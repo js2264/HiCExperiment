@@ -1,0 +1,53 @@
+Package: HiCExperiment
+Title: Interface to (m)cool files in R
+Version: 0.0.0.9000
+Date: 2022-11-10
+Authors@R:
+    c(person(given = "Jacques",
+           family = "Serizay",
+           role = c("aut", "cre"),
+           email = "jacquesserizay@gmail.com",
+           comment = c(ORCID = "0000-0002-4295-0624")))
+Description: HiCExperiment: R interface to (m)cool files and other Hi-C 
+    processed file formats. HiCExperiment objects can be analyzed by 
+    HiContacts.
+License: MIT + file LICENSE
+URL: https://github.com/js2264/HiCExperiment
+BugReports: https://github.com/js2264/HiCExperiment/issues
+Depends:
+    R (>= 4.2)
+Imports:
+    HiContactsData,
+    InteractionSet,
+    GenomicInteractions,
+    GenomicRanges,
+    IRanges,
+    GenomeInfoDb,
+    S4Vectors,
+    BiocGenerics,
+    BiocIO,
+    methods,
+    rhdf5,
+    Matrix,
+    vroom,
+    tibble,
+    tidyr,
+    dplyr,
+    glue,
+    stringr,
+    reticulate
+Suggests:
+    testthat (>= 3.0.0),
+    BiocStyle,
+    knitr,
+    rmarkdown
+biocViews:
+    HiC,
+    DNA3DStructure, 
+    DataImport
+Encoding: UTF-8
+VignetteBuilder: knitr
+LazyData: false
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Config/testthat/edition: 3

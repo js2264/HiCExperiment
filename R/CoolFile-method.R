@@ -28,12 +28,10 @@ setMethod("resolution", "CoolFile", function(x) x@resolution)
 #' show(contacts_yeast)
 
 setMethod("show", signature("CoolFile"), function(object) {
-
     r <- BiocIO::resource(object)
     res <- resolution(object)
     if (is.null(res)) res = lsCoolResolutions(r)[1]
     if (!S4Vectors::isSingleString(r))
         r <- summary(r)$description
     cat(class(object), "object\nresource:", r, "\nresolution:", res, "\n")
-
 })

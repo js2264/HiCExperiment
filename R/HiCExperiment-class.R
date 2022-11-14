@@ -58,9 +58,9 @@ methods::setClass("HiCExperiment",
 
 #' @rdname HiCExperiment
 #' 
-#' @param file Path to a (m)cool file
+#' @param file CoolFile, HiCoolFile, or plain path to a (m)cool file
 #' @param resolution Resolution to use with mcool file
-#' @param focus focus Chr. coordinates for which 
+#' @param focus Chromosome coordinates for which 
 #'   interaction counts are extracted from the .(m)cool file, provided
 #'   as a character string (e.g. "II:4000-5000"). If not provided, 
 #'   the entire (m)cool file will be imported. 

@@ -45,6 +45,22 @@ biocViews:
     HiC,
     DNA3DStructure, 
     DataImport
+Collate: 
+    'AllGenerics.R'
+    'CoolFile-class.R'
+    'CoolFile-method.R'
+    'HiCExperiment-class.R'
+    'HiCExperiment-method.R'
+    'HiCExperiment.R'
+    'PairsFile-class.R'
+    'HiCoolFile-class.R'
+    'HiCoolFile-method.R'
+    'PairsFile-method.R'
+    'checks.R'
+    'data.R'
+    'import-method.R'
+    'parse.R'
+    'utils.R'
 Encoding: UTF-8
 VignetteBuilder: knitr
 LazyData: false

@@ -1,6 +1,10 @@
 #' @title Example datasets provided in `HiCExperiment` & `HiContactsData`
 #' 
 #' @name data
+#' @aliases centros_yeast
+#' @aliases contacts_yeast
+#' @aliases contacts_yeast_eco1
+#' @aliases full_contacts_yeast
 #' 
 #' @format An object of class \code{"GRanges"}.
 #' @docType data

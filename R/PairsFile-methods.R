@@ -11,6 +11,8 @@
 #'
 #' @importFrom BiocGenerics path
 #' @examples 
+#' pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
+#' pf <- PairsFile(pairs_path)
 #' pairsFile(pf)
 NULL
 

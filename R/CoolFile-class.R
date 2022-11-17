@@ -3,6 +3,7 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' @title `CoolFile` S4 class
 #' 
 #' @name CoolFile-class
+#' @aliases McoolFile-class
 #' @aliases CoolFile
 #' 
 #' @description

@@ -1,6 +1,18 @@
 #' @title Generic functions
 #' 
 #' @name AllGenerics
+#' @aliases resolutions
+#' @aliases resolution
+#' @aliases focus
+#' @aliases focus<-
+#' @aliases scores
+#' @aliases scores<-
+#' @aliases topologicalFeatures
+#' @aliases topologicalFeatures<-
+#' @aliases pairsFile
+#' @aliases pairsFile<-
+#' @aliases metadata<-
+#' @aliases bins
 #' 
 #' @description
 #' 

@@ -5,6 +5,9 @@
 #' @aliases import,CoolFile-method
 #' @aliases import,HiCoolFile-method
 #' @aliases import,PairsFile-method
+#' @aliases import,CoolFile,ANY,ANY-method
+#' @aliases import,HiCoolFile,ANY,ANY-method
+#' @aliases import,PairsFile,ANY,ANY-method
 #' 
 #' @description 
 #' 
@@ -15,10 +18,15 @@
 #' 
 #' @param con Path or connection to a cool, mcool or pairs file. Con argument 
 #'   can also be a CoolFile or PairsFile object. 
+#' @param format The format of the output. If missing and 'con' is a filename, 
+#'    the format is derived from the file extension. 
+#'    This argument is unnecessary when 'con' is a derivative of 'BiocFile'.
+#' @param text If 'con' is missing, this can be a character vector directly 
+#'    providing the string data to import.
 #' @param ... e.g. `resolution = ...`; parameters to pass to the 
 #'    format-specific method.
 #' 
-#' @usage import(con, ...)
+#' @usage import(con, format, text, ...)
 #' 
 #' @importFrom BiocIO import
 #' @importFrom BiocGenerics path

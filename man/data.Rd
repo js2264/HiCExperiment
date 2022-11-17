@@ -3,6 +3,10 @@
 \docType{data}
 \name{data}
 \alias{data}
+\alias{centros_yeast}
+\alias{contacts_yeast}
+\alias{contacts_yeast_eco1}
+\alias{full_contacts_yeast}
 \title{Example datasets provided in \code{HiCExperiment} & \code{HiContactsData}}
 \format{
 An object of class \code{"GRanges"}.

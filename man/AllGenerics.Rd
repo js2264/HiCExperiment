@@ -2,6 +2,18 @@
 % Please edit documentation in R/AllGenerics.R
 \name{AllGenerics}
 \alias{AllGenerics}
+\alias{resolutions}
+\alias{resolution}
+\alias{focus}
+\alias{focus<-}
+\alias{scores}
+\alias{scores<-}
+\alias{topologicalFeatures}
+\alias{topologicalFeatures<-}
+\alias{pairsFile}
+\alias{pairsFile<-}
+\alias{metadata}
+\alias{bins}
 \title{Generic functions}
 \arguments{
 \item{x}{Passed to corresponding method}

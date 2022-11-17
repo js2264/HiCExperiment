@@ -6,13 +6,23 @@
 \alias{import,CoolFile-method}
 \alias{import,HiCoolFile-method}
 \alias{import,PairsFile-method}
+\alias{import,CoolFile,ANY,ANY-method}
+\alias{import,HiCoolFile,ANY,ANY-method}
+\alias{import,PairsFile,ANY,ANY-method}
 \title{HiCExperiment import methods}
 \usage{
-import(con, ...)
+import(con, format, text, ...)
 }
 \arguments{
 \item{con}{Path or connection to a cool, mcool or pairs file. Con argument
 can also be a CoolFile or PairsFile object.}
+
+\item{format}{The format of the output. If missing and 'con' is a filename,
+the format is derived from the file extension.
+This argument is unnecessary when 'con' is a derivative of 'BiocFile'.}
+
+\item{text}{If 'con' is missing, this can be a character vector directly
+providing the string data to import.}
 
 \item{...}{e.g. \code{resolution = ...}; parameters to pass to the
 format-specific method.}

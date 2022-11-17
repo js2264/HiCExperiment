@@ -1,0 +1,153 @@
+---
+title: "Introduction to HiCExperiment"
+author: "Jacques Serizay"
+date: "`r Sys.Date()`"
+output: 
+    BiocStyle::html_document
+vignette: >
+    %\VignetteIndexEntry{Introduction to HiCExperiment}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r, eval = TRUE, echo=FALSE, results="hide", warning=FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>", 
+    crop = NULL
+)
+suppressPackageStartupMessages({
+    library(ggplot2)
+    library(dplyr)
+    library(GenomicRanges)
+    library(HiContactsData)
+    library(HiCExperiment)
+})
+```
+
+# The `HiCExperiment` class
+
+`HiCExperiment` package implements the new `HiCExperiment` S4 class. It is build 
+on pre-existing Bioconductor classes, namely `InteractionSet`, 
+`GenomicInterations` and `ContactMatrix` 
+(`Lun, Perry & Ing-Simmons, F1000Research 2016`), and leverages them to 
+import locally stored `.(m)cool` files. It further provides **analytical** 
+and **visualization** tools to investigate contact maps directly in `R`. 
+
+```{r}
+library(HiCExperiment)
+showClass("HiCExperiment")
+hic <- contacts_yeast()
+hic
+```
+
+```{r}
+citation('HiCExperiment')
+```
+
+# Basics: importing `.(m)/cool` files as `HiCExperiment` objects
+
+The `HiContactsData` package gives access to a range of toy datasets stored 
+by Bioconductor in the `ExperimentHub`. 
+
+```{r}
+library(HiContactsData)
+cool_file <- HiContactsData('yeast_wt', format = 'cool')
+cool_file
+```
+
+The `HiCExperiment()` function can be used to import a Hi-C matrix locally stored 
+as a `cool`/`mcool` file. It creates a `HiCExperiment` object. 
+
+```{r}
+range <- 'I:20000-80000' # range of interest
+hic <- HiCExperiment(cool_file, focus = range)
+hic
+focus(hic)
+```
+
+`HiCExperiment()` works with `.mcool` files as well: in this case, the user can  
+specify the resolution at which count values are recovered. 
+
+```{r}
+mcool_file <- HiContactsData('yeast_wt', format = 'mcool')
+range <- 'II:0-800000' # range of interest
+lsCoolResolutions(mcool_file, verbose = TRUE)
+hic <- HiCExperiment(mcool_file, focus = range, res = 1000)
+hic
+```
+
+One can also extract a count matrix from a `.(m)cool` file that is *not* 
+centered at the diagonal. To do this, specify a couple of coordinates in the 
+`focus` argument using a character string formatted as `"... x ..."`: 
+
+```{r}
+hic <- HiCExperiment(mcool_file, focus = 'II:0-500000 x II:100000-600000', res = 1000)
+focus(hic)
+```
+
+## Slots
+
+Slots for a `HiCExperiment` object can be accessed using the following `getters`: 
+
+```{r}
+fileName(hic)
+focus(hic)
+resolutions(hic)
+resolution(hic)
+interactions(hic)
+scores(hic)
+tail(scores(hic, 1))
+tail(scores(hic, 'balanced'))
+topologicalFeatures(hic)
+pairsFile(hic)
+metadata(hic)
+```
+
+Several extra functions are available as well: 
+
+```{r}
+seqinfo(hic) ## To recover the `Seqinfo` object from the `.(m)cool` file
+bins(hic) ## To bin the genome at the current resolution
+regions(hic) ## To extract unique regions of the contact matrix
+anchors(hic) ## To extract "first" and "second" anchors for each interaction
+```
+
+## Slot setters
+
+### Scores 
+
+Add any `scores` metric using a numerical vector. 
+
+```{r}
+scores(hic, 'random') <- runif(length(hic))
+scores(hic)
+tail(scores(hic, 'random'))
+```
+
+### Features 
+
+Add `topologicalFeatures` using `GRanges` or `Pairs`. 
+
+```{r}
+topologicalFeatures(hic, 'viewpoints') <- GRanges("II:300000-320000")
+topologicalFeatures(hic)
+topologicalFeatures(hic, 'viewpoints')
+```
+
+## Coercing `HiCExperiment`
+
+Using the `as()` function, `HiCExperiment` can be coerced in `GInteractions`, 
+`ContactMatrix` and `matrix` seamlessly.
+
+```{r}
+as(hic, "GInteractions")
+as(hic, "ContactMatrix")
+as(hic, "matrix")[1:10, 1:10]
+```
+
+# Session info
+
+```{r}
+sessionInfo()
+```

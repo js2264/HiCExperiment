@@ -2,29 +2,40 @@
 % Please edit documentation in R/CoolFile-class.R
 \name{CoolFile-class}
 \alias{CoolFile-class}
-\alias{McoolFile-class}
 \alias{CoolFile}
 \title{\code{CoolFile} S4 class}
 \arguments{
 \item{path}{String; path to a (m)cool file}
 
-\item{resolution}{numeric; resolution to use with an mcool file}
+\item{resolution}{numeric; resolution to use with mcool file}
+
+\item{pairs}{String; path to a pairs file}
+
+\item{metadata}{list; contains path to log file and stats file from hicstuff}
 }
 \description{
 The \code{CoolFile} class describes a \code{BiocFile} object, pointing to the location
-of an (m)cool file and containing an additional \code{resolution} slot,
-specifying at which resolution the associated mcool file should be parsed
-when imported in R.
+of an (m)cool file and containing additional slots:
+\enumerate{
+\item resolution: at which resolution the associated mcool file should be parsed
+\item pairsFile: the path (in plain character) to an optional pairs file
+(stored as a \code{PairsFile} object);
+\item metadata: a list with two elements: \code{log} (path to \code{HiCool} processing
+log file) and \code{stats} (aggregating some stats from \code{HiCool} mapping).
+}
 }
 \section{Slots}{
 
 \describe{
 \item{\code{resolution}}{numeric value or NULL}
+
+\item{\code{pairsFile}}{PairsFile object}
+
+\item{\code{metadata}}{list}
 }}
 
 \examples{
-cool_path <- HiContactsData::HiContactsData('yeast_wt', 'cool')
-CoolFile(cool_path)
-cool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-cf <- CoolFile(cool_path, resolution = 4000)
+mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
+hcf <- CoolFile(mcool_path, resolution = 4000, pairs = pairs_path)
 }

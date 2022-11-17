@@ -3,6 +3,7 @@
 
 setClassUnion("GRangesOrGInteractions", members = c("GRanges", "GInteractions"))
 setClassUnion("characterOrNULL", members = c("character", "NULL"))
+setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 
 #' @title `HiCExperiment` S4 class
 #' 
@@ -27,7 +28,7 @@ setClassUnion("characterOrNULL", members = c("character", "NULL"))
 #' @slot pairsFile Path to the .pairs file associated with the .(m)cool file
 #' @slot metadata metadata associated with the .(m)cool file.
 #' 
-#' @param file CoolFile, HiCoolFile, or plain path to a (m)cool file
+#' @param file CoolFile or plain path to a (m)cool file
 #' @param resolution Resolution to use with mcool file
 #' @param focus Chromosome coordinates for which 
 #'   interaction counts are extracted from the .(m)cool file, provided

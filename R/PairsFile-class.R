@@ -25,8 +25,4 @@ setClass('PairsFile', contains = 'BiocFile')
 
 #' @export
 
-PairsFile <- function(x) {
-    if (!S4Vectors::isSingleString(x))
-        stop('"filename" must be a single string, specifiying a path')
-    new('PairsFile', resource = x)
-}
+PairsFile <- function(x) {new('PairsFile', resource = x)}

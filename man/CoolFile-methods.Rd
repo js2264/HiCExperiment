@@ -3,6 +3,7 @@
 \name{CoolFile-methods}
 \alias{CoolFile-methods}
 \alias{show,CoolFile-method}
+\alias{pairsFile,CoolFile-method}
 \alias{resolution,CoolFile-method}
 \title{\code{CoolFile} methods}
 \arguments{
@@ -14,8 +15,9 @@
 CoolFile methods.
 }
 \examples{
-cool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-cf <- CoolFile(cool_path, resolution = 4000)
-cf
-resolution(cf)
+mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
+hcf <- CoolFile(mcool_path, resolution = 4000, pairs = pairs_path)
+hcf
+resolution(hcf)
 }

@@ -3,10 +3,8 @@
 #' @name import-methods
 #' @aliases import
 #' @aliases import,CoolFile-method
-#' @aliases import,HiCoolFile-method
 #' @aliases import,PairsFile-method
 #' @aliases import,CoolFile,ANY,ANY-method
-#' @aliases import,HiCoolFile,ANY,ANY-method
 #' @aliases import,PairsFile,ANY,ANY-method
 #' 
 #' @description 
@@ -36,24 +34,6 @@ NULL
 #' @export
 
 setMethod('import', 'CoolFile', function(con, ...) {
-
-    path <- BiocGenerics::path(con)
-    stopifnot(file.exists(path))
-    params <- list(...)
-    if ('resolution' %in% names(params)) {
-        check_cool_format(path, params[['resolution']])
-        HiCExperiment(path, ...)
-    }
-    else {
-        check_cool_format(path, resolution(con))
-        HiCExperiment(con, ...)
-    }
-
-})
-
-#' @export
-
-setMethod('import', 'HiCoolFile', function(con, ...) {
 
     path <- BiocGenerics::path(con)
     stopifnot(file.exists(path))

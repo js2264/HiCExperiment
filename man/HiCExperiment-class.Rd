@@ -4,7 +4,7 @@
 \alias{HiCExperiment-class}
 \title{\code{HiCExperiment} S4 class}
 \arguments{
-\item{file}{CoolFile, HiCoolFile, or plain path to a (m)cool file}
+\item{file}{CoolFile or plain path to a (m)cool file}
 
 \item{resolution}{Resolution to use with mcool file}
 

@@ -1,8 +1,16 @@
 test_that("CoolFile works", {
     cool_path <- HiContactsData::HiContactsData('yeast_wt', 'cool')
     mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+    pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
     cf <- CoolFile(cool_path)
+    cf <- CoolFile(cool_path, pairs = pairs_path)
     mcf <- CoolFile(mcool_path, resolution = 2000)
+
+    expect_no_warning(cf)
+    expect_no_error(mcf)
+    expect_equal(resolution(mcf), 2000L)
+    expect_no_warning(pairsFile(cf))
+    expect_no_error(pairsFile(cf))
 
     expect_s4_class(CoolFile(cool_path), "CoolFile")
     expect_error(CoolFile(cool_path, 1000))

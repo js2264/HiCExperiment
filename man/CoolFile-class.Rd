@@ -2,6 +2,7 @@
 % Please edit documentation in R/CoolFile-class.R
 \name{CoolFile-class}
 \alias{CoolFile-class}
+\alias{McoolFile-class}
 \alias{CoolFile}
 \title{\code{CoolFile} S4 class}
 \arguments{

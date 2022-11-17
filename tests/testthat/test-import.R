@@ -17,21 +17,18 @@ test_that("imports work", {
     expect_s4_class(HiCExperiment(CoolFile(mcool_path)), 'HiCExperiment')
     expect_error(HiCExperiment(CoolFile(cool_path, 1000)))
 
-    expect_s4_class(import(CoolFile(cool_path), format = 'cool'), 'HiCExperiment')
+    expect_s4_class(import(CoolFile(cool_path)), 'HiCExperiment')
     expect_s4_class(import(cool_path, format = 'cool'), 'HiCExperiment')
-    expect_s4_class(import(CoolFile(mcool_path), format = 'mcool'), 'HiCExperiment')
-    cf <- import(mcool_path, format = 'mcool', pairsFile = pairs_path)
+    expect_s4_class(import(CoolFile(mcool_path)), 'HiCExperiment')
+    expect_s4_class(import(mcool_path, format = 'mcool', resolution = 16000), 'HiCExperiment')
+    cf <- import(mcool_path, format = 'mcool', resolution = 16000, pairsFile = pairs_path)
     expect_s4_class(cf, 'HiCExperiment')
     expect_equal(pairsFile(cf), pairs_path)
     expect_equal(
-        resolution(import(CoolFile(mcool_path, 2000), format = 'mcool')), 
-        2000
+        resolution(cf), 
+        16000
     )
 
-    expect_equal(
-        resolution(import(mcool_path, format = 'mcool', resolution = 8000)), 
-        8000
-    )
     expect_error(import(cool_path, format = 'cool', resolution = 8000))
 
     expect_s4_class(import(pairs_path, format = 'pairs'), 'GenomicInteractions')

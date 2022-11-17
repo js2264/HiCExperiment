@@ -1,6 +1,7 @@
 #' @title `CoolFile` S4 class
 #' 
 #' @name CoolFile-class
+#' @aliases McoolFile-class
 #' @aliases CoolFile
 #' 
 #' @description

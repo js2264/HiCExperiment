@@ -40,19 +40,35 @@ setMethod('import', 'CoolFile', function(con, ...) {
     params <- list(...)
     if ('resolution' %in% names(params)) {
         check_cool_format(path, params[['resolution']])
-        HiCExperiment(
-            path, ..., 
-            pairsFile = pairsFile(con), 
-            metadata = S4Vectors::metadata(con)
-        )
+        if ('pairsFile' %in% names(params)) {
+            HiCExperiment(
+                path, ..., 
+                metadata = S4Vectors::metadata(con)
+            )
+        }
+        else {
+            HiCExperiment(
+                path, ..., 
+                pairsFile = pairsFile(con), 
+                metadata = S4Vectors::metadata(con)
+            )
+        }
     }
     else {
         check_cool_format(path, resolution(con))
-        HiCExperiment(
-            con, ..., 
-            pairsFile = pairsFile(con), 
-            metadata = S4Vectors::metadata(con)
-        )
+        if ('pairsFile' %in% names(params)) {
+            HiCExperiment(
+                con, ..., 
+                metadata = S4Vectors::metadata(con)
+            )
+        }
+        else {
+            HiCExperiment(
+                con, ..., 
+                pairsFile = pairsFile(con), 
+                metadata = S4Vectors::metadata(con)
+            )
+        }
     }
 
 })

@@ -1,10 +1,13 @@
-#' HiCExperiment package
-#' 
-#' @name HiCExperiment package
+#' @title HiCExperiment package
+#' @name HiCExperiment
 #' 
 #' @description 
-#'   HiCExperiment: R interface to (m)cool files and other Hi-C 
-#'   processed file formats. 
+#' 
+#' R interface to (m)cool files and other Hi-C processed file formats. 
+#' 
+#' @include CoolFile-class.R
+#' @include CoolFile-methods.R
+#' @include PairsFile-class.R
 
 NULL
 

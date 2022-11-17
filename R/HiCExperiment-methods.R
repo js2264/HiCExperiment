@@ -1,3 +1,96 @@
+#' @title `HiCExperiment` methods
+#' 
+#' @name HiCExperiment-methods
+#' @aliases resolutions,HiCExperiment-method
+#' @aliases resolution,HiCExperiment-method
+#' @aliases focus,HiCExperiment-method
+#' @aliases focus<-,HiCExperiment-method
+#' @aliases focus<-,HiCExperiment,character-method
+#' @aliases scores,HiCExperiment-method
+#' @aliases scores,HiCExperiment,missing-method
+#' @aliases scores,HiCExperiment,character-method
+#' @aliases scores,HiCExperiment,numeric-method
+#' @aliases scores<-,HiCExperiment-method
+#' @aliases scores<-,HiCExperiment,character,numeric-method
+#' @aliases topologicalFeatures,HiCExperiment-method
+#' @aliases topologicalFeatures,HiCExperiment,missing-method
+#' @aliases topologicalFeatures,HiCExperiment,character-method
+#' @aliases topologicalFeatures,HiCExperiment,numeric-method
+#' @aliases topologicalFeatures<-,HiCExperiment-method
+#' @aliases topologicalFeatures<-,HiCExperiment,character,GRangesOrGInteractions-method
+#' @aliases pairsFile,HiCExperiment-method
+#' @aliases pairsFile<-,HiCExperiment-method
+#' @aliases pairsFile<-,HiCExperiment,character-method
+#' @aliases metadata<-,HiCExperiment-method
+#' @aliases metadata<-,HiCExperiment,list-method
+#' @aliases fileName,HiCExperiment-method
+#' @aliases interactions,HiCExperiment-method
+#' @aliases interactions<-,HiCExperiment-method
+#' @aliases interactions<-,HiCExperiment,GInteractions-method
+#' @aliases length,HiCExperiment-method
+#' @aliases [,HiCExperiment-method
+#' @aliases [,HiCExperiment,numeric,ANY,ANY-method
+#' @aliases [,HiCExperiment,logical,ANY,ANY-method
+#' @aliases [,HiCExperiment,character,ANY,ANY-method
+#' @aliases seqinfo,HiCExperiment-method
+#' @aliases bins,HiCExperiment-method
+#' @aliases anchors,HiCExperiment-method
+#' @aliases regions,HiCExperiment-method
+#' @aliases show,HiCExperiment-method
+#' @aliases coerce,HiCExperiment,GInteractions-method
+#' @aliases coerce,HiCExperiment,ContactMatrix-method
+#' @aliases coerce,HiCExperiment,matrix-method
+#' @aliases coerce,HiCExperiment,data.frame-method
+#' 
+#' @description
+#' 
+#' HiCExperiment methods.
+#'
+#' @param x A \code{HiCExperiment} object.
+#' @param object A \code{HiCExperiment} object.
+#' @param name ...
+#' @param value ...
+#' @param i a range or boolean vector.
+#' 
+#' @importMethodsFrom BiocGenerics fileName
+#' @importFrom InteractionSet reduceRegions
+#' @importFrom GenomeInfoDb seqinfo
+#' 
+#' @examples 
+#' library(HiCExperiment)
+#' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+#' contacts_yeast <- HiCExperiment(mcool_path, resolution = 16000)
+#' resolutions(contacts_yeast)
+#' resolution(contacts_yeast)
+#' focus(contacts_yeast)
+#' scores(contacts_yeast)
+#' tail(scores(contacts_yeast, 1))
+#' tail(scores(contacts_yeast, 'balanced'))
+#' scores(contacts_yeast, 'test') <- runif(length(contacts_yeast))
+#' tail(scores(contacts_yeast, 'test'))
+#' full_contacts_yeast <- full_contacts_yeast()
+#' topologicalFeatures(full_contacts_yeast)
+#' topologicalFeatures(full_contacts_yeast, 1)
+#' topologicalFeatures(full_contacts_yeast, 'centromeres')
+#' data(centros_yeast)
+#' topologicalFeatures(contacts_yeast, 'centromeres') <- centros_yeast
+#' topologicalFeatures(contacts_yeast, 'centromeres')
+#' pairsFile(full_contacts_yeast)
+#' fileName(contacts_yeast)
+#' interactions(contacts_yeast)
+#' length(contacts_yeast)
+#' contacts_yeast[seq_len(10)]
+#' seqinfo(contacts_yeast)
+#' bins(contacts_yeast)
+#' anchors(contacts_yeast)
+#' regions(contacts_yeast)
+#' contacts_yeast
+#' as(contacts_yeast, 'GInteractions')
+#' as(contacts_yeast, 'ContactMatrix')
+#' as(contacts_yeast, 'matrix')[seq_len(10), seq_len(10)]
+#' as(contacts_yeast, 'data.frame')[seq_len(10), seq_len(10)]
+NULL
+
 ################################################################################
 ################################################################################
 ###############                                                  ###############
@@ -6,55 +99,18 @@
 ################################################################################
 ################################################################################
 
-#' @rdname HiCExperiment
-#'
-#' @name resolutions
-#' @docType methods
-#' @aliases resolutions,HiCExperiment-method
-#'
-#' @param x A \code{HiCExperiment} object.
-#' 
 #' @export
-#' @examples 
-#' library(HiCExperiment)
-#' contacts_yeast <- contacts_yeast()
-#' resolutions(contacts_yeast)
 
 setMethod("resolutions", "HiCExperiment", function(x) x@resolutions)
 
-#' @rdname HiCExperiment
-#'
-#' @name resolution
-#' @docType methods
-#' @aliases resolution,HiCExperiment-method
-#'
 #' @export
-#' @examples 
-#' resolution(contacts_yeast)
 
 setMethod("resolution", "HiCExperiment", function(x) x@resolution)
 
-#' @rdname HiCExperiment
-#'
-#' @name focus
-#' @docType methods
-#' @aliases focus,HiCExperiment-method
-#'
 #' @export
-#' @examples 
-#' focus(contacts_yeast)
 
 setMethod("focus", "HiCExperiment", function(x) x@focus)
 
-#' @rdname HiCExperiment
-#'
-#' @name focus<-
-#' @docType methods
-#' @aliases focus<-,HiCExperiment,character-method
-#'
-#' @param name name
-#' @param value value
-#'
 #' @export
 
 setMethod("focus<-", signature(x = "HiCExperiment", value = "character"), function(x, value) {
@@ -62,19 +118,7 @@ setMethod("focus<-", signature(x = "HiCExperiment", value = "character"), functi
     x
 })
 
-#' @rdname HiCExperiment
-#'
-#' @name scores
-#' @docType methods
-#' @aliases scores,HiCExperiment,missing-method
-#' @aliases scores,HiCExperiment,character-method
-#' @aliases scores,HiCExperiment,numeric-method
-#'
 #' @export
-#' @examples 
-#' scores(contacts_yeast)
-#' tail(scores(contacts_yeast, 1))
-#' tail(scores(contacts_yeast, 'balanced'))
 
 setMethod("scores", signature(x = "HiCExperiment", name = "missing"), function(x) x@scores)
 setMethod("scores", signature(x = "HiCExperiment", name = "character"), function(x, name) {
@@ -90,39 +134,14 @@ setMethod("scores", signature(x = "HiCExperiment", name = "numeric"), function(x
     return(x@scores[[name]])
 })
 
-#' @rdname HiCExperiment
-#'
-#' @name scores<-
-#' @docType methods
-#' @aliases scores<-,HiCExperiment,character,numeric-method
-#'
-#' @param name name
-#' @param value value
-#'
 #' @export
-#' @examples 
-#' scores(contacts_yeast, 'test') <- runif(length(contacts_yeast))
-#' tail(scores(contacts_yeast, 'test'))
 
 setMethod("scores<-", c(x = "HiCExperiment", name = "character", value = "numeric"), function(x, name, value) {
     x@scores[[name]] <- value
     return(x)
 })
 
-#' @rdname HiCExperiment
-#' 
-#' @name topologicalFeatures
-#' @docType methods
-#' @aliases topologicalFeatures,HiCExperiment,missing-method
-#' @aliases topologicalFeatures,HiCExperiment,character-method
-#' @aliases topologicalFeatures,HiCExperiment,numeric-method
-#'
 #' @export
-#' @examples 
-#' full_contacts_yeast <- full_contacts_yeast()
-#' topologicalFeatures(full_contacts_yeast)
-#' topologicalFeatures(full_contacts_yeast, 1)
-#' topologicalFeatures(full_contacts_yeast, 'centromeres')
 
 setMethod("topologicalFeatures", signature(x = "HiCExperiment", name = "missing"), function(x) {
     S4Vectors::SimpleList(as.list(x@topologicalFeatures))
@@ -140,49 +159,19 @@ setMethod("topologicalFeatures", signature(x = "HiCExperiment", name = "numeric"
     x@topologicalFeatures[[name]]
 })
 
-#' @rdname HiCExperiment
-#' 
-#' @name topologicalFeatures<-
-#' @docType methods
-#' @aliases topologicalFeatures<-,HiCExperiment,character,GRangesOrGInteractions-method
-#'
-#' @param name name
-#' @param value value
-#'
 #' @export
-#' @examples 
-#' data(centros_yeast)
-#' topologicalFeatures(contacts_yeast, 'centromeres') <- centros_yeast
-#' topologicalFeatures(contacts_yeast, 'centromeres')
 
 setMethod("topologicalFeatures<-", signature(x = "HiCExperiment", name = "character", value = "GRangesOrGInteractions"), function(x, name, value) {
     x@topologicalFeatures[[name]] <- value
     return(x)
 })
 
-#' @rdname HiCExperiment
-#' 
-#' @name pairsFile
-#' @docType methods
-#' @aliases pairsFile,HiCExperiment-method
-#'
 #' @export
-#' @examples 
-#' pairsFile(full_contacts_yeast)
 
 setMethod("pairsFile", "HiCExperiment", function(x) {
     x@pairsFile
 })
 
-#' @rdname HiCExperiment
-#' 
-#' @name pairsFile<-
-#' @docType methods
-#' @aliases pairsFile<-,HiCExperiment,character-method
-#'
-#' @param name name
-#' @param value value
-#'
 #' @export
 
 setMethod("pairsFile<-", signature(x = "HiCExperiment", value = "character"), function(x, value) {
@@ -193,15 +182,6 @@ setMethod("pairsFile<-", signature(x = "HiCExperiment", value = "character"), fu
     x
 })
 
-#' @rdname HiCExperiment
-#' 
-#' @name metadata<-
-#' @docType methods
-#' @aliases metadata<-,HiCExperiment,list-method
-#'
-#' @param name name
-#' @param value value
-#'
 #' @export
 
 setMethod("metadata<-", signature(x = "HiCExperiment", value = "list"), function(x, value) {
@@ -217,40 +197,14 @@ setMethod("metadata<-", signature(x = "HiCExperiment", value = "list"), function
 ################################################################################
 ################################################################################
 
-#' @rdname HiCExperiment
-#'
-#' @name fileName
-#' @docType methods
-#' @aliases fileName,HiCExperiment-method
-#'
-#' @importMethodsFrom BiocGenerics fileName
 #' @export
-#' @examples 
-#' fileName(contacts_yeast)
 
 setMethod("fileName", "HiCExperiment", function(object) object@fileName)
 
-#' @rdname HiCExperiment
-#'
-#' @name interactions
-#' @docType methods
-#' @aliases interactions,HiCExperiment-method
-#'
 #' @export
-#' @examples 
-#' interactions(contacts_yeast)
 
 setMethod("interactions", "HiCExperiment", function(x) x@interactions)
 
-#' @rdname HiCExperiment
-#'
-#' @name interactions<-
-#' @docType methods
-#' @aliases interactions<-,HiCExperiment,GInteractions-method
-#'
-#' @param name name
-#' @param value value
-#'
 #' @export
 
 setMethod("interactions<-", signature(x = "HiCExperiment", value = "GInteractions"), function(x, value) {
@@ -258,33 +212,11 @@ setMethod("interactions<-", signature(x = "HiCExperiment", value = "GInteraction
     x
 })
 
-#' @rdname HiCExperiment
-#'
-#' @name length
-#' @docType methods
-#' @aliases length,HiCExperiment-method
-#'
 #' @export
-#' @examples 
-#' length(contacts_yeast)
 
 setMethod("length", "HiCExperiment", function(x) length(interactions(x)))
 
-#' @rdname HiCExperiment
-#'
-#' @name [
-#' @docType methods
-#' @aliases [,HiCExperiment,numeric,ANY,ANY-method
-#' @aliases [,HiCExperiment,logical,ANY,ANY-method
-#' @aliases [,HiCExperiment,character,ANY,ANY-method
-#'
-#' @param i a range or boolean vector.
-#'
-#' @importFrom InteractionSet reduceRegions
-#' @importFrom GenomeInfoDb seqinfo
 #' @export
-#' @examples 
-#' contacts_yeast[seq_len(10)]
 
 setMethod("[", signature("HiCExperiment", "numeric"), function(x, i) {
     interactions(x) <- InteractionSet::reduceRegions(
@@ -360,14 +292,7 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
     return(x)
 })
 
-#' @rdname HiCExperiment
-#'
-#' @name seqinfo,HiCExperiment-method
-#' @docType methods
-#'
 #' @export
-#' @examples 
-#' seqinfo(contacts_yeast)
 
 setMethod("seqinfo", "HiCExperiment", function(x) {
     if (is_mcool(fileName(x))) {
@@ -379,16 +304,7 @@ setMethod("seqinfo", "HiCExperiment", function(x) {
     return(si)
 })
 
-#' @rdname HiCExperiment
-#'
-#' @name bins
-#' @docType methods
-#' @aliases bins,HiCExperiment-method
-#'
-#' @importFrom GenomeInfoDb seqinfo
 #' @export
-#' @examples 
-#' bins(contacts_yeast)
 
 setMethod("bins", "HiCExperiment", function(x) {
     bins <- getAnchors(
@@ -398,57 +314,15 @@ setMethod("bins", "HiCExperiment", function(x) {
     return(bins)
 })
 
-#' @rdname HiCExperiment
-#' 
-#' @name anchors
-#' @docType methods
-#' @aliases anchors,HiCExperiment-method
-#'
 #' @export
-#' @examples 
-#' anchors(contacts_yeast)
 
 setMethod("anchors", "HiCExperiment", function(x) anchors(interactions(x)))
 
-#' @rdname HiCExperiment
-#' 
-#' @name regions
-#' @docType methods
-#' @aliases regions,HiCExperiment-method
-#'
 #' @export
-#' @examples 
-#' regions(contacts_yeast)
 
 setMethod("regions", "HiCExperiment", function(x) regions(interactions(x)))
 
-#' @rdname HiCExperiment
-#' 
-#' @name summary
-#' @docType methods
-#' @aliases summary,HiCExperiment-method
-#'
 #' @export
-#' @examples 
-#' summary(contacts_yeast)
-
-setMethod("summary", "HiCExperiment", function(object) {
-    cat(glue::glue(
-        '`HiCExperiment` object with {format(length(interactions(object)), big.mark = ",")} interactions over {format(length(regions(object)), big.mark = ",")} regions'
-    ), '\n')
-})
-
-#' @rdname HiCExperiment
-#' 
-#' @name show
-#' @docType methods
-#' @aliases show,HiCExperiment-method
-#'
-#' @param object A \code{HiCExperiment} object.
-#'
-#' @export
-#' @examples 
-#' show(contacts_yeast)
 
 setMethod("show", signature("HiCExperiment"), function(object) {
 
@@ -459,7 +333,9 @@ setMethod("show", signature("HiCExperiment"), function(object) {
         focus_str <- coords2char(focus(object))
     }
 
-    cat(summary(object))
+    cat(glue::glue(
+        '`HiCExperiment` object with {format(length(interactions(object)), big.mark = ",")} interactions over {format(length(regions(object)), big.mark = ",")} regions'
+    ), '\n')
     cat('-------\n')
     cat(glue::glue('fileName: "{fileName(object)}"'), '\n')
     cat(glue::glue('focus: "{focus_str}"'), '\n')
@@ -493,20 +369,12 @@ setMethod("show", signature("HiCExperiment"), function(object) {
 ################################################################################
 ################################################################################
 
-#' @rdname HiCExperiment
-#' 
-#' @name setAs
-#' @docType methods
-#' @aliases setAs,HiCExperiment-method
-#'
 #' @export
-#' @examples 
-#' as(contacts_yeast, 'GInteractions')
-#' as(contacts_yeast, 'ContactMatrix')
-#' as(contacts_yeast, 'matrix')[seq_len(10), seq_len(10)]
-#' as(contacts_yeast, 'data.frame')[seq_len(10), seq_len(10)]
 
 setAs("HiCExperiment", "GInteractions", function(from) interactions(from))
+
+#' @export
+
 setAs("HiCExperiment", "ContactMatrix", function(from) {
     if ('balanced' %in% names(scores(from))) {
         x <- interactions(from)
@@ -519,9 +387,15 @@ setAs("HiCExperiment", "ContactMatrix", function(from) {
         gi2cm(x)
     }
 })
+
+#' @export
+
 setAs("HiCExperiment", "matrix", function(from) {
     as(from, "ContactMatrix") |> cm2matrix()
 })
+
+#' @export
+
 setAs("HiCExperiment", "data.frame", function(from) {
     x <- interactions(from)
     x <- as.data.frame(x)

@@ -2,6 +2,7 @@
 #' 
 #' Useful functions to validate the nature/structure of (m)cool files or 
 #' `HiCExperiment` objects.
+#'  All these check functions should return a logical.
 #' 
 #' @param path Path of a (m)cool file
 #' @param contacts A `HiCExperiment` object
@@ -151,11 +152,6 @@ are_contacts <- function(...) {
 }
 
 #' @rdname checks
-#' @export
-#' @examples
-#' library(HiCExperiment)
-#' contacts_yeast <- contacts_yeast()
-#' is_symmetrical(contacts_yeast)
 
 is_symmetrical <- function(contacts) {
     if (is.null(focus(contacts))) {

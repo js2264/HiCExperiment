@@ -1,19 +1,18 @@
-################################################################################
-################################################################################
-###############                                                  ###############
-###############          CLASS DEFINITION                        ###############
-###############                                                  ###############
-################################################################################
-################################################################################
-
 #' @importClassesFrom GenomicRanges GRanges
 #' @importClassesFrom InteractionSet GInteractions
 
 setClassUnion("GRangesOrGInteractions", members = c("GRanges", "GInteractions"))
 setClassUnion("characterOrNULL", members = c("character", "NULL"))
-setClassUnion("characterOrCoolFile", members = c("character", "CoolFile"))
 
-#' @title `HiCExperiment` S4 class and methods
+#' @title `HiCExperiment` S4 class
+#' 
+#' @name HiCExperiment-class
+#' 
+#' @description
+#' 
+#' The `HiCExperiment` class describes (m)cool files imported in R, either 
+#' through the `HiCExperiment` constructor function or using the `import` 
+#' method implemented by `HiCExperiment` package. 
 #'
 #' @slot fileName Path of (m)cool file
 #' @slot focus Chr. coordinates for which interaction counts are extracted 
@@ -28,15 +27,32 @@ setClassUnion("characterOrCoolFile", members = c("character", "CoolFile"))
 #' @slot pairsFile Path to the .pairs file associated with the .(m)cool file
 #' @slot metadata metadata associated with the .(m)cool file.
 #' 
+#' @param file CoolFile, HiCoolFile, or plain path to a (m)cool file
+#' @param resolution Resolution to use with mcool file
+#' @param focus Chromosome coordinates for which 
+#'   interaction counts are extracted from the .(m)cool file, provided
+#'   as a character string (e.g. "II:4000-5000"). If not provided, 
+#'   the entire (m)cool file will be imported. 
+#' @param metadata list of metadata
+#' @param topologicalFeatures topologicalFeatures provided as a named SimpleList
+#' @param pairsFile Path to an associated .pairs file
+#' 
+#' @return An `HiCExperiment` object.
+#' 
 #' @importFrom methods setClass
 #' @importClassesFrom S4Vectors Annotated
+#' @examples 
+#' library(HiCExperiment)
+#' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+#' HiCExperiment(mcool_path, resolution = 16000)
+NULL
+
 #' @export
-#' @rdname HiCExperiment 
 
 methods::setClass("HiCExperiment", 
     contains = c("Annotated"), 
     slots = c(
-        fileName = "characterOrCoolFile",
+        fileName = "character",
         focus = "characterOrNULL", 
         resolutions = "numeric", 
         resolution = "numeric", 
@@ -48,32 +64,7 @@ methods::setClass("HiCExperiment",
     )
 )
 
-################################################################################
-################################################################################
-###############                                                  ###############
-###############                  CONSTRUCTOR                     ###############
-###############                                                  ###############
-################################################################################
-################################################################################
-
-#' @rdname HiCExperiment
-#' 
-#' @param file CoolFile, HiCoolFile, or plain path to a (m)cool file
-#' @param resolution Resolution to use with mcool file
-#' @param focus Chromosome coordinates for which 
-#'   interaction counts are extracted from the .(m)cool file, provided
-#'   as a character string (e.g. "II:4000-5000"). If not provided, 
-#'   the entire (m)cool file will be imported. 
-#' @param metadata list of metadata
-#' @param topologicalFeatures topologicalFeatures provided as a named SimpleList
-#' @param pairsFile Path to an associated .pairs file
-#' @return a new `HiCExperiment` object.
-#' 
 #' @export
-#' @examples 
-#' library(HiCExperiment)
-#' contacts_yeast <- contacts_yeast()
-#' contacts_yeast
 
 HiCExperiment <- function(
     file, 
@@ -92,12 +83,14 @@ HiCExperiment <- function(
     pairsFile = NULL
 ) {
     
-    ## -- Check that provided file is valid 
+    ## -- Check that provided file is valid
     if (is(file, 'CoolFile')) {
         resolution <- resolution(file)
         file <- BiocIO::resource(file)
+        if (is_mcool(file) & is.null(resolution)) resolution <- lsCoolResolutions(file)[1]
     }
     check_cool_file(file)
+    if (is_mcool(file) & is.null(resolution)) resolution <- lsCoolResolutions(file)[1]
     check_cool_format(file, resolution)
 
     ## -- Read resolutions

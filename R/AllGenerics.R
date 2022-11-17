@@ -1,3 +1,16 @@
+#' @title Generic functions
+#' 
+#' @name AllGenerics
+#' 
+#' @description
+#' 
+#' Generics functions created in HiCExperiment package. 
+#' 
+#' @param x Passed to corresponding method
+#' @param name Passed to corresponding method
+#' @param value Passed to corresponding method
+NULL
+
 setGeneric("resolutions", function(x) {standardGeneric("resolutions")})
 setGeneric("resolution", function(x) {standardGeneric("resolution")})
 setGeneric("focus", function(x) {standardGeneric("focus")})

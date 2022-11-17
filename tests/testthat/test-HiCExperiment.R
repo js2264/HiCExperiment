@@ -1,18 +1,7 @@
-test_that("HiCExperiment works", {
+test_that("HiCExperiment methods work", {
     cool_path <- HiContactsData::HiContactsData('yeast_wt', 'cool')
     mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
     contacts_yeast <- contacts_yeast()
-
-    expect_s4_class(HiCExperiment(cool_path), 'HiCExperiment')
-    expect_s4_class(HiCExperiment(mcool_path, 1000), 'HiCExperiment')
-    expect_error(HiCExperiment(cool_path, 1000))
-    expect_error(HiCExperiment(mcool_path))
-    expect_s4_class(HiCExperiment(CoolFile(cool_path)), 'HiCExperiment')
-    expect_s4_class(HiCExperiment(CoolFile(mcool_path, 1000)), 'HiCExperiment')
-    expect_error(HiCExperiment(CoolFile(cool_path, 1000)))
-    expect_error(HiCExperiment(CoolFile(mcool_path)))
-
-    expect_s4_class(contacts_yeast, 'HiCExperiment')
     expect_identical(length(contacts_yeast), 74360L)
     expect_s4_class(contacts_yeast[seq_len(10)], 'HiCExperiment')
     expect_s4_class({
@@ -44,7 +33,6 @@ test_that("HiCExperiment works", {
     expect_s4_class(topologicalFeatures(contacts_yeast, 'borders'), 'GRanges')
     expect_type(pairsFile(contacts_yeast), 'NULL')
     expect_type(anchors(contacts_yeast), 'list')
-    expect_error(summary(contacts_yeast), NA)
 })
 
 test_that("checks work", {
@@ -126,9 +114,9 @@ test_that("parse works", {
     expect_error({
         HiCExperiment(cool, resolution = 16000)
     })
-    expect_error({
+    expect_s4_class({
         HiCExperiment(mcool)
-    })
+    }, 'HiCExperiment')
 })
 
 test_that("coerce works", {

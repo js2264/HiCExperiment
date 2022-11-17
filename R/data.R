@@ -1,31 +1,29 @@
-#' Example datasets provided in `HiContacts` & `HiContactsData`
+#' @title Example datasets provided in `HiCExperiment` & `HiContactsData`
+#' 
+#' @name data
 #' 
 #' @format An object of class \code{"GRanges"}.
 #' @docType data
 #' @usage data(centros_yeast)
 #' @source HiContacts
-#' @rdname datasets
+#' @importFrom HiContactsData HiContactsData
 #' @examples
 #' data(centros_yeast)
 #' centros_yeast
-"centros_yeast"
-
-#' @rdname datasets
-#' 
-#' @format An object of class \code{"Contacts"}.
-#' @importFrom HiContactsData HiContactsData
-#' @export
-#' @examples
 #' contacts_yeast()
 #' contacts_yeast_eco1()
 #' full_contacts_yeast()
+NULL 
+
+"centros_yeast"
+
+#' @export
 
 contacts_yeast <- function() {
     fpath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
     HiCExperiment(fpath, 'II', resolution = 1000)
 }
 
-#' @rdname datasets
 #' @export
 
 contacts_yeast_eco1 <- function() {
@@ -33,7 +31,6 @@ contacts_yeast_eco1 <- function() {
     HiCExperiment(fpath, 'II', resolution = 1000)
 }
 
-#' @rdname datasets
 #' @export
 
 full_contacts_yeast <- function() {

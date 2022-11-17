@@ -59,9 +59,5 @@ Logical
 \description{
 Useful functions to validate the nature/structure of (m)cool files or
 \code{HiCExperiment} objects.
-}
-\examples{
-library(HiCExperiment)
-contacts_yeast <- contacts_yeast()
-is_symmetrical(contacts_yeast)
+All these check functions should return a logical.
 }

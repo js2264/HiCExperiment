@@ -430,7 +430,6 @@ cm2matrix <- function(cm, replace_NA = NA) {
 #' @importFrom IRanges IRanges
 #' @import tibble
 #' @rdname parse
-#' @export
 
 pairs2gi <- function(
     file,

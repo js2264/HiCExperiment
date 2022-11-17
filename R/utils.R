@@ -120,53 +120,43 @@ char2coords <- function(char) {
 
 getHicStats <- function(hicstuff_log) {
     stats <- list()
+    lines <- readLines(hicstuff_log)
 
     ## -- Parse log file
-    nFiltered <- readLines(hicstuff_log) |>
-        grep("INFO :: .* pairs kept", ., value = TRUE) |>
-        stringr::str_replace_all("INFO ::| pairs.*", "") |>
+    nFiltered <- grep("INFO :: .* pairs kept", lines, value = TRUE) |>
+        stringr::str_replace_all(".*INFO ::| pairs.*", "") |>
         as.numeric()
-    nDangling <- readLines(hicstuff_log) |>
-        grep("INFO :: .* pairs discarded", ., value = TRUE) |>
+    nDangling <- grep("INFO :: .* pairs discarded", lines, value = TRUE) |>
         stringr::str_replace_all(".* Uncuts: |, Weirds.*", "") |>
         as.numeric() # "Uncut"
-    nSelf <- readLines(hicstuff_log) |>
-        grep("INFO :: .* pairs discarded", ., value = TRUE) |>
+    nSelf <- grep("INFO :: .* pairs discarded", lines, value = TRUE) |>
         stringr::str_replace_all(".* Loops: |, Uncuts.*", "") |>
         as.numeric() # "loop"
-    nDumped <- readLines(hicstuff_log) |>
-        grep("INFO :: .* pairs discarded", ., value = TRUE) |>
+    nDumped <- grep("INFO :: .* pairs discarded", lines, value = TRUE) |>
         stringr::str_replace_all(".* Weirds:", "") |>
         as.numeric() # "Weird"
-    nDups <- readLines(hicstuff_log) |>
-        grep("INFO :: .* PCR duplicates have", ., value = TRUE) |>
+    nDups <- grep("INFO :: .* PCR duplicates have", lines, value = TRUE) |>
         stringr::str_replace_all(".*out \\(| \\/ .*", "") |>
         as.numeric()
-    nCis <- readLines(hicstuff_log) |>
-        grep("INFO :: Proportion of inter contacts", ., value = TRUE) |>
+    nCis <- grep("INFO :: Proportion of inter contacts", lines, value = TRUE) |>
         stringr::str_replace_all(".*intra:|, inter:.*", "") |>
         as.numeric()
-    nTrans <- readLines(hicstuff_log) |>
-        grep("INFO :: Proportion of inter contacts", ., value = TRUE) |>
+    nTrans <- grep("INFO :: Proportion of inter contacts", lines, value = TRUE) |>
         stringr::str_replace_all(".* inter: |\\)", "") |>
         as.numeric()
 
-    stats[["Threshold for dangling pairs (uncut)"]] <- readLines(hicstuff_log) |>
-        grep("INFO :: Filtering with thresholds", ., value = TRUE) |>
+    stats[["Threshold for dangling pairs (uncut)"]] <- grep("INFO :: Filtering with thresholds", lines, value = TRUE) |>
         stringr::str_replace_all(".*thresholds: | loops=.*", "") |>
         stringr::str_replace(".*=", "") |>
         as.numeric()
-    stats[["Threshold for self pairs (loop)"]] <- readLines(hicstuff_log) |>
-        grep("INFO :: Filtering with thresholds", ., value = TRUE) |>
+    stats[["Threshold for self pairs (loop)"]] <- grep("INFO :: Filtering with thresholds", lines, value = TRUE) |>
         stringr::str_replace_all(".*=", "") |>
         as.numeric()
-    stats[["nFragments"]] <- readLines(hicstuff_log) |>
-        grep("INFO :: .* mapped with Q", ., value = TRUE) |>
+    stats[["nFragments"]] <- grep("INFO :: .* mapped with Q", lines, value = TRUE) |>
         stringr::str_replace_all(".*/|\\)", "") |>
         as.numeric() |>
         (`/`)(2)
-    stats[["nFragments"]] <- readLines(hicstuff_log) |>
-        grep("INFO :: .* mapped with Q", ., value = TRUE) |>
+    stats[["nFragments"]] <- grep("INFO :: .* mapped with Q", lines, value = TRUE) |>
         stringr::str_replace_all(".*/|\\)", "") |>
         as.numeric() |>
         (`/`)(2)

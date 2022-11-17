@@ -1,6 +1,6 @@
 Package: HiCExperiment
 Title: Interface to (m)cool files in R
-Version: 0.0.0.9000
+Version: 0.98.0
 Date: 2022-11-10
 Authors@R:
     c(person(given = "Jacques",
@@ -9,7 +9,8 @@ Authors@R:
            email = "jacquesserizay@gmail.com",
            comment = c(ORCID = "0000-0002-4295-0624")))
 Description: HiCExperiment: R interface to (m)cool files and other Hi-C 
-    processed file formats. HiCExperiment objects can be analyzed by 
+    processed file formats. (m)cool files can be subsetted 
+    performed on  HiCExperiment objects can be analyzed by 
     HiContacts.
 License: MIT + file LICENSE
 URL: https://github.com/js2264/HiCExperiment
@@ -34,8 +35,7 @@ Imports:
     tidyr,
     dplyr,
     glue,
-    stringr,
-    reticulate
+    stringr
 Suggests:
     testthat (>= 3.0.0),
     BiocStyle,
@@ -48,17 +48,18 @@ biocViews:
 Collate: 
     'AllGenerics.R'
     'CoolFile-class.R'
-    'CoolFile-method.R'
+    'CoolFile-methods.R'
     'HiCExperiment-class.R'
-    'HiCExperiment-method.R'
-    'HiCExperiment.R'
+    'HiCExperiment-methods.R'
     'PairsFile-class.R'
+    'HiCExperiment.R'
     'HiCoolFile-class.R'
-    'HiCoolFile-method.R'
-    'PairsFile-method.R'
+    'HiCoolFile-methods.R'
+    'PairsFile-methods.R'
     'checks.R'
     'data.R'
-    'import-method.R'
+    'globals.R'
+    'import-methods.R'
     'parse.R'
     'utils.R'
 Encoding: UTF-8

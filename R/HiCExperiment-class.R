@@ -118,7 +118,12 @@ HiCExperiment <- function(
     ## -- Check pairs file
     if (!is.null(pairsFile)) {
         if (!file.exists(pairsFile)) {
-            stop("Provided pairsFile does not exist. Aborting now.")
+            if (pairsFile == "") {
+                pairsFile <- NULL
+            }
+            else {
+                stop("Provided pairsFile does not exist. Aborting now.")
+            }
         }
     }
 

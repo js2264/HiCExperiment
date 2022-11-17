@@ -17,7 +17,6 @@ knitr::opts_chunk$set(
     crop = NULL
 )
 suppressPackageStartupMessages({
-    library(ggplot2)
     library(dplyr)
     library(GenomicRanges)
     library(HiContactsData)

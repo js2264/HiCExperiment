@@ -12,7 +12,7 @@
 \alias{topologicalFeatures<-}
 \alias{pairsFile}
 \alias{pairsFile<-}
-\alias{metadata}
+\alias{metadata<-}
 \alias{bins}
 \title{Generic functions}
 \arguments{

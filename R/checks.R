@@ -1,4 +1,9 @@
-#' Checks functions
+#' @title Checks functions
+#' 
+#' @name checks
+#' @rdname checks
+#' 
+#' @description 
 #' 
 #' Useful functions to validate the nature/structure of (m)cool files or 
 #' `HiCExperiment` objects.
@@ -10,7 +15,8 @@
 #' @param pair Pairs object with length of 1
 #' @param ... `HiCExperiment` object, arguments passed on by other functions
 #' @return Logical
-#' 
+NULL
+
 #' @rdname checks
 
 check_cool_file <- function(path) {

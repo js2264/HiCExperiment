@@ -45,8 +45,6 @@ test_that("checks work", {
         first = 'I:10000-20000', 
         second = 'I:10000-20000'
     )))
-    expect_true(is_symmetrical(contacts_yeast))
-    expect_true(is_symmetrical(full_contacts_yeast))
 })
 
 test_that("utils works", {

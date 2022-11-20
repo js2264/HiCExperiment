@@ -1,5 +1,5 @@
 #' @title HiCExperiment package
-#' @name HiCExperiment
+#' @name HiCExperiment package
 #' 
 #' @description 
 #' 

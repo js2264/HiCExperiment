@@ -7,14 +7,7 @@
 \alias{check_cool_format}
 \alias{is_mcool}
 \alias{is_cool}
-\alias{is_same_seqinfo}
-\alias{is_same_resolution}
-\alias{is_same_bins}
-\alias{is_same_regions}
-\alias{is_comparable}
 \alias{is_square}
-\alias{are_contacts}
-\alias{is_symmetrical}
 \title{Checks functions}
 \usage{
 check_cool_file(path)
@@ -27,21 +20,7 @@ is_mcool(path)
 
 is_cool(path)
 
-is_same_seqinfo(...)
-
-is_same_resolution(...)
-
-is_same_bins(...)
-
-is_same_regions(...)
-
-is_comparable(...)
-
 is_square(pair)
-
-are_contacts(...)
-
-is_symmetrical(contacts)
 }
 \arguments{
 \item{path}{Path of a (m)cool file}

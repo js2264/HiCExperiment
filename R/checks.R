@@ -77,66 +77,6 @@ is_cool <- function(path) {
 
 #' @rdname checks
 
-is_same_seqinfo <- function(...) {
-    contacts_list <- list(...)
-    all(unlist(lapply(contacts_list, function(x) {
-        identical(seqinfo(contacts_list[[1]]), seqinfo(x))
-    })))
-}
-
-#' @rdname checks
-
-is_same_resolution <- function(...) {
-    contacts_list <- list(...)
-    all(unlist(lapply(contacts_list, function(x) {
-        identical(resolution(contacts_list[[1]]), resolution(x))
-    })))
-}
-
-#' @rdname checks
-
-is_same_bins <- function(...) {
-    contacts_list <- list(...)
-    all(unlist(lapply(contacts_list, function(x) {
-        identical(bins(contacts_list[[1]]), bins(x))
-    })))
-}
-
-#' @rdname checks
-
-is_same_regions <- function(...) {
-    contacts_list <- list(...)
-    all(unlist(lapply(contacts_list, function(x) {
-        identical(regions(contacts_list[[1]]), regions(x))
-    })))
-}
-
-#' @rdname checks
-
-is_comparable <- function(...) {
-    are_contacts(...)
-    err <- c()
-    if (!is_same_seqinfo(...)) {
-        err <- c(err, "seqinfos")
-    }
-    if (!is_same_resolution(...)) {
-        err <- c(err, "resolutions")
-    }
-    if (!is_same_bins(...)) {
-        err <- c(err, "bins")
-    }
-    if (!is_same_regions(...)) {
-        err <- c(err, "regions")
-    }
-    if (length(err) > 0) {
-        mess <- paste0("Provided `HiCExperiment` have different ", paste(err, collapse = ' & '), '.')
-        stop(mess)
-    }
-    TRUE
-}
-
-#' @rdname checks
-
 is_square <- function(pair) {
     w1 <- GenomicRanges::width(S4Vectors::first(pair))
     w2 <- GenomicRanges::width(S4Vectors::second(pair))
@@ -144,29 +84,4 @@ is_square <- function(pair) {
         stop("Provided pair is not square.")
     }
     TRUE
-}
-
-#' @rdname checks
-
-are_contacts <- function(...) {
-    args <- list(...)
-    if (!all(unlist(lapply(args, is, 'HiCExperiment')))) {
-        stop("Provided arguments are not all `HiCExperiment` objects. 
-        Please only use `HiCExperiment` objects with this function.")
-    }
-    TRUE
-}
-
-#' @rdname checks
-
-is_symmetrical <- function(contacts) {
-    if (is.null(focus(contacts))) {
-        return(TRUE)
-    }
-    if (grepl(' x ', focus(contacts))) {
-        return(FALSE)
-    }
-    else {
-        return(TRUE)
-    }
 }

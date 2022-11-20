@@ -49,7 +49,7 @@ Encoding: UTF-8
 VignetteBuilder: knitr
 LazyData: false
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Config/testthat/edition: 3
 Collate: 
     'AllGenerics.R'

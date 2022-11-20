@@ -7,7 +7,8 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 
 #' @title `HiCExperiment` S4 class
 #' 
-#' @name HiCExperiment-class
+#' @name HiCExperiment
+#' @rdname HiCExperiment
 #' 
 #' @description
 #' 
@@ -48,6 +49,7 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' HiCExperiment(mcool_path, resolution = 16000)
 NULL
 
+#' @rdname HiCExperiment
 #' @export
 
 methods::setClass("HiCExperiment", 
@@ -65,6 +67,7 @@ methods::setClass("HiCExperiment",
     )
 )
 
+#' @rdname HiCExperiment
 #' @export
 
 HiCExperiment <- function(

@@ -5,6 +5,8 @@
 \alias{show,CoolFile-method}
 \alias{pairsFile,CoolFile-method}
 \alias{resolution,CoolFile-method}
+\alias{metadata<-,CoolFile-method}
+\alias{metadata<-,CoolFile,list-method}
 \title{\code{CoolFile} methods}
 \arguments{
 \item{object}{A \code{CoolFile} object.}

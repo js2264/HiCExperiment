@@ -4,6 +4,8 @@
 #' @aliases show,CoolFile-method
 #' @aliases pairsFile,CoolFile-method
 #' @aliases resolution,CoolFile-method
+#' @aliases metadata<-,CoolFile-method
+#' @aliases metadata<-,CoolFile,list-method
 #' 
 #' @description
 #' 
@@ -31,13 +33,10 @@ setMethod("show", signature("CoolFile"), function(object) {
     if (is.null(res)) res = lsCoolResolutions(r)[1]
     if (!S4Vectors::isSingleString(r))
         stop('"filename" must be a single string, specifiying a path')
-    cat(
-        class(object), "object\nmcool file:", r, 
-        "\nresolution:", res, 
-        "\npairs file:", pairsFile(object), 
-        "\nlog:", S4Vectors::metadata(object)$log, 
-        "\nstats:", S4Vectors::metadata(object)$stats, '\n'  
-    )
+    cat(class(object), "object\nmcool file:", r, '\n') 
+    cat("resolution:", res, '\n')
+    cat("pairs file:", pairsFile(object), '\n')
+    S4Vectors::coolcat("metadata(%d): %s\n", names(S4Vectors::metadata(object)))
 })
 
 #' @export
@@ -49,3 +48,10 @@ setMethod("pairsFile", "CoolFile", function(x) {
 #' @export
 
 setMethod("resolution", "CoolFile", function(x) x@resolution)
+
+#' @export
+
+setMethod("metadata<-", signature(x = "CoolFile", value = "list"), function(x, value) {
+    x@metadata <- value
+    x
+})

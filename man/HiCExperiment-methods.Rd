@@ -6,7 +6,6 @@
 \alias{resolution,HiCExperiment-method}
 \alias{focus,HiCExperiment-method}
 \alias{focus<-,HiCExperiment-method}
-\alias{focus<-,HiCExperiment,character-method}
 \alias{scores,HiCExperiment-method}
 \alias{scores,HiCExperiment,missing-method}
 \alias{scores,HiCExperiment,character-method}
@@ -27,7 +26,6 @@
 \alias{fileName,HiCExperiment-method}
 \alias{interactions,HiCExperiment-method}
 \alias{interactions<-,HiCExperiment-method}
-\alias{interactions<-,HiCExperiment,GInteractions-method}
 \alias{length,HiCExperiment-method}
 \alias{[,HiCExperiment-method}
 \alias{[,HiCExperiment,numeric,ANY,ANY-method}

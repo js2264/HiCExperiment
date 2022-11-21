@@ -43,6 +43,10 @@ pairs2gi(
   start1.field = 3,
   chr2.field = 4,
   start2.field = 5,
+  strand1.field = 6,
+  strand2.field = 7,
+  frag1.field = NULL,
+  frag2.field = NULL,
   nThread = 16,
   nrows = Inf
 )
@@ -85,6 +89,10 @@ Can also be a Pairs object of paired GRanges (length of 1).}
 \item{chr2.field}{chr2.field}
 
 \item{start2.field}{start2.field}
+
+\item{strand1.field}{strand1.field}
+
+\item{strand2.field}{strand2.field}
 
 \item{nThread}{Number of CPUs to use to import the \code{pairs} file in R}
 

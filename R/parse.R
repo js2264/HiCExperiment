@@ -418,6 +418,8 @@ cm2matrix <- function(cm, replace_NA = NA) {
 #' @param start1.field start1.field
 #' @param chr2.field chr2.field
 #' @param start2.field start2.field
+#' @param strand1.field strand1.field
+#' @param strand2.field strand2.field
 #' @param nThread Number of CPUs to use to import the `pairs` file in R
 #' @param nrows Number of pairs to import
 #' @return a GenomicInteractions object
@@ -437,13 +439,29 @@ pairs2gi <- function(
     start1.field = 3, 
     chr2.field = 4, 
     start2.field = 5, 
+    strand1.field = 6,
+    strand2.field = 7,
+    frag1.field = NULL,
+    frag2.field = NULL,
     nThread = 16, 
     nrows = Inf
 ) {
+    if (!is.null(frag1.field)) {
+        sel1 <- dplyr::all_of(c(chr1.field, start1.field, strand1.field, frag1.field))
+    }
+    else {
+        sel1 <- dplyr::all_of(c(chr1.field, start1.field, strand1.field))
+    }
+    if (!is.null(frag2.field)) {
+        sel2 <- dplyr::all_of(c(chr2.field, start2.field, strand2.field, frag2.field))
+    }
+    else {
+        sel2 <- dplyr::all_of(c(chr2.field, start2.field, strand2.field))
+    }
     anchors1 <- vroom::vroom(
         file,
         n_max = nrows,
-        col_select = dplyr::all_of(c(chr1.field, start1.field)),
+        col_select = sel1,
         comment = '#',
         col_names = FALSE,
         show_col_types = FALSE
@@ -451,20 +469,30 @@ pairs2gi <- function(
     anchors2 <- vroom::vroom(
         file,
         n_max = nrows,
-        col_select = dplyr::all_of(c(chr2.field, start2.field)),
+        col_select = sel2,
         comment = '#',
         col_names = FALSE,
         show_col_types = FALSE
-    )    
+    )  
     anchor_one <- GenomicRanges::GRanges(
         anchors1[[1]],
-        IRanges::IRanges(anchors1[[2]], width = 1)
+        IRanges::IRanges(anchors1[[2]], width = 1), 
+        strand = anchors1[[3]]
     )
     anchor_two <- GenomicRanges::GRanges(
         anchors2[[1]],
-        IRanges::IRanges(anchors2[[2]], width = 1)
+        IRanges::IRanges(anchors2[[2]], width = 1), 
+        strand = anchors2[[3]]
     )
     gi <- GenomicInteractions::GenomicInteractions(anchor_one, anchor_two)
+    if (!is.null(frag1.field) & !is.null(frag2.field)) {
+        gi$frag1 <- anchors1[[4]]
+        gi$frag2 <- anchors2[[4]]
+    } 
+    else {
+        gi$frag1 <- NA
+        gi$frag2 <- NA
+    }
     gi$distance <- GenomicInteractions::calculateDistances(gi) 
     return(gi)
 }

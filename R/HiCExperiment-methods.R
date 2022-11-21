@@ -5,7 +5,6 @@
 #' @aliases resolution,HiCExperiment-method
 #' @aliases focus,HiCExperiment-method
 #' @aliases focus<-,HiCExperiment-method
-#' @aliases focus<-,HiCExperiment,character-method
 #' @aliases scores,HiCExperiment-method
 #' @aliases scores,HiCExperiment,missing-method
 #' @aliases scores,HiCExperiment,character-method
@@ -26,7 +25,6 @@
 #' @aliases fileName,HiCExperiment-method
 #' @aliases interactions,HiCExperiment-method
 #' @aliases interactions<-,HiCExperiment-method
-#' @aliases interactions<-,HiCExperiment,GInteractions-method
 #' @aliases length,HiCExperiment-method
 #' @aliases [,HiCExperiment-method
 #' @aliases [,HiCExperiment,numeric,ANY,ANY-method
@@ -110,8 +108,6 @@ setMethod("resolution", "HiCExperiment", function(x) x@resolution)
 #' @export
 
 setMethod("focus", "HiCExperiment", function(x) x@focus)
-
-#' @export
 
 setMethod("focus<-", signature(x = "HiCExperiment", value = "character"), function(x, value) {
     x@focus <- value
@@ -204,8 +200,6 @@ setMethod("fileName", "HiCExperiment", function(object) object@fileName)
 #' @export
 
 setMethod("interactions", "HiCExperiment", function(x) x@interactions)
-
-#' @export
 
 setMethod("interactions<-", signature(x = "HiCExperiment", value = "GInteractions"), function(x, value) {
     x@interactions <- value

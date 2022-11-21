@@ -40,11 +40,28 @@ hic <- contacts_yeast()
 hic
 ```
 
+```{r, eval = TRUE, echo=FALSE, out.width='100%'}
+knitr::include_graphics(
+   "https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_data-structure.png"
+)
+```
+
+# Citing HiCExperiment 
+
 ```{r}
 citation('HiCExperiment')
 ```
 
 # Basics: importing `.(m)/cool` files as `HiCExperiment` objects
+
+The `import()` function allows one to import a .(m)cool file in R as an 
+`HiCExperiment` object.
+
+```{r, eval = FALSE}
+hic <- import("path-to-(m)cool-file", focus = "...", resolution = ...)
+```
+
+# Import arguments
 
 The `HiContactsData` package gives access to a range of toy datasets stored 
 by Bioconductor in the `ExperimentHub`. 
@@ -52,15 +69,17 @@ by Bioconductor in the `ExperimentHub`.
 ```{r}
 library(HiContactsData)
 cool_file <- HiContactsData('yeast_wt', format = 'cool')
-cool_file
+cf <- CoolFile(cool_file)
+cf
+import(cf)
 ```
 
-The `HiCExperiment()` function can be used to import a Hi-C matrix locally stored 
-as a `cool`/`mcool` file. It creates a `HiCExperiment` object. 
+The `focus` argument is used to spcifically import contacts within a genomic 
+locus of interest. 
 
 ```{r}
 range <- 'I:20000-80000' # range of interest
-hic <- HiCExperiment(cool_file, focus = range)
+hic <- import(cf, focus = range)
 hic
 focus(hic)
 ```
@@ -72,7 +91,7 @@ specify the resolution at which count values are recovered.
 mcool_file <- HiContactsData('yeast_wt', format = 'mcool')
 range <- 'II:0-800000' # range of interest
 lsCoolResolutions(mcool_file, verbose = TRUE)
-hic <- HiCExperiment(mcool_file, focus = range, res = 1000)
+hic <- import(mcool_file, format = 'cool', focus = range, res = 1000)
 hic
 ```
 
@@ -81,7 +100,7 @@ centered at the diagonal. To do this, specify a couple of coordinates in the
 `focus` argument using a character string formatted as `"... x ..."`: 
 
 ```{r}
-hic <- HiCExperiment(mcool_file, focus = 'II:0-500000 x II:100000-600000', res = 1000)
+hic <- import(mcool_file, format = 'cool', focus = 'II:0-500000 x II:100000-600000', res = 2000)
 focus(hic)
 ```
 
@@ -143,6 +162,7 @@ Using the `as()` function, `HiCExperiment` can be coerced in `GInteractions`,
 as(hic, "GInteractions")
 as(hic, "ContactMatrix")
 as(hic, "matrix")[1:10, 1:10]
+as(hic, "data.frame")[1:10, ]
 ```
 
 # Session info

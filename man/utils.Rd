@@ -5,7 +5,6 @@
 \alias{coords2char}
 \alias{char2coords}
 \alias{fullContactInteractions}
-\alias{sdiag<-}
 \alias{sortPairs}
 \alias{asGInteractions}
 \title{Utils functions}
@@ -17,8 +16,6 @@ coords2char(coords, big.mark = ",")
 char2coords(char)
 
 fullContactInteractions(chr, start, end, binning)
-
-sdiag(A, k = 0) <- value
 
 sortPairs(pairs)
 
@@ -39,12 +36,6 @@ asGInteractions(df)
 
 \item{binning}{binning}
 
-\item{A}{A}
-
-\item{k}{k}
-
-\item{value}{value}
-
 \item{pairs}{pairs}
 
 \item{df}{df}
@@ -57,8 +48,6 @@ a character string
 a S4Vectors::Pairs object
 
 a GenomicInteractions object
-
-a matrix
 
 a Pairs object
 

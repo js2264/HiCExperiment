@@ -6,6 +6,7 @@
 \alias{resolution,HiCExperiment-method}
 \alias{focus,HiCExperiment-method}
 \alias{focus<-,HiCExperiment-method}
+\alias{focus<-,HiCExperiment,character-method}
 \alias{scores,HiCExperiment-method}
 \alias{scores,HiCExperiment,missing-method}
 \alias{scores,HiCExperiment,character-method}
@@ -40,6 +41,8 @@
 \alias{coerce,HiCExperiment,ContactMatrix-method}
 \alias{coerce,HiCExperiment,matrix-method}
 \alias{coerce,HiCExperiment,data.frame-method}
+\alias{as.matrix,HiCExperiment-method}
+\alias{as.data.frame,HiCExperiment-method}
 \title{\code{HiCExperiment} methods}
 \arguments{
 \item{x}{A \code{HiCExperiment} object.}

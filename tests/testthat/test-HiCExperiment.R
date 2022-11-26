@@ -60,12 +60,6 @@ test_that("utils works", {
 
     expect_s4_class(fullContactInteractions("II", 30000, 50000, 1000), 'GInteractions')
 
-    expect_true(is.matrix({
-        m <- matrix(data = 0, nrow = 100, ncol = 100)
-        sdiag(m, k = 0) <- 3
-        m
-    }))
-
     expect_equal(
         sortPairs(char2coords("II:30000-50000 x II:60000-80000")), 
         char2coords("II:30000-50000 x II:60000-80000")

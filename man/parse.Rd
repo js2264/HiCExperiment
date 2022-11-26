@@ -94,6 +94,10 @@ Can also be a Pairs object of paired GRanges (length of 1).}
 
 \item{strand2.field}{strand2.field}
 
+\item{frag1.field}{frag1.field}
+
+\item{frag2.field}{frag2.field}
+
 \item{nThread}{Number of CPUs to use to import the \code{pairs} file in R}
 
 \item{nrows}{Number of pairs to import}

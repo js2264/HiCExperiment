@@ -5,6 +5,7 @@
 #' @aliases resolution,HiCExperiment-method
 #' @aliases focus,HiCExperiment-method
 #' @aliases focus<-,HiCExperiment-method
+#' @aliases focus<-,HiCExperiment,character-method
 #' @aliases scores,HiCExperiment-method
 #' @aliases scores,HiCExperiment,missing-method
 #' @aliases scores,HiCExperiment,character-method
@@ -39,6 +40,8 @@
 #' @aliases coerce,HiCExperiment,ContactMatrix-method
 #' @aliases coerce,HiCExperiment,matrix-method
 #' @aliases coerce,HiCExperiment,data.frame-method
+#' @aliases as.matrix,HiCExperiment-method
+#' @aliases as.data.frame,HiCExperiment-method
 #' 
 #' @description
 #' 
@@ -398,4 +401,16 @@ setAs("HiCExperiment", "data.frame", function(from) {
         x[[n]] <- scores(from, n)
     }
     return(x)
+})
+
+#' @export
+
+setMethod("as.matrix", "HiCExperiment", function(x) {
+    as(x, 'matrix')
+})
+
+#' @export
+
+setMethod("as.data.frame", "HiCExperiment", function(x) {
+    as(x, 'data.frame')
 })

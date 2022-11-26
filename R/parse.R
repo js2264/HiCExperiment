@@ -390,6 +390,7 @@ cool2gi <- function(file, coords = NULL, resolution = NULL) {
 #' @import InteractionSet
 #' @importFrom GenomicRanges mcols
 #' @rdname parse
+#' @export
 
 gi2cm <- function(gi) {
     InteractionSet::inflate(
@@ -406,6 +407,7 @@ gi2cm <- function(gi) {
 #'
 #' @importFrom Matrix as.matrix
 #' @rdname parse
+#' @export
 
 cm2matrix <- function(cm, replace_NA = NA) {
     m <- Matrix::as.matrix(cm)
@@ -420,6 +422,8 @@ cm2matrix <- function(cm, replace_NA = NA) {
 #' @param start2.field start2.field
 #' @param strand1.field strand1.field
 #' @param strand2.field strand2.field
+#' @param frag1.field frag1.field
+#' @param frag2.field frag2.field
 #' @param nThread Number of CPUs to use to import the `pairs` file in R
 #' @param nrows Number of pairs to import
 #' @return a GenomicInteractions object
@@ -434,30 +438,20 @@ cm2matrix <- function(cm, replace_NA = NA) {
 #' @rdname parse
 
 pairs2gi <- function(
-    file,
+    file, 
     chr1.field = 2, 
     start1.field = 3, 
     chr2.field = 4, 
     start2.field = 5, 
-    strand1.field = 6,
-    strand2.field = 7,
-    frag1.field = NULL,
-    frag2.field = NULL,
+    strand1.field = 6, 
+    strand2.field = 7, 
+    frag1.field = NULL, 
+    frag2.field = NULL, 
     nThread = 16, 
-    nrows = Inf
+    nrows = Inf  
 ) {
-    if (!is.null(frag1.field)) {
-        sel1 <- dplyr::all_of(c(chr1.field, start1.field, strand1.field, frag1.field))
-    }
-    else {
-        sel1 <- dplyr::all_of(c(chr1.field, start1.field, strand1.field))
-    }
-    if (!is.null(frag2.field)) {
-        sel2 <- dplyr::all_of(c(chr2.field, start2.field, strand2.field, frag2.field))
-    }
-    else {
-        sel2 <- dplyr::all_of(c(chr2.field, start2.field, strand2.field))
-    }
+    sel1 <- dplyr::all_of(c(chr1.field, start1.field, strand1.field, frag1.field))
+    sel2 <- dplyr::all_of(c(chr2.field, start2.field, strand2.field, frag2.field))
     anchors1 <- vroom::vroom(
         file,
         n_max = nrows,

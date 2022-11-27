@@ -60,7 +60,7 @@
 #' @examples 
 #' library(HiCExperiment)
 #' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-#' contacts_yeast <- HiCExperiment(mcool_path, resolution = 16000)
+#' contacts_yeast <- import(mcool_path, resolution = 16000, format = 'cool')
 #' resolutions(contacts_yeast)
 #' resolution(contacts_yeast)
 #' focus(contacts_yeast)
@@ -293,10 +293,10 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
 
 setMethod("seqinfo", "HiCExperiment", function(x) {
     if (is_mcool(fileName(x))) {
-        si <- cool2seqinfo(fileName(x), resolution(x))
+        si <- .cool2seqinfo(fileName(x), resolution(x))
     }
-    else {
-        si <- cool2seqinfo(fileName(x))
+    else if (is_cool(fileName(x))) {
+        si <- .cool2seqinfo(fileName(x))
     }
     return(si)
 })
@@ -304,7 +304,7 @@ setMethod("seqinfo", "HiCExperiment", function(x) {
 #' @export
 
 setMethod("bins", "HiCExperiment", function(x) {
-    bins <- getAnchors(
+    bins <- .getAnchors(
         fileName(x), resolution = resolution(x), balanced = FALSE
     )
     GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)

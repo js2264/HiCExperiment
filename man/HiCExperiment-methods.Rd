@@ -61,7 +61,7 @@ HiCExperiment methods.
 \examples{
 library(HiCExperiment)
 mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-contacts_yeast <- HiCExperiment(mcool_path, resolution = 16000)
+contacts_yeast <- import(mcool_path, resolution = 16000, format = 'cool')
 resolutions(contacts_yeast)
 resolution(contacts_yeast)
 focus(contacts_yeast)

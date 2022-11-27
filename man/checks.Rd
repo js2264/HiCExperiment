@@ -3,16 +3,17 @@
 \name{checks}
 \alias{checks}
 \alias{check_cool_file}
-\alias{check_resolution}
 \alias{check_cool_format}
 \alias{is_mcool}
 \alias{is_cool}
+\alias{check_hic_file}
+\alias{check_hic_format}
+\alias{is_hic}
+\alias{check_resolution}
 \alias{is_square}
 \title{Checks functions}
 \usage{
 check_cool_file(path)
-
-check_resolution(contacts, resolution)
 
 check_cool_format(path, resolution, ...)
 
@@ -20,16 +21,24 @@ is_mcool(path)
 
 is_cool(path)
 
+check_hic_file(path)
+
+check_hic_format(path, resolution, ...)
+
+is_hic(path)
+
+check_resolution(contacts, resolution)
+
 is_square(pair)
 }
 \arguments{
 \item{path}{Path of a (m)cool file}
 
-\item{contacts}{A \code{HiCExperiment} object}
-
 \item{resolution}{Resolution}
 
 \item{...}{\code{HiCExperiment} object, arguments passed on by other functions}
+
+\item{contacts}{A \code{HiCExperiment} object}
 
 \item{pair}{Pairs object with length of 1}
 }

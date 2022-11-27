@@ -86,56 +86,75 @@ HiCExperiment <- function(
     ), 
     pairsFile = NULL
 ) {
+    if (is_cool(file) | is_mcool(file)) {
+        return(.HiCExperimentFromCoolFile(
+            file = file,
+            resolution = resolution,
+            focus = focus,
+            metadata = metadata,
+            topologicalFeatures = topologicalFeatures,
+            pairsFile = pairsFile
+        ))
+    }
+    if (is_hic(file)) {
+        return(.HiCExperimentFromHicFile(
+            file = file,
+            resolution = resolution,
+            focus = focus,
+            metadata = metadata,
+            topologicalFeatures = topologicalFeatures,
+            pairsFile = pairsFile
+        ))
+    }
+    return(NA)
+}
+
+setValidity("HiCExperiment",
+    function(object) {
+        if (!is(focus(object), "characterOrNULL"))
+            return("'focus' slot must be a characterOrNULL")
+        if (!is(resolutions(object), "numeric"))
+            return("'resolutions' slot must be an numeric vector")
+        if (!is(scores(object), "SimpleList"))
+            return("'scores' slot must be a SimpleList")
+        TRUE
+    }
+)
+
+#' @rdname HiCExperiment
+
+.HiCExperimentFromCoolFile <- function(
+    file, 
+    resolution = NULL, 
+    focus = NULL, 
+    metadata = list(), 
+    topologicalFeatures = S4Vectors::SimpleList(
+        'loops' = S4Vectors::Pairs(
+            GenomicRanges::GRanges(), 
+            GenomicRanges::GRanges()
+        ), 
+        'borders' = GenomicRanges::GRanges(), 
+        'compartments' = GenomicRanges::GRanges(), 
+        'viewpoints' = GenomicRanges::GRanges()
+    ), 
+    pairsFile = NULL
+) {
     
     ## -- Check that provided file is valid
-    if (is(file, 'CoolFile')) {
-        resolution <- resolution(file)
-        file <- BiocIO::resource(file)
-        if (is_mcool(file) & is.null(resolution)) resolution <- lsCoolResolutions(file)[1]
-    }
     check_cool_file(file)
-    if (is_mcool(file) & is.null(resolution)) resolution <- lsCoolResolutions(file)[1]
     check_cool_format(file, resolution)
 
-    ## -- Read resolutions
-    resolutions <- lsCoolResolutions(file)
-    if (is_mcool(file)) {
-        res <- resolutions[length(resolutions)]
-        if (!is.null(resolution)) {
-            current_res <- resolution
-        }
-        else {
-            current_res <- res
-        }
-    } 
-    else {
-        res <- resolutions[length(resolutions)]
-        current_res <- NULL
-    }
-
     ## -- Read interactions
-    gis <- cool2gi(file, resolution = current_res, coords = focus)
+    gis <- .cool2gi(file, resolution = resolution, coords = focus)
     mcols <- GenomicRanges::mcols(gis)
     GenomicRanges::mcols(gis) <- mcols[, c('bin_id1', 'bin_id2')]
-
-    ## -- Check pairs file
-    if (!is.null(pairsFile)) {
-        if (!file.exists(pairsFile)) {
-            if (pairsFile == "") {
-                pairsFile <- NULL
-            }
-            else {
-                stop("Provided pairsFile does not exist. Aborting now.")
-            }
-        }
-    }
 
     ## -- Create contact object
     x <- methods::new("HiCExperiment", 
         fileName = as.character(file),
         focus = focus, 
-        resolutions = resolutions, 
-        resolution = ifelse(is_mcool(file), current_res, res), 
+        resolutions = lsCoolResolutions(file), 
+        resolution = ifelse(is.null(resolution), lsCoolResolutions(file)[1], resolution), 
         interactions = gis, 
         scores = S4Vectors::SimpleList(
             'raw' = as.numeric(mcols$count),
@@ -149,14 +168,51 @@ HiCExperiment <- function(
     return(x)
 } 
 
-setValidity("HiCExperiment",
-    function(object) {
-        if (!is(focus(object), "characterOrNULL"))
-            return("'focus' slot must be a characterOrNULL")
-        if (!is(resolutions(object), "numeric"))
-            return("'resolutions' slot must be an numeric vector")
-        if (!is(scores(object), "SimpleList"))
-            return("'scores' slot must be a SimpleList")
-        TRUE
-    }
-)
+#' @rdname HiCExperiment
+
+.HiCExperimentFromHicFile <- function(
+    file, 
+    resolution = NULL, 
+    focus = NULL, 
+    metadata = list(), 
+    topologicalFeatures = S4Vectors::SimpleList(
+        'loops' = S4Vectors::Pairs(
+            GenomicRanges::GRanges(), 
+            GenomicRanges::GRanges()
+        ), 
+        'borders' = GenomicRanges::GRanges(), 
+        'compartments' = GenomicRanges::GRanges(), 
+        'viewpoints' = GenomicRanges::GRanges()
+    ), 
+    pairsFile = NULL
+) {
+    
+    ## -- Check that provided file is valid
+    check_hic_file(file)
+    check_hic_format(file, resolution)
+
+    ## -- Read interactions
+    gis <- .hic2gi(file, resolution = resolution, coords = focus)
+    mcols <- GenomicRanges::mcols(gis)
+    GenomicRanges::mcols(gis) <- mcols[, c('bin_id1', 'bin_id2')]
+
+    ## -- Create HiCExperiment
+    x <- methods::new("HiCExperiment", 
+        fileName = as.character(file),
+        focus = focus, 
+        resolutions = strawr::readHicBpResolutions(file), 
+        resolution = resolution, 
+        interactions = gis, 
+        scores = S4Vectors::SimpleList(
+            'raw' = as.numeric(mcols$count),
+            'balanced' = as.numeric(mcols$score)
+        ), 
+        topologicalFeatures = topologicalFeatures, 
+        pairsFile = pairsFile, 
+        metadata = metadata
+    )
+    methods::validObject(x)
+    return(x)
+} 
+
+

@@ -25,14 +25,14 @@ NULL
 
 contacts_yeast <- function() {
     fpath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-    HiCExperiment(fpath, 'II', resolution = 1000)
+    import(fpath, 'II', resolution = 1000, format = 'cool')
 }
 
 #' @export
 
 contacts_yeast_eco1 <- function() {
     fpath <- HiContactsData::HiContactsData('yeast_eco1', 'mcool')
-    HiCExperiment(fpath, 'II', resolution = 1000)
+    import(fpath, 'II', resolution = 1000, format = 'cool')
 }
 
 #' @export
@@ -41,7 +41,7 @@ full_contacts_yeast <- function() {
     env_ <- new.env(parent = emptyenv())
     data(centros_yeast, envir = env_)
     fpath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-    x <- HiCExperiment(fpath, resolution = 16000)
+    x <- import(fpath, resolution = 16000, format = 'cool')
     topologicalFeatures(x, 'centromeres') <- env_$centros_yeast
     return(x)
 }

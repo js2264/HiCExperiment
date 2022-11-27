@@ -92,13 +92,13 @@ test_that("parse works", {
         'yeast_wt', format = 'mcool'
     )
     expect_s4_class({
-        HiCExperiment(cool, focus = 'II:1-10000')
-    }, 'HiCExperiment')
-    expect_s4_class({
         HiCExperiment(cool)
     }, 'HiCExperiment')
     expect_s4_class({
-        HiCExperiment(mcool, focus = 'II:1-10000', resolution = 2000)
+        HiCExperiment(cool, focus = 'II:1-10000')
+    }, 'HiCExperiment')
+    expect_s4_class({
+        HiCExperiment(mcool, focus = 'II:1-10000', resolution = 16000)
     }, 'HiCExperiment')
     expect_s4_class({
         HiCExperiment(mcool, resolution = 16000)
@@ -106,7 +106,7 @@ test_that("parse works", {
     expect_error({
         HiCExperiment(cool, resolution = 16000)
     })
-    expect_s4_class({
+    expect_error({
         HiCExperiment(mcool)
     }, 'HiCExperiment')
 })

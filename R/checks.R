@@ -17,6 +17,10 @@
 #' @return Logical
 NULL
 
+############################################################################################
+######################### CHECKS FOR COOL-BASED HICEXPERIMENTS #############################
+############################################################################################
+
 #' @rdname checks
 
 check_cool_file <- function(path) {
@@ -29,15 +33,6 @@ check_cool_file <- function(path) {
     if (!{is_cool(path) | is_mcool(path)}) {
         stop('Provided file is not a .cool/.mcool file.\n  Aborting now.')
     }
-    TRUE
-}
-
-#' @rdname checks
-
-check_resolution <- function(contacts, resolution) {
-    available_res <- resolutions(contacts)
-    if (!resolution %in% available_res) 
-        stop("Resolution not stored in the cool file.\n", paste0('  Available resolutions: ', paste0(res, collapse = ', '), '.'))
     TRUE
 }
 
@@ -64,18 +59,76 @@ check_cool_format <- function(path, resolution, ...) {
 #' @rdname checks
 
 is_mcool <- function(path) {
-    x <- lsCoolFiles(path)
+    if (!is_hdf5(path)) return(FALSE)
+    x <- .lsCoolFiles(path)
     all(grepl('^/resolutions', x))
 }
 
 #' @rdname checks
 
 is_cool <- function(path) {
-    x <- lsCoolFiles(path)
+    if (!is_hdf5(path)) return(FALSE)
+    x <- .lsCoolFiles(path)
     all(!grepl('^/resolutions', x))
 }
 
+is_hdf5 <- function(path) {
+    .Call("_H5Fis_hdf5", path, PACKAGE = 'rhdf5')
+}
+
+############################################################################################
+######################### CHECKS FOR HIC-BASED HICEXPERIMENTS #############################
+############################################################################################
+
 #' @rdname checks
+
+check_hic_file <- function(path) {
+    if (!file.exists(path) | {
+        isTRUE(nzchar(Sys.readlink(path), keepNA = TRUE)) & 
+        !file.exists(Sys.readlink(path))
+    }) {
+        stop('File not found. Aborting now')
+    }
+    if (!{is_hic(path)}) {
+        stop('Provided file is not a .hic file.\n  Aborting now.')
+    }
+    TRUE
+}
+
+#' @rdname checks
+
+check_hic_format <- function(path, resolution, ...) {
+    res <- lsHicResolutions(path)
+    if (!resolution %in% res) {
+        stop("Resolution not stored in .hic file.\n", paste0('  Available resolutions: ', paste0(res, collapse = ', '), '.'))
+    }
+    TRUE
+}
+
+#' @rdname checks
+
+is_hic <- function(path) {
+    x <- .lsHicFiles(path)
+}
+
+############################################################################################
+######################### CHECKS FOR HICEXPERIMENT OBJECTS #################################
+############################################################################################
+
+#' @rdname checks
+
+check_resolution <- function(contacts, resolution) {
+    available_res <- resolutions(contacts)
+    if (!resolution %in% available_res) 
+        stop("Resolution not stored in the matrix file.\n", paste0('  Available resolutions: ', paste0(res, collapse = ', '), '.'))
+    TRUE
+}
+
+#' @rdname checks
+
+############################################################################################
+######################### OTHER CHECKS #####################################################
+############################################################################################
 
 is_square <- function(pair) {
     w1 <- GenomicRanges::width(S4Vectors::first(pair))

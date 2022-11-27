@@ -52,13 +52,15 @@ knitr::include_graphics(
 citation('HiCExperiment')
 ```
 
-# Basics: importing `.(m)/cool` files as `HiCExperiment` objects
+# Basics: importing `.(m)cool` or `.hic` files as `HiCExperiment` objects
 
-The `import()` function allows one to import a .(m)cool file in R as an 
-`HiCExperiment` object.
+The `import()` function allows one to import .(m)cool or .hic files in R as 
+`HiCExperiment` objects.
 
 ```{r, eval = FALSE}
+## Not run:
 hic <- import("path-to-(m)cool-file", focus = "...", resolution = ...)
+## End(Not run)
 ```
 
 # Import arguments
@@ -74,7 +76,7 @@ cf
 import(cf)
 ```
 
-The `focus` argument is used to spcifically import contacts within a genomic 
+The `focus` argument is used to specifically import contacts within a genomic 
 locus of interest. 
 
 ```{r}
@@ -84,14 +86,14 @@ hic
 focus(hic)
 ```
 
-`HiCExperiment()` works with `.mcool` files as well: in this case, the user can  
+`import()` works with `.mcool` files as well: in this case, the user can  
 specify the resolution at which count values are recovered. 
 
 ```{r}
 mcool_file <- HiContactsData('yeast_wt', format = 'mcool')
 range <- 'II:0-800000' # range of interest
 lsCoolResolutions(mcool_file, verbose = TRUE)
-hic <- import(mcool_file, format = 'cool', focus = range, res = 1000)
+hic <- import(mcool_file, format = 'cool', focus = range, resolution = 2000)
 hic
 ```
 
@@ -100,7 +102,7 @@ centered at the diagonal. To do this, specify a couple of coordinates in the
 `focus` argument using a character string formatted as `"... x ..."`: 
 
 ```{r}
-hic <- import(mcool_file, format = 'cool', focus = 'II:0-500000 x II:100000-600000', res = 2000)
+hic <- import(mcool_file, format = 'cool', focus = 'II:0-500000 x II:100000-600000', resolution = 2000)
 focus(hic)
 ```
 

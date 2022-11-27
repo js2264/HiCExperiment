@@ -4,8 +4,10 @@
 \alias{import-methods}
 \alias{import}
 \alias{import,CoolFile-method}
+\alias{import,HicFile-method}
 \alias{import,PairsFile-method}
 \alias{import,CoolFile,ANY,ANY-method}
+\alias{import,HicFile,ANY,ANY-method}
 \alias{import,PairsFile,ANY,ANY-method}
 \title{HiCExperiment import methods}
 \usage{

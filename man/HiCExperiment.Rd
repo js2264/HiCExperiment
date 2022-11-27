@@ -4,9 +4,35 @@
 \name{HiCExperiment}
 \alias{HiCExperiment}
 \alias{HiCExperiment-class}
+\alias{.HiCExperimentFromCoolFile}
+\alias{.HiCExperimentFromHicFile}
 \title{\code{HiCExperiment} S4 class}
 \usage{
 HiCExperiment(
+  file,
+  resolution = NULL,
+  focus = NULL,
+  metadata = list(),
+  topologicalFeatures = S4Vectors::SimpleList(loops =
+    S4Vectors::Pairs(GenomicRanges::GRanges(), GenomicRanges::GRanges()), borders =
+    GenomicRanges::GRanges(), compartments = GenomicRanges::GRanges(), viewpoints =
+    GenomicRanges::GRanges()),
+  pairsFile = NULL
+)
+
+.HiCExperimentFromCoolFile(
+  file,
+  resolution = NULL,
+  focus = NULL,
+  metadata = list(),
+  topologicalFeatures = S4Vectors::SimpleList(loops =
+    S4Vectors::Pairs(GenomicRanges::GRanges(), GenomicRanges::GRanges()), borders =
+    GenomicRanges::GRanges(), compartments = GenomicRanges::GRanges(), viewpoints =
+    GenomicRanges::GRanges()),
+  pairsFile = NULL
+)
+
+.HiCExperimentFromHicFile(
   file,
   resolution = NULL,
   focus = NULL,

@@ -14,15 +14,15 @@
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges end
 #' @importFrom IRanges IRanges
-#' @rdname parse
+#' @rdname parse-cool
 
-getAnchors <- function(file, resolution = NULL, balanced = "cooler") {
-    bins <- fetchCool(file, "bins", resolution)
+.getAnchors <- function(file, resolution = NULL, balanced = "cooler") {
+    bins <- .fetchCool(file, "bins", resolution)
     anchors <- GenomicRanges::GRanges(
         bins$chr,
         IRanges::IRanges(bins$start + 1, bins$end),
         bin_id = seq_along(bins$chr), 
-        seqinfo = cool2seqinfo(file, resolution)
+        seqinfo = .cool2seqinfo(file, resolution)
     )
     names(anchors) <- paste(GenomicRanges::seqnames(anchors), GenomicRanges::start(anchors), GenomicRanges::end(anchors), sep = "_")
     if ("weight" %in% names(bins) & {
@@ -54,7 +54,7 @@ getAnchors <- function(file, resolution = NULL, balanced = "cooler") {
 #' @importFrom S4Vectors subjectHits
 #' @rdname parse
 
-getCountsFromPair <- function(file,
+.getCountsFromPair <- function(file,
     pair,
     anchors,
     resolution = NULL
@@ -81,20 +81,20 @@ getCountsFromPair <- function(file,
     ## Find out which chunks of the mcool to recover
     gr_1 <- coords[1]
     sub_1 <- which(anchors %within% gr_1)
-    bin_idx_1 <- fetchCool(file, path = "indexes/bin1_offset", resolution, idx = sub_1)
+    bin_idx_1 <- .fetchCool(file, path = "indexes/bin1_offset", resolution, idx = sub_1)
     chunks_1 <- seq(min(bin_idx_1)+1, max(bin_idx_1)+1, by = 1)
     
     gr_2 <- coords[2]
     sub_2 <- which(anchors %within% gr_2)
-    bin_idx_2 <- fetchCool(file, path = "indexes/bin1_offset", resolution, idx = sub_2)
+    bin_idx_2 <- .fetchCool(file, path = "indexes/bin1_offset", resolution, idx = sub_2)
     chunks_2 <- seq(min(bin_idx_2), max(bin_idx_2), by = 1)
-    valid_bin2 <- unique(fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks_2))
+    valid_bin2 <- unique(.fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks_2))
     
     ## Reading the chunks from the cool file
     df <- tidyr::tibble(
-        bin1_id = fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks_1) + 1,
-        bin2_id = fetchCool(file, path = "pixels/bin2_id", resolution, idx = chunks_1) + 1,
-        count = fetchCool(file, path = "pixels/count", resolution, idx = chunks_1)
+        bin1_id = .fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks_1) + 1,
+        bin2_id = .fetchCool(file, path = "pixels/bin2_id", resolution, idx = chunks_1) + 1,
+        count = .fetchCool(file, path = "pixels/count", resolution, idx = chunks_1)
     )
     
     ## Filter to only get interesting bins
@@ -121,7 +121,7 @@ getCountsFromPair <- function(file,
 #' @importFrom S4Vectors subjectHits
 #' @rdname parse
 
-getCounts <- function(file,
+.getCounts <- function(file,
     coords,
     anchors,
     resolution = NULL
@@ -155,15 +155,15 @@ getCounts <- function(file,
     else {
         gr <- GRanges(coords_chr, IRanges::IRanges(coords_start, coords_end))
         sub <- which(anchors %within% gr)
-        bin_idx <- fetchCool(file, path = "indexes/bin1_offset", resolution, idx = sub)
+        bin_idx <- .fetchCool(file, path = "indexes/bin1_offset", resolution, idx = sub)
         chunks <- seq(min(bin_idx)+1, max(bin_idx)+1, by = 1)
     }
 
     ## Reading the chunks from the cool file
     df <- tidyr::tibble(
-        bin1_id = fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks) + 1,
-        bin2_id = fetchCool(file, path = "pixels/bin2_id", resolution, idx = chunks) + 1,
-        count = fetchCool(file, path = "pixels/count", resolution, idx = chunks)
+        bin1_id = .fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks) + 1,
+        bin2_id = .fetchCool(file, path = "pixels/bin2_id", resolution, idx = chunks) + 1,
+        count = .fetchCool(file, path = "pixels/count", resolution, idx = chunks)
     )
 
     ## Filter to only get interesting bins
@@ -184,7 +184,7 @@ getCounts <- function(file,
 #' @import rhdf5
 #' @rdname parse
 
-fetchCool <- function(file, path, resolution = NULL, idx = NULL, ...) {
+.fetchCool <- function(file, path, resolution = NULL, idx = NULL, ...) {
     check_cool_format(file, resolution)
     path <- ifelse(
         is.null(resolution), 
@@ -205,7 +205,7 @@ fetchCool <- function(file, path, resolution = NULL, idx = NULL, ...) {
 #' @import GenomicInteractions
 #' @rdname parse
 
-lsCoolFiles <- function(file, verbose = FALSE) {
+.lsCoolFiles <- function(file, verbose = FALSE) {
     x <- rhdf5::h5ls(file) |> 
         dplyr::mutate(path = paste0(group, "/", name)) |> 
         dplyr::pull(path) |> 
@@ -240,7 +240,7 @@ lsCoolFiles <- function(file, verbose = FALSE) {
 lsCoolResolutions <- function(file, verbose = FALSE) {
     if (is_cool(file)) {
         x <- rhdf5::h5ls(file)
-        bin_ends <- peekCool(file, '/bins/end', n = 2)
+        bin_ends <- .peekCool(file, '/bins/end', n = 2)
         res <- bin_ends[2] - bin_ends[1]
     }
     if (is_mcool(file)) {
@@ -267,7 +267,7 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
 #' @import rhdf5
 #' @rdname parse
 
-peekCool <- function(file, path, resolution = NULL, n = 10) {
+.peekCool <- function(file, path, resolution = NULL, n = 10) {
     check_cool_format(file, resolution)
     path <- ifelse(is.null(resolution), glue::glue("/{path}"), glue::glue("/resolutions/{resolution}/{path}"))
     resolution <- as.vector(rhdf5::h5read(file, name = path))
@@ -286,9 +286,9 @@ peekCool <- function(file, path, resolution = NULL, n = 10) {
 #' @importFrom GenomeInfoDb Seqinfo
 #' @rdname parse
 
-cool2seqinfo <- function(file, resolution = NULL) {
+.cool2seqinfo <- function(file, resolution = NULL) {
     check_cool_format(file, resolution)
-    chroms <- fetchCool(file, "chroms", resolution)
+    chroms <- .fetchCool(file, "chroms", resolution)
     seqinfo <- GenomeInfoDb::Seqinfo(
         seqnames = as.vector(chroms$name),
         seqlengths = as.vector(chroms$length)
@@ -308,7 +308,7 @@ cool2seqinfo <- function(file, resolution = NULL) {
 #' @importFrom GenomicRanges resize
 #' @rdname parse
 
-cool2gi <- function(file, coords = NULL, resolution = NULL) {
+.cool2gi <- function(file, coords = NULL, resolution = NULL) {
     check_cool_format(file, resolution)
     
     # Mutate Pairs provided as characters to real Pairs
@@ -322,7 +322,7 @@ cool2gi <- function(file, coords = NULL, resolution = NULL) {
     is_pair <- is(coords, 'Pairs')
 
     # Get anchors from mcool
-    anchors <- getAnchors(file, resolution)
+    anchors <- .getAnchors(file, resolution)
 
     # Get raw counts for bins from mcool
     if (!is_pair) {
@@ -330,14 +330,14 @@ cool2gi <- function(file, coords = NULL, resolution = NULL) {
         coords_chr <- .v[[1]]
         coords_start <- .v[[2]]
         coords_end <- .v[[3]]
-        cnts <- getCounts(file, coords = coords, anchors = anchors, resolution = resolution)
+        cnts <- .getCounts(file, coords = coords, anchors = anchors, resolution = resolution)
     }
     else {
         .v <- splitCoords(unlist(S4Vectors::zipup(coords)))
         coords_chr <- .v[[1]]
         coords_start <- .v[[2]]
         coords_end <- .v[[3]]
-        cnts <- getCountsFromPair(file, pair = coords, anchors = anchors, resolution = resolution)
+        cnts <- .getCountsFromPair(file, pair = coords, anchors = anchors, resolution = resolution)
     }
 
     # Associate raw counts for bins to corresponding anchors
@@ -381,112 +381,5 @@ cool2gi <- function(file, coords = NULL, resolution = NULL) {
     InteractionSet::regions(gi)$center <- GenomicRanges::start(GenomicRanges::resize(InteractionSet::regions(gi), fix = "center", width = 1))
     InteractionSet::regions(gi)$bin_id <- anchors$bin_id[BiocGenerics::match(regions(gi), anchors)]
     
-    return(gi)
-}
-
-#' @param gi A `GInteractions` object
-#' @return a ContactMatrix object
-#'
-#' @import InteractionSet
-#' @importFrom GenomicRanges mcols
-#' @rdname parse
-#' @export
-
-gi2cm <- function(gi) {
-    InteractionSet::inflate(
-        gi,
-        rows = seq_along(InteractionSet::regions(gi)),
-        columns = seq_along(InteractionSet::regions(gi)),
-        fill = GenomicRanges::mcols(gi)[['score']]
-    )
-}
-
-#' @param cm A `ContactMatrix` object
-#' @param replace_NA Replace NA values
-#' @return a dense matrix
-#'
-#' @importFrom Matrix as.matrix
-#' @rdname parse
-#' @export
-
-cm2matrix <- function(cm, replace_NA = NA) {
-    m <- Matrix::as.matrix(cm)
-    m[is.na(m)] <- replace_NA
-    m
-}
-
-#' @param file pairs file: `<readname>\t<chr1>\t<start1>\t<chr2>\t<start2>`
-#' @param chr1.field chr1.field
-#' @param start1.field start1.field
-#' @param chr2.field chr2.field
-#' @param start2.field start2.field
-#' @param strand1.field strand1.field
-#' @param strand2.field strand2.field
-#' @param frag1.field frag1.field
-#' @param frag2.field frag2.field
-#' @param nThread Number of CPUs to use to import the `pairs` file in R
-#' @param nrows Number of pairs to import
-#' @return a GenomicInteractions object
-#'
-#' @importFrom vroom vroom
-#' @importFrom glue glue
-#' @importFrom GenomicRanges GRanges
-#' @importFrom GenomicInteractions GenomicInteractions
-#' @importFrom GenomicInteractions calculateDistances
-#' @importFrom IRanges IRanges
-#' @import tibble
-#' @rdname parse
-
-pairs2gi <- function(
-    file, 
-    chr1.field = 2, 
-    start1.field = 3, 
-    chr2.field = 4, 
-    start2.field = 5, 
-    strand1.field = 6, 
-    strand2.field = 7, 
-    frag1.field = NULL, 
-    frag2.field = NULL, 
-    nThread = 16, 
-    nrows = Inf  
-) {
-    sel1 <- dplyr::all_of(c(chr1.field, start1.field, strand1.field, frag1.field))
-    sel2 <- dplyr::all_of(c(chr2.field, start2.field, strand2.field, frag2.field))
-    anchors1 <- vroom::vroom(
-        file,
-        n_max = nrows,
-        col_select = sel1,
-        comment = '#',
-        col_names = FALSE,
-        show_col_types = FALSE
-    )
-    anchors2 <- vroom::vroom(
-        file,
-        n_max = nrows,
-        col_select = sel2,
-        comment = '#',
-        col_names = FALSE,
-        show_col_types = FALSE
-    )  
-    anchor_one <- GenomicRanges::GRanges(
-        anchors1[[1]],
-        IRanges::IRanges(anchors1[[2]], width = 1), 
-        strand = anchors1[[3]]
-    )
-    anchor_two <- GenomicRanges::GRanges(
-        anchors2[[1]],
-        IRanges::IRanges(anchors2[[2]], width = 1), 
-        strand = anchors2[[3]]
-    )
-    gi <- GenomicInteractions::GenomicInteractions(anchor_one, anchor_two)
-    if (!is.null(frag1.field) & !is.null(frag2.field)) {
-        gi$frag1 <- anchors1[[4]]
-        gi$frag2 <- anchors2[[4]]
-    } 
-    else {
-        gi$frag1 <- NA
-        gi$frag2 <- NA
-    }
-    gi$distance <- GenomicInteractions::calculateDistances(gi) 
     return(gi)
 }

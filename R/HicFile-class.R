@@ -6,15 +6,13 @@
 #' @description
 #' 
 #' The `HicFile` class describes a `BiocFile` object, pointing to the location 
-#' of a .hic file and containing 3 additional slots:
+#' of a .hic file (usually created with juicer) and containing 3 
+#' additional slots:
 #' 
-#' 1. resolution: at which resolution the associated mcool file should be parsed 
+#' 1. resolution: at which resolution the associated .hic file should be parsed;
 #' 2. pairsFile: the path (in plain character) to an optional pairs file 
 #'   (stored as a `PairsFile` object);
 #' 2. metadata: a list metadata
-#'
-#' @slot resolution numeric value or NULL 
-#' @slot metadata list
 #' 
 #' @param path String; path to a .hic file
 #' @param resolution numeric; resolution to use with mcool file

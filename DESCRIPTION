@@ -61,7 +61,6 @@ Collate:
     'CoolFile-class.R'
     'CoolFile-methods.R'
     'HiCExperiment-methods.R'
-    'HiCExperiment.R'
     'HicFile-class.R'
     'HicFile-methods.R'
     'HicproFile-class.R'

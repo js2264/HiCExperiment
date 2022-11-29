@@ -7,17 +7,14 @@
 #' @description
 #' 
 #' The `CoolFile` class describes a `BiocFile` object, pointing to the location 
-#' of an (m)cool file and containing additional slots:
+#' of an Hi-C matrix file (cool, mcool, hic, hicpro, ...) and containing additional slots:
 #' 
 #' 1. resolution: at which resolution the associated mcool file should be parsed 
 #' 2. pairsFile: the path (in plain character) to an optional pairs file 
 #'   (stored as a `PairsFile` object);
-#' 3. metadata: a list with two elements: `log` (path to `HiCool` processing 
-#'   log file) and `stats` (aggregating some stats from `HiCool` mapping).
-#'
-#' @slot resolution numeric value or NULL 
-#' @slot pairsFile PairsFile object
-#' @slot metadata list
+#' 3. metadata: a list. If the CoolFile is created by `HiCool`, it will contain 
+#'   two elements: `log` (path to `HiCool` processing log file) and `stats` 
+#'   (aggregating some stats from `HiCool` mapping).
 #' 
 #' @param path String; path to a (m)cool file
 #' @param resolution numeric; resolution to use with mcool file
@@ -54,8 +51,6 @@ CoolFile <- function(path, resolution = NULL, pairsFile = NULL, metadata = list(
     if (is_mcool(path) & is.null(resolution)) 
         resolution <- lsCoolResolutions(path)[1]
     check_cool_format(path, resolution)
-    if (!S4Vectors::isSingleString(path))
-        stop('"filename" must be a single string, specifiying a path')
     new(
         'CoolFile', 
         resource = path, 

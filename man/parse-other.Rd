@@ -25,6 +25,8 @@ pairs2gi(
 )
 }
 \arguments{
+\item{gi}{GInteractions}
+
 \item{cm}{A \code{ContactMatrix} object}
 
 \item{replace_NA}{Replace NA values}

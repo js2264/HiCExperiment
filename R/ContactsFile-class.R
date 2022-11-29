@@ -11,8 +11,9 @@
 #' 1. resolution: at which resolution the associated mcool file should be parsed 
 #' 2. pairsFile: the path (in plain character) to an optional pairs file 
 #'   (stored as a `PairsFile` object);
-#' 3. metadata: a list with two elements: `log` (path to `HiCool` processing 
-#'   log file) and `stats` (aggregating some stats from `HiCool` mapping).
+#' 3. metadata: a list. If the CoolFile is created by `HiCool`, it will contain 
+#'   two elements: `log` (path to `HiCool` processing log file) and `stats` 
+#'   (aggregating some stats from `HiCool` mapping).
 #'
 #' @slot resolution numeric value or NULL 
 #' @slot pairsFile PairsFile object

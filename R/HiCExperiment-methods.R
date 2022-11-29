@@ -318,7 +318,7 @@ setMethod("bins", "HiCExperiment", function(x) {
     }
     else if (is_hic(fileName(x))) {
         bins <- .getHicAnchors(
-            fileName(x), resolution = resolution(x), balanced = FALSE
+            fileName(x), resolution = resolution(x)
         )
         GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
     }

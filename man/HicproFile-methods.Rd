@@ -14,6 +14,9 @@ HicproFile methods.
 hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
 hicpro_bed_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_bed')
 pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
-hcf <- HicproFile(hicpro_matrix_path, bed = hicpro_bed_path, pairs = pairs_path)
-hcf
+hicpro <- HicproFile(hicpro_matrix_path, bed = hicpro_bed_path, pairs = pairs_path)
+hicpro
+resolution(hicpro)
+pairsFile(hicpro)
+metadata(hicpro)
 }

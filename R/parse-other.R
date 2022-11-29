@@ -2,6 +2,7 @@
 #' 
 #' @import InteractionSet
 #' @importFrom GenomicRanges mcols
+#' @param gi GInteractions
 #' @rdname parse-other
 #' @export
 

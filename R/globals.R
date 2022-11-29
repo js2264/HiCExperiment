@@ -13,6 +13,8 @@ utils::globalVariables(c(
     "region2",
     "res",
     "setNames",
-    "value"
+    "value", 
+    "X1", 
+    "X3"
 ))
 

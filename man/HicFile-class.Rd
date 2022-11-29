@@ -15,22 +15,15 @@
 }
 \description{
 The \code{HicFile} class describes a \code{BiocFile} object, pointing to the location
-of a .hic file and containing 3 additional slots:
+of a .hic file (usually created with juicer) and containing 3
+additional slots:
 \enumerate{
-\item resolution: at which resolution the associated mcool file should be parsed
+\item resolution: at which resolution the associated .hic file should be parsed;
 \item pairsFile: the path (in plain character) to an optional pairs file
 (stored as a \code{PairsFile} object);
 \item metadata: a list metadata
 }
 }
-\section{Slots}{
-
-\describe{
-\item{\code{resolution}}{numeric value or NULL}
-
-\item{\code{metadata}}{list}
-}}
-
 \examples{
 hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
 pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')

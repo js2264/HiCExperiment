@@ -19,25 +19,16 @@ the hash ID used by HiCool.}
 }
 \description{
 The \code{CoolFile} class describes a \code{BiocFile} object, pointing to the location
-of an (m)cool file and containing additional slots:
+of an Hi-C matrix file (cool, mcool, hic, hicpro, ...) and containing additional slots:
 \enumerate{
 \item resolution: at which resolution the associated mcool file should be parsed
 \item pairsFile: the path (in plain character) to an optional pairs file
 (stored as a \code{PairsFile} object);
-\item metadata: a list with two elements: \code{log} (path to \code{HiCool} processing
-log file) and \code{stats} (aggregating some stats from \code{HiCool} mapping).
+\item metadata: a list. If the CoolFile is created by \code{HiCool}, it will contain
+two elements: \code{log} (path to \code{HiCool} processing log file) and \code{stats}
+(aggregating some stats from \code{HiCool} mapping).
 }
 }
-\section{Slots}{
-
-\describe{
-\item{\code{resolution}}{numeric value or NULL}
-
-\item{\code{pairsFile}}{PairsFile object}
-
-\item{\code{metadata}}{list}
-}}
-
 \examples{
 mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
 pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')

@@ -9,6 +9,9 @@
 \alias{check_hic_file}
 \alias{check_hic_format}
 \alias{is_hic}
+\alias{check_hicpro_files}
+\alias{is_hicpro_matrix}
+\alias{is_hicpro_regions}
 \alias{check_resolution}
 \alias{is_square}
 \title{Checks functions}
@@ -26,6 +29,12 @@ check_hic_file(path)
 check_hic_format(path, resolution, ...)
 
 is_hic(path)
+
+check_hicpro_files(path, bed)
+
+is_hicpro_matrix(path)
+
+is_hicpro_regions(bed)
 
 check_resolution(contacts, resolution)
 

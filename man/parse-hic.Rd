@@ -2,9 +2,18 @@
 % Please edit documentation in R/parse-hic.R
 \name{.hic2gi}
 \alias{.hic2gi}
+\alias{lsHicResolutions}
+\alias{.getHicAnchors}
+\alias{.hic2seqinfo}
 \title{Parsing hic files}
 \usage{
 .hic2gi(file, coords = NULL, resolution = NULL)
+
+lsHicResolutions(file, verbose = FALSE)
+
+.getHicAnchors(file, resolution = NULL)
+
+.hic2seqinfo(file)
 }
 \arguments{
 \item{file}{file}
@@ -13,12 +22,16 @@
 Can also be a Pairs object of paired GRanges (length of 1).}
 
 \item{resolution}{resolution}
+
+\item{verbose}{Print resolutions in the console}
 }
 \value{
 a GenomicInteractions object
+
+vector
 }
 \description{
 These functions are the workhorse internal functions used to import
 a \code{.hic} file as GenomicInteractions (wrapped into a \code{HiCExperiment} object
-by \code{HiCExperimentFromHicFile()} function).
+by \code{HiCExperiment()} function).
 }

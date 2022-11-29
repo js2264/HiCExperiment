@@ -1,8 +1,18 @@
 utils::globalVariables(c(
     ".",
     "centros_yeast",
+    "chr",
+    "combn",
     "data",
+    "end<-",
     "group",
     "packageVersion",
-    "res"
+    "parsed_hic",
+    "parsed_hic_balanced",
+    "region1",
+    "region2",
+    "res",
+    "setNames",
+    "value"
 ))
+

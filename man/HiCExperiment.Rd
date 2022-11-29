@@ -6,6 +6,7 @@
 \alias{HiCExperiment-class}
 \alias{.HiCExperimentFromCoolFile}
 \alias{.HiCExperimentFromHicFile}
+\alias{.HiCExperimentFromHicproFile}
 \title{\code{HiCExperiment} S4 class}
 \usage{
 HiCExperiment(
@@ -17,7 +18,8 @@ HiCExperiment(
     S4Vectors::Pairs(GenomicRanges::GRanges(), GenomicRanges::GRanges()), borders =
     GenomicRanges::GRanges(), compartments = GenomicRanges::GRanges(), viewpoints =
     GenomicRanges::GRanges()),
-  pairsFile = NULL
+  pairsFile = NULL,
+  ...
 )
 
 .HiCExperimentFromCoolFile(
@@ -43,6 +45,17 @@ HiCExperiment(
     GenomicRanges::GRanges()),
   pairsFile = NULL
 )
+
+.HiCExperimentFromHicproFile(
+  file,
+  bed,
+  metadata = list(),
+  topologicalFeatures = S4Vectors::SimpleList(loops =
+    S4Vectors::Pairs(GenomicRanges::GRanges(), GenomicRanges::GRanges()), borders =
+    GenomicRanges::GRanges(), compartments = GenomicRanges::GRanges(), viewpoints =
+    GenomicRanges::GRanges()),
+  pairsFile = NULL
+)
 }
 \arguments{
 \item{file}{CoolFile or plain path to a (m)cool file}
@@ -59,6 +72,8 @@ the entire (m)cool file will be imported.}
 \item{topologicalFeatures}{topologicalFeatures provided as a named SimpleList}
 
 \item{pairsFile}{Path to an associated .pairs file}
+
+\item{...}{Extra arguments}
 }
 \value{
 An \code{HiCExperiment} object.

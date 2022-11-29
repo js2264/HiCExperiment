@@ -10,7 +10,6 @@
 #' @docType data
 #' @usage data(centros_yeast)
 #' @source HiContacts
-#' @importFrom HiContactsData HiContactsData
 #' @examples
 #' data(centros_yeast)
 #' centros_yeast

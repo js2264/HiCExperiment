@@ -2,7 +2,7 @@ test_that("HiCExperiment methods work", {
     cool_path <- HiContactsData::HiContactsData('yeast_wt', 'cool')
     mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
     contacts_yeast <- contacts_yeast()
-    expect_identical(length(contacts_yeast), 74360L)
+    expect_identical(length(contacts_yeast), 2945402L)
     expect_s4_class(contacts_yeast[seq_len(10)], 'HiCExperiment')
     expect_s4_class({
         sub <- c(
@@ -22,7 +22,7 @@ test_that("HiCExperiment methods work", {
     expect_type(resolutions(contacts_yeast), 'integer')
     expect_equal(resolution(contacts_yeast), 1000L)
     expect_s4_class(bins(contacts_yeast), 'GRanges')
-    expect_type(focus(contacts_yeast), 'character')
+    expect_null(focus(contacts_yeast))
     expect_s4_class(interactions(contacts_yeast), 'GInteractions')
     expect_s4_class(scores(contacts_yeast), 'SimpleList')
     expect_type(scores(contacts_yeast, 1), 'double')
@@ -82,33 +82,6 @@ test_that("utils works", {
         ), 
         'GInteractions'
     )
-})
-
-test_that("parse works", {
-    cool <- HiContactsData::HiContactsData(
-        'yeast_wt', format = 'cool'
-    )
-    mcool <- HiContactsData::HiContactsData(
-        'yeast_wt', format = 'mcool'
-    )
-    expect_s4_class({
-        HiCExperiment(cool)
-    }, 'HiCExperiment')
-    expect_s4_class({
-        HiCExperiment(cool, focus = 'II:1-10000')
-    }, 'HiCExperiment')
-    expect_s4_class({
-        HiCExperiment(mcool, focus = 'II:1-10000', resolution = 16000)
-    }, 'HiCExperiment')
-    expect_s4_class({
-        HiCExperiment(mcool, resolution = 16000)
-    }, 'HiCExperiment')
-    expect_error({
-        HiCExperiment(cool, resolution = 16000)
-    })
-    expect_error({
-        HiCExperiment(mcool)
-    }, 'HiCExperiment')
 })
 
 test_that("coerce works", {

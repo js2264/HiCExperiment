@@ -38,6 +38,7 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' @param metadata list of metadata
 #' @param topologicalFeatures topologicalFeatures provided as a named SimpleList
 #' @param pairsFile Path to an associated .pairs file
+#' @param ... Extra arguments
 #' 
 #' @return An `HiCExperiment` object.
 #' 
@@ -70,7 +71,7 @@ methods::setClass("HiCExperiment",
 #' @rdname HiCExperiment
 #' @export
 
-HiCExperiment <- function(
+ HiCExperiment <- function(
     file, 
     resolution = NULL, 
     focus = NULL, 
@@ -84,8 +85,14 @@ HiCExperiment <- function(
         'compartments' = GenomicRanges::GRanges(), 
         'viewpoints' = GenomicRanges::GRanges()
     ), 
-    pairsFile = NULL
+    pairsFile = NULL, 
+    ...
 ) {
+    file <- gsub('~', Sys.getenv('HOME'), file)
+    stopifnot(file.exists(file))
+    params <- list(...)
+    if ("bed" %in% names(params)) bed <- params[['bed']]
+
     if (is_cool(file) | is_mcool(file)) {
         return(.HiCExperimentFromCoolFile(
             file = file,
@@ -101,6 +108,15 @@ HiCExperiment <- function(
             file = file,
             resolution = resolution,
             focus = focus,
+            metadata = metadata,
+            topologicalFeatures = topologicalFeatures,
+            pairsFile = pairsFile
+        ))
+    }
+    if (is_hicpro_matrix(file) & is_hicpro_regions(bed)) {
+        return(.HiCExperimentFromHicproFile(
+            file = file,
+            bed = bed,
             metadata = metadata,
             topologicalFeatures = topologicalFeatures,
             pairsFile = pairsFile
@@ -141,11 +157,12 @@ setValidity("HiCExperiment",
 ) {
     
     ## -- Check that provided file is valid
+    file <- gsub('~', Sys.getenv('HOME'), file)
     check_cool_file(file)
     check_cool_format(file, resolution)
 
     ## -- Read interactions
-    gis <- .cool2gi(file, resolution = resolution, coords = focus)
+    gis <- .cool2gi(file, resolution = resolution, coords = focus) |> sort()
     mcols <- GenomicRanges::mcols(gis)
     GenomicRanges::mcols(gis) <- mcols[, c('bin_id1', 'bin_id2')]
 
@@ -188,19 +205,21 @@ setValidity("HiCExperiment",
 ) {
     
     ## -- Check that provided file is valid
+    file <- gsub('~', Sys.getenv('HOME'), file)
     check_hic_file(file)
     check_hic_format(file, resolution)
 
     ## -- Read interactions
-    gis <- .hic2gi(file, resolution = resolution, coords = focus)
+    gis <- .hic2gi(file, resolution = resolution, coords = focus) |> sort()
     mcols <- GenomicRanges::mcols(gis)
     GenomicRanges::mcols(gis) <- mcols[, c('bin_id1', 'bin_id2')]
 
     ## -- Create HiCExperiment
+    if (!is.null(focus)) focus <- gsub("(:.*[^:]*):", "\\1-", focus)
     x <- methods::new("HiCExperiment", 
         fileName = as.character(file),
         focus = focus, 
-        resolutions = strawr::readHicBpResolutions(file), 
+        resolutions = rev(strawr::readHicBpResolutions(file)), 
         resolution = resolution, 
         interactions = gis, 
         scores = S4Vectors::SimpleList(
@@ -214,5 +233,53 @@ setValidity("HiCExperiment",
     methods::validObject(x)
     return(x)
 } 
+
+#' @rdname HiCExperiment
+
+.HiCExperimentFromHicproFile <- function(
+    file, 
+    bed, 
+    metadata = list(), 
+    topologicalFeatures = S4Vectors::SimpleList(
+        'loops' = S4Vectors::Pairs(
+            GenomicRanges::GRanges(), 
+            GenomicRanges::GRanges()
+        ), 
+        'borders' = GenomicRanges::GRanges(), 
+        'compartments' = GenomicRanges::GRanges(), 
+        'viewpoints' = GenomicRanges::GRanges()
+    ), 
+    pairsFile = NULL
+) {
+    
+    ## -- Check that provided file is valid
+    file <- gsub('~', Sys.getenv('HOME'), file)
+    check_hicpro_files(file, bed)
+
+    ## -- Read interactions
+    gis <- .hicpro2gi(file, bed) |> sort()
+    mcols <- GenomicRanges::mcols(gis)
+    GenomicRanges::mcols(gis) <- mcols[, c('bin_id1', 'bin_id2')]
+    res <- GenomicRanges::width(regions(gis))[[1]]
+
+    ## -- Create HiCExperiment
+    x <- methods::new("HiCExperiment", 
+        fileName = as.character(file),
+        focus = NULL, 
+        resolutions = res, 
+        resolution = res, 
+        interactions = gis, 
+        scores = S4Vectors::SimpleList(
+            'counts' = as.numeric(mcols$count)
+        ), 
+        topologicalFeatures = topologicalFeatures, 
+        pairsFile = pairsFile, 
+        metadata = c(list(regions = bed), metadata)
+    )
+    methods::validObject(x)
+    return(x)
+} 
+
+
 
 

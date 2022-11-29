@@ -99,6 +99,9 @@ check_hic_file <- function(path) {
 
 check_hic_format <- function(path, resolution, ...) {
     res <- lsHicResolutions(path)
+    if (is.null(resolution)) {
+        stop("File is in .hic format, a resolution must be provided.\n", paste0('  Available resolutions: ', paste0(res, collapse = ', '), '.'))
+    }
     if (!resolution %in% res) {
         stop("Resolution not stored in .hic file.\n", paste0('  Available resolutions: ', paste0(res, collapse = ', '), '.'))
     }
@@ -108,7 +111,99 @@ check_hic_format <- function(path, resolution, ...) {
 #' @rdname checks
 
 is_hic <- function(path) {
-    x <- .lsHicFiles(path)
+    path <- gsub('~', Sys.getenv('HOME'), path)
+    tryCatch(
+        expr = {strawr::readHicChroms(path); TRUE}, 
+        error = function(e) {
+            FALSE
+        },
+        warning = function(e) {
+            FALSE
+        }
+    )
+}
+
+############################################################################################
+######################### CHECKS FOR HICPRO-BASED HICEXPERIMENTS ###########################
+############################################################################################
+
+#' @rdname checks
+
+check_hicpro_files <- function(path, bed) {
+    if (!file.exists(path) | {
+        isTRUE(nzchar(Sys.readlink(path), keepNA = TRUE)) & 
+        !file.exists(Sys.readlink(path))
+    }) {
+        stop('Matrix file not found. Aborting now')
+    }
+    if (!file.exists(bed) | {
+        isTRUE(nzchar(Sys.readlink(bed), keepNA = TRUE)) & 
+        !file.exists(Sys.readlink(bed))
+    }) {
+        stop('Regions file not found. Aborting now')
+    }
+    if (!{is_hicpro_matrix(path)}) {
+        stop('Provided matrix is not an HiC-Pro file.\n  Aborting now.')
+    }
+    if (!{is_hicpro_regions(bed)}) {
+        stop('Provided regions are not an HiC-Pro file.\n  Aborting now.')
+    }
+    TRUE
+}
+
+#' @rdname checks
+
+is_hicpro_matrix <- function(path) {
+    tryCatch(
+        expr = {
+            x <- vroom::vroom(
+                file = path, 
+                col_names = FALSE, 
+                n_max = 1000, 
+                show_col_types = FALSE, 
+                progress = FALSE
+            )
+            is.numeric(x[[1]]) & is.numeric(x[[2]]) & is.numeric(x[[3]]) & ncol(x) == 3 & all(x >= 0)
+        }, 
+        error = function(e) {
+            FALSE
+        },
+        warning = function(e) {
+            FALSE
+        }
+    )
+}
+
+#' @rdname checks
+
+is_hicpro_regions <- function(bed) {
+    tryCatch(
+        expr = {
+            x <- vroom::vroom(
+                file = bed, 
+                col_names = FALSE, 
+                n_max = 1000, 
+                show_col_types = FALSE, 
+                progress = FALSE
+            )
+            {
+                is.numeric(x[[1]]) | 
+                is.character(x[[1]]) & 
+                is.numeric(x[[2]]) & 
+                is.numeric(x[[3]]) & 
+                ncol(x) == 3 & 
+                all(x[, c(2, 3)] >= 0) & 
+                all(x[,3] > x[,2]) &
+                length(unique(x[,3] - x[,2]))
+            }
+        }, 
+        error = function(e) {
+            FALSE
+        },
+        warning = function(e) {
+            FALSE
+        }
+    )
 }
 
 ############################################################################################

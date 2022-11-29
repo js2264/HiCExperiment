@@ -298,16 +298,34 @@ setMethod("seqinfo", "HiCExperiment", function(x) {
     else if (is_cool(fileName(x))) {
         si <- .cool2seqinfo(fileName(x))
     }
+    else if (is_hic(fileName(x))) {
+        si <- .hic2seqinfo(fileName(x))
+    }
+    else if (is_hicpro_matrix(fileName(x)) & is_hicpro_regions(metadata(x)$regions)) {
+        si <- .hicpro2seqinfo(metadata(x)$regions)
+    }
     return(si)
 })
 
 #' @export
 
 setMethod("bins", "HiCExperiment", function(x) {
-    bins <- .getAnchors(
-        fileName(x), resolution = resolution(x), balanced = FALSE
-    )
-    GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
+    if (is_cool(fileName(x)) | is_mcool(fileName(x))) {
+        bins <- .getCoolAnchors(
+            fileName(x), resolution = resolution(x), balanced = FALSE
+        )
+        GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
+    }
+    else if (is_hic(fileName(x))) {
+        bins <- .getHicAnchors(
+            fileName(x), resolution = resolution(x), balanced = FALSE
+        )
+        GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
+    }
+    else if (is_hicpro_matrix(fileName(x)) & is_hicpro_regions(metadata(x)$regions)) {
+        bins <- .getHicproAnchors(metadata(x)$regions)
+        GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
+    }
     return(bins)
 })
 

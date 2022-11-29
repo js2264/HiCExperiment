@@ -11,13 +11,14 @@
 #' @return a GenomicInteractions object
 #'
 #' @import InteractionSet
+#' @import strawr
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges resize
 #' @rdname parse-hic
 
 .hic2gi <- function(file, coords = NULL, resolution = NULL) {
-   
+    
     file <- gsub('~', Sys.getenv('HOME'), file)
     
     # Mutate Pairs provided as characters to real Pairs
@@ -30,8 +31,100 @@
     # Check if the provided coords are GRanges or Pairs
     is_pair <- is(coords, 'Pairs')
 
+    # Get anchors from hic
+    anchors <- .getHicAnchors(file, resolution)
+    si <- GenomeInfoDb::seqinfo(anchors)
+
     # Get raw counts for bins from hic
-    if (!is_pair) {
+    if (is.null(coords)) {
+        combs <- combn(GenomeInfoDb::seqlevels(anchors), m = 2) |> 
+            as.data.frame() |> 
+            t()
+        gis_ <- apply(combs, 1, function(coords) {tryCatch(expr = {
+            parsed_hic <- strawr::straw(
+                fname = file, 
+                binsize = resolution, 
+                chr1loc = coords[[1]], 
+                chr2loc = coords[[2]], 
+                unit = 'BP', 
+                matrix = "observed", 
+                norm = 'NONE'
+            )
+            parsed_hic_balanced <- strawr::straw(
+                fname = file, 
+                binsize = resolution, 
+                chr1loc = coords[[1]], 
+                chr2loc = coords[[2]], 
+                unit = 'BP', 
+                matrix = "observed", 
+                norm = 'KR'
+            )
+            seqnames1 <- gsub(':.*', '', coords[[1]])
+            seqnames2 <- gsub(':.*', '', coords[[2]])
+            an1 <- GenomicRanges::GRanges(
+                seqnames = seqnames1, 
+                ranges = IRanges::IRanges(
+                    start = parsed_hic$x + 1, 
+                    width = resolution
+                )
+            )
+            ean1 <- end(an1)
+            maxean1 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == coords[[1]]]
+            end(an1)[ean1 > maxean1] <- maxean1
+            GenomeInfoDb::seqlevels(an1) <- GenomeInfoDb::seqlevels(si)
+            GenomeInfoDb::seqinfo(an1) <- si
+            an2 <- GenomicRanges::GRanges(
+                seqnames = seqnames2, 
+                ranges = IRanges::IRanges(
+                    start = parsed_hic$y + 1, 
+                    width = resolution
+                )
+            )
+            ean2 <- end(an2)
+            maxean2 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == coords[[2]]]
+            end(an2)[ean2 > maxean2] <- maxean2
+            GenomeInfoDb::seqlevels(an2) <- GenomeInfoDb::seqlevels(si)
+            GenomeInfoDb::seqinfo(an2) <- si
+            gi <- InteractionSet::GInteractions(
+                an1, 
+                an2, 
+            )
+
+            # Associate raw counts for bins to corresponding anchors
+            gi$count <- parsed_hic$counts
+            gi$score <- parsed_hic_balanced$counts
+
+            # Return gi
+            as.data.frame(gi)
+        }, error = function(e) {
+            as.data.frame(InteractionSet::GInteractions())
+        })})
+        gis_ <- gis_[sapply(gis_, nrow) > 0]
+        full_parsed_hic <- do.call(rbind, gis_)
+        an1 <- GenomicRanges::GRanges(
+            seqnames = full_parsed_hic$seqnames1, 
+            ranges = IRanges::IRanges(
+                start = full_parsed_hic$start1, 
+                width = resolution
+            )
+        )
+        an2 <- GenomicRanges::GRanges(
+            seqnames = full_parsed_hic$seqnames2, 
+            ranges = IRanges::IRanges(
+                start = full_parsed_hic$start2, 
+                width = resolution
+            )
+        )
+        gi <- InteractionSet::GInteractions(
+            an1, 
+            an2, 
+        )
+
+        # Associate raw counts for bins to corresponding anchors
+        gi$count <- full_parsed_hic$count
+        gi$score <- full_parsed_hic$score
+    }
+    else if (!is_pair) {
         parsed_hic <- strawr::straw(
             fname = file, 
             binsize = resolution, 
@@ -51,47 +144,50 @@
             norm = 'KR'
         )
         seqnames <- gsub(':.*', '', coords)
+        an1 <- GenomicRanges::GRanges(
+            seqnames = seqnames, 
+            ranges = IRanges::IRanges(
+                start = parsed_hic$x + 1, 
+                width = resolution
+            )
+        )
+        ean1 <- end(an1)
+        maxean1 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == seqnames]
+        end(an1)[ean1 > maxean1] <- maxean1
+        GenomeInfoDb::seqlevels(an1) <- GenomeInfoDb::seqlevels(si)
+        GenomeInfoDb::seqinfo(an1) <- si
+        an2 <- GenomicRanges::GRanges(
+            seqnames = seqnames, 
+            ranges = IRanges::IRanges(
+                start = parsed_hic$y + 1, 
+                width = resolution
+            )
+        )
+        ean2 <- end(an2)
+        maxean2 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == seqnames]
+        end(an2)[ean2 > maxean2] <- maxean2
+        GenomeInfoDb::seqlevels(an2) <- GenomeInfoDb::seqlevels(si)
+        GenomeInfoDb::seqinfo(an2) <- si
+        gi <- InteractionSet::GInteractions(
+            an1, 
+            an2, 
+        )
+
+        # Associate raw counts for bins to corresponding anchors
+        gi$count <- parsed_hic$counts
+        gi$score <- parsed_hic_balanced$counts
     }
     else {
-        stop("unsupported xx")
+            stop("unsupported xx")
     }
-    an1 <- GenomicRanges::GRanges(
-        seqnames = seqnames, 
-        ranges = IRanges::IRanges(
-            start = parsed_hic$x + 1, 
-            width = resolution
-        )
-    )
-    an2 <- GenomicRanges::GRanges(
-        seqnames = seqnames, 
-        ranges = IRanges::IRanges(
-            start = parsed_hic$y + 1, 
-            width = resolution
-        )
-    )
-    gi <- InteractionSet::GInteractions(
-        an1, 
-        an2, 
-    )
 
-    # Find bin IDs
-    si <- strawr::readHicChroms(file) |> 
-        setNames(c('seqnames', 'seqlengths')) |>
-        as("Seqinfo")
-    anchors <- GenomicRanges::tileGenome(
-        si, tilewidth = resolution, cut.last.tile.in.chrom = TRUE
-    )
-    anchors$bin_id <- seq_along(anchors)
+    # Match anchor ID with each interaction
     gi$bin_id1 <- S4Vectors::subjectHits(
         GenomicRanges::findOverlaps(an1, anchors)
-    )
+    ) - 1
     gi$bin_id2 <- S4Vectors::subjectHits(
         GenomicRanges::findOverlaps(an2, anchors)
-    )
-
-    # Associate raw counts for bins to corresponding anchors
-    gi$count <- parsed_hic$counts
-    gi$score <- parsed_hic_balanced$counts
+    ) - 1
     
     # Add extra info
     InteractionSet::regions(gi)$chr <- GenomicRanges::seqnames(InteractionSet::regions(gi))
@@ -102,35 +198,39 @@
 }
 
 #' @param file file
-#' @param verbose verbose
-#' @return vector
-#'
-#' @import rhdf5
-#' @import stringr
-#' @import tidyr
-#' @import dplyr
-#' @import GenomicInteractions
-#' @rdname parse
-
-.lsHicFiles <- function(file, verbose = FALSE) {
-    tryCatch(
-        expr = {strawr::readHicChroms(file); TRUE}, 
-        error = function(e) {message("Provided file is not a .hic file.")}
-    )
-}
-
-#' @param file file
 #' @param verbose Print resolutions in the console
 #' @return vector
 #'
 #' @import rhdf5
 #' @import tidyr
-#' @rdname parse
+#' @rdname parse-hic
 #' @export
 
 lsHicResolutions <- function(file, verbose = FALSE) {
-    res <- strawr::readHicBpResolutions(file)
+    res <- rev(strawr::readHicBpResolutions(file))
     if (verbose) message(S4Vectors::coolcat("resolutions(%d): %s", res))
     invisible(as.integer(res))
+}
+
+#' @rdname parse-hic
+
+.getHicAnchors <- function(file, resolution = NULL) {
+    si <- .hic2seqinfo(file)
+    anchors <- GenomicRanges::tileGenome(
+        si, tilewidth = resolution, cut.last.tile.in.chrom = TRUE
+    )
+    anchors$bin_id <- seq_along(anchors) - 1
+    names(anchors) <- paste(GenomicRanges::seqnames(anchors), GenomicRanges::start(anchors), GenomicRanges::end(anchors), sep = "_")
+    weight <- 1
+    return(anchors)
+}
+
+#' @rdname parse-hic
+
+.hic2seqinfo <- function(file) {
+    strawr::readHicChroms(file) |> 
+        setNames(c('seqnames', 'seqlengths')) |>
+        dplyr::filter(seqnames != 'ALL') |>
+        as("Seqinfo")
 }
 

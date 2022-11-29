@@ -2,7 +2,7 @@
 #' 
 #' @import InteractionSet
 #' @importFrom GenomicRanges mcols
-#' @rdname parse
+#' @rdname parse-other
 #' @export
 
 gi2cm <- function(gi) {
@@ -19,7 +19,7 @@ gi2cm <- function(gi) {
 #' @return a dense matrix
 #'
 #' @importFrom Matrix as.matrix
-#' @rdname parse
+#' @rdname parse-other
 #' @export
 
 cm2matrix <- function(cm, replace_NA = NA) {
@@ -48,7 +48,7 @@ cm2matrix <- function(cm, replace_NA = NA) {
 #' @importFrom GenomicInteractions calculateDistances
 #' @importFrom IRanges IRanges
 #' @import tibble
-#' @rdname parse
+#' @rdname parse-other
 
 pairs2gi <- function(
     file, 

@@ -18,7 +18,7 @@
 #' 
 #' @param path String; path to a .hic file
 #' @param resolution numeric; resolution to use with mcool file
-#' @param pairs String; path to a pairs file
+#' @param pairsFile String; path to a pairs file
 #' @param metadata list.
 #' 
 #' @importFrom S4Vectors metadata
@@ -30,32 +30,28 @@
 #' @examples
 #' hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
 #' pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
-#' hic <- HicFile(hic_path, resolution = pairs = pairs_path)
+#' hic <- HicFile(hic_path, resolution = 16000, pairsFile = pairs_path)
 NULL
 
 #' @export
 
-setClass('HicFile', contains = c('BiocFile', 'Annotated'),
-    slots = list(
-        resolution = 'numericOrNULL', 
-        pairsFile = 'PairsFile'
-    )
-)
+setClass('HicFile', contains = 'ContactsFile')
 
 #' @export 
 
-HicFile <- function(path, resolution = NULL, pairs = "", metadata = list()) {
+HicFile <- function(path, resolution = NULL, pairsFile = NULL, metadata = list()) {
     path <- gsub('~', Sys.getenv('HOME'), path)
-    # check_hic_file(path)
-    if (is.null(resolution)) 
-        resolution <- strawr::readHicBpResolutions(path)[1]
+    check_hic_file(path)
+    if (is_hic(path) & is.null(resolution)) 
+        resolution <- lsHicResolutions(path)[1]
+    check_hic_format(path, resolution)
     if (!S4Vectors::isSingleString(path))
         stop('"filename" must be a single string, specifiying a path')
     new(
         'HicFile', 
         resource = path, 
         resolution = resolution,
-        pairsFile = PairsFile(pairs),
+        pairsFile = PairsFile(pairsFile),
         metadata = metadata
     )
 }

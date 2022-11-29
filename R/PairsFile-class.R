@@ -23,6 +23,12 @@ NULL
 
 setClass('PairsFile', contains = 'BiocFile')
 
+setClassUnion("PairsFileOrNULL", members = c("PairsFile", "NULL"))
+
 #' @export
 
-PairsFile <- function(x) {new('PairsFile', resource = x)}
+PairsFile <- function(x) {
+    if (is.null(x)) 
+        return(NULL)
+    new('PairsFile', resource = x)
+}

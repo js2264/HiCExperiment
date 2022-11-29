@@ -41,20 +41,17 @@ setMethod('import', 'CoolFile', function(con, ...) {
     path <- gsub('~', Sys.getenv('HOME'), path)
     stopifnot(file.exists(path))
     if (!check_cool_file(path)) stop("Provided file is not a valid .(m)cool file")
-    params <- list(...)
 
-    ## -- Check parsed arguments
+    ## -- Handle parsed arguments. Priority is given to 
+    #       explicitly provided arguments, then to resolution/pairsFile/metadata 
+    #       stored in *File.
+    params <- list(...)
     if ('resolution' %in% names(params)) {
         check_cool_format(path, params[['resolution']])
         resolution <- params[['resolution']]
     } else {
-        if (is_mcool(path)) {
-            resolution <- lsCoolResolutions(path)[1]
-        }
-        else {
-            resolution <- NULL
-        }
-    }
+        resolution <- resolution(con)
+    } 
     if ('focus' %in% names(params)) {
         focus <- params[['focus']]
     } else {
@@ -62,17 +59,12 @@ setMethod('import', 'CoolFile', function(con, ...) {
     }
     if ('pairsFile' %in% names(params)) {
         if (!file.exists(params[['pairsFile']])) {
-            if (params[['pairsFile']] == "") {
-                pairsFile <- NULL
-            }
-            else {
-                stop("Provided pairsFile does not exist. Aborting now.")
-            }
+            stop("Provided pairsFile does not exist. Aborting now.")
         } else {
             pairsFile <- params[['pairsFile']]
         }
     } else {
-        pairsFile <- NULL
+        pairsFile <- pairsFile(con)
     }
     if ('topologicalFeatures' %in% names(params)) {
         topologicalFeatures <- params[['topologicalFeatures']]
@@ -87,7 +79,7 @@ setMethod('import', 'CoolFile', function(con, ...) {
     if ('metadata' %in% names(params)) {
         metadata <- params[['metadata']]
     } else {
-        metadata <- list()
+        metadata <- metadata(con)
     }
 
     ## -- Create HiCExperiment
@@ -110,34 +102,31 @@ setMethod('import', 'HicFile', function(con, ...) {
     path <- gsub('~', Sys.getenv('HOME'), path)
     stopifnot(file.exists(path))
     if (!check_hic_file(path)) stop("Provided file is not a valid .hic file")
-    params <- list(...)
 
-    ## -- Check parsed arguments
+    ## -- Handle parsed arguments. Priority is given to 
+    #       explicitly provided arguments, then to resolution/pairsFile/metadata 
+    #       potentially stored in *File.
+    params <- list(...)
     if ('resolution' %in% names(params)) {
-        # check_hic_format(path, params[['resolution']])
+        check_hic_format(path, params[['resolution']])
         resolution <- params[['resolution']]
     } else {
-        resolution <- strawr::readHicBpResolutions(path)[1]
+        resolution <- resolution(con)
     }
     if ('focus' %in% names(params)) {
         focus <- params[['focus']]
         focus <- gsub("-", ":", params[['focus']])
     } else {
-        stop("`focus` argument is required for .hic files.")
+        focus <- NULL
     }
     if ('pairsFile' %in% names(params)) {
         if (!file.exists(params[['pairsFile']])) {
-            if (params[['pairsFile']] == "") {
-                pairsFile <- NULL
-            }
-            else {
-                stop("Provided pairsFile does not exist. Aborting now.")
-            }
+            stop("Provided pairsFile does not exist. Aborting now.")
         } else {
             pairsFile <- params[['pairsFile']]
         }
     } else {
-        pairsFile <- NULL
+        pairsFile <- pairsFile(con)
     }
     if ('topologicalFeatures' %in% names(params)) {
         topologicalFeatures <- params[['topologicalFeatures']]
@@ -152,7 +141,7 @@ setMethod('import', 'HicFile', function(con, ...) {
     if ('metadata' %in% names(params)) {
         metadata <- params[['metadata']]
     } else {
-        metadata <- list()
+        metadata <- metadata(con)
     }
 
     ## -- Create HiCExperiment

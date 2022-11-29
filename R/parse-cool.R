@@ -16,12 +16,12 @@
 #' @importFrom IRanges IRanges
 #' @rdname parse-cool
 
-.getAnchors <- function(file, resolution = NULL, balanced = "cooler") {
+.getCoolAnchors <- function(file, resolution = NULL, balanced = "cooler") {
     bins <- .fetchCool(file, "bins", resolution)
     anchors <- GenomicRanges::GRanges(
         bins$chr,
         IRanges::IRanges(bins$start + 1, bins$end),
-        bin_id = seq_along(bins$chr), 
+        bin_id = seq_along(bins$chr) - 1, 
         seqinfo = .cool2seqinfo(file, resolution)
     )
     names(anchors) <- paste(GenomicRanges::seqnames(anchors), GenomicRanges::start(anchors), GenomicRanges::end(anchors), sep = "_")
@@ -52,7 +52,7 @@
 #' @importFrom IRanges subsetByOverlaps
 #' @importFrom glue glue
 #' @importFrom S4Vectors subjectHits
-#' @rdname parse
+#' @rdname parse-cool
 
 .getCountsFromPair <- function(file,
     pair,
@@ -119,7 +119,7 @@
 #' @importFrom IRanges subsetByOverlaps
 #' @importFrom glue glue
 #' @importFrom S4Vectors subjectHits
-#' @rdname parse
+#' @rdname parse-cool
 
 .getCounts <- function(file,
     coords,
@@ -182,7 +182,7 @@
 #'
 #' @importFrom glue glue
 #' @import rhdf5
-#' @rdname parse
+#' @rdname parse-cool
 
 .fetchCool <- function(file, path, resolution = NULL, idx = NULL, ...) {
     check_cool_format(file, resolution)
@@ -203,7 +203,7 @@
 #' @import tidyr
 #' @import dplyr
 #' @import GenomicInteractions
-#' @rdname parse
+#' @rdname parse-cool
 
 .lsCoolFiles <- function(file, verbose = FALSE) {
     x <- rhdf5::h5ls(file) |> 
@@ -234,7 +234,7 @@
 #'
 #' @import rhdf5
 #' @import tidyr
-#' @rdname parse
+#' @rdname parse-cool
 #' @export
 
 lsCoolResolutions <- function(file, verbose = FALSE) {
@@ -265,7 +265,7 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
 #' @importFrom Matrix head
 #' @importFrom glue glue
 #' @import rhdf5
-#' @rdname parse
+#' @rdname parse-cool
 
 .peekCool <- function(file, path, resolution = NULL, n = 10) {
     check_cool_format(file, resolution)
@@ -284,7 +284,7 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
 #' @return a Seqinfo object
 #'
 #' @importFrom GenomeInfoDb Seqinfo
-#' @rdname parse
+#' @rdname parse-cool
 
 .cool2seqinfo <- function(file, resolution = NULL) {
     check_cool_format(file, resolution)
@@ -306,7 +306,7 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges resize
-#' @rdname parse
+#' @rdname parse-cool
 
 .cool2gi <- function(file, coords = NULL, resolution = NULL) {
     check_cool_format(file, resolution)
@@ -322,7 +322,7 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
     is_pair <- is(coords, 'Pairs')
 
     # Get anchors from mcool
-    anchors <- .getAnchors(file, resolution)
+    anchors <- .getCoolAnchors(file, resolution)
 
     # Get raw counts for bins from mcool
     if (!is_pair) {
@@ -346,8 +346,8 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
         anchors[cnts$bin2_id],
         count = cnts$count
     )
-    gi$bin_id1 <- cnts$bin1_id
-    gi$bin_id2 <- cnts$bin2_id
+    gi$bin_id1 <- cnts$bin1_id - 1
+    gi$bin_id2 <- cnts$bin2_id - 1
     
     if (!is.null(coords_chr) & all(!is.na(coords_chr)) & !is_pair) {
         # Make sure no extra GInteractions is pulled from cool (happends e.g. when fetching whole chrs.)

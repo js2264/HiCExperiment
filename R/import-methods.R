@@ -235,7 +235,7 @@ setMethod('import', 'HicproFile', function(con, ...) {
 
 #' @export
 
-setMethod('import', signature = 'PairsFile', function(con, ...) {
+setMethod('import', 'PairsFile', function(con, ...) {
 
     con <- BiocGenerics::path(con)
     stopifnot(file.exists(con))

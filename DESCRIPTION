@@ -74,4 +74,5 @@ Collate:
     'parse-hic.R'
     'parse-hicpro.R'
     'parse-other.R'
+    'parse-pairs.R'
     'utils.R'

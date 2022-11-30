@@ -33,7 +33,7 @@
 #' @examples
 #' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
 #' pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
-#' hcf <- CoolFile(mcool_path, resolution = 4000, pairsFile = pairs_path)
+#' cf <- CoolFile(mcool_path, resolution = 4000, pairsFile = pairs_path)
 NULL
 
 #' @export

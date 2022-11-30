@@ -13,7 +13,10 @@ HicFile methods.
 \examples{
 hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
 pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
-hic <- HicFile(hic_path, resolution = 4000, pairsFile = pairs_path, metadata = list(info = 'Processed with Juicer'))
+hic <- HicFile(
+  hic_path, resolution = 4000, 
+  pairsFile = pairs_path, metadata = list(info = 'Processed with Juicer')
+)
 hic
 resolution(hic)
 pairsFile(hic)

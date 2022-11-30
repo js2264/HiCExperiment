@@ -45,6 +45,7 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' 
 #' @importFrom methods setClass
 #' @importClassesFrom S4Vectors Annotated
+#' @importFrom S4Vectors metadata
 #' @examples 
 #' library(HiCExperiment)
 #' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')

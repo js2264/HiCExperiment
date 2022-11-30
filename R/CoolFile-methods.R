@@ -9,6 +9,7 @@
 #'
 #' @param object A \code{CoolFile} object.
 #'
+#' @importFrom S4Vectors metadata
 #' @importFrom BiocGenerics path
 #' @include CoolFile-class.R 
 #' @include PairsFile-class.R 
@@ -22,7 +23,7 @@
 #' cf
 #' resolution(cf)
 #' pairsFile(cf)
-#' metadata(cf)
+#' S4Vectors::metadata(cf)
 NULL
 
 #' @export

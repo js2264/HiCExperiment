@@ -196,11 +196,10 @@ is_hicpro_regions <- function(bed) {
                 progress = FALSE
             )
             {
-                is.numeric(x[[1]]) | 
-                is.character(x[[1]]) & 
+                {is.numeric(x[[1]]) | is.character(x[[1]])} & 
                 is.numeric(x[[2]]) & 
                 is.numeric(x[[3]]) & 
-                ncol(x) == 3 & 
+                {ncol(x) == 3 | ncol(x) == 4} & 
                 all(x[, c(2, 3)] >= 0) & 
                 all(x[,3] > x[,2]) &
                 length(unique(x[,3] - x[,2]))

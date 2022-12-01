@@ -313,7 +313,7 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
     
     # Mutate Pairs provided as characters to real Pairs
     if (!is.null(coords)) {
-        if (grepl(' x ', coords)) {
+        if (grepl('|', coords)) {
             coords <- char2coords(coords)
         }
     }

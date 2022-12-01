@@ -15,7 +15,7 @@ test_that("HiCExperiment methods work", {
         contacts_yeast['II:1-10000']
     }, 'HiCExperiment')
     expect_s4_class({
-        contacts_yeast['II:1-10000 x II:20000-40000']
+        contacts_yeast['II:1-10000|II:20000-40000']
     }, 'HiCExperiment')
     expect_type(fileName(contacts_yeast), 'character')
     expect_s4_class(seqinfo(contacts_yeast), 'Seqinfo')
@@ -53,20 +53,20 @@ test_that("utils works", {
     expect_type(splitCoords('II:30-40'), 'list')
 
     expect_type(coords2char('II:30-40'), 'character')
-    expect_type(coords2char('II:30-40 x II:40-50'), 'character')
+    expect_type(coords2char('II:30-40|II:40-50'), 'character')
     expect_type(coords2char(GRanges('II:30-40')), 'character')
 
-    expect_s4_class(char2coords("II:30000-50000 x II:60000-80000"), 'Pairs')
+    expect_s4_class(char2coords("II:30000-50000|II:60000-80000"), 'Pairs')
 
     expect_s4_class(fullContactInteractions("II", 30000, 50000, 1000), 'GInteractions')
 
     expect_equal(
-        sortPairs(char2coords("II:30000-50000 x II:60000-80000")), 
-        char2coords("II:30000-50000 x II:60000-80000")
+        sortPairs(char2coords("II:30000-50000|II:60000-80000")), 
+        char2coords("II:30000-50000|II:60000-80000")
     )
     expect_equal(
-        sortPairs(char2coords("II:90000-100000 x II:60000-80000")), 
-        char2coords("II:60000-80000 x II:90000-100000")
+        sortPairs(char2coords("II:90000-100000|II:60000-80000")), 
+        char2coords("II:60000-80000|II:90000-100000")
     )
 
     expect_s4_class(

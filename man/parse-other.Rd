@@ -3,26 +3,11 @@
 \name{gi2cm}
 \alias{gi2cm}
 \alias{cm2matrix}
-\alias{pairs2gi}
 \title{Other parsing functions}
 \usage{
 gi2cm(gi)
 
 cm2matrix(cm, replace_NA = NA)
-
-pairs2gi(
-  file,
-  chr1.field = NULL,
-  start1.field = NULL,
-  chr2.field = NULL,
-  start2.field = NULL,
-  strand1.field = NULL,
-  strand2.field = NULL,
-  frag1.field = NULL,
-  frag2.field = NULL,
-  nThread = 16,
-  nrows = Inf
-)
 }
 \arguments{
 \item{gi}{GInteractions}
@@ -30,33 +15,9 @@ pairs2gi(
 \item{cm}{A \code{ContactMatrix} object}
 
 \item{replace_NA}{Replace NA values}
-
-\item{file}{pairs file: \verb{<readname>\\t<chr1>\\t<start1>\\t<chr2>\\t<start2>}}
-
-\item{chr1.field}{chr1.field}
-
-\item{start1.field}{start1.field}
-
-\item{chr2.field}{chr2.field}
-
-\item{start2.field}{start2.field}
-
-\item{strand1.field}{strand1.field}
-
-\item{strand2.field}{strand2.field}
-
-\item{frag1.field}{frag1.field}
-
-\item{frag2.field}{frag2.field}
-
-\item{nThread}{Number of CPUs to use to import the \code{pairs} file in R}
-
-\item{nrows}{Number of pairs to import}
 }
 \value{
 a dense matrix
-
-a GenomicInteractions object
 }
 \description{
 Other parsing functions

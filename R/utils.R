@@ -1,16 +1,19 @@
-#' Utils functions 
+#' @title Utils functions 
+#' 
+#' @name HiCExperiment utils
+#' 
+#' @rdname utils
+#' 
+#' @description 
 #' 
 #' Utilities to facilitate parsing/handling of coordinates, GInteractions, 
 #' Pairs, ...
 #'
 #' @param coords coords
-#' @return a list containing `chr`, `start` and `end`
-#' 
 #' @import stringr
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges end
-#' @rdname utils
 
 splitCoords <- function(coords) {
     if (is(coords, 'GRanges')) {
@@ -38,16 +41,7 @@ splitCoords <- function(coords) {
     }
 }
 
-#' coords2char
-#'
-#' @param coords coords
 #' @param big.mark big.mark
-#' @return a character string
-#'
-#' @import stringr
-#' @importFrom GenomicRanges seqnames
-#' @importFrom GenomicRanges start
-#' @importFrom GenomicRanges end
 #' @rdname utils
 
 coords2char <- function(coords, big.mark = ',') {
@@ -58,7 +52,7 @@ coords2char <- function(coords, big.mark = ',') {
         paste0(chr, ':', format(start, big.mark = big.mark), '-', format(end, big.mark = big.mark))
     }
     else {
-        if (grepl('x', coords)) {
+        if (grepl('\\|', coords)) {
             coords
         }
         else {
@@ -73,12 +67,7 @@ coords2char <- function(coords, big.mark = ',') {
     }
 }
 
-#' char2coords
-#'
-#' @param char char (e.g. "II:30000-50000" or "II:30000-50000 x II:60000-80000")
-#' @return a S4Vectors::Pairs object
-#'
-#' @import stringr
+#' @param char char (e.g. "II:30000-50000" or "II:30000-50000|II:60000-80000")
 #' @importFrom methods is
 #' @importFrom stringr str_split
 #' @importFrom S4Vectors Pairs
@@ -90,16 +79,16 @@ char2coords <- function(char) {
     #     return(char)
     # }
     if (grepl(
-        '[A-Za-z0-9]*:[0-9]*-[0-9]* [xX/-;] [A-Za-z0-9]*:[0-9]*-[0-9]*$', 
+        '[A-Za-z0-9]*:[0-9]*-[0-9]*|[A-Za-z0-9]*:[0-9]*-[0-9]*$', 
         char
     )) {
-        splitst <- stringr::str_split(char, ' . ')[[1]]
+        splitst <- stringr::str_split(char, '\\|')[[1]]
         S4Vectors::Pairs(
             GenomicRanges::GRanges(splitst[[1]]), 
             GenomicRanges::GRanges(splitst[[2]])
         )
     }
-    else if (grepl('[A-Za-z0-9]*:[0-9]*-[0-9]*$', char)) {
+    else if (grepl('[A-Za-z0-9]*:[0-9]*[-:][0-9]*$', char)) {
         S4Vectors::Pairs(
             GenomicRanges::GRanges(char), 
             GenomicRanges::GRanges(char)
@@ -110,15 +99,10 @@ char2coords <- function(char) {
     }
 }
 
-#' fullContactInteractions
-#'
 #' @param chr chr
 #' @param start start
 #' @param end end
 #' @param binning binning
-#' @return a GenomicInteractions object
-#'
-#' @importFrom GenomicRanges GRanges
 #' @importFrom IRanges IRanges
 #' @importFrom InteractionSet GInteractions
 #' @rdname utils
@@ -138,11 +122,7 @@ fullContactInteractions <- function(chr, start, end, binning) {
     )
 }
 
-#' sortPairs
-#'
 #' @param pairs pairs
-#' @return a Pairs object
-#'
 #' @importFrom S4Vectors zipup
 #' @importFrom S4Vectors zipdown
 #' @importFrom GenomicRanges GRangesList
@@ -156,14 +136,7 @@ sortPairs <- function(pairs) {
     S4Vectors::zipdown(p_sorted)
 }
 
-#' asGInteractions
-#'
 #' @param df df
-#' @return a GenomicInteractions object
-#'
-#' @importFrom GenomicRanges GRanges
-#' @importFrom IRanges IRanges
-#' @importFrom InteractionSet GInteractions
 #' @rdname utils
 
 asGInteractions <- function(df) {

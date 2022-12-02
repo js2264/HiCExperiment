@@ -94,7 +94,8 @@ methods::setClass("HiCExperiment",
     stopifnot(file.exists(file))
     params <- list(...)
     bed <- NULL ; if ("bed" %in% names(params)) bed <- params[['bed']]
-
+    if (!is.null(resolution)) resolution <- as.integer(resolution)
+    
     if (is_cool(file) | is_mcool(file)) {
         return(.HiCExperimentFromCoolFile(
             file = file,

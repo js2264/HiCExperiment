@@ -64,7 +64,7 @@ setMethod('import', 'CoolFile', function(con, ...) {
     params <- list(...)
     if ('resolution' %in% names(params)) {
         check_cool_format(path, params[['resolution']])
-        resolution <- params[['resolution']]
+        resolution <- as.integer(params[['resolution']])
     } else {
         resolution <- resolution(con)
     } 
@@ -125,7 +125,7 @@ setMethod('import', 'HicFile', function(con, ...) {
     params <- list(...)
     if ('resolution' %in% names(params)) {
         check_hic_format(path, params[['resolution']])
-        resolution <- params[['resolution']]
+        resolution <- as.integer(params[['resolution']])
     } else {
         resolution <- resolution(con)
     }

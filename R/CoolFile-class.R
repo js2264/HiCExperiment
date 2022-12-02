@@ -42,7 +42,7 @@ setClass('CoolFile', contains = 'ContactsFile')
 
 #' @export
 
-setClass('McoolFile', contains = 'ContactsFile')
+setClass('McoolFile', contains = 'CoolFile')
 
 #' @export 
 

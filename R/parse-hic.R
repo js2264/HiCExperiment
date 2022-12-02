@@ -23,7 +23,7 @@
     
     # Mutate Pairs provided as characters to real Pairs
     if (!is.null(coords)) {
-        if (grepl('|', coords)) {
+        if (grepl('\\|', coords)) {
             coords <- char2coords(coords)
         }
     }

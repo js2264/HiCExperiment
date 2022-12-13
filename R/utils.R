@@ -79,7 +79,7 @@ char2coords <- function(char) {
     #     return(char)
     # }
     if (grepl(
-        '[A-Za-z0-9]*:[0-9]*-[0-9]*|[A-Za-z0-9]*:[0-9]*-[0-9]*$', 
+        '[A-Za-z0-9]*:[0-9]*-[0-9]*\\|[A-Za-z0-9]*:[0-9]*-[0-9]*$', 
         char
     )) {
         splitst <- stringr::str_split(char, '\\|')[[1]]

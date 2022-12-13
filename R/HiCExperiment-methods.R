@@ -238,7 +238,7 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
     ints_ <- interactions(x)
     if (length(i) == 1) {
         if (grepl(
-            '[A-Za-z0-9]*:[0-9]*-[0-9]* [xX/-;] [A-Za-z0-9]*:[0-9]*-[0-9]*$', i
+            '[A-Za-z0-9]*:[0-9]*-[0-9]*[xX/-;\\|][A-Za-z0-9]*:[0-9]*-[0-9]*$', i
         )) {
             i_ <- char2coords(i)
             valid_regions_first <- subsetByOverlaps(

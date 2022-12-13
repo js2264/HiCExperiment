@@ -103,12 +103,12 @@ pairs2gi <- function(
     ))) stop("Impossible to parse pairs file")
 
     # -- Import pairs
-    sel1 <- dplyr::all_of(c(chr1.field, start1.field, strand1.field, frag1.field))
-    sel2 <- dplyr::all_of(c(chr2.field, start2.field, strand2.field, frag2.field))
+    sel1 <- (c(chr1.field, start1.field, strand1.field, frag1.field))
+    sel2 <- (c(chr2.field, start2.field, strand2.field, frag2.field))
     anchors1 <- vroom::vroom(
         file,
         n_max = nrows,
-        col_select = sel1,
+        col_select = dplyr::all_of(sel1),
         comment = '#',
         col_names = FALSE,
         show_col_types = FALSE
@@ -116,7 +116,7 @@ pairs2gi <- function(
     anchors2 <- vroom::vroom(
         file,
         n_max = nrows,
-        col_select = sel2,
+        col_select = dplyr::all_of(sel2),
         comment = '#',
         col_names = FALSE,
         show_col_types = FALSE

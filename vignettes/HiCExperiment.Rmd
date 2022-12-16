@@ -60,9 +60,7 @@ The implemented `import()` methods allow one to import Hi-C matrix files in R as
 `HiCExperiment` objects.
 
 ```{r, eval = FALSE}
-## Not run:
 hic <- import("path-to-(m)cool-file")
-## End(Not run)
 ```
 
 To give real-life examples, we use the `HiContactsData` package to get access 
@@ -128,7 +126,7 @@ locus of interest.
 
 ```{r}
 range <- 'I:20000-80000' # range of interest
-hic <- import(cf, focus = range)
+hic <- import(cool_file, format = 'cool',  focus = range)
 hic
 focus(hic)
 ```

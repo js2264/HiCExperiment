@@ -309,6 +309,7 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
 #' @rdname parse-cool
 
 .cool2gi <- function(file, coords = NULL, resolution = NULL) {
+    file <- gsub('~', Sys.getenv('HOME'), file)
     check_cool_format(file, resolution)
     
     # Mutate Pairs provided as characters to real Pairs

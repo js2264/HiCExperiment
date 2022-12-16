@@ -58,14 +58,14 @@ HiCExperiment(
 )
 }
 \arguments{
-\item{file}{CoolFile or plain path to a (m)cool file}
+\item{file}{CoolFile or plain path to a Hi-C contact file}
 
-\item{resolution}{Resolution to use with mcool file}
+\item{resolution}{Resolution to use with the Hi-C contact file}
 
 \item{focus}{Chromosome coordinates for which
-interaction counts are extracted from the .(m)cool file, provided
+interaction counts are extracted from the Hi-C contact file, provided
 as a character string (e.g. "II:4000-5000"). If not provided,
-the entire (m)cool file will be imported.}
+the entire Hi-C contact file will be imported.}
 
 \item{metadata}{list of metadata}
 
@@ -81,23 +81,23 @@ the entire (m)cool file will be imported.}
 An \code{HiCExperiment} object.
 }
 \description{
-The \code{HiCExperiment} class describes (m)cool files imported in R, either
+The \code{HiCExperiment} class describes Hi-C contact files imported in R, either
 through the \code{HiCExperiment} constructor function or using the \code{import}
 method implemented by \code{HiCExperiment} package.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{fileName}}{Path of (m)cool file}
+\item{\code{fileName}}{Path of Hi-C contact file}
 
 \item{\code{focus}}{Chr. coordinates for which interaction counts are extracted
-from the .(m)cool file.}
+from the Hi-C contact file.}
 
-\item{\code{resolutions}}{Resolutions available in the .(m)cool file.}
+\item{\code{resolutions}}{Resolutions available in the Hi-C contact file.}
 
 \item{\code{resolution}}{Current resolution}
 
-\item{\code{interactions}}{Genomic Interactions extracted from the .(m)cool object}
+\item{\code{interactions}}{Genomic Interactions extracted from the Hi-C contact file}
 
 \item{\code{scores}}{Available interaction scores.}
 
@@ -105,9 +105,9 @@ from the .(m)cool file.}
 (e.g. loops (\<Pairs\>), borders (\<GRanges\>),
 viewpoints (\<GRanges\>), etc...)}
 
-\item{\code{pairsFile}}{Path to the .pairs file associated with the .(m)cool file}
+\item{\code{pairsFile}}{Path to the .pairs file associated with the Hi-C contact file}
 
-\item{\code{metadata}}{metadata associated with the .(m)cool file.}
+\item{\code{metadata}}{metadata associated with the Hi-C contact file.}
 }}
 
 \examples{

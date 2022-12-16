@@ -42,7 +42,7 @@ mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
 import(mcool_path, resolution = 16000, format = 'cool')
 
 # ---- Importing .hic files 
-hic_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
 import(hic_path, resolution = 2000, focus = 'II', format = 'hic')
 
 # ---- Importing HiC-Pro files 

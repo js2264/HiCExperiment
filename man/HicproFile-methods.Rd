@@ -18,5 +18,5 @@ hicpro <- HicproFile(hicpro_matrix_path, bed = hicpro_bed_path, pairs = pairs_pa
 hicpro
 resolution(hicpro)
 pairsFile(hicpro)
-metadata(hicpro)
+S4Vectors::metadata(hicpro)
 }

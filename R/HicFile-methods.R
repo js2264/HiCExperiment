@@ -22,7 +22,7 @@
 #' hic
 #' resolution(hic)
 #' pairsFile(hic)
-#' metadata(hic)
+#' S4Vectors::metadata(hic)
 NULL
 
 #' @export

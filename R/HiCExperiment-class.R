@@ -12,29 +12,29 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' 
 #' @description
 #' 
-#' The `HiCExperiment` class describes (m)cool files imported in R, either 
+#' The `HiCExperiment` class describes Hi-C contact files imported in R, either 
 #' through the `HiCExperiment` constructor function or using the `import` 
 #' method implemented by `HiCExperiment` package. 
 #'
-#' @slot fileName Path of (m)cool file
+#' @slot fileName Path of Hi-C contact file
 #' @slot focus Chr. coordinates for which interaction counts are extracted 
-#'   from the .(m)cool file.
-#' @slot resolutions Resolutions available in the .(m)cool file.
+#'   from the Hi-C contact file.
+#' @slot resolutions Resolutions available in the Hi-C contact file.
 #' @slot resolution Current resolution
-#' @slot interactions Genomic Interactions extracted from the .(m)cool object
+#' @slot interactions Genomic Interactions extracted from the Hi-C contact file
 #' @slot scores Available interaction scores. 
 #' @slot topologicalFeatures Topological features associated with the dataset 
 #'   (e.g. loops (\<Pairs\>), borders (\<GRanges\>), 
 #'   viewpoints (\<GRanges\>), etc...)
-#' @slot pairsFile Path to the .pairs file associated with the .(m)cool file
-#' @slot metadata metadata associated with the .(m)cool file.
+#' @slot pairsFile Path to the .pairs file associated with the Hi-C contact file
+#' @slot metadata metadata associated with the Hi-C contact file.
 #' 
-#' @param file CoolFile or plain path to a (m)cool file
-#' @param resolution Resolution to use with mcool file
+#' @param file CoolFile or plain path to a Hi-C contact file
+#' @param resolution Resolution to use with the Hi-C contact file
 #' @param focus Chromosome coordinates for which 
-#'   interaction counts are extracted from the .(m)cool file, provided
+#'   interaction counts are extracted from the Hi-C contact file, provided
 #'   as a character string (e.g. "II:4000-5000"). If not provided, 
-#'   the entire (m)cool file will be imported. 
+#'   the entire Hi-C contact file will be imported. 
 #' @param metadata list of metadata
 #' @param topologicalFeatures topologicalFeatures provided as a named SimpleList
 #' @param pairsFile Path to an associated .pairs file
@@ -73,7 +73,7 @@ methods::setClass("HiCExperiment",
 #' @rdname HiCExperiment
 #' @export
 
- HiCExperiment <- function(
+HiCExperiment <- function(
     file, 
     resolution = NULL, 
     focus = NULL, 

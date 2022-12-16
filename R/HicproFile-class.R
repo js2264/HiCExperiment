@@ -43,6 +43,7 @@ setClass('HicproFile', contains = 'ContactsFile', slots = list(
 #' @export 
 
 HicproFile <- function(path, bed = NULL, pairsFile = NULL, metadata = list()) {
+    path <- gsub('~', Sys.getenv('HOME'), path)
     check_hicpro_files(path, bed)
     if (!is.null(bed)) {
         bed1 <- vroom::vroom(

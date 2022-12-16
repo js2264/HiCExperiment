@@ -1,16 +1,14 @@
 test_that("HicFile works", {
     
     # Prepare paths and HicproFiles
-    # hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-    # hicpro_bed_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-    hicpro_matrix_path <- '~/Projects/20221128_HiCExperiment_datasets/results/contact_maps/raw/txt/CH112_R_1000.txt'
-    hicpro_bed_path <- '~/Projects/20221128_HiCExperiment_datasets/results/contact_maps/raw/txt/CH112_R_1000.bed'
+    hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
+    hicpro_bed_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_bed')
     pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
 
     hicpro0 <- HicproFile(hicpro_matrix_path)
     hicpro1 <- HicproFile(hicpro_matrix_path, bed = hicpro_bed_path)
+    hicpro2 <- HicproFile(hicpro_matrix_path, bed = hicpro_bed_path, pairs = pairs_path)
     
-
     # import is properly handled for HicproFile
     expect_error(import(hicpro0))
     ihicpro1 <- import(hicpro1)

@@ -30,6 +30,7 @@
 #'    format-specific methods.
 #' 
 #' @usage import(con, format, text, ...)
+#' @return A `HiCExperiment` or `GInteractions` object
 #' 
 #' @importFrom BiocIO import
 #' @importFrom BiocGenerics path

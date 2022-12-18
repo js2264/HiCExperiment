@@ -9,6 +9,8 @@
 #' Utilities to facilitate parsing/handling of coordinates, GInteractions, 
 #' Pairs, ...
 #'
+#' @return Reformatted coordinates or GInteractions
+#' 
 #' @param coords coords
 #' @import stringr
 #' @importFrom GenomicRanges seqnames
@@ -97,29 +99,6 @@ char2coords <- function(char) {
     else {
         stop("Cannot coerce string into a Pairs object")
     }
-}
-
-#' @param chr chr
-#' @param start start
-#' @param end end
-#' @param binning binning
-#' @importFrom IRanges IRanges
-#' @importFrom InteractionSet GInteractions
-#' @rdname utils
-
-fullContactInteractions <- function(chr, start, end, binning) {
-    full_anchors <- GenomicRanges::GRanges(
-        seqnames = chr, 
-        IRanges::IRanges(
-            start = seq(start, end-1, by = binning),
-            width = binning
-        )
-    )
-    InteractionSet::GInteractions(
-        full_anchors[rep(seq_along(full_anchors), length(full_anchors))], 
-        full_anchors[rep(seq_along(full_anchors), each = length(full_anchors))], 
-        full_anchors
-    )
 }
 
 #' @param pairs pairs

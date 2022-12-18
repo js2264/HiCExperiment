@@ -5,7 +5,6 @@
 \alias{splitCoords}
 \alias{coords2char}
 \alias{char2coords}
-\alias{fullContactInteractions}
 \alias{sortPairs}
 \alias{asGInteractions}
 \title{Utils functions}
@@ -15,8 +14,6 @@ splitCoords(coords)
 coords2char(coords, big.mark = ",")
 
 char2coords(char)
-
-fullContactInteractions(chr, start, end, binning)
 
 sortPairs(pairs)
 
@@ -29,17 +26,12 @@ asGInteractions(df)
 
 \item{char}{char (e.g. "II:30000-50000" or "II:30000-50000|II:60000-80000")}
 
-\item{chr}{chr}
-
-\item{start}{start}
-
-\item{end}{end}
-
-\item{binning}{binning}
-
 \item{pairs}{pairs}
 
 \item{df}{df}
+}
+\value{
+Reformatted coordinates or GInteractions
 }
 \description{
 Utilities to facilitate parsing/handling of coordinates, GInteractions,

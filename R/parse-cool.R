@@ -236,6 +236,9 @@
 #' @import tidyr
 #' @rdname parse-cool
 #' @export
+#' @examples 
+#' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+#' lsCoolResolutions(mcool_path, verbose = TRUE)
 
 lsCoolResolutions <- function(file, verbose = FALSE) {
     if (is_cool(file)) {

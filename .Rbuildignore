@@ -1,1 +1,8 @@
 ^LICENSE\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
+^\.pre-commit-config\.yaml$
+^doc$
+^Meta$

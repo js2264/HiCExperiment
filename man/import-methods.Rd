@@ -30,6 +30,9 @@ providing the string data to import.}
 \item{...}{e.g. \code{resolution = ...}; parameters to pass to
 format-specific methods.}
 }
+\value{
+A \code{HiCExperiment} or \code{GInteractions} object
+}
 \description{
 Import methods for data structures implemented in the HiCExperiment package.
 HiCExperiment package implements methods to faciliate

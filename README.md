@@ -2,7 +2,7 @@
 [![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-# HiCExperiment <img src="man/figures/logo.png" align="right" alt="" />
+# HiCExperiment
 
 ## Aims of `HiCExperiment` package 
 
@@ -22,55 +22,6 @@ pairs format (by indicating the columns containing
 `chr1`, `start1`, `strand1`, `chr2`, `start2`, `strand2` information). 
 
 ![](https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_data-structure.png)
-
-## The `HiCExperiment` ecosystem
-
-`HiCExperiment` S4 class is build on pre-existing Bioconductor classes, 
-namely `InteractionSet`, `GenomicInterations` and `ContactMatrix` 
-(`Lun, Perry & Ing-Simmons, F1000Research 2016`), and leverages them to 
-import on-disk Hi-C matrix files.
-
-Several other packages rely on the `HiCExperiment` class to provide a rich 
-ecosystem when interacting with Hi-C data. 
-
-### HiContacts 
-
-[`HiContacts` package](http://www.bioconductor.org/packages/release/bioc/html/HiContacts.html) 
-further provides **analytical** and **visualization** tools to investigate Hi-C 
-matrices imported as `HiCExperiment` in R. 
-
-Among other features, it provides the end-user with generic functions to 
-annotate topological features in a Hi-C contact map and export them, notably 
-(1) compartments, (2) TADs and (3) 
-
-### HiCool 
-
-`HiCool` package integrates an end-to-end processing workflow, to generate 
-multi-resolution balanced contact matrices from paired-end fastq files 
-of Hi-C experiments. 
-
-Under the hood, `HiCool` leverages `hicstuff` and `cooler` to process fastq files 
-into .mcool files. [`hicstuff`](https://github.com/koszullab/hicstuff) takes 
-care of the heavy-lifting, and accurately filters non-informative read pairs out, 
-to retain onlly informative contacts. 
-
-Two important features of `HiCool` are: 
-
-1. Its operability within the `R` ecosystem. It relies on `basilisk` to set 
-  up a `conda` environment with pinned versions of each software it needs to 
-  align, filter and process read pairs into contact matrices. 
-1. Its transparency. `HiCool` generates QC checks and logs, all embedded in 
-  HTML files to easily inspect the quality of each sample. 
-
-### fourDNData
-
-`fourDNData` (read `"4DN Data"`) is a package providing a gateway to 
-the [4DN data portal](https://data.4dnucleome.org/). 
-
-### HiContactsData
-
-[`HiContactsData` package](http://www.bioconductor.org/packages/release/bioc/html/HiContactsData.html) 
-provides toy datasets to illustrate how the `HiCExperiment` ecosystem works.
 
 ## Importing a Hi-C matrix file
 
@@ -214,3 +165,54 @@ import(hicpro_pairs_file, nrows = 100)
 ##   regions: 158 ranges and 0 metadata columns
 ##   seqinfo: 15 sequences from an unspecified genome; no seqlengths
 ```
+
+## The `HiCExperiment` ecosystem
+
+`HiCExperiment` S4 class is build on pre-existing Bioconductor classes, 
+namely `InteractionSet`, `GenomicInterations` and `ContactMatrix` 
+(`Lun, Perry & Ing-Simmons, F1000Research 2016`), and leverages them to 
+import on-disk Hi-C matrix files.
+
+Several other packages rely on the `HiCExperiment` class to provide a rich 
+ecosystem when interacting with Hi-C data. 
+
+![](https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_ecosystem.png)
+
+### HiContacts 
+
+[`HiContacts` package](http://www.bioconductor.org/packages/release/bioc/html/HiContacts.html) 
+further provides **analytical** and **visualization** tools to investigate Hi-C 
+matrices imported as `HiCExperiment` in R. 
+
+Among other features, it provides the end-user with generic functions to 
+annotate topological features in a Hi-C contact map and export them, notably 
+(1) compartments, (2) TADs and (3) 
+
+### HiCool 
+
+`HiCool` package integrates an end-to-end processing workflow, to generate 
+multi-resolution balanced contact matrices from paired-end fastq files 
+of Hi-C experiments. 
+
+Under the hood, `HiCool` leverages `hicstuff` and `cooler` to process fastq files 
+into .mcool files. [`hicstuff`](https://github.com/koszullab/hicstuff) takes 
+care of the heavy-lifting, and accurately filters non-informative read pairs out, 
+to retain onlly informative contacts. 
+
+Two important features of `HiCool` are: 
+
+1. Its operability within the `R` ecosystem. It relies on `basilisk` to set 
+  up a `conda` environment with pinned versions of each software it needs to 
+  align, filter and process read pairs into contact matrices. 
+1. Its transparency. `HiCool` generates QC checks and logs, all embedded in 
+  HTML files to easily inspect the quality of each sample. 
+
+### fourDNData
+
+`fourDNData` (read `"4DN Data"`) is a package providing a gateway to 
+the [4DN data portal](https://data.4dnucleome.org/). 
+
+### HiContactsData
+
+[`HiContactsData` package](http://www.bioconductor.org/packages/release/bioc/html/HiContactsData.html) 
+provides toy datasets to illustrate how the `HiCExperiment` ecosystem works.

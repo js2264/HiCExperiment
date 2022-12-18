@@ -22,3 +22,12 @@ a dense matrix
 \description{
 Other parsing functions
 }
+\examples{
+mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+contacts <- import(mcool_path, format = 'cool')
+gis <- interactions(contacts)
+gis$score <- scores(contacts, 1)
+cm <- gi2cm(gis)
+cm
+cm2matrix(cm)[1:10, 1:10]
+}

@@ -5,6 +5,13 @@
 #' @param gi GInteractions
 #' @rdname parse-other
 #' @export
+#' @examples 
+#' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+#' contacts <- import(mcool_path, format = 'cool')
+#' gis <- interactions(contacts)
+#' gis$score <- scores(contacts, 1)
+#' cm <- gi2cm(gis)
+#' cm
 
 gi2cm <- function(gi) {
     InteractionSet::inflate(
@@ -22,6 +29,8 @@ gi2cm <- function(gi) {
 #' @importFrom Matrix as.matrix
 #' @rdname parse-other
 #' @export
+#' @examples 
+#' cm2matrix(cm)[1:10, 1:10]
 
 cm2matrix <- function(cm, replace_NA = NA) {
     m <- Matrix::as.matrix(cm)

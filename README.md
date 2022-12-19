@@ -4,6 +4,8 @@
 
 # HiCExperiment
 
+![](https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_data-structure.png)
+
 ## Aims of `HiCExperiment` package 
 
 The `HiCExperiment` package provides a unified data structure to import the 
@@ -20,8 +22,6 @@ The `HiCExperiment` package also provides methods to import pairs files generate
 by `pairtools`/`cooler` workflow, by HiC-Pro pipeline, or any type of tabular 
 pairs format (by indicating the columns containing 
 `chr1`, `start1`, `strand1`, `chr2`, `start2`, `strand2` information). 
-
-![](https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_data-structure.png)
 
 ## Importing a Hi-C matrix file
 
@@ -186,7 +186,8 @@ matrices imported as `HiCExperiment` in R.
 
 Among other features, it provides the end-user with generic functions to 
 annotate topological features in a Hi-C contact map and export them, notably 
-(1) compartments, (2) TADs and (3) 
+compartments, domains of constrained interactions (so-called TADs) and focal 
+chromatin loops.
 
 ### HiCool 
 
@@ -197,7 +198,7 @@ of Hi-C experiments.
 Under the hood, `HiCool` leverages `hicstuff` and `cooler` to process fastq files 
 into .mcool files. [`hicstuff`](https://github.com/koszullab/hicstuff) takes 
 care of the heavy-lifting, and accurately filters non-informative read pairs out, 
-to retain onlly informative contacts. 
+to retain only informative contacts. 
 
 Two important features of `HiCool` are: 
 

@@ -57,6 +57,7 @@
 #' @importFrom InteractionSet reduceRegions
 #' @importFrom GenomeInfoDb seqinfo
 #' 
+#' @include AllGenerics.R
 #' @examples 
 #' library(HiCExperiment)
 #' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')

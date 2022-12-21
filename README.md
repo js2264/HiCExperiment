@@ -6,8 +6,6 @@
 
 ![](https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_data-structure.png)
 
-## Aims of `HiCExperiment` package 
-
 The `HiCExperiment` package provides a unified data structure to import the 
 three main Hi-C matrix file formats (`.(m)cool`, `.hic` and `HiC-Pro` matrices) 
 in R and performs common array operations on them. 
@@ -40,7 +38,7 @@ import(cool_file, focus = "II:10000-100000")
 ## resolutions(1): 1000
 ## current resolution: 1000
 ## interactions: 3454
-## scores(2): raw balanced
+## scores(2): count balanced
 ## topologicalFeatures: loops(0) borders(0) compartments(0) viewpoints(0)
 ## pairsFile: N/A
 ## metadata(0):
@@ -59,7 +57,7 @@ import(mcool_file, focus = "II:10000-100000", resolution = 2000)
 ## resolutions(5): 1000 2000 4000 8000 16000
 ## current resolution: 2000
 ## interactions: 1004
-## scores(2): raw balanced
+## scores(2): count balanced
 ## topologicalFeatures: loops(0) borders(0) compartments(0) viewpoints(0)
 ## pairsFile: N/A
 ## metadata(0):
@@ -80,7 +78,7 @@ import(hic_file, focus = "II:10000-100000", resolution = 4000)
 ## resolutions(5): 1000 2000 4000 8000 16000
 ## current resolution: 4000
 ## interactions: 276
-## scores(2): raw balanced
+## scores(2): count balanced
 ## topologicalFeatures: loops(0) borders(0) compartments(0) viewpoints(0)
 ## pairsFile: N/A
 ## metadata(0):

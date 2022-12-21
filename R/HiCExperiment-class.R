@@ -180,7 +180,7 @@ setValidity("HiCExperiment",
         resolution = ifelse(is.null(resolution), lsCoolResolutions(file)[1], resolution), 
         interactions = gis, 
         scores = S4Vectors::SimpleList(
-            'raw' = as.numeric(mcols$count),
+            'count' = as.numeric(mcols$count),
             'balanced' = as.numeric(mcols$score)
         ), 
         topologicalFeatures = topologicalFeatures, 
@@ -229,7 +229,7 @@ setValidity("HiCExperiment",
         resolution = resolution, 
         interactions = gis, 
         scores = S4Vectors::SimpleList(
-            'raw' = as.numeric(mcols$count),
+            'count' = as.numeric(mcols$count),
             'balanced' = as.numeric(mcols$score)
         ), 
         topologicalFeatures = topologicalFeatures, 
@@ -276,7 +276,7 @@ setValidity("HiCExperiment",
         resolution = res, 
         interactions = gis, 
         scores = S4Vectors::SimpleList(
-            'counts' = as.numeric(mcols$count)
+            'count' = as.numeric(mcols$count)
         ), 
         topologicalFeatures = topologicalFeatures, 
         pairsFile = pairsFile, 

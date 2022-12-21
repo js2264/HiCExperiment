@@ -26,7 +26,6 @@ test_that("HiCExperiment methods work", {
     expect_s4_class(interactions(contacts_yeast), 'GInteractions')
     expect_s4_class(scores(contacts_yeast), 'SimpleList')
     expect_type(scores(contacts_yeast, 1), 'double')
-    expect_type(scores(contacts_yeast, 'raw'), 'double')
     expect_type(scores(contacts_yeast, 'balanced'), 'double')
     expect_s4_class(topologicalFeatures(contacts_yeast), 'SimpleList')
     expect_s4_class(topologicalFeatures(contacts_yeast, 'loops'), 'Pairs')

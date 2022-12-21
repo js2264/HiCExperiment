@@ -7,6 +7,7 @@
 \alias{char2coords}
 \alias{sortPairs}
 \alias{asGInteractions}
+\alias{sdiag}
 \title{Utils functions}
 \usage{
 splitCoords(coords)
@@ -18,6 +19,8 @@ char2coords(char)
 sortPairs(pairs)
 
 asGInteractions(df)
+
+sdiag(A, k = 0)
 }
 \arguments{
 \item{coords}{coords}
@@ -29,6 +32,10 @@ asGInteractions(df)
 \item{pairs}{pairs}
 
 \item{df}{df}
+
+\item{A}{matrix}
+
+\item{k}{secondary diagonal k}
 }
 \value{
 Reformatted coordinates or GInteractions

@@ -53,9 +53,10 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 Collate: 
+    'HiCExperiment-class.R'
+    'AggrHiCExperiment-class.R'
     'AllGenerics.R'
     'PairsFile-class.R'
-    'HiCExperiment-class.R'
     'ContactsFile-class.R'
     'ContactsFile-methods.R'
     'CoolFile-class.R'
@@ -70,6 +71,7 @@ Collate:
     'data.R'
     'globals.R'
     'import-methods.R'
+    'multiquery.R'
     'parse-cool.R'
     'parse-hic.R'
     'parse-hicpro.R'

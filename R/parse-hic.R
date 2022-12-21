@@ -178,7 +178,7 @@
         gi$score <- parsed_hic_balanced$counts
     }
     else {
-            stop("unsupported xx")
+        stop("Non-symetric parsing of .hic files is currently unsupported.")
     }
 
     # Match anchor ID with each interaction

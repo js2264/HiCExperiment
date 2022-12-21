@@ -5,6 +5,7 @@
 \alias{.getCountsFromPair}
 \alias{.getCounts}
 \alias{.fetchCool}
+\alias{.dumpCool}
 \alias{.lsCoolFiles}
 \alias{lsCoolResolutions}
 \alias{.peekCool}
@@ -19,6 +20,8 @@
 .getCounts(file, coords, anchors, resolution = NULL)
 
 .fetchCool(file, path, resolution = NULL, idx = NULL, ...)
+
+.dumpCool(file, resolution = NULL)
 
 .lsCoolFiles(file, verbose = FALSE)
 

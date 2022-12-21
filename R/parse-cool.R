@@ -194,6 +194,29 @@
     as.vector(rhdf5::h5read(file, name = path, index = list(idx), ...))
 }
 
+#' @importFrom tibble as_tibble
+#' @rdname parse-cool
+
+.dumpCool <- function(file, resolution = NULL) {
+    check_cool_format(file, resolution)
+    path <- ifelse(
+        is.null(resolution), 
+        '/', 
+        glue::glue("/resolutions/{resolution}")
+    )
+    lres <- as.vector(rhdf5::h5read(file, name = path))
+    res <- list(
+        'bins' = tibble::as_tibble(lres[['bins']]),
+        'chroms' = tibble::as_tibble(lres[['chroms']]),
+        'indexes' = list(
+            bin1_offset = lres[['indexes']]$bin1_offset, 
+            chrom_offset = lres[['indexes']]$chrom_offset
+        ),
+        'pixels' = tibble::as_tibble(lres[['pixels']])
+    )
+    return(res)
+}
+
 #' @param file file
 #' @param verbose verbose
 #' @return vector

@@ -25,13 +25,16 @@ NULL
 #' @rdname AggrHiCExperiment
 #' @export
 
-methods::setClass("AggrHiCExperiment", contains = c("HiCExperiment"))
+methods::setClass("AggrHiCExperiment", contains = c("HiCExperiment"), 
+    slots = c(slices = "SimpleList")
+)
 
 #' @rdname AggrHiCExperiment
 #' @export
 #' @examples
 #' library(rtracklayer)
 #' devtools::load_all('.')
+#' file = '/home/rsg/.cache/R/ExperimentHub/7fa45373d163_7836'
 #' file = "/home/rsg/.cache/R/fourDNData/78685597e138_4DNFI9FVHJZQ.mcool"
 #' file = "/data/20221214_HiContacts_compartments-TADs-loops/data/test.mcool"
 #' resolution = 10000 
@@ -43,29 +46,22 @@ methods::setClass("AggrHiCExperiment", contains = c("HiCExperiment"))
 #' snippets <- coords_list[coords_list$score >= quantile(coords_list$score , 0.75) & coords_list$scoreChIP >= quantile(coords_list$scoreChIP , 0.75)]
 #' snippets <- GenomicRanges::resize(snippets, width = resolution*100, fix = 'center')
 #' snippets <- snippets[order(snippets$scoreChIP, decreasing = TRUE)]
+#' #snippets <- snippets[strand(snippets) == '+']
+#' snippets <- snippets[resize(snippets, fix = 'center', width = 1) %over% GRanges('chr2:11000000-12000000')]
 #' pairs <- Pairs(
 #'     rep(snippets, each = length(snippets)),
 #'     rep(snippets, length(snippets))
 #' )
-#' d <- distance(pairs)
-#' pairs <- pairs[d > 200000 & d < 1000000 & !is.na(d)]
+#' pairs <- pairs[start(S4Vectors::first(pairs)) - start(S4Vectors::second(pairs)) > 0]
 
 AggrHiCExperiment <- function(
     file, 
     resolution = NULL, 
     snippets, 
     metadata = list(), 
-    topologicalFeatures = S4Vectors::SimpleList(
-        'loops' = S4Vectors::Pairs(
-            GenomicRanges::GRanges(), 
-            GenomicRanges::GRanges()
-        ), 
-        'borders' = GenomicRanges::GRanges(), 
-        'compartments' = GenomicRanges::GRanges(), 
-        'viewpoints' = GenomicRanges::GRanges()
-    ), 
+    topologicalFeatures = S4Vectors::SimpleList(), 
     pairsFile = NULL, 
-    BPPARAM = BiocParallel::SerialParam(progressbar = TRUE),
+    BPPARAM = BiocParallel::bpparam(),
     ...
 ) {
     file <- gsub('~', Sys.getenv('HOME'), file)
@@ -75,7 +71,9 @@ AggrHiCExperiment <- function(
     if (!is.null(resolution)) resolution <- as.integer(resolution)
     
     if (is_cool(file) | is_mcool(file)) {
-        return(.AggrHiCExperimentFromCoolFile(
+        check_cool_file(file)
+        check_cool_format(file, resolution)
+        return(.aggrHiCExperiment(
             file = file,
             resolution = resolution,
             snippets = snippets,
@@ -86,7 +84,9 @@ AggrHiCExperiment <- function(
         ))
     }
     if (is_hic(file)) {
-        return(.AggrHiCExperimentFromHicFile(
+        check_hic_file(file)
+        check_hic_format(file, resolution)
+        return(.aggrHiCExperiment(
             file = file,
             resolution = resolution,
             snippets = snippets,
@@ -97,15 +97,16 @@ AggrHiCExperiment <- function(
         ))
     }
     if (is_hicpro_matrix(file)) {
+        check_hicpro_files(file, bed)
         if (is.null(bed)) stop("Regions files not provided.")
-        if (!is.null(resolution)) stop("Resolution cannot be specified when importing HiC-Pro files.")
-        return(.AggrHiCExperimentFromHicproFile(
+        return(.aggrHiCExperiment(
             file = file,
-            bed = bed,
-            metadata = metadata,
+            resolution = resolution,
             snippets = snippets,
+            metadata = metadata,
             topologicalFeatures = topologicalFeatures,
             pairsFile = pairsFile, 
+            bed = bed,
             BPPARAM = BPPARAM
         ))
     }
@@ -114,38 +115,32 @@ AggrHiCExperiment <- function(
 
 #' @rdname AggrHiCExperiment
 
-.AggrHiCExperimentFromCoolFile <- function(
+.aggrHiCExperiment <- function(
     file, 
     resolution = NULL, 
     snippets, 
     metadata = list(), 
-    topologicalFeatures = S4Vectors::SimpleList(
-        'loops' = S4Vectors::Pairs(
-            GenomicRanges::GRanges(), 
-            GenomicRanges::GRanges()
-        ), 
-        'borders' = GenomicRanges::GRanges(), 
-        'compartments' = GenomicRanges::GRanges(), 
-        'viewpoints' = GenomicRanges::GRanges()
-    ), 
+    topologicalFeatures = S4Vectors::SimpleList(), 
     pairsFile = NULL, 
     BPPARAM
 ) {
     
-    ## -- Check that provided file is valid
-    file <- gsub('~', Sys.getenv('HOME'), file)
-    check_cool_file(file)
-    check_cool_format(file, resolution)
-
     ## -- Parse multi-query
     if (is(snippets, 'GRanges')) {
-        gis <- .coolMulti1DQuery(file, resolution, snippets, BPPARAM = BPPARAM)
-        # snippets <- S4Vectors::Pairs(snippets, snippets)
-        # gis <- .coolMulti2DQuery(file, resolution, snippets, BPPARAM = BPPARAM)
+
+        # Need to check that snippets are OK (unique width, greater than 0, ...)
+        snippets <- S4Vectors::Pairs(snippets, snippets)
+        gis <- .coolMulti2DQuery(file, resolution, snippets, BPPARAM = BPPARAM)
+
     }
     else if (is(snippets, 'Pairs')) {
-        gis <- .coolMulti2DQuery(file, resolution, snippets, BPPARAM = BPPARAM)
+
+        # Need to check that pairs are OK (all width = 1)
+        gis <- .multi2DQuery(file, resolution, snippets, BPPARAM = BPPARAM)
+
     }
+    mdata <- S4Vectors::metadata(gis)
+    S4Vectors::metadata(gis) <- list()
     mcols <- GenomicRanges::mcols(gis)
     GenomicRanges::mcols(gis) <- NULL
 
@@ -162,12 +157,13 @@ AggrHiCExperiment <- function(
             'expected' = as.numeric(mcols$expected), 
             'detrended' = as.numeric(mcols$detrended)
         ),
-        topologicalFeatures = c(snippets, topologicalFeatures),
+        slices = mdata$slices, 
+        topologicalFeatures = S4Vectors::SimpleList(
+            c(snippets = snippets, as.list(topologicalFeatures))
+        ),
         pairsFile = pairsFile, 
         metadata = metadata
     )
     methods::validObject(x)
     return(x)
 } 
-
-#' @rdname AggrHiCExperiment

@@ -152,3 +152,46 @@ asGInteractions <- function(df) {
     A[ii]
 }
 
+#' @param diag vector of distances to diagonal
+#' @param score scores to parse into symmetrical matrix
+#' @rdname utils
+
+.df_to_symmmat <- function(diag, score) {
+    .n <- length(diag)
+    .l <- vector(mode = 'list', length = .n)
+    .l[[1]] <- score
+    .l[-1] <- lapply(seq(2, .n), function(k) {c(tail(score, k-1), head(score, 101-k+1))})
+    .l <- do.call(rbind, .l)
+    .l[lower.tri(.l)] <- .l[upper.tri(.l)]
+    return(.l)
+}
+
+#' @param dump dumped contacts, e.g. from .dumpCool
+#' @param threshold maximum distance to compute distance decay for
+#' @rdname utils
+
+distance_decay <- function(dump, threshold = 1e10) {
+    resolution <- as.vector(dump$bins[1, ]$end - dump$bins[1, ]$start)
+    dump$bins$bin_id <- seq(0, nrow(dump$bins)-1)
+    df <- dump$pixels
+    j1 <- dplyr::left_join(
+        dump$pixels, dump$bins, by = c(bin1_id = 'bin_id')
+    )
+    j2 <- dplyr::left_join(
+        dump$pixels, dump$bins, by = c(bin2_id = 'bin_id')
+    )
+    df$chrom1 <- j1$chrom
+    df$weight1 <- j1$weight
+    df$chrom2 <- j2$chrom
+    df$weight2 <- j2$weight
+    df <- dplyr::filter(df, chrom1 == chrom2)
+    df <- dplyr::mutate(df, 
+        diag = {as.vector(bin2_id) - as.vector(bin1_id)}, 
+        distance = diag * resolution
+    ) |> 
+        dplyr::filter(distance <= threshold)
+    mod <- dplyr::group_by(df, diag, distance) |> 
+        dplyr::mutate(score = count * weight1 * weight2) |> 
+        dplyr::summarize(score = mean(score, na.rm = TRUE))
+    return(mod)
+}

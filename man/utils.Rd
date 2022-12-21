@@ -8,6 +8,8 @@
 \alias{sortPairs}
 \alias{asGInteractions}
 \alias{sdiag}
+\alias{.df_to_symmmat}
+\alias{distance_decay}
 \title{Utils functions}
 \usage{
 splitCoords(coords)
@@ -21,6 +23,10 @@ sortPairs(pairs)
 asGInteractions(df)
 
 sdiag(A, k = 0)
+
+.df_to_symmmat(diag, score)
+
+distance_decay(dump, threshold = 1e+10)
 }
 \arguments{
 \item{coords}{coords}
@@ -36,6 +42,14 @@ sdiag(A, k = 0)
 \item{A}{matrix}
 
 \item{k}{secondary diagonal k}
+
+\item{diag}{vector of distances to diagonal}
+
+\item{score}{scores to parse into symmetrical matrix}
+
+\item{dump}{dumped contacts, e.g. from .dumpCool}
+
+\item{threshold}{maximum distance to compute distance decay for}
 }
 \value{
 Reformatted coordinates or GInteractions

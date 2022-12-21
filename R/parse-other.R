@@ -3,6 +3,7 @@
 #' @import InteractionSet
 #' @importFrom GenomicRanges mcols
 #' @param gi GInteractions
+#' @param use.scores Which scores to use to inflate GInteractions
 #' @rdname parse-other
 #' @export
 #' @examples 
@@ -13,12 +14,12 @@
 #' cm <- gi2cm(gis)
 #' cm
 
-gi2cm <- function(gi) {
+gi2cm <- function(gi, use.scores = 'score') {
     InteractionSet::inflate(
         gi,
         rows = seq_along(InteractionSet::regions(gi)),
         columns = seq_along(InteractionSet::regions(gi)),
-        fill = GenomicRanges::mcols(gi)[['score']]
+        fill = GenomicRanges::mcols(gi)[[use.scores]]
     )
 }
 

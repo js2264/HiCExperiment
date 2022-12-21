@@ -5,12 +5,14 @@
 \alias{cm2matrix}
 \title{Other parsing functions}
 \usage{
-gi2cm(gi)
+gi2cm(gi, use.scores = "score")
 
 cm2matrix(cm, replace_NA = NA)
 }
 \arguments{
 \item{gi}{GInteractions}
+
+\item{use.scores}{Which scores to use to inflate GInteractions}
 
 \item{cm}{A \code{ContactMatrix} object}
 

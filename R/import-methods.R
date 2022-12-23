@@ -86,9 +86,9 @@ setMethod('import', 'CoolFile', function(con, ...) {
         topologicalFeatures <- params[['topologicalFeatures']]
     } else {
         topologicalFeatures <- S4Vectors::SimpleList(
-            loops = S4Vectors::Pairs(GenomicRanges::GRanges(), GenomicRanges::GRanges()), 
-            borders = GenomicRanges::GRanges(), 
             compartments = GenomicRanges::GRanges(), 
+            borders = GenomicRanges::GRanges(), 
+            loops = InteractionSet::GInteractions(GenomicRanges::GRanges(), GenomicRanges::GRanges()), 
             viewpoints = GenomicRanges::GRanges()
         )
     }
@@ -148,9 +148,9 @@ setMethod('import', 'HicFile', function(con, ...) {
         topologicalFeatures <- params[['topologicalFeatures']]
     } else {
         topologicalFeatures <- S4Vectors::SimpleList(
-            loops = S4Vectors::Pairs(GenomicRanges::GRanges(), GenomicRanges::GRanges()), 
-            borders = GenomicRanges::GRanges(), 
             compartments = GenomicRanges::GRanges(), 
+            borders = GenomicRanges::GRanges(), 
+            loops = InteractionSet::GInteractions(GenomicRanges::GRanges(), GenomicRanges::GRanges()), 
             viewpoints = GenomicRanges::GRanges()
         )
     }
@@ -207,9 +207,9 @@ setMethod('import', 'HicproFile', function(con, ...) {
         topologicalFeatures <- params[['topologicalFeatures']]
     } else {
         topologicalFeatures <- S4Vectors::SimpleList(
-            loops = S4Vectors::Pairs(GenomicRanges::GRanges(), GenomicRanges::GRanges()), 
-            borders = GenomicRanges::GRanges(), 
             compartments = GenomicRanges::GRanges(), 
+            borders = GenomicRanges::GRanges(), 
+            loops = InteractionSet::GInteractions(GenomicRanges::GRanges(), GenomicRanges::GRanges()), 
             viewpoints = GenomicRanges::GRanges()
         )
     }

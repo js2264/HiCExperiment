@@ -79,12 +79,12 @@ HiCExperiment <- function(
     focus = NULL, 
     metadata = list(), 
     topologicalFeatures = S4Vectors::SimpleList(
-        'loops' = S4Vectors::Pairs(
+        'compartments' = GenomicRanges::GRanges(), 
+        'borders' = GenomicRanges::GRanges(), 
+        'loops' = InteractionSet::GInteractions(
             GenomicRanges::GRanges(), 
             GenomicRanges::GRanges()
         ), 
-        'borders' = GenomicRanges::GRanges(), 
-        'compartments' = GenomicRanges::GRanges(), 
         'viewpoints' = GenomicRanges::GRanges()
     ), 
     pairsFile = NULL, 
@@ -151,12 +151,12 @@ setValidity("HiCExperiment",
     focus = NULL, 
     metadata = list(), 
     topologicalFeatures = S4Vectors::SimpleList(
-        'loops' = S4Vectors::Pairs(
+        'compartments' = GenomicRanges::GRanges(), 
+        'borders' = GenomicRanges::GRanges(), 
+        'loops' = InteractionSet::GInteractions(
             GenomicRanges::GRanges(), 
             GenomicRanges::GRanges()
         ), 
-        'borders' = GenomicRanges::GRanges(), 
-        'compartments' = GenomicRanges::GRanges(), 
         'viewpoints' = GenomicRanges::GRanges()
     ), 
     pairsFile = NULL
@@ -199,12 +199,12 @@ setValidity("HiCExperiment",
     focus = NULL, 
     metadata = list(), 
     topologicalFeatures = S4Vectors::SimpleList(
-        'loops' = S4Vectors::Pairs(
+        'compartments' = GenomicRanges::GRanges(), 
+        'borders' = GenomicRanges::GRanges(), 
+        'loops' = InteractionSet::GInteractions(
             GenomicRanges::GRanges(), 
             GenomicRanges::GRanges()
         ), 
-        'borders' = GenomicRanges::GRanges(), 
-        'compartments' = GenomicRanges::GRanges(), 
         'viewpoints' = GenomicRanges::GRanges()
     ), 
     pairsFile = NULL
@@ -247,12 +247,12 @@ setValidity("HiCExperiment",
     bed, 
     metadata = list(), 
     topologicalFeatures = S4Vectors::SimpleList(
-        'loops' = S4Vectors::Pairs(
+        'compartments' = GenomicRanges::GRanges(), 
+        'borders' = GenomicRanges::GRanges(), 
+        'loops' = InteractionSet::GInteractions(
             GenomicRanges::GRanges(), 
             GenomicRanges::GRanges()
         ), 
-        'borders' = GenomicRanges::GRanges(), 
-        'compartments' = GenomicRanges::GRanges(), 
         'viewpoints' = GenomicRanges::GRanges()
     ), 
     pairsFile = NULL

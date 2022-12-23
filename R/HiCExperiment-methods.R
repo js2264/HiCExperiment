@@ -120,6 +120,32 @@ setMethod("focus<-", signature(x = "HiCExperiment", value = "character"), functi
 
 #' @export
 
+setMethod("zoom", c("HiCExperiment", "numeric"), function(x, resolution) {
+    HiCExperiment(
+        fileName(x), 
+        resolution = as.integer(resolution), 
+        focus = focus(x), 
+        metadata = S4Vectors::metadata(x), 
+        topologicalFeatures = topologicalFeatures(x), 
+        pairsFile = pairsFile(x)
+    )
+})
+
+#' @export
+
+setMethod("refocus", c("HiCExperiment", "character"), function(x, focus) {
+    HiCExperiment(
+        fileName(x), 
+        resolution = resolution(x), 
+        focus = focus, 
+        metadata = S4Vectors::metadata(x), 
+        topologicalFeatures = topologicalFeatures(x), 
+        pairsFile = pairsFile(x)
+    )
+})
+
+#' @export
+
 setMethod("scores", signature(x = "HiCExperiment", name = "missing"), function(x) x@scores)
 setMethod("scores", signature(x = "HiCExperiment", name = "character"), function(x, name) {
     if (!name %in% names(scores(x))) {
@@ -203,7 +229,14 @@ setMethod("fileName", "HiCExperiment", function(object) object@fileName)
 
 #' @export
 
-setMethod("interactions", "HiCExperiment", function(x) x@interactions)
+setMethod("interactions", "HiCExperiment", function(x) {
+    gi <- x@interactions
+    n <- names(scores(x))
+    for (N in n) {
+        S4Vectors::mcols(gi)[[N]] <- scores(x, N)
+    }
+    return(gi)
+})
 
 setMethod("interactions<-", signature(x = "HiCExperiment", value = "GInteractions"), function(x, value) {
     x@interactions <- value
@@ -313,7 +346,7 @@ setMethod("seqinfo", "HiCExperiment", function(x) {
 setMethod("bins", "HiCExperiment", function(x) {
     if (is_cool(fileName(x)) | is_mcool(fileName(x))) {
         bins <- .getCoolAnchors(
-            fileName(x), resolution = resolution(x), balanced = FALSE
+            fileName(x), resolution = resolution(x), balanced = TRUE
         )
         GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
     }

@@ -1,4 +1,4 @@
-.multi1DQuery <- function(file, resolution, snippets, ..., BPPARAM = BiocParallel::bpparam()) {
+.multi1DQuery <- function(file, resolution, snippets, ..., BPPARAM) {
 
     message( "Going through preflight checklist..." )
     # - Get si and bins from contact matrix
@@ -47,6 +47,7 @@
     detrending_model_mat <- .df_to_symmmat(
         detrending_model$diag, detrending_model$score
     )
+    detrending_model_mat[lower.tri(detrending_model_mat)] <- NA
 
     # - For each snippet, recover corresponding pixels
     message( "Filtering for contacts within provided snippet..." )
@@ -118,7 +119,7 @@
 
 }
 
-.multi2DQuery <- function(file, resolution, pairs, BPPARAM = BiocParallel::bpparam()) {
+.multi2DQuery <- function(file, resolution, pairs, BPPARAM, ...) {
 
     message( "Going through preflight checklist..." )
     # - Get si and bins from contact matrix
@@ -152,8 +153,9 @@
     breadth <- width(S4Vectors::first(pairs))[1]
     threshold <- InteractionSet::GInteractions(
         S4Vectors::first(pairs), S4Vectors::second(pairs)
-    ) |> InteractionSet::pairdist() |> max()
-    if (threshold == 0) threshold <- breadth
+    ) |> InteractionSet::pairdist(type = 'span') |> max()
+    if (threshold < breadth) threshold <- breadth
+    threshold <- ceiling(threshold / resolution) * resolution
 
     # - !!! HEAVY LOAD !!! Parse ALL pixels and convert to sparse matrix
     # - Full parsing has to be done since parallelized access to HDF5 is not supported 
@@ -166,7 +168,7 @@
         l <- .dumpHic(file, resolution = resolution)
     }
     else if (is_hic_pro(file)) {
-        l <- .dumpHicpro(file, ..., resolution = resolution)
+        l <- .dumpHicpro(file, ...)
     }
 
     # - Get detrending model
@@ -175,6 +177,7 @@
     detrending_model_mat <- .df_to_symmmat(
         detrending_model$diag, detrending_model$score
     )
+    detrending_model_mat[lower.tri(detrending_model_mat)] <- NA
 
     # - For each pair, recover balanced pixels
     message( "Filtering for contacts within provided pairs..." )
@@ -186,6 +189,8 @@
     xx <- BiocParallel::bplapply(BPPARAM = BPPARAM, 
         seq_along(pairs), function(K) {
             pair <- pairs[K]
+            dist <- start(S4Vectors::second(pair)) - start(S4Vectors::first(pair))
+            dist <- abs(ceiling(dist / resolution))
             bi_1 <- seq(
                 coords_list_1[K]$bin_id - {breadth/resolution}/2, 
                 coords_list_1[K]$bin_id + {breadth/resolution}/2
@@ -194,19 +199,17 @@
                 coords_list_2[K]$bin_id - {breadth/resolution}/2, 
                 coords_list_2[K]$bin_id + {breadth/resolution}/2
             )
-            bin1_weights <- all_bins[bi_1]$weight
-            bin2_weights <- all_bins[bi_2]$weight
+            bin1_weights <- all_bins[bi_1+1]$weight
+            bin2_weights <- all_bins[bi_2+1]$weight
             counts <- l[bi_1+1, bi_2+1]
-            counts[lower.tri(counts)] <- NA
             balanced <- t(apply(
                 apply(counts, 1, `*`, bin1_weights), 2, `*`, bin2_weights
             ))
-            dist <- start(S4Vectors::first(pair)) - start(S4Vectors::second(pair))
-            exp_bi <- seq(
-                {dist+{breadth/resolution}/2} - {breadth/resolution}/2, 
-                {dist+{breadth/resolution}/2} + {breadth/resolution}/2
+            exp_bi_0 <- seq(
+                {{breadth/resolution}/2} - {breadth/resolution}/2, 
+                {{breadth/resolution}/2} + {breadth/resolution}/2
             )
-            expected <- detrending_model_mat[exp_bi+1, exp_bi+1]
+            expected <- detrending_model_mat[exp_bi_0+1, exp_bi_0+1+dist]
             detrended <- log2( {balanced/sum(balanced, na.rm = TRUE)} / {expected/sum(expected, na.rm = TRUE)} )
             detrended[is.infinite(detrended)] <- NA
             list(
@@ -233,7 +236,11 @@
     # - Convert in dense GInteractions
     an <- GenomicRanges::GRanges(
         'aggr.', IRanges::IRanges(
-            start = seq(-{breadth/resolution}/2, +{breadth/resolution}/2, length.out = {breadth/resolution}+1) * resolution + 1, 
+            start = seq(
+                -{breadth/resolution}/2,
+                +{breadth/resolution}/2, 
+                length.out = {breadth/resolution}+1
+            ) * resolution + 1, 
             width = resolution
         ), 
         bin_id = seq(-{breadth/resolution}/2, +{breadth/resolution}/2, length.out = {breadth/resolution}+1)

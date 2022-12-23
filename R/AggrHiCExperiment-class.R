@@ -47,12 +47,14 @@ methods::setClass("AggrHiCExperiment", contains = c("HiCExperiment"),
 #' snippets <- GenomicRanges::resize(snippets, width = resolution*100, fix = 'center')
 #' snippets <- snippets[order(snippets$scoreChIP, decreasing = TRUE)]
 #' #snippets <- snippets[strand(snippets) == '+']
-#' snippets <- snippets[resize(snippets, fix = 'center', width = 1) %over% GRanges('chr2:11000000-12000000')]
-#' pairs <- Pairs(
+#' #snippets <- snippets[resize(snippets, fix = 'center', width = 1) %over% GRanges('chr2:1-12000000')]
+#' pairs <- GInteractions(
 #'     rep(snippets, each = length(snippets)),
 #'     rep(snippets, length(snippets))
 #' )
-#' pairs <- pairs[start(S4Vectors::first(pairs)) - start(S4Vectors::second(pairs)) > 0]
+#' pairs <- swapAnchors(pairs)
+#' pairs <- pairs[!is.na(pairdist(pairs))]
+#' pairs <- pairs[pairdist(pairs) > 30000 & pairdist(pairs) < 500000]
 
 AggrHiCExperiment <- function(
     file, 
@@ -130,13 +132,14 @@ AggrHiCExperiment <- function(
 
         # Need to check that snippets are OK (unique width, greater than 0, ...)
         snippets <- S4Vectors::Pairs(snippets, snippets)
-        gis <- .coolMulti2DQuery(file, resolution, snippets, BPPARAM = BPPARAM)
+        gis <- .multi2DQuery(file, resolution, snippets, BPPARAM = BPPARAM)
 
     }
-    else if (is(snippets, 'Pairs')) {
+    else if (is(snippets, 'GInteractions')) {
 
         # Need to check that pairs are OK (all width = 1)
-        gis <- .multi2DQuery(file, resolution, snippets, BPPARAM = BPPARAM)
+        # Need to check that pairs are OK (distance between each pair > width of each anchor)
+        gis <- .multi2DQuery(file, resolution, as(snippets, 'Pairs'), BPPARAM = BPPARAM)
 
     }
     mdata <- S4Vectors::metadata(gis)

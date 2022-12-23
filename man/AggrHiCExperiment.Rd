@@ -90,10 +90,12 @@ snippets <- coords_list[coords_list$score >= quantile(coords_list$score , 0.75) 
 snippets <- GenomicRanges::resize(snippets, width = resolution*100, fix = 'center')
 snippets <- snippets[order(snippets$scoreChIP, decreasing = TRUE)]
 #snippets <- snippets[strand(snippets) == '+']
-snippets <- snippets[resize(snippets, fix = 'center', width = 1) \%over\% GRanges('chr2:11000000-12000000')]
-pairs <- Pairs(
+#snippets <- snippets[resize(snippets, fix = 'center', width = 1) \%over\% GRanges('chr2:1-12000000')]
+pairs <- GInteractions(
     rep(snippets, each = length(snippets)),
     rep(snippets, length(snippets))
 )
-pairs <- pairs[start(S4Vectors::first(pairs)) - start(S4Vectors::second(pairs)) > 0]
+pairs <- swapAnchors(pairs)
+pairs <- pairs[!is.na(pairdist(pairs))]
+pairs <- pairs[pairdist(pairs) > 30000 & pairdist(pairs) < 500000]
 }

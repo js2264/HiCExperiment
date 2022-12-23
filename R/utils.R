@@ -160,7 +160,7 @@ asGInteractions <- function(df) {
     .n <- length(diag)
     .l <- vector(mode = 'list', length = .n)
     .l[[1]] <- score
-    .l[-1] <- lapply(seq(2, .n), function(k) {c(tail(score, k-1), head(score, 101-k+1))})
+    .l[-1] <- lapply(seq(2, .n), function(k) {c(tail(score, k-1), head(score, .n-k+1))})
     .l <- do.call(rbind, .l)
     .l[lower.tri(.l)] <- .l[upper.tri(.l)]
     return(.l)

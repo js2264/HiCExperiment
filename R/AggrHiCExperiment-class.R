@@ -44,17 +44,23 @@ methods::setClass("AggrHiCExperiment", contains = c("HiCExperiment"),
 #' coords_list = import('/home/rsg/Projects/20221214_HiContacts_compartments-TADs-loops/data/test_CTCF.bed.gz')
 #' coords_list$scoreChIP <- mean(CTCF_bw)
 #' snippets <- coords_list[coords_list$score >= quantile(coords_list$score , 0.75) & coords_list$scoreChIP >= quantile(coords_list$scoreChIP , 0.75)]
-#' snippets <- GenomicRanges::resize(snippets, width = resolution*100, fix = 'center')
+#' snippets <- GenomicRanges::resize(snippets, width = resolution*20, fix = 'center')
 #' snippets <- snippets[order(snippets$scoreChIP, decreasing = TRUE)]
-#' #snippets <- snippets[strand(snippets) == '+']
+#' snippets <- snippets[resize(snippets, fix = 'center', width = 1) %over% GRanges(.cool2seqinfo(file, resolution))]
 #' #snippets <- snippets[resize(snippets, fix = 'center', width = 1) %over% GRanges('chr2:1-12000000')]
+#' #snippets <- snippets[strand(snippets) == '+']
+#' strand(snippets) <- '+'
+#' snippets <- sort(snippets)
 #' pairs <- GInteractions(
 #'     rep(snippets, each = length(snippets)),
 #'     rep(snippets, length(snippets))
 #' )
 #' pairs <- swapAnchors(pairs)
 #' pairs <- pairs[!is.na(pairdist(pairs))]
+#' pairs <- pairs[pairdist(pairs) > 200000 & pairdist(pairs) < 1000000]
 #' pairs <- pairs[pairdist(pairs) > 30000 & pairdist(pairs) < 500000]
+#' 
+#' dd <- vroom::vroom('pairs.bedpe', col_names=FALSE) ; snippets <- GInteractions(GRanges(dd[[1]], IRanges(dd[[2]], end = dd[[3]])) |> resize(200000, fix = 'center'), GRanges(dd[[7]], IRanges(dd[[8]], end = dd[[9]])) |> resize(200000, fix = 'center'))
 
 AggrHiCExperiment <- function(
     file, 
@@ -71,7 +77,6 @@ AggrHiCExperiment <- function(
     params <- list(...)
     bed <- NULL ; if ("bed" %in% names(params)) bed <- params[['bed']]
     if (!is.null(resolution)) resolution <- as.integer(resolution)
-    
     if (is_cool(file) | is_mcool(file)) {
         check_cool_file(file)
         check_cool_format(file, resolution)
@@ -131,16 +136,26 @@ AggrHiCExperiment <- function(
     if (is(snippets, 'GRanges')) {
 
         # Need to check that snippets are OK (unique width, greater than 0, ...)
-        snippets <- S4Vectors::Pairs(snippets, snippets)
-        gis <- .multi2DQuery(file, resolution, snippets, BPPARAM = BPPARAM)
+        gis <- .multi2DQuery(
+            file, resolution, 
+            S4Vectors::Pairs(snippets, snippets), 
+            BPPARAM = BPPARAM
+        )
 
     }
     else if (is(snippets, 'GInteractions')) {
 
         # Need to check that pairs are OK (all width = 1)
         # Need to check that pairs are OK (distance between each pair > width of each anchor)
-        gis <- .multi2DQuery(file, resolution, as(snippets, 'Pairs'), BPPARAM = BPPARAM)
+        gis <- .multi2DQuery(
+            file, resolution, 
+            as(snippets, 'Pairs'), 
+            BPPARAM = BPPARAM
+        )
 
+    }
+    else {
+        stop("Please provide `snippets` as `GRanges` or `GInteractions`.")
     }
     mdata <- S4Vectors::metadata(gis)
     S4Vectors::metadata(gis) <- list()

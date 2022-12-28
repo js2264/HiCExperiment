@@ -15,6 +15,14 @@ utils::globalVariables(c(
     "setNames",
     "value", 
     "X1", 
-    "X3"
+    "X3", 
+    "bin1_id", 
+    "bin2_id", 
+    "chrom1", 
+    "chrom2", 
+    "distance", 
+    "score", 
+    "weight1", 
+    "weight2"  
 ))
 

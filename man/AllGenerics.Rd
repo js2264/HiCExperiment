@@ -14,6 +14,9 @@
 \alias{pairsFile<-}
 \alias{metadata<-}
 \alias{bins}
+\alias{slices}
+\alias{zoom}
+\alias{refocus}
 \title{Generic functions}
 \arguments{
 \item{x}{Passed to corresponding method}

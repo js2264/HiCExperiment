@@ -6,6 +6,8 @@
 #' @aliases focus,HiCExperiment-method
 #' @aliases focus<-,HiCExperiment-method
 #' @aliases focus<-,HiCExperiment,character-method
+#' @aliases zoom,HiCExperiment,numeric-method
+#' @aliases refocus,HiCExperiment,character-method
 #' @aliases scores,HiCExperiment-method
 #' @aliases scores,HiCExperiment,missing-method
 #' @aliases scores,HiCExperiment,character-method

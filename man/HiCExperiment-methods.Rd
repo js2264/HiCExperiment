@@ -7,6 +7,8 @@
 \alias{focus,HiCExperiment-method}
 \alias{focus<-,HiCExperiment-method}
 \alias{focus<-,HiCExperiment,character-method}
+\alias{zoom,HiCExperiment,numeric-method}
+\alias{refocus,HiCExperiment,character-method}
 \alias{scores,HiCExperiment-method}
 \alias{scores,HiCExperiment,missing-method}
 \alias{scores,HiCExperiment,character-method}

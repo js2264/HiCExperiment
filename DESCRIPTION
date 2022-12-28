@@ -19,14 +19,15 @@ Depends:
     R (>= 4.2)
 Imports:
     InteractionSet,
-    GenomicInteractions,
     strawr, 
+    GenomicInteractions,
+    GenomeInfoDb,
     GenomicRanges,
     IRanges,
-    GenomeInfoDb,
     S4Vectors,
     BiocGenerics,
     BiocIO,
+    BiocParallel, 
     methods,
     rhdf5,
     Matrix,
@@ -38,6 +39,8 @@ Imports:
     stringr
 Suggests:
     HiContactsData,
+    BiocFileCache, 
+    rtracklayer, 
     testthat (>= 3.0.0),
     BiocStyle,
     knitr,
@@ -70,6 +73,7 @@ Collate:
     'PairsFile-methods.R'
     'checks.R'
     'data.R'
+    'example.R'
     'globals.R'
     'import-methods.R'
     'parse-cool.R'

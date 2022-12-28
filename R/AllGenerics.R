@@ -13,6 +13,9 @@
 #' @aliases pairsFile<-
 #' @aliases metadata<-
 #' @aliases bins
+#' @aliases slices
+#' @aliases zoom
+#' @aliases refocus
 #' 
 #' @description
 #' 

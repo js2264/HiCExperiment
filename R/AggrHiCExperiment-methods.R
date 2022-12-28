@@ -1,26 +1,20 @@
-#' @title `AggrHiCExperiment` S4 class
+#' @title `AggrHiCExperiment` methods
 #' 
-#' @name AggrHiCExperiment
-#' @rdname AggrHiCExperiment
+#' @name AggrHiCExperiment-methods
+#' @aliases slices,AggrHiCExperiment,missing-method
+#' @aliases slices,AggrHiCExperiment,character-method
+#' @aliases slices,AggrHiCExperiment,numeric-method
+#' @aliases show,AggrHiCExperiment-method
 #' 
 #' @description
 #' 
-#' The `AggrHiCExperiment` extends `HiCExperiment` class
-#'
-#' @slot fileName Path of Hi-C contact file
-#' @slot resolutions Resolutions available in the Hi-C contact file.
-#' @slot resolution Current resolution
-#' @slot interactions Genomic Interactions extracted from the Hi-C contact file
-#' @slot scores Available interaction scores. 
-#' @slot topologicalFeatures Topological features associated with the dataset 
-#'   (e.g. loops (\<Pairs\>), borders (\<GRanges\>), 
-#'   viewpoints (\<GRanges\>), etc...)
-#' @slot pairsFile Path to the .pairs file associated with the Hi-C contact file
-#' @slot metadata metadata associated with the Hi-C contact file.
+#' AggrHiCExperiment methods.
+#' 
+#' @param x A \code{AggrHiCExperiment} object.
+#' @param name The name/index of slices to extract.
 #' 
 #' @include AggrHiCExperiment-class.R
 #' @include HiCExperiment-methods.R
-#' 
 NULL
 
 #' @export
@@ -43,11 +37,11 @@ setMethod("slices", signature(x = "AggrHiCExperiment", name = "numeric"), functi
 
 setMethod("show", signature("AggrHiCExperiment"), function(object) {
 
-    nsnippets <- length(topologicalFeatures(object, 'snippets'))
-    cat(glue::glue('`AggrHiCExperiment` object over {nsnippets} snippets'), '\n')
+    ntargets <- length(topologicalFeatures(object, 'targets'))
+    cat(glue::glue('`AggrHiCExperiment` object over {ntargets} targets'), '\n')
     cat('-------\n')
     cat(glue::glue('fileName: "{fileName(object)}"'), '\n')
-    cat(glue::glue('focus: {nsnippets} snippets'), '\n')
+    cat(glue::glue('focus: {ntargets} targets'), '\n')
 
     ## Resolutions
     S4Vectors::coolcat("resolutions(%d): %s\n", resolutions(object))

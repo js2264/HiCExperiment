@@ -86,9 +86,9 @@ HiCExperimentCache <- function(
 #' @export
 
 HiCExperiment_example <- function() {
-    if (!requireNamespace(rtracklayer)) 
+    if (!requireNamespace("rtracklayer")) 
         stop("rtracklayer package must be installed.")
-    if (!requireNamespace(BiocFileCache)) 
+    if (!requireNamespace("BiocFileCache")) 
         stop("BiocFileCache package must be installed.")
 
     bfc <- HiCExperimentCache()

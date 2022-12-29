@@ -3,29 +3,18 @@
 \docType{class}
 \name{AggrHiCExperiment}
 \alias{AggrHiCExperiment}
-\alias{.aggrHiCExperiment}
 \title{\code{AggrHiCExperiment} S4 class}
 \usage{
 AggrHiCExperiment(
   file,
   resolution = NULL,
   targets,
+  flanking_bins = 50,
   metadata = list(),
   topologicalFeatures = S4Vectors::SimpleList(),
   pairsFile = NULL,
   bed = NULL,
   BPPARAM = BiocParallel::bpparam()
-)
-
-.aggrHiCExperiment(
-  file,
-  resolution = NULL,
-  targets,
-  metadata = list(),
-  topologicalFeatures = S4Vectors::SimpleList(),
-  pairsFile = NULL,
-  bed = NULL,
-  BPPARAM
 )
 }
 \arguments{
@@ -37,6 +26,9 @@ AggrHiCExperiment(
 interaction counts are extracted from the Hi-C contact file, provided
 as a GRanges object (for diagnoal-centered loci) or as a GInteractions
 object (for off-diagonal coordinates).}
+
+\item{flanking_bins}{Number of bins on each flank of the bins containing
+input targets.}
 
 \item{metadata}{list of metadata}
 
@@ -76,13 +68,40 @@ viewpoints (\<GRanges\>), etc...)}
 }}
 
 \examples{
+#### -----
+#### Using a regular Hi-C map
+#### -----
+contacts <- full_contacts_yeast()
+centros <- topologicalFeatures(contacts, 'centromeres')
+x <- AggrHiCExperiment(
+  file = fileName(contacts), 
+  resolution = 1000,
+  targets = centros
+)
+x
+slices(x, 'count')[1:10, 1:10, 1]
+
+#### -----
+#### Using a micro-C map
+#### -----
 microC <- HiCExperiment_example()
 CTCF_peaks <- topologicalFeatures(microC, 'CTCF_peaks')
+CTCF_peaks <- CTCF_peaks[GenomicRanges::strand(CTCF_peaks) == '+']
 x <- AggrHiCExperiment(
   file = fileName(microC), 
   resolution = resolution(microC),
   targets = CTCF_peaks
 )
 x
-slices(x, 'count')[, , 1]
+slices(x, 'balanced')[, , 1]
+
+CTCF_pairs <- topologicalFeatures(microC, 'CTCF_pairs')
+x <- AggrHiCExperiment(
+  file = fileName(microC), 
+  resolution = resolution(microC),
+  targets = CTCF_pairs, 
+  flanking_bins = 10
+)
+x
+slices(x, 'balanced')[, , 1]
 }

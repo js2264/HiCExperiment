@@ -25,6 +25,8 @@
 #'   interaction counts are extracted from the Hi-C contact file, provided
 #'   as a GRanges object (for diagnoal-centered loci) or as a GInteractions
 #'   object (for off-diagonal coordinates).
+#' @param flanking_bins Number of bins on each flank of the bins containing 
+#'   input targets.
 #' @param metadata list of metadata
 #' @param topologicalFeatures topologicalFeatures provided as a named SimpleList
 #' @param pairsFile Path to an associated .pairs file
@@ -33,15 +35,42 @@
 #' 
 #' @include HiCExperiment-class.R
 #' @examples
+#' #### -----
+#' #### Using a regular Hi-C map
+#' #### -----
+#' contacts <- full_contacts_yeast()
+#' centros <- topologicalFeatures(contacts, 'centromeres')
+#' x <- AggrHiCExperiment(
+#'   file = fileName(contacts), 
+#'   resolution = 1000,
+#'   targets = centros
+#' )
+#' x
+#' slices(x, 'count')[1:10, 1:10, 1]
+#' 
+#' #### -----
+#' #### Using a micro-C map
+#' #### -----
 #' microC <- HiCExperiment_example()
 #' CTCF_peaks <- topologicalFeatures(microC, 'CTCF_peaks')
+#' CTCF_peaks <- CTCF_peaks[GenomicRanges::strand(CTCF_peaks) == '+']
 #' x <- AggrHiCExperiment(
 #'   file = fileName(microC), 
 #'   resolution = resolution(microC),
 #'   targets = CTCF_peaks
 #' )
 #' x
-#' slices(x, 'count')[, , 1]
+#' slices(x, 'balanced')[, , 1]
+#' 
+#' CTCF_pairs <- topologicalFeatures(microC, 'CTCF_pairs')
+#' x <- AggrHiCExperiment(
+#'   file = fileName(microC), 
+#'   resolution = resolution(microC),
+#'   targets = CTCF_pairs, 
+#'   flanking_bins = 10
+#' )
+#' x
+#' slices(x, 'balanced')[, , 1]
 
 methods::setClass("AggrHiCExperiment", contains = c("HiCExperiment"), 
     slots = c(slices = "SimpleList")
@@ -54,104 +83,22 @@ AggrHiCExperiment <- function(
     file, 
     resolution = NULL, 
     targets, 
+    flanking_bins = 50, 
     metadata = list(), 
     topologicalFeatures = S4Vectors::SimpleList(), 
     pairsFile = NULL, 
     bed = NULL, 
     BPPARAM = BiocParallel::bpparam()
 ) {
+    
+    ## - Check input arguments
     file <- gsub('~', Sys.getenv('HOME'), file)
     stopifnot(file.exists(file))
-    if (!is.null(resolution)) resolution <- as.integer(resolution)
-    if (is_cool(file) | is_mcool(file)) {
-        check_cool_file(file)
-        check_cool_format(file, resolution)
-        return(.aggrHiCExperiment(
-            file = file,
-            resolution = resolution,
-            targets = targets,
-            metadata = metadata,
-            topologicalFeatures = topologicalFeatures,
-            pairsFile = pairsFile, 
-            BPPARAM = BPPARAM
-        ))
-    }
-    if (is_hic(file)) {
-        check_hic_file(file)
-        check_hic_format(file, resolution)
-        return(.aggrHiCExperiment(
-            file = file,
-            resolution = resolution,
-            targets = targets,
-            metadata = metadata,
-            topologicalFeatures = topologicalFeatures,
-            pairsFile = pairsFile, 
-            BPPARAM = BPPARAM
-        ))
-    }
-    if (is_hicpro_matrix(file)) {
-        check_hicpro_files(file, bed)
-        if (is.null(bed)) stop("Regions files not provided.")
-        return(.aggrHiCExperiment(
-            file = file,
-            resolution = resolution,
-            targets = targets,
-            metadata = metadata,
-            topologicalFeatures = topologicalFeatures,
-            pairsFile = pairsFile, 
-            bed = bed,
-            BPPARAM = BPPARAM
-        ))
-    }
-    return(NA)
-}
-
-#' @rdname AggrHiCExperiment
-
-.aggrHiCExperiment <- function(
-    file, 
-    resolution = NULL, 
-    targets, 
-    metadata = list(), 
-    topologicalFeatures = S4Vectors::SimpleList(), 
-    pairsFile = NULL, 
-    bed = NULL, 
-    BPPARAM  
-) {
-    
-    ## -- Parse multi-query
-    if (is(targets, 'GRanges')) {
-
-        # Need to check that targets are OK (unique width, greater than 0, ...)
-        gis <- .multi2DQuery(
-            file, resolution, 
-            pairs = S4Vectors::Pairs(targets, targets), 
-            bed = bed, 
-            BPPARAM = BPPARAM
-        )
-
-    }
-    else if (is(targets, 'GInteractions')) {
-
-        # Need to check that pairs are OK (all width = 1)
-        # Need to check that pairs are OK (distance between each pair > width of each anchor)
-        targets <- InteractionSet::swapAnchors(targets)
-        gis <- .multi2DQuery(
-            file, resolution, 
-            pairs = as(targets, 'Pairs'), 
-            bed = bed, 
-            BPPARAM = BPPARAM
-        )
-
+    if (!is.null(resolution)) {
+        resolution <- as.integer(resolution)
+        res <- resolution
     }
     else {
-        stop("Please provide `targets` as `GRanges` or `GInteractions`.")
-    }
-    mdata <- S4Vectors::metadata(gis)
-    S4Vectors::metadata(gis) <- list()
-    mcols <- GenomicRanges::mcols(gis)
-    GenomicRanges::mcols(gis) <- NULL
-    if (is.null(resolution)) {
         res <- ifelse({is_cool(file) | is_mcool(file)}, 
             lsCoolResolutions(file)[1], 
             ifelse(is_hic(file), lsHicResolutions(file)[1], 
@@ -159,14 +106,55 @@ AggrHiCExperiment <- function(
         )
     }
     if (is_cool(file) | is_mcool(file)) {
+        check_cool_file(file)
+        check_cool_format(file, resolution)
         resolutions <- lsCoolResolutions(file)
     }
     else if (is_hic(file)) {
+        check_hic_file(file)
+        check_hic_format(file, resolution)
         resolutions <- lsHicResolutions(file)
     }
     else if (is_hicpro_matrix(file)) {
+        check_hicpro_files(file, bed)
+        if (is.null(bed)) stop("Regions files not provided.")
         resolutions <- res
     }
+    
+    ## - Reformat targets
+    if (is(targets, 'GRanges')) {
+        # Need to check that targets are OK (unique width, greater than 0, ...)
+        targets <- GenomicRanges::resize(
+            targets, fix = 'center', width = resolution*{2*flanking_bins}
+        )
+        pairs <- S4Vectors::Pairs(targets, targets)
+    }
+    else if (is(targets, 'GInteractions')) {
+        # Need to check that pairs are OK (all width = 1)
+        an1 <- GenomicInteractions::anchorOne(targets)
+        an1 <- resize(an1, fix = 'center', width = resolution*{2*flanking_bins})
+        an2 <- GenomicInteractions::anchorTwo(targets)
+        an2 <- resize(an2, fix = 'center', width = resolution*{2*flanking_bins})
+        pairs <- InteractionSet::swapAnchors(InteractionSet::GInteractions(
+            an1, an2
+        ))
+        pairs <- as(pairs, 'Pairs')
+    }
+    else {
+        stop("Please provide `targets` as `GRanges` or `GInteractions`.")
+    }
+
+    ## - Compute aggregated scores
+    gis <- .multi2DQuery(
+        file, resolution, 
+        pairs = pairs, 
+        bed = bed, 
+        BPPARAM = BPPARAM
+    )
+    mdata <- S4Vectors::metadata(gis)
+    S4Vectors::metadata(gis) <- list()
+    mcols <- GenomicRanges::mcols(gis)
+    GenomicRanges::mcols(gis) <- NULL
     
     ## -- Create contact object
     x <- methods::new("AggrHiCExperiment", 
@@ -190,4 +178,5 @@ AggrHiCExperiment <- function(
     )
     methods::validObject(x)
     return(x)
-} 
+
+}

@@ -24,7 +24,11 @@
         bin_id = seq_along(bins$chr) - 1, 
         seqinfo = .cool2seqinfo(file, resolution)
     )
-    names(anchors) <- paste(GenomicRanges::seqnames(anchors), GenomicRanges::start(anchors), GenomicRanges::end(anchors), sep = "_")
+    names(anchors) <- paste(
+        GenomicRanges::seqnames(anchors), 
+        GenomicRanges::start(anchors), 
+        GenomicRanges::end(anchors), sep = "_"
+    )
     if ("weight" %in% names(bins) & {
         balanced == "cooler" | balanced == TRUE
     }) {
@@ -199,6 +203,7 @@
 
 .dumpCool <- function(file, resolution = NULL) {
     check_cool_format(file, resolution)
+    an <- .getCoolAnchors(file, resolution)
     path <- ifelse(
         is.null(resolution), 
         '/', 
@@ -214,6 +219,14 @@
         ),
         'pixels' = tibble::as_tibble(lres[['pixels']])
     )
+    res$pixels$bin1_weight <- left_join(
+       res$pixels, data.frame(an), by = c(bin1_id = 'bin_id')
+    )$weight
+    res$pixels$bin2_weight <- left_join(
+       res$pixels, data.frame(an), by = c(bin2_id = 'bin_id')
+    )$weight
+    res$pixels$score <- res$pixels$count * res$pixels$bin1_weight * res$pixels$bin2_weight
+
     return(res)
 }
 

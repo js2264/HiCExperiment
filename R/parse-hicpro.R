@@ -102,7 +102,7 @@
 
 #' @rdname parse-hicpro
 
-.dumpHicpro <- function(file) {
+.dumpHicpro <- function(file, bed) {
     check_hicpro_files(file, bed)
     
     # Get anchors from hicpro regions file

@@ -13,7 +13,7 @@
 
 .hicpro2seqinfo(bed)
 
-.dumpHicpro(file)
+.dumpHicpro(file, bed)
 }
 \arguments{
 \item{file}{file}

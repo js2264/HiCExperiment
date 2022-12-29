@@ -98,30 +98,30 @@ HiCExperiment_example <- function() {
     url_ctcf_track <- 'https://osf.io/w92u3/download'
 
     # - Fetch contact map and CTCF files
-    rid_map <- bfcquery(bfc, query = 'microC.mcool')$rid
+    rid_map <- BiocFileCache::bfcquery(bfc, query = 'microC.mcool')$rid
     if (!length(rid_map)) {
         message( "Fetching Hi-C contact map from OSF portal" )
-        bfcentry <- bfcadd( 
+        bfcentry <- BiocFileCache::bfcadd( 
             bfc, 
             rname = 'microC.mcool', 
             fpath = url_map 
         )
         rid_map <- names(bfcentry)
     } 
-    rid_ctcf_peaks <- bfcquery(bfc, query = 'CTCF_peaks.narrowPeak')$rid
+    rid_ctcf_peaks <- BiocFileCache::bfcquery(bfc, query = 'CTCF_peaks.narrowPeak')$rid
     if (!length(rid_ctcf_peaks)) {
         message( "Fetching CTCF peaks from OSF portal" )
-        bfcentry <- bfcadd( 
+        bfcentry <- BiocFileCache::bfcadd( 
             bfc, 
             rname = 'CTCF_peaks.narrowPeak', 
             fpath = url_ctcf_peaks 
         )
         rid_ctcf_peaks <- names(bfcentry)
     }
-    rid_ctcf_track <- bfcquery(bfc, query = 'CTCF_track.bw')$rid
+    rid_ctcf_track <- BiocFileCache::bfcquery(bfc, query = 'CTCF_track.bw')$rid
     if (!length(rid_ctcf_track)) {
         message( "Fetching CTCF peaks from OSF portal" )
-        bfcentry <- bfcadd( 
+        bfcentry <- BiocFileCache::bfcadd( 
             bfc, 
             rname = 'CTCF_track.bw', 
             fpath = url_ctcf_track 
@@ -133,12 +133,12 @@ HiCExperiment_example <- function() {
     message( "Importing CTCF peaks in memory..." )
     res <- 10000
     CTCF_peaks <- rtracklayer::import(
-        bfcrpath(bfc, rids = rid_ctcf_peaks), 
+        BiocFileCache::bfcrpath(bfc, rids = rid_ctcf_peaks), 
         format = 'bed'
     )
     message( "Importing CTCF track in memory..." )
     CTCF_track <- rtracklayer::import(
-        bfcrpath(bfc, rids = rid_ctcf_track), 
+        BiocFileCache::bfcrpath(bfc, rids = rid_ctcf_track), 
         format = 'BigWig', 
         selection = rtracklayer::BigWigSelection(
             GenomicRanges::resize(CTCF_peaks, fix = 'center', width = 500)
@@ -182,9 +182,9 @@ HiCExperiment_example <- function() {
 
     message( "Importing contacts in memory..." )
     x <- HiCExperiment(
-        bfcrpath(bfc, rids = rid_map), 
+        BiocFileCache::bfcrpath(bfc, rids = rid_map), 
         resolution = res, 
-        metadata = list(CTCF_track = bfcrpath(bfc, rids = rid_ctcf_track)), 
+        metadata = list(CTCF_track = BiocFileCache::bfcrpath(bfc, rids = rid_ctcf_track)), 
         topologicalFeatures = S4Vectors::SimpleList(
             CTCF_peaks = CTCF_peaks, 
             CTCF_pairs = CTCF_pairs

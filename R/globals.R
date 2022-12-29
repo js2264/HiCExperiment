@@ -23,6 +23,9 @@ utils::globalVariables(c(
     "distance", 
     "score", 
     "weight1", 
-    "weight2"  
+    "weight2", 
+    "start1", 
+    "start2", 
+    "bed"  
 ))
 

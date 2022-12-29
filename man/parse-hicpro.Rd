@@ -4,6 +4,7 @@
 \alias{.hicpro2gi}
 \alias{.getHicproAnchors}
 \alias{.hicpro2seqinfo}
+\alias{.dumpHicpro}
 \title{Parsing hicpro files (matrix & bed)}
 \usage{
 .hicpro2gi(file, bed)
@@ -11,6 +12,8 @@
 .getHicproAnchors(bed)
 
 .hicpro2seqinfo(bed)
+
+.dumpHicpro(file)
 }
 \arguments{
 \item{file}{file}

@@ -38,8 +38,16 @@
     # Get raw counts for bins from hic
     if (is.null(coords)) {
         combs <- combn(GenomeInfoDb::seqlevels(anchors), m = 2) |> 
-            as.data.frame() |> 
-            t()
+                as.data.frame() |> 
+                t()
+        colnames(combs) <- c('one', 'two')
+        combs <- rbind(
+            data.frame(
+                'one' = GenomeInfoDb::seqlevels(anchors), 
+                'two' = GenomeInfoDb::seqlevels(anchors)
+            ),
+            combs
+        )
         gis_ <- apply(combs, 1, function(coords) {tryCatch(expr = {
             parsed_hic <- strawr::straw(
                 fname = file, 
@@ -237,3 +245,65 @@ lsHicResolutions <- function(file, verbose = FALSE) {
         as("Seqinfo")
 }
 
+#' @importFrom tibble as_tibble
+#' @rdname parse-hic
+
+.dumpHic <- function(file, resolution = NULL) {
+    check_hic_format(file, resolution)
+    anchors <- .getHicAnchors(file, resolution)
+    bins <- as_tibble(anchors)
+    si <- GenomeInfoDb::seqinfo(anchors)
+    combs <- data.frame(
+        'one' = GenomeInfoDb::seqlevels(anchors), 
+        'two' = GenomeInfoDb::seqlevels(anchors)
+    )
+    pixs <- apply(combs, 1, function(coords) {tryCatch(expr = {
+        parsed_hic <- strawr::straw(
+            fname = file, 
+            binsize = resolution, 
+            chr1loc = coords[[1]], 
+            chr2loc = coords[[2]], 
+            unit = 'BP', 
+            matrix = "observed", 
+            norm = 'NONE'
+        )
+        parsed_hic_balanced <- strawr::straw(
+            fname = file, 
+            binsize = resolution, 
+            chr1loc = coords[[1]], 
+            chr2loc = coords[[2]], 
+            unit = 'BP', 
+            matrix = "observed", 
+            norm = 'KR'
+        )
+        seqnames1 <- gsub(':.*', '', coords[[1]])
+        seqnames2 <- gsub(':.*', '', coords[[2]])
+        df <- data.frame(
+            chrom1 = seqnames1, 
+            start1 = parsed_hic$x, 
+            end1 = parsed_hic$x + resolution,
+            chrom2 = seqnames2, 
+            start2 = parsed_hic$y, 
+            end2 = parsed_hic$y + resolution, 
+            count = parsed_hic$counts, 
+            score = parsed_hic_balanced$counts
+        )
+        df <- dplyr::filter(df, chrom1 == chrom2)
+        df <- dplyr::mutate(df, 
+            diag = {start2 - start1}/resolution, 
+            distance = start2 - start1
+        )
+    }, error = function(e) {
+        as.data.frame(InteractionSet::GInteractions())
+    })}) |> dplyr::bind_rows()
+    pixs$bin1_id <- left_join(pixs, bins, by = c(chrom1 = 'seqnames', end1 = 'end'))$bin_id
+    pixs$bin2_id <- left_join(pixs, bins, by = c(chrom2 = 'seqnames', end2 = 'end'))$bin_id
+    pixs <- dplyr::arrange(pixs, bin1_id, bin2_id) |> 
+        tidyr::drop_na(bin1_id, bin2_id)
+    res <- list(
+        bins = bins, 
+        pixels = pixs
+    )
+
+    return(res)
+}

@@ -10,8 +10,8 @@
         all_bins <- .getHicAnchors(file, resolution = resolution)
         si <- .hic2seqinfo(file)
     }
-    else if (is_hicpro_matrix(file) & is_hicpro_regions(...)) {
-        all_bins <- .getHicproAnchors(...)
+    else if (is_hicpro_matrix(file) & is_hicpro_regions(bed)) {
+        all_bins <- .getHicproAnchors(bed)
         si <- .hicpro2seqinfo(file)
     }
     all_bins <- all_bins[GenomicRanges::width(all_bins) == resolution]
@@ -54,8 +54,8 @@
     else if (is_hic(file)) {
         l <- .dumpHic(file, resolution = resolution)
     }
-    else if (is_hic_pro(file)) {
-        l <- .dumpHicpro(file, ...)
+    else if (is_hicpro_matrix(file)) {
+        l <- .dumpHicpro(file, bed)
     }
 
     # - Get detrending model

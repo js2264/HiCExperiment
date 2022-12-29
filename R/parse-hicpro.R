@@ -99,3 +99,39 @@
         as.data.frame() |> 
         as("Seqinfo")
 }
+
+#' @rdname parse-hicpro
+
+.dumpHicpro <- function(file) {
+    check_hicpro_files(file, bed)
+    
+    # Get anchors from hicpro regions file
+    anchors <- .getHicproAnchors(bed)
+    bins <- as_tibble(anchors)
+    
+    # Get raw counts for bins from hicpro matrix file
+    pixs <- vroom::vroom(
+        file, 
+        col_names = FALSE, 
+        progress = FALSE, 
+        show_col_types = FALSE
+    )
+    colnames(pixs) <- c("bin1_id", "bin2_id", "count")
+    pixs$score <- pixs$count
+    j1 <- left_join(pixs, bins, by = c(bin1_id = 'bin_id'))
+    pixs$chrom1 <- j1$seqnames 
+    pixs$start1 <- j1$start 
+    pixs$end1 <- j1$end 
+    j2 <- left_join(pixs, bins, by = c(bin2_id = 'bin_id'))
+    pixs$chrom2 <- j2$seqnames 
+    pixs$start2 <- j2$start 
+    pixs$end2 <- j2$end 
+    pixs <- dplyr::arrange(pixs, bin1_id, bin2_id) |> 
+        tidyr::drop_na(bin1_id, bin2_id)
+    
+    res <- list(
+        bins = bins, 
+        pixels = pixs
+    )
+    return(res)
+}

@@ -5,6 +5,7 @@
 \alias{lsHicResolutions}
 \alias{.getHicAnchors}
 \alias{.hic2seqinfo}
+\alias{.dumpHic}
 \title{Parsing hic files}
 \usage{
 .hic2gi(file, coords = NULL, resolution = NULL)
@@ -14,6 +15,8 @@ lsHicResolutions(file, verbose = FALSE)
 .getHicAnchors(file, resolution = NULL)
 
 .hic2seqinfo(file)
+
+.dumpHic(file, resolution = NULL)
 }
 \arguments{
 \item{file}{file}

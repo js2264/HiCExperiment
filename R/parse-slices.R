@@ -59,6 +59,7 @@
             GenomicRanges::resize(coords_list_2, fix = 'center', width = 1), all_bins))
     ]$bin_id
     breadth <- GenomicRanges::width(S4Vectors::first(pairs))[1]
+    if(is.na(breadth)) stop("No pairs are contained within the contact matrix. Try with a smaller `flanking_bins` or a finer `resolution`")
     threshold <- InteractionSet::GInteractions(
         S4Vectors::first(pairs), S4Vectors::second(pairs)
     ) |> InteractionSet::pairdist(type = 'span') |> max()

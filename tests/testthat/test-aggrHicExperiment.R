@@ -1,10 +1,10 @@
 test_that("AggrHiCExperiment methods work", {
-    microC <- HiCExperiment_example()
-    CTCF_peaks <- topologicalFeatures(microC, 'CTCF_peaks')
+    contacts <- full_contacts_yeast()
+    centros <- topologicalFeatures(contacts, 'centromeres')
     x <- AggrHiCExperiment(
-        file = fileName(microC), 
-        resolution = resolution(microC),
-        targets = CTCF_peaks
+        file = fileName(contacts), 
+        resolution = 1000,
+        targets = centros
     )
     expect_s4_class(x, "AggrHiCExperiment")
     expect_s4_class(slices(x), 'SimpleList')

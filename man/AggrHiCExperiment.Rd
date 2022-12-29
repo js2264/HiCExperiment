@@ -68,9 +68,6 @@ viewpoints (\<GRanges\>), etc...)}
 }}
 
 \examples{
-#### -----
-#### Using a regular Hi-C map
-#### -----
 contacts <- full_contacts_yeast()
 centros <- topologicalFeatures(contacts, 'centromeres')
 x <- AggrHiCExperiment(
@@ -80,28 +77,4 @@ x <- AggrHiCExperiment(
 )
 x
 slices(x, 'count')[1:10, 1:10, 1]
-
-#### -----
-#### Using a micro-C map
-#### -----
-microC <- HiCExperiment_example()
-CTCF_peaks <- topologicalFeatures(microC, 'CTCF_peaks')
-CTCF_peaks <- CTCF_peaks[GenomicRanges::strand(CTCF_peaks) == '+']
-x <- AggrHiCExperiment(
-  file = fileName(microC), 
-  resolution = resolution(microC),
-  targets = CTCF_peaks
-)
-x
-slices(x, 'balanced')[, , 1]
-
-CTCF_pairs <- topologicalFeatures(microC, 'CTCF_pairs')
-x <- AggrHiCExperiment(
-  file = fileName(microC), 
-  resolution = resolution(microC),
-  targets = CTCF_pairs, 
-  flanking_bins = 10
-)
-x
-slices(x, 'balanced')[, , 1]
 }

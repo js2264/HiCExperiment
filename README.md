@@ -21,9 +21,19 @@ by `pairtools`/`cooler` workflow, by HiC-Pro pipeline, or any type of tabular
 pairs format (by indicating the columns containing 
 `chr1`, `start1`, `strand1`, `chr2`, `start2`, `strand2` information). 
 
+`HiCExperiment` S4 class is build on pre-existing Bioconductor classes, 
+namely `InteractionSet`, `GenomicInterations` and `ContactMatrix` 
+(`Lun, Perry & Ing-Simmons, F1000Research 2016`), and leverages them to 
+import on-disk Hi-C matrix files.
+
+Several other packages rely on the `HiCExperiment` class to provide a rich 
+ecosystem when interacting with Hi-C data. 
+
+![](https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_ecosystem.png)
+
 ## Importing a Hi-C matrix file
 
-- `.(m)cool` files: 
+### `.(m)cool` files: 
 
 ```r
 cool_file <- CoolFile(HiContactsData::HiContactsData('yeast_wt', format = 'cool'))
@@ -63,7 +73,7 @@ import(mcool_file, focus = "II:10000-100000", resolution = 2000)
 ## metadata(0):
 ```
 
-- `.hic` files: 
+### `.hic` files: 
 
 ```r
 hic_file <- HicFile(HiContactsData::HiContactsData('yeast_wt', format = 'hic'))
@@ -84,7 +94,7 @@ import(hic_file, focus = "II:10000-100000", resolution = 4000)
 ## metadata(0):
 ```
 
-- HiC-Pro files: 
+### HiC-Pro files: 
 
 ```r
 hicpro_file <- HicproFile(
@@ -166,16 +176,6 @@ import(hicpro_pairs_file, nrows = 100)
 
 ## The `HiCExperiment` ecosystem
 
-`HiCExperiment` S4 class is build on pre-existing Bioconductor classes, 
-namely `InteractionSet`, `GenomicInterations` and `ContactMatrix` 
-(`Lun, Perry & Ing-Simmons, F1000Research 2016`), and leverages them to 
-import on-disk Hi-C matrix files.
-
-Several other packages rely on the `HiCExperiment` class to provide a rich 
-ecosystem when interacting with Hi-C data. 
-
-![](https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_ecosystem.png)
-
 ### HiContacts 
 
 [`HiContacts` package](http://www.bioconductor.org/packages/release/bioc/html/HiContacts.html) 
@@ -208,7 +208,7 @@ Two important features of `HiCool` are:
 
 ### fourDNData
 
-`fourDNData` (read `"4DN Data"`) is a package providing a gateway to 
+`fourDNData` (read `"4DN Data"`) provides a gateway to 
 the [4DN data portal](https://data.4dnucleome.org/). 
 
 ### HiContactsData

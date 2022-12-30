@@ -60,7 +60,7 @@ The implemented `import()` methods allow one to import Hi-C matrix files in R as
 `HiCExperiment` objects.
 
 ```{r, eval = FALSE}
-hic <- import("path-to-(m)cool-file")
+hic <- import("path-to-cool/mcool/hic/HiC-Pro-file")
 ```
 
 To give real-life examples, we use the `HiContactsData` package to get access 

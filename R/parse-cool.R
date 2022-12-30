@@ -86,18 +86,28 @@
     gr_1 <- coords[1]
     sub_1 <- which(anchors %within% gr_1)
     bin_idx_1 <- .fetchCool(file, path = "indexes/bin1_offset", resolution, idx = sub_1)
-    chunks_1 <- seq(min(bin_idx_1)+1, max(bin_idx_1)+1, by = 1)
-    
+    max_bin <- max(.fetchCool(file, path = "indexes/bin1_offset", resolution))
+    if ({max(bin_idx_1)+1} > max_bin) {
+        chunks_1 <- seq(min(bin_idx_1)+1, max(bin_idx_1), by = 1)
+    } else {
+        chunks_1 <- seq(min(bin_idx_1)+1, max(bin_idx_1)+1, by = 1)
+    }
+
     gr_2 <- coords[2]
     sub_2 <- which(anchors %within% gr_2)
-    bin_idx_2 <- .fetchCool(file, path = "indexes/bin1_offset", resolution, idx = sub_2)
-    chunks_2 <- seq(min(bin_idx_2), max(bin_idx_2), by = 1)
+    bin_idx_2 <- .fetchCool(file, path = "indexes/bin2_offset", resolution, idx = sub_2)
+    max_bin <- max(.fetchCool(file, path = "indexes/bin2_offset", resolution))
+    if ({max(bin_idx_2)+1} > max_bin) {
+        chunks_2 <- seq(min(bin_idx_2)+1, max(bin_idx_2), by = 1)
+    } else {
+        chunks_2 <- seq(min(bin_idx_2)+1, max(bin_idx_2)+1, by = 1)
+    }
     valid_bin2 <- unique(.fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks_2))
     
     ## Reading the chunks from the cool file
     df <- tidyr::tibble(
-        bin1_id = .fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks_1) + 1,
-        bin2_id = .fetchCool(file, path = "pixels/bin2_id", resolution, idx = chunks_1) + 1,
+        bin1_id = .fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks_1),
+        bin2_id = .fetchCool(file, path = "pixels/bin2_id", resolution, idx = chunks_1),
         count = .fetchCool(file, path = "pixels/count", resolution, idx = chunks_1)
     )
     
@@ -155,23 +165,27 @@
     ## Find out which chunks of the mcool to recover
     if (is.na(coords_chr)) {
         chunks <- NULL
-    } 
-    else {
+    } else {
         gr <- GRanges(coords_chr, IRanges::IRanges(coords_start, coords_end))
-        sub <- which(anchors %within% gr)
-        bin_idx <- .fetchCool(file, path = "indexes/bin1_offset", resolution, idx = sub)
-        chunks <- seq(min(bin_idx)+1, max(bin_idx)+1, by = 1)
+        sub_within <- which(anchors %within% gr)
+        bin_idx <- .fetchCool(file, path = "indexes/bin1_offset", resolution, idx = sub_within)
+        max_bin <- max(.fetchCool(file, path = "indexes/bin1_offset", resolution))
+        if ({max(bin_idx)+1} > max_bin) {
+            chunks <- seq(min(bin_idx)+1, max(bin_idx), by = 1)
+        } else {
+            chunks <- seq(min(bin_idx)+1, max(bin_idx)+1, by = 1)
+        }
     }
 
     ## Reading the chunks from the cool file
     df <- tidyr::tibble(
-        bin1_id = .fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks) + 1,
-        bin2_id = .fetchCool(file, path = "pixels/bin2_id", resolution, idx = chunks) + 1,
+        bin1_id = .fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks),
+        bin2_id = .fetchCool(file, path = "pixels/bin2_id", resolution, idx = chunks),
         count = .fetchCool(file, path = "pixels/count", resolution, idx = chunks)
     )
 
     ## Filter to only get interesting bins
-    df <- df[df$bin2_id %in% df$bin1_id, ]
+    df <- df[df$bin2_id %in% {sub_within-1}, ]
 
     return(df)
 
@@ -382,32 +396,13 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
 
     # Associate raw counts for bins to corresponding anchors
     gi <- InteractionSet::GInteractions(
-        anchors[cnts$bin1_id],
-        anchors[cnts$bin2_id],
+        anchors[cnts$bin1_id+1],
+        anchors[cnts$bin2_id+1],
         count = cnts$count
     )
-    gi$bin_id1 <- cnts$bin1_id - 1
-    gi$bin_id2 <- cnts$bin2_id - 1
+    gi$bin_id1 <- cnts$bin1_id
+    gi$bin_id2 <- cnts$bin2_id
     
-    if (!is.null(coords_chr) & all(!is.na(coords_chr)) & !is_pair) {
-        # Make sure no extra GInteractions is pulled from cool (happends e.g. when fetching whole chrs.)
-        # DEFINITELY HACKY HERE
-        sub <- seqnames(InteractionSet::anchors(gi)[['first']]) == coords_chr & 
-            seqnames(InteractionSet::anchors(gi)[['second']]) == coords_chr
-        gi <- gi[sub]
-        regs <- unique(c(
-            InteractionSet::anchors(gi)[['first']], 
-            InteractionSet::anchors(gi)[['second']]
-        ))
-        names(regs) <- paste(
-            GenomicRanges::seqnames(regs), 
-            GenomicRanges::start(regs), 
-            GenomicRanges::end(regs), 
-            sep = "_"
-        )
-        InteractionSet::replaceRegions(gi) <- regs
-    }
-
     # Get balanced counts if they exist
     if (!is.null(gi$anchor1.weight) & !is.null(gi$anchor2.weight)) {
         gi$score <- gi$count * gi$anchor1.weight * gi$anchor2.weight

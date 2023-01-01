@@ -143,7 +143,8 @@
     
     `%within%` <- IRanges::`%within%`
     check_cool_format(file, resolution)
-
+    sub_within <- NULL
+    
     ## Process coordinates
     .v <- splitCoords(coords)
     coords_chr <- .v[[1]]
@@ -185,7 +186,9 @@
     )
 
     ## Filter to only get interesting bins
-    df <- df[df$bin2_id %in% {sub_within-1}, ]
+    if (!is.null(sub_within)) {
+        df <- df[df$bin2_id %in% {sub_within-1}, ]
+    }
 
     return(df)
 

@@ -15,11 +15,26 @@
 #' cm
 
 gi2cm <- function(gi, use.scores = 'score') {
+    # if (!use.scores %in% colnames(S4Vectors::mcols(gi))) 
+    #     stop("`use.scores` argument not found in the provided interactions")
+    # seqnames <- unique(GenomeInfoDb::seqnames(regions(gi)))
+    # if (length(seqnames == 1)) {
+    #     gr <- GenomicRanges::GRanges(seqinfo(gi))
+    #     res <- GenomicRanges::width(regions(gi))[1]
+    #     gr <- GenomicRanges::tileGenome(
+    #         seqinfo(gi), 
+    #         tilewidth = res, 
+    #         cut.last.tile.in.chrom = TRUE
+    #     )
+    #     gr <- gr[GenomicRanges::seqnames(gr) == seqnames]
+    #     InteractionSet::replaceRegions(gi) <- gr
+    # }
     InteractionSet::inflate(
         gi,
-        rows = seq_along(InteractionSet::regions(gi)),
-        columns = seq_along(InteractionSet::regions(gi)),
-        fill = GenomicRanges::mcols(gi)[[use.scores]]
+        rows = InteractionSet::regions(gi), 
+        columns = InteractionSet::regions(gi), 
+        fill = GenomicRanges::mcols(gi)[[use.scores]], 
+        sparse = TRUE
     )
 }
 

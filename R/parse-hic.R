@@ -296,8 +296,12 @@ lsHicResolutions <- function(file, verbose = FALSE) {
     }, error = function(e) {
         as.data.frame(InteractionSet::GInteractions())
     })}) |> dplyr::bind_rows()
-    pixs$bin1_id <- left_join(pixs, bins, by = c(chrom1 = 'seqnames', end1 = 'end'))$bin_id
-    pixs$bin2_id <- left_join(pixs, bins, by = c(chrom2 = 'seqnames', end2 = 'end'))$bin_id
+    pixs$bin1_id <- left_join(
+        pixs, bins, by = c(chrom1 = 'seqnames', end1 = 'end')
+    )$bin_id
+    pixs$bin2_id <- left_join(
+        pixs, bins, by = c(chrom2 = 'seqnames', end2 = 'end')
+    )$bin_id
     pixs <- dplyr::arrange(pixs, bin1_id, bin2_id) |> 
         tidyr::drop_na(bin1_id, bin2_id)
     res <- list(

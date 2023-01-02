@@ -136,9 +136,14 @@ setMethod("zoom", c("HiCExperiment", "numeric"), function(x, resolution) {
 #' @export
 
 setMethod("refocus", c("HiCExperiment", "character"), function(x, focus) {
+    if (is_cool(fileName(x))) {
+        res <- NULL
+    } else {
+        res <- resolution(x)
+    }
     HiCExperiment(
         fileName(x), 
-        resolution = resolution(x), 
+        resolution = res, 
         focus = focus, 
         metadata = S4Vectors::metadata(x), 
         topologicalFeatures = topologicalFeatures(x), 
@@ -460,7 +465,8 @@ setAs("HiCExperiment", "data.frame", function(from) {
 #' @export
 
 setMethod("as.matrix", "HiCExperiment", function(x) {
-    as(x, 'matrix')
+    xx <- as(x, 'matrix')
+    base::as.matrix(xx)
 })
 
 #' @export

@@ -95,8 +95,8 @@
 
     gr_2 <- coords[2]
     sub_2 <- which(anchors %within% gr_2)
-    bin_idx_2 <- .fetchCool(file, path = "indexes/bin2_offset", resolution, idx = sub_2)
-    max_bin <- max(.fetchCool(file, path = "indexes/bin2_offset", resolution))
+    bin_idx_2 <- .fetchCool(file, path = "indexes/bin1_offset", resolution, idx = sub_2)
+    max_bin <- max(.fetchCool(file, path = "indexes/bin1_offset", resolution))
     if ({max(bin_idx_2)+1} > max_bin) {
         chunks_2 <- seq(min(bin_idx_2)+1, max(bin_idx_2), by = 1)
     } else {
@@ -296,7 +296,7 @@
 lsCoolResolutions <- function(file, verbose = FALSE) {
     if (is_cool(file)) {
         x <- rhdf5::h5ls(file)
-        bin_ends <- .peekCool(file, '/bins/end', n = 2)
+        bin_ends <- rhdf5::h5read(file, name = '/bins/end', index = list(c(1, 2)))
         res <- bin_ends[2] - bin_ends[1]
     }
     if (is_mcool(file)) {
@@ -310,29 +310,6 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
     }
     if (verbose) message(S4Vectors::coolcat("resolutions(%d): %s", res))
     invisible(as.integer(res))
-}
-
-#' @param file file
-#' @param path path
-#' @param resolution resolution
-#' @param n n
-#' @return vector
-#'
-#' @importFrom Matrix head
-#' @importFrom glue glue
-#' @import rhdf5
-#' @rdname parse-cool
-
-.peekCool <- function(file, path, resolution = NULL, n = 10) {
-    check_cool_format(file, resolution)
-    path <- ifelse(is.null(resolution), glue::glue("/{path}"), glue::glue("/resolutions/{resolution}/{path}"))
-    resolution <- as.vector(rhdf5::h5read(file, name = path))
-    if (is.list(resolution)) {
-        lapply(resolution, Matrix::head, n = n)
-    }
-    else {
-        Matrix::head(resolution, n = n)
-    }
 }
 
 #' @param file file

@@ -50,6 +50,7 @@ gi2cm <- function(gi, use.scores = 'score') {
 
 cm2matrix <- function(cm, replace_NA = NA) {
     m <- Matrix::as.matrix(cm)
+    m <- base::as.matrix(m)
     m[is.na(m)] <- replace_NA
     m
 }

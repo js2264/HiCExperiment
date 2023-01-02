@@ -50,8 +50,11 @@ check_cool_format <- function(path, resolution, ...) {
         }
     }
     if (is_cool(path)) {
+        correct_res <- lsCoolResolutions(path)
         if (!is.null(resolution)) {
-            stop("File is in .cool format, please do not specify any resolution. Aborting now.")
+            if (resolution != correct_res) {
+                stop("File is in .cool format, please do not specify any resolution. Aborting now.")
+            }
         }
     }
     TRUE

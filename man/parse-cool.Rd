@@ -8,7 +8,6 @@
 \alias{.dumpCool}
 \alias{.lsCoolFiles}
 \alias{lsCoolResolutions}
-\alias{.peekCool}
 \alias{.cool2seqinfo}
 \alias{.cool2gi}
 \title{Parsing (m)cool files}
@@ -26,8 +25,6 @@
 .lsCoolFiles(file, verbose = FALSE)
 
 lsCoolResolutions(file, verbose = FALSE)
-
-.peekCool(file, path, resolution = NULL, n = 10)
 
 .cool2seqinfo(file, resolution = NULL)
 
@@ -55,8 +52,6 @@ Can also be a Pairs object of paired GRanges (length of 1).}
 \item{...}{...}
 
 \item{verbose}{Print resolutions in the console}
-
-\item{n}{n}
 }
 \value{
 anchors from (m)cool, stored as a GRanges
@@ -64,8 +59,6 @@ anchors from (m)cool, stored as a GRanges
 counts from (m)cool, stored as a tibble
 
 counts from (m)cool, stored as a tibble
-
-vector
 
 vector
 

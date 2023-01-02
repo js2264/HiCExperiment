@@ -69,16 +69,20 @@ AggrHiCExperiment <- function(
     stopifnot(file.exists(file))
     if (!is.null(resolution)) {
         resolution <- as.integer(resolution)
-        res <- resolution
     }
     else {
-        res <- ifelse({is_cool(file) | is_mcool(file)}, 
+        resolution <- ifelse({is_cool(file) | is_mcool(file)}, 
             lsCoolResolutions(file)[1], 
             ifelse(is_hic(file), lsHicResolutions(file)[1], 
             GenomicRanges::width(.getHicproAnchors(bed))[1])
         )
     }
-    if (is_cool(file) | is_mcool(file)) {
+    if (is_cool(file)) {
+        check_cool_file(file)
+        check_cool_format(file, NULL)
+        resolutions <- lsCoolResolutions(file)
+    } 
+    else if (is_mcool(file)) {
         check_cool_file(file)
         check_cool_format(file, resolution)
         resolutions <- lsCoolResolutions(file)
@@ -91,7 +95,7 @@ AggrHiCExperiment <- function(
     else if (is_hicpro_matrix(file)) {
         check_hicpro_files(file, bed)
         if (is.null(bed)) stop("Regions files not provided.")
-        resolutions <- res
+        resolutions <- resolution
     }
     
     ## - Reformat targets
@@ -119,7 +123,8 @@ AggrHiCExperiment <- function(
 
     ## - Compute aggregated scores
     gis <- .multi2DQuery(
-        file, resolution, 
+        file, 
+        resolution, 
         pairs = pairs, 
         bed = bed, 
         BPPARAM = BPPARAM
@@ -134,7 +139,7 @@ AggrHiCExperiment <- function(
         fileName = as.character(file),
         focus = "aggregated targets", 
         resolutions = resolutions, 
-        resolution = res, 
+        resolution = resolution, 
         interactions = gis, 
         scores = S4Vectors::SimpleList(
             'count' = as.numeric(mcols$count), 

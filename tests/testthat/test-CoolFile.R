@@ -32,7 +32,8 @@ test_that("CoolFile works", {
     expect_equal(resolution(mcf1), 1000L)
     expect_equal(resolution(mcf2), 16000L)
     expect_equal(resolution(mcf3), 16000L)
-    expect_error(CoolFile(cool_path, 1000))
+    expect_no_error(CoolFile(cool_path, 1000L))
+    expect_error(CoolFile(cool_path, 2000L))
     expect_error(CoolFile(mcool_path, 2))
 
     # pairFile is properly handled

@@ -23,7 +23,10 @@
 
     message( "Going through preflight checklist..." )
     # - Get si and bins from contact matrix
-    if (is_cool(file) | is_mcool(file)) {
+    if (is_cool(file)) {
+        all_bins <- .getCoolAnchors(file, resolution = NULL)
+        si <- .cool2seqinfo(file, NULL)
+    } else if (is_mcool(file)) {
         all_bins <- .getCoolAnchors(file, resolution = resolution)
         si <- .cool2seqinfo(file, resolution)
     }
@@ -71,7 +74,10 @@
     # - Full parsing has to be done since parallelized access to HDF5 is not supported 
     # - Once full parsing is done, parallelization is trivial
     message( "Parsing the entire contact matrice as a sparse matrix..." )
-    if (is_cool(file) | is_mcool(file)) {
+    if (is_cool(file)) {
+        l <- .dumpCool(file, resolution = NULL)
+    }
+    if (is_mcool(file)) {
         l <- .dumpCool(file, resolution = resolution)
     }
     else if (is_hic(file)) {

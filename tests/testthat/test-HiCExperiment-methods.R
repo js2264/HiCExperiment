@@ -2,7 +2,7 @@ test_that("HiCExperiment methods work", {
     cool_path <- HiContactsData::HiContactsData('yeast_wt', 'cool')
     mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
     contacts_yeast <- contacts_yeast()
-    expect_identical(length(contacts_yeast), 2945402L)
+    expect_identical(length(contacts_yeast), 2945692L)
     expect_s4_class(contacts_yeast[seq_len(10)], 'HiCExperiment')
     expect_s4_class({
         sub <- c(
@@ -90,7 +90,7 @@ test_that("coerce works", {
         as(contacts_yeast, 'ContactMatrix')
     }, 'ContactMatrix')
     expect_true(is.matrix({
-        as(contacts_yeast, 'matrix')
+        as(refocus(contacts_yeast, 'II'), 'matrix')
     }))
     expect_s3_class({
         as(contacts_yeast, 'data.frame')

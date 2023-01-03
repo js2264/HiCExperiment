@@ -20,7 +20,6 @@ Depends:
 Imports:
     InteractionSet,
     strawr, 
-    GenomicInteractions,
     GenomeInfoDb,
     GenomicRanges,
     IRanges,
@@ -73,7 +72,6 @@ Collate:
     'PairsFile-methods.R'
     'checks.R'
     'data.R'
-    'example.R'
     'globals.R'
     'import-methods.R'
     'parse-cool.R'

@@ -9,6 +9,7 @@ test_that("HicFile works", {
     hf3 <- HicFile(hic_path, resolution = 16000)
 
     # No errors/warnings when printing HicFile
+    expect_no_warning(show(hf0))
     expect_no_warning(hf0)
     expect_no_error(hf0)
     expect_no_warning(hf1)

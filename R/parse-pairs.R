@@ -11,13 +11,12 @@
 #' @param frag2.field frag2.field
 #' @param nThread Number of CPUs to use to import the `pairs` file in R
 #' @param nrows Number of pairs to import
-#' @return a GenomicInteractions object
+#' @return a GInteractions object
 #'
 #' @importFrom vroom vroom
 #' @importFrom glue glue
 #' @importFrom GenomicRanges GRanges
-#' @importFrom GenomicInteractions GenomicInteractions
-#' @importFrom GenomicInteractions calculateDistances
+#' @importFrom IRanges IRanges
 #' @importFrom IRanges IRanges
 #' @import tibble
 #' @rdname parse-pairs
@@ -131,7 +130,7 @@ pairs2gi <- function(
         IRanges::IRanges(anchors2[[2]], width = 1), 
         strand = anchors2[[3]]
     )
-    gi <- GenomicInteractions::GenomicInteractions(anchor_one, anchor_two)
+    gi <- InteractionSet::GInteractions(anchor_one, anchor_two)
     
     if (!is.null(frag1.field) & !is.null(frag2.field)) {
         gi$frag1 <- anchors1[[4]]
@@ -141,7 +140,7 @@ pairs2gi <- function(
         gi$frag1 <- NA
         gi$frag2 <- NA
     }
-    gi$distance <- GenomicInteractions::calculateDistances(gi) 
+    gi$distance <- InteractionSet::pairdist(gi) 
     return(gi)
 }
 

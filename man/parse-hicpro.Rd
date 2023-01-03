@@ -21,10 +21,10 @@
 \item{bed}{bed}
 }
 \value{
-a GenomicInteractions object
+a GInteractions object
 }
 \description{
 These functions are the workhorse internal functions used to import
-HiC-Pro \code{.matrix} and \code{.bed} files as GenomicInteractions (wrapped into a \code{HiCExperiment} object
+HiC-Pro \code{.matrix} and \code{.bed} files as GInteractions (wrapped into a \code{HiCExperiment} object
 by \code{HiCExperiment()} function).
 }

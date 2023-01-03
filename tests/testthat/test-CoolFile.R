@@ -12,6 +12,7 @@ test_that("CoolFile works", {
     mcf3 <- CoolFile(mcool_path, resolution = 16000)
 
     # No errors/warnings when printing CoolFile
+    expect_no_warning(show(cf0))
     expect_no_warning(cf0)
     expect_no_error(cf0)
     expect_no_warning(cf1)
@@ -35,6 +36,7 @@ test_that("CoolFile works", {
     expect_no_error(CoolFile(cool_path, 1000L))
     expect_error(CoolFile(cool_path, 2000L))
     expect_error(CoolFile(mcool_path, 2))
+    expect_no_error(metadata(mcf0) <- list(test = 'OK'))
 
     # pairFile is properly handled
     expect_null(pairsFile(cf0))

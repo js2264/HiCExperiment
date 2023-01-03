@@ -1,4 +1,4 @@
-test_that("HicFile works", {
+test_that("HicproFile works", {
     
     # Prepare paths and HicproFiles
     hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
@@ -10,6 +10,7 @@ test_that("HicFile works", {
     hicpro2 <- HicproFile(hicpro_matrix_path, bed = hicpro_bed_path, pairs = pairs_path)
     
     # import is properly handled for HicproFile
+    expect_no_error(show(HicproFile(hicpro_matrix_path)))
     expect_error(import(hicpro0))
     ihicpro1 <- import(hicpro1)
 

@@ -42,7 +42,7 @@ pairs2gi(
 \item{nrows}{Number of pairs to import}
 }
 \value{
-a GenomicInteractions object
+a GInteractions object
 }
 \description{
 Pairs parsing functions

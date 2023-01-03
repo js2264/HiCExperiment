@@ -128,7 +128,7 @@ import(pairs_file)
 ```
 
 ```
-## GenomicInteractions object with 471364 interactions and 4 metadata columns:
+## GInteractions object with 471364 interactions and 4 metadata columns:
 ##            seqnames1   ranges1     seqnames2   ranges2 |    counts     frag1     frag2  distance
 ##                <Rle> <IRanges>         <Rle> <IRanges> | <integer> <numeric> <numeric> <numeric>
 ##        [1]        II       105 ---        II     48548 |         1      1358      1681     48443
@@ -155,7 +155,7 @@ import(hicpro_pairs_file, nrows = 100)
 ```
 
 ```
-## GenomicInteractions object with 100 interactions and 4 metadata columns:
+## GInteractions object with 100 interactions and 4 metadata columns:
 ##         seqnames1   ranges1     seqnames2   ranges2 |    counts     frag1       frag2  distance
 ##             <Rle> <IRanges>         <Rle> <IRanges> | <integer> <numeric> <character> <numeric>
 ##     [1]         I        33 ---         I       620 |         1       414     HIC_I_1       587

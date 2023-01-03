@@ -37,7 +37,7 @@ A \code{HiCExperiment} or \code{GInteractions} object
 Import methods for data structures implemented in the HiCExperiment package.
 HiCExperiment package implements methods to faciliate
 the import of Hi-C files (.(m)cool, .hic, HiC-Pro derived)
-and pairs files in R, as HiCExperiment or GenomicInteractions objects.
+and pairs files in R, as HiCExperiment or GInteractions objects.
 }
 \examples{
 # ---- Importing .(m)cool files 

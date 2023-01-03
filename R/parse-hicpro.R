@@ -1,12 +1,12 @@
 #' Parsing hicpro files (matrix & bed)
 #' 
 #' These functions are the workhorse internal functions used to import 
-#' HiC-Pro `.matrix` and `.bed` files as GenomicInteractions (wrapped into a `HiCExperiment` object
+#' HiC-Pro `.matrix` and `.bed` files as GInteractions (wrapped into a `HiCExperiment` object
 #' by `HiCExperiment()` function).
 #'
 #' @param file file
 #' @param bed bed
-#' @return a GenomicInteractions object
+#' @return a GInteractions object
 #'
 #' @import InteractionSet
 #' @importFrom GenomicRanges seqnames

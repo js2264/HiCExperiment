@@ -29,13 +29,13 @@ Can also be a Pairs object of paired GRanges (length of 1).}
 \item{verbose}{Print resolutions in the console}
 }
 \value{
-a GenomicInteractions object
+a GInteractions object
 
 vector
 }
 \description{
 These functions are the workhorse internal functions used to import
-a \code{.hic} file as GenomicInteractions (wrapped into a \code{HiCExperiment} object
+a \code{.hic} file as GInteractions (wrapped into a \code{HiCExperiment} object
 by \code{HiCExperiment()} function).
 }
 \examples{

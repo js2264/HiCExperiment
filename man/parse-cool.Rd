@@ -68,11 +68,11 @@ vector
 
 a Seqinfo object
 
-a GenomicInteractions object
+a GInteractions object
 }
 \description{
 These functions are the workhorse internal functions used to import
-a \verb{.(m)cool} file as GenomicInteractions (wrapped into a \code{HiCExperiment} object
+a \verb{.(m)cool} file as GInteractions (wrapped into a \code{HiCExperiment} object
 by \code{HiCExperiment()} function).
 }
 \examples{

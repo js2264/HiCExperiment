@@ -26,6 +26,7 @@ utils::globalVariables(c(
     "weight2", 
     "start1", 
     "start2", 
-    "bed"  
+    "bed", 
+    "name" 
 ))
 

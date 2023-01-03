@@ -108,9 +108,10 @@ AggrHiCExperiment <- function(
     }
     else if (is(targets, 'GInteractions')) {
         # Need to check that pairs are OK (all width = 1)
-        an1 <- GenomicInteractions::anchorOne(targets)
+        ans <- InteractionSet::anchors(targets)
+        an1 <- ans[[1]]
         an1 <- resize(an1, fix = 'center', width = resolution*{2*flanking_bins})
-        an2 <- GenomicInteractions::anchorTwo(targets)
+        an2 <- ans[[2]]
         an2 <- resize(an2, fix = 'center', width = resolution*{2*flanking_bins})
         pairs <- InteractionSet::swapAnchors(InteractionSet::GInteractions(
             an1, an2

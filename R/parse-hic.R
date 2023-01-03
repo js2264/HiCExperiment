@@ -1,14 +1,14 @@
 #' Parsing hic files
 #' 
 #' These functions are the workhorse internal functions used to import 
-#' a `.hic` file as GenomicInteractions (wrapped into a `HiCExperiment` object
+#' a `.hic` file as GInteractions (wrapped into a `HiCExperiment` object
 #' by `HiCExperiment()` function).
 #'
 #' @param file file
 #' @param coords NULL, character, or GRanges. 
 #'   Can also be a Pairs object of paired GRanges (length of 1).
 #' @param resolution resolution
-#' @return a GenomicInteractions object
+#' @return a GInteractions object
 #'
 #' @import InteractionSet
 #' @import strawr

@@ -57,6 +57,8 @@
 #' 
 #' @importMethodsFrom BiocGenerics fileName
 #' @importFrom InteractionSet reduceRegions
+#' @importFrom InteractionSet anchors
+#' @importFrom InteractionSet regions
 #' @importFrom GenomeInfoDb seqinfo
 #' 
 #' @include AllGenerics.R

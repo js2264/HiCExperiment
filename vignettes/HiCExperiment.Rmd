@@ -27,8 +27,7 @@ suppressPackageStartupMessages({
 # The `HiCExperiment` class
 
 `HiCExperiment` package implements the new `HiCExperiment` S4 class. It is build 
-on pre-existing Bioconductor classes, namely `InteractionSet`, 
-`GenomicInterations` and `ContactMatrix` 
+on pre-existing Bioconductor classes, namely `InteractionSet` and `ContactMatrix` 
 (`Lun, Perry & Ing-Simmons, F1000Research 2016`), and leverages them to 
 import locally stored Hi-C matrix files. It further provides **analytical** 
 and **visualization** tools to investigate contact maps directly in `R`. 

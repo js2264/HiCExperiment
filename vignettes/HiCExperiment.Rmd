@@ -109,11 +109,9 @@ import(pairsFile(hicf), format = 'pairs')
 ## --- HicproFile
 hicpro_matrix_file <- HiContactsData('yeast_wt', format = 'hicpro_matrix')
 hicpro_regions_file <- HiContactsData('yeast_wt', format = 'hicpro_bed')
-hicpro_pairs_file <- HiContactsData('yeast_wt', format = 'hicpro_pairs')
-hicprof <- HicproFile(hicpro_matrix_file, bed = hicpro_regions_file, pairsFile = hicpro_pairs_file)
+hicprof <- HicproFile(hicpro_matrix_file, bed = hicpro_regions_file)
 hicprof
 import(hicprof)
-import(pairsFile(hicprof), format = 'pairs')
 ```
 
 # Import arguments
@@ -238,10 +236,6 @@ in R with the `import` function:
 ## --- .pairs file
 pairs_file <- HiContactsData('yeast_wt', format = 'pairs.gz')
 import(pairs_file, format = 'pairs')
-
-## --- .validPairs file
-hicpro_pairs_file <- HiContactsData('yeast_wt', format = 'hicpro_pairs')
-import(hicpro_pairs_file, format = 'pairs')
 ```
 
 # Session info

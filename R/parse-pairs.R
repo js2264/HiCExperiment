@@ -31,7 +31,7 @@ pairs2gi <- function(
     strand2.field = NULL, 
     frag1.field = NULL, 
     frag2.field = NULL, 
-    nThread = 16, 
+    nThread = 1, 
     nrows = Inf  
 ) {
 
@@ -110,7 +110,8 @@ pairs2gi <- function(
         col_select = dplyr::all_of(sel1),
         comment = '#',
         col_names = FALSE,
-        show_col_types = FALSE
+        show_col_types = FALSE, 
+        num_threads = nThread
     )
     anchors2 <- vroom::vroom(
         file,
@@ -118,7 +119,8 @@ pairs2gi <- function(
         col_select = dplyr::all_of(sel2),
         comment = '#',
         col_names = FALSE,
-        show_col_types = FALSE
+        show_col_types = FALSE, 
+        num_threads = nThread
     )  
     anchor_one <- GenomicRanges::GRanges(
         anchors1[[1]],

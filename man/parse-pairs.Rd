@@ -14,7 +14,7 @@ pairs2gi(
   strand2.field = NULL,
   frag1.field = NULL,
   frag2.field = NULL,
-  nThread = 16,
+  nThread = 1,
   nrows = Inf
 )
 }

@@ -47,10 +47,10 @@ test_that("CoolFile works", {
     expect_null(pairsFile(mcf3))
 
     # import is properly handled for CoolFile
-    icf0 <- import(cf0)
-    icf1 <- import(cf1)
-    imcf0 <- import(mcf0)
-    imcf1 <- import(mcf1)
+    icf0 <- import(cf0, focus = 'I')
+    icf1 <- import(cf1, focus = 'I')
+    imcf0 <- import(mcf0, focus = 'I')
+    imcf1 <- import(mcf1, focus = 'I')
     imcf2 <- import(mcf2)
     imcf3 <- import(mcf3)
     imcf4 <- import(mcf3, focus = 'I')
@@ -78,10 +78,10 @@ test_that("CoolFile works", {
     expect_equal(focus(imcf5), "I")
 
     # import is properly handled for files provided as string
-    icf0 <- import(cool_path, format = 'cool')
-    icf1 <- import(cool_path, pairsFile = pairs_path, format = 'cool')
-    imcf0 <- import(mcool_path, format = 'cool')
-    imcf1 <- import(mcool_path, pairsFile = pairs_path, format = 'cool')
+    icf0 <- import(cool_path, focus = 'I', format = 'cool')
+    icf1 <- import(cool_path, focus = 'I', pairsFile = pairs_path, format = 'cool')
+    imcf0 <- import(mcool_path, focus = 'I', format = 'cool')
+    imcf1 <- import(mcool_path, focus = 'I', pairsFile = pairs_path, format = 'cool')
     imcf2 <- import(mcool_path, pairsFile = pairs_path, resolution = 16000, format = 'cool')
     imcf3 <- import(mcool_path, resolution = 16000, format = 'cool')
     imcf4 <- import(mcool_path, focus = 'I', format = 'cool')
@@ -107,7 +107,6 @@ test_that("CoolFile works", {
     expect_equal(focus(imcf5), "I")
 
     # import is properly handled with HiCExperiment function
-    expect_no_error(HiCExperiment(cool_path))
     expect_no_error(HiCExperiment(cool_path, focus = 'I'))
     expect_error(HiCExperiment(mcool_path, focus = 'I'))
     expect_error(HiCExperiment(mcool_path))

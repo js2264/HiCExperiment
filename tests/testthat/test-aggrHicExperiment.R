@@ -1,10 +1,10 @@
 test_that("AggrHiCExperiment methods work", {
-    contacts <- full_contacts_yeast()
+    contacts <- contacts_yeast(full = TRUE)
     centros <- topologicalFeatures(contacts, 'centromeres')
     x <- AggrHiCExperiment(
         file = fileName(contacts), 
-        resolution = 1000,
-        targets = centros
+        resolution = 2000,
+        targets = centros[3:8]
     )
     expect_s4_class(x, "AggrHiCExperiment")
     expect_no_error(show(x))

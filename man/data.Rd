@@ -6,7 +6,6 @@
 \alias{centros_yeast}
 \alias{contacts_yeast}
 \alias{contacts_yeast_eco1}
-\alias{full_contacts_yeast}
 \title{Example datasets provided in \code{HiCExperiment} & \code{HiContactsData}}
 \format{
 An object of class \code{"GRanges"}.
@@ -16,6 +15,13 @@ HiContacts
 }
 \usage{
 data(centros_yeast)
+
+contacts_yeast(full = FALSE)
+
+contacts_yeast_eco1(full = FALSE)
+}
+\arguments{
+\item{full}{Whether to import all interactions}
 }
 \description{
 Example datasets provided in \code{HiCExperiment} & \code{HiContactsData}
@@ -25,5 +31,4 @@ data(centros_yeast)
 centros_yeast
 contacts_yeast()
 contacts_yeast_eco1()
-full_contacts_yeast()
 }

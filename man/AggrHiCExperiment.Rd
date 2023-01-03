@@ -3,6 +3,7 @@
 \docType{class}
 \name{AggrHiCExperiment}
 \alias{AggrHiCExperiment}
+\alias{AggrHiCExperiment-class}
 \title{\code{AggrHiCExperiment} S4 class}
 \usage{
 AggrHiCExperiment(
@@ -40,6 +41,9 @@ input targets.}
 
 \item{BPPARAM}{BiocParallel parameters}
 }
+\value{
+An \code{AggrHiCExperiment} object.
+}
 \description{
 The \code{AggrHiCExperiment} extends \code{HiCExperiment} class
 }
@@ -68,12 +72,12 @@ viewpoints (\<GRanges\>), etc...)}
 }}
 
 \examples{
-contacts <- full_contacts_yeast()
+contacts <- contacts_yeast(full = TRUE)
 centros <- topologicalFeatures(contacts, 'centromeres')
 x <- AggrHiCExperiment(
   file = fileName(contacts), 
-  resolution = 1000,
-  targets = centros
+  resolution = 2000,
+  targets = centros[3:8]
 )
 x
 slices(x, 'count')[1:10, 1:10, 1]

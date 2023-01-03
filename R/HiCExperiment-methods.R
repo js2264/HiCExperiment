@@ -74,7 +74,7 @@
 #' tail(scores(contacts_yeast, 'balanced'))
 #' scores(contacts_yeast, 'test') <- runif(length(contacts_yeast))
 #' tail(scores(contacts_yeast, 'test'))
-#' full_contacts_yeast <- full_contacts_yeast()
+#' full_contacts_yeast <- contacts_yeast()
 #' topologicalFeatures(full_contacts_yeast)
 #' topologicalFeatures(full_contacts_yeast, 1)
 #' topologicalFeatures(full_contacts_yeast, 'centromeres')

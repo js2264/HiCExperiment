@@ -1,4 +1,4 @@
-[![](https://img.shields.io/badge/release%20version-0.98.0-orange.svg)](https://www.bioconductor.org/packages/HiCExperiment)
+[![](https://img.shields.io/badge/release%20version-0.99.1-orange.svg)](https://www.bioconductor.org/packages/HiCExperiment)
 [![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 

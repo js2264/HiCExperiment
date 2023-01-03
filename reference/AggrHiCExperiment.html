@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">HiCExperiment</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.1</span>
       </span>
     </div>
 
@@ -108,6 +108,12 @@ input targets.</p></dd>
 <dd><p>BiocParallel parameters</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>An <code>AggrHiCExperiment</code> object.</p>
+    </div>
     <div id="slots">
     <h2>Slots</h2>
     
@@ -154,45 +160,45 @@ viewpoints (\&lt;GRanges\&gt;), etc...)</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">contacts</span> <span class="op">&lt;-</span> <span class="fu"><a href="data.html">full_contacts_yeast</a></span><span class="op">(</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">contacts</span> <span class="op">&lt;-</span> <span class="fu"><a href="data.html">contacts_yeast</a></span><span class="op">(</span>full <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2022-12-16</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
 <span class="r-in"><span><span class="va">centros</span> <span class="op">&lt;-</span> <span class="fu"><a href="AllGenerics.html">topologicalFeatures</a></span><span class="op">(</span><span class="va">contacts</span>, <span class="st">'centromeres'</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">AggrHiCExperiment</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  file <span class="op">=</span> <span class="fu">fileName</span><span class="op">(</span><span class="va">contacts</span><span class="op">)</span>, </span></span>
-<span class="r-in"><span>  resolution <span class="op">=</span> <span class="fl">1000</span>,</span></span>
-<span class="r-in"><span>  targets <span class="op">=</span> <span class="va">centros</span></span></span>
+<span class="r-in"><span>  resolution <span class="op">=</span> <span class="fl">2000</span>,</span></span>
+<span class="r-in"><span>  targets <span class="op">=</span> <span class="va">centros</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Going through preflight checklist...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing the entire contact matrice as a sparse matrix...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Modeling distance decay...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering for contacts within provided targets...</span>
 <span class="r-in"><span><span class="va">x</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> `AggrHiCExperiment` object over 16 targets </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> `AggrHiCExperiment` object over 6 targets </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/4d164d65a1a_7752" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> focus: 16 targets </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/4d3b6d94c9_7752" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> focus: 6 targets </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolutions(5): 1000 2000 4000 8000 16000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> current resolution: 1000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> current resolution: 2000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> interactions: 10201 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> scores(4): count balanced expected detrended </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> slices(4): count balanced expected detrended </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> topologicalFeatures: targets(16) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> topologicalFeatures: targets(6) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: N/A </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> metadata(0):</span>
 <span class="r-in"><span><span class="fu"><a href="AllGenerics.html">slices</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">'count'</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]    4   43   54   40   41   38   35   16    5    17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]    0   13   61   52   62   42   25   14    9    23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]    0    0   53   72   93   76   47   25    8    29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]    0    0    0    6   67   56   42   20    8    17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]    0    0    0    0   43   68   71   45   25    39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]    0    0    0    0    0   48   70   45   23    61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]    0    0    0    0    0    0   29   31    9    37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]    0    0    0    0    0    0    0    7   17    26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]    0    0    0    0    0    0    0    0   10    38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]    0    0    0    0    0    0    0    0    0    33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]   46  135   71   43   47   44   68   33   28    33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]    0  140  224  179  134  103  150   74   68    79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]    0    0   84  211  189  106  136   56   43    42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]    0    0    0   63  148  118  135   64   42    50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]    0    0    0    0  112  213  240   98   46    64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]    0    0    0    0    0   72  315  113   63    77</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]    0    0    0    0    0    0  201  177  117   157</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]    0    0    0    0    0    0    0   42   65   116</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]    0    0    0    0    0    0    0    0   48   239</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]    0    0    0    0    0    0    0    0    0   163</span>
 </code></pre></div>
     </div>
   </div>

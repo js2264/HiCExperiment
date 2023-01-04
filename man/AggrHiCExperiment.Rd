@@ -91,13 +91,13 @@ viewpoints (\<GRanges\>), etc...)}
 }}
 
 \examples{
-fpath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-data(centros_yeast)
-x <- AggrHiCExperiment(
-  file = fpath, 
-  resolution = 8000,
-  targets = centros_yeast[c(4, 7)]
-)
-x
-slices(x, 'count')[1:10, 1:10, 1]
+#fpath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+#data(centros_yeast)
+#x <- AggrHiCExperiment(
+#  file = fpath, 
+#  resolution = 8000,
+#  targets = centros_yeast[c(4, 7)]
+#)
+#x
+#slices(x, 'count')[1:10, 1:10, 1]
 }

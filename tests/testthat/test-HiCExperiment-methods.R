@@ -23,6 +23,7 @@ test_that("HiCExperiment methods work", {
     expect_s4_class(bins(contacts_yeast), 'GRanges')
     expect_null(focus(contacts_yeast))
     expect_no_error(focus(contacts_yeast) <- 'II')
+    expect_no_error(refocus(contacts_yeast, 'III'))
     expect_s4_class(zoom(contacts_yeast, 16000), 'HiCExperiment')
     expect_s4_class(interactions(contacts_yeast), 'GInteractions')
     expect_no_error(interactions(contacts_yeast) <- interactions(contacts_yeast))

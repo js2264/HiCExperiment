@@ -1,8 +1,6 @@
 test_that("HicFile works", {
     
     # Prepare paths and HicFiles
-    hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-    pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
     hf0 <- HicFile(hic_path)
     hf2 <- HicFile(hic_path, pairsFile = pairs_path, resolution = 16000)
     hf3 <- HicFile(hic_path, resolution = 16000)

@@ -8,10 +8,9 @@
 #' @export
 #' @examples 
 #' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-#' contacts <- import(mcool_path, format = 'cool')
+#' contacts <- import(mcool_path, focus = 'XVI', resolution = 16000, format = 'cool')
 #' gis <- interactions(contacts)
-#' gis$score <- scores(contacts, 1)
-#' cm <- gi2cm(gis)
+#' cm <- gi2cm(gis, 'balanced')
 #' cm
 
 gi2cm <- function(gi, use.scores = 'score') {

@@ -37,12 +37,12 @@
 #' 
 #' @include HiCExperiment-class.R
 #' @examples
-#' contacts <- contacts_yeast(full = TRUE)
-#' centros <- topologicalFeatures(contacts, 'centromeres')
+#' fpath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+#' data(centros_yeast)
 #' x <- AggrHiCExperiment(
-#'   file = fileName(contacts), 
-#'   resolution = 2000,
-#'   targets = centros[3:8]
+#'   file = fpath, 
+#'   resolution = 8000,
+#'   targets = centros_yeast[c(4, 7)]
 #' )
 #' x
 #' slices(x, 'count')[1:10, 1:10, 1]
@@ -144,7 +144,7 @@ AggrHiCExperiment <- function(
     ## -- Create contact object
     x <- methods::new("AggrHiCExperiment", 
         fileName = as.character(file),
-        focus = "aggregated targets", 
+        focus = paste0(length(targets), " aggregated targets"), 
         resolutions = resolutions, 
         resolution = resolution, 
         interactions = gis, 

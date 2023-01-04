@@ -26,10 +26,9 @@ Other parsing functions
 }
 \examples{
 mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-contacts <- import(mcool_path, format = 'cool')
+contacts <- import(mcool_path, focus = 'XVI', resolution = 16000, format = 'cool')
 gis <- interactions(contacts)
-gis$score <- scores(contacts, 1)
-cm <- gi2cm(gis)
+cm <- gi2cm(gis, 'balanced')
 cm
 cm2matrix(cm)[1:10, 1:10]
 }

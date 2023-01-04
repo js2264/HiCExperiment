@@ -1,6 +1,7 @@
 #' @title `pairsFile` methods
 #' 
-#' @name pairsFile-methods
+#' @name PairsFile-class
+#' @rdname PairsFile-class
 #' @aliases pairsFile,PairsFile-method
 #' 
 #' @description
@@ -10,10 +11,6 @@
 #' @param x Path to a pairs file
 #'
 #' @importFrom BiocGenerics path
-#' @examples 
-#' pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
-#' pf <- PairsFile(pairs_path)
-#' pairsFile(pf)
 NULL
 
 #' @export

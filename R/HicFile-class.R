@@ -28,7 +28,16 @@
 #' @examples
 #' hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
 #' pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
-#' hic <- HicFile(hic_path, resolution = 16000, pairsFile = pairs_path)
+#' hic <- HicFile(
+#'   hic_path, 
+#'   resolution = 16000, 
+#'   pairsFile = pairs_path, 
+#'   metadata = list(type = 'example')
+#' )
+#' hic
+#' resolution(hic)
+#' pairsFile(hic)
+#' S4Vectors::metadata(hic)
 NULL
 
 #' @export

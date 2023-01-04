@@ -1,9 +1,6 @@
 test_that("CoolFile works", {
     
     # Prepare paths and CoolFiles
-    cool_path <- HiContactsData::HiContactsData('yeast_wt', 'cool')
-    mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-    pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
     cf0 <- CoolFile(cool_path)
     cf1 <- CoolFile(cool_path, pairsFile = pairs_path)
     mcf0 <- CoolFile(mcool_path)

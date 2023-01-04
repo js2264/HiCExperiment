@@ -30,5 +30,4 @@ Example datasets provided in \code{HiCExperiment} & \code{HiContactsData}
 data(centros_yeast)
 centros_yeast
 contacts_yeast()
-contacts_yeast_eco1()
 }

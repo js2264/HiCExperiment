@@ -33,7 +33,16 @@
 #' @examples
 #' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
 #' pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
-#' cf <- CoolFile(mcool_path, resolution = 4000, pairsFile = pairs_path)
+#' cf <- CoolFile(
+#'   mcool_path, 
+#'   resolution = 2000, 
+#'   pairsFile = pairs_path, 
+#'   metadata = list(info = 'Yeast WT Hi-C exp.')
+#' )
+#' cf
+#' resolution(cf)
+#' pairsFile(cf)
+#' S4Vectors::metadata(cf)
 NULL
 
 #' @export

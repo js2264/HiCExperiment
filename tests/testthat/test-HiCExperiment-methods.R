@@ -1,9 +1,7 @@
+contacts_yeast <- contacts_yeast()
+
 test_that("HiCExperiment methods work", {
-    cool_path <- HiContactsData::HiContactsData('yeast_wt', 'cool')
-    mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-    pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
-    contacts_yeast <- contacts_yeast()
-    expect_identical(length(contacts_yeast), 2945692L)
+    expect_identical(length(contacts_yeast), 267709L)
     expect_s4_class(contacts_yeast[seq_len(10)], 'HiCExperiment')
     expect_s4_class({
         sub <- c(
@@ -13,19 +11,19 @@ test_that("HiCExperiment methods work", {
         contacts_yeast[sub]
     }, 'HiCExperiment')
     expect_s4_class({
-        contacts_yeast['II:1-10000']
+        contacts_yeast['II:1-20000']
     }, 'HiCExperiment')
     expect_s4_class({
-        contacts_yeast['II:1-10000|II:20000-40000']
+        contacts_yeast['II:1-30000|II:30000-60000']
     }, 'HiCExperiment')
     expect_type(fileName(contacts_yeast), 'character')
     expect_s4_class(seqinfo(contacts_yeast), 'Seqinfo')
     expect_type(resolutions(contacts_yeast), 'integer')
-    expect_equal(resolution(contacts_yeast), 1000L)
+    expect_equal(resolution(contacts_yeast), 16000L)
     expect_s4_class(bins(contacts_yeast), 'GRanges')
     expect_null(focus(contacts_yeast))
     expect_no_error(focus(contacts_yeast) <- 'II')
-    expect_s4_class(zoom(contacts_yeast, 2000), 'HiCExperiment')
+    expect_s4_class(zoom(contacts_yeast, 16000), 'HiCExperiment')
     expect_s4_class(interactions(contacts_yeast), 'GInteractions')
     expect_no_error(interactions(contacts_yeast) <- interactions(contacts_yeast))
     expect_s4_class(scores(contacts_yeast), 'SimpleList')
@@ -47,7 +45,6 @@ test_that("HiCExperiment methods work", {
 })
 
 test_that("checks work", {
-    contacts_yeast <- contacts_yeast()
     expect_true(check_resolution(contacts_yeast, 2000))
     expect_error(check_resolution(contacts_yeast, 3000))
     expect_true(is_square(S4Vectors::Pairs(
@@ -92,7 +89,6 @@ test_that("utils works", {
 })
 
 test_that("coerce works", {
-    contacts_yeast <- contacts_yeast()
     expect_s4_class({
         as(contacts_yeast, 'GInteractions')
     }, 'GInteractions')

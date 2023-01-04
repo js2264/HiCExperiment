@@ -47,9 +47,36 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' @importClassesFrom S4Vectors Annotated
 #' @importFrom S4Vectors metadata
 #' @examples 
-#' library(HiCExperiment)
 #' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-#' HiCExperiment(mcool_path, resolution = 16000)
+#' contacts_yeast <- HiCExperiment(mcool_path, resolution = 16000, focus = 'II')
+#' contacts_yeast
+#' resolutions(contacts_yeast)
+#' resolution(contacts_yeast)
+#' focus(contacts_yeast)
+#' scores(contacts_yeast)
+#' tail(scores(contacts_yeast, 1))
+#' tail(scores(contacts_yeast, 'balanced'))
+#' scores(contacts_yeast, 'test') <- runif(length(contacts_yeast))
+#' tail(scores(contacts_yeast, 'test'))
+#' data(centros_yeast)
+#' topologicalFeatures(contacts_yeast, 'centromeres') <- centros_yeast
+#' topologicalFeatures(contacts_yeast, 1)
+#' topologicalFeatures(contacts_yeast, 'centromeres')
+#' pairsFile(contacts_yeast)
+#' fileName(contacts_yeast)
+#' interactions(contacts_yeast)
+#' length(contacts_yeast)
+#' contacts_yeast[seq_len(10)]
+#' seqinfo(contacts_yeast)
+#' bins(contacts_yeast)
+#' anchors(contacts_yeast)
+#' regions(contacts_yeast)
+#' contacts_yeast
+#' as(contacts_yeast, 'GInteractions')
+#' as(contacts_yeast, 'ContactMatrix')
+#' as(contacts_yeast, 'matrix')[seq_len(10), seq_len(10)]
+#' as(contacts_yeast, 'data.frame')[seq_len(10), seq_len(10)]
+
 NULL
 
 #' @rdname HiCExperiment

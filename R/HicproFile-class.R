@@ -31,7 +31,14 @@
 #' hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
 #' hicpro_bed_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_bed')
 #' pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
-#' hcf <- HicproFile(hicpro_matrix_path, bed = hicpro_bed_path, pairs = pairs_path)
+#' hicpro <- HicproFile(
+#'   hicpro_matrix_path, bed = hicpro_bed_path, pairs = pairs_path ,
+#'   metadata = list(type = 'example')
+#' )
+#' hicpro
+#' resolution(hicpro)
+#' pairsFile(hicpro)
+#' S4Vectors::metadata(hicpro)
 NULL
 
 #' @export
@@ -74,4 +81,3 @@ HicproFile <- function(path, bed = NULL, pairsFile = NULL, metadata = list()) {
         )
     }
 }
-

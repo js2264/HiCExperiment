@@ -42,11 +42,11 @@ and pairs files in R, as HiCExperiment or GInteractions objects.
 \examples{
 # ---- Importing .(m)cool files 
 mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-import(mcool_path, resolution = 16000, format = 'cool')
+import(mcool_path, resolution = 16000, focus = 'XVI', format = 'cool')
 
 # ---- Importing .hic files 
 hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-import(hic_path, resolution = 2000, focus = 'II', format = 'hic')
+import(hic_path, resolution = 16000, focus = 'XVI', format = 'hic')
 
 # ---- Importing HiC-Pro files 
 hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')

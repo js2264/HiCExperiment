@@ -1,6 +1,7 @@
 #' @title `HicFile` methods
 #' 
 #' @name HicFile-methods
+#' @rdname HicFile-class
 #' @aliases show,HicFile-method
 #' 
 #' @description
@@ -12,17 +13,6 @@
 #' @importFrom BiocGenerics path
 #' @include HicFile-class.R 
 #' @include PairsFile-class.R 
-#' @examples 
-#' hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-#' pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
-#' hic <- HicFile(
-#'   hic_path, resolution = 4000, 
-#'   pairsFile = pairs_path, metadata = list(info = 'Processed with Juicer')
-#' )
-#' hic
-#' resolution(hic)
-#' pairsFile(hic)
-#' S4Vectors::metadata(hic)
 NULL
 
 #' @export

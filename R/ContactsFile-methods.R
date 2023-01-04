@@ -1,6 +1,7 @@
 #' @title `ContactsFile` methods
 #' 
 #' @name ContactsFile-methods
+#' @rdname ContactsFile-class
 #' @aliases pairsFile,ContactsFile-method
 #' @aliases resolution,ContactsFile-method
 #' @aliases metadata<-,ContactsFile-method

@@ -1,6 +1,7 @@
 #' @title `AggrHiCExperiment` methods
 #' 
-#' @name AggrHiCExperiment-methods
+#' @name AggrHiCExperiment
+#' @rdname AggrHiCExperiment
 #' @aliases slices,AggrHiCExperiment,missing-method
 #' @aliases slices,AggrHiCExperiment,character-method
 #' @aliases slices,AggrHiCExperiment,numeric-method
@@ -10,7 +11,7 @@
 #' 
 #' AggrHiCExperiment methods.
 #' 
-#' @param x A \code{AggrHiCExperiment} object.
+#' @param x,object A \code{AggrHiCExperiment} object.
 #' @param name The name/index of slices to extract.
 #' 
 #' @include AggrHiCExperiment-class.R
@@ -18,14 +19,23 @@
 NULL
 
 #' @export
+#' @rdname AggrHiCExperiment
 
 setMethod("slices", signature(x = "AggrHiCExperiment", name = "missing"), function(x) x@slices)
+
+#' @export
+#' @rdname AggrHiCExperiment
+
 setMethod("slices", signature(x = "AggrHiCExperiment", name = "character"), function(x, name) {
     if (!name %in% names(slices(x))) {
         stop(paste0(name, ' not in slices.'))
     }
     return(x@slices[[name]])
 })
+
+#' @export
+#' @rdname AggrHiCExperiment
+
 setMethod("slices", signature(x = "AggrHiCExperiment", name = "numeric"), function(x, name) {
     if (name > length(slices(x))) {
         stop(paste0('Only ', length(slices(x)), ' slices in x.'))
@@ -34,6 +44,7 @@ setMethod("slices", signature(x = "AggrHiCExperiment", name = "numeric"), functi
 })
 
 #' @export
+#' @rdname AggrHiCExperiment
 
 setMethod("show", signature("AggrHiCExperiment"), function(object) {
 

@@ -17,6 +17,7 @@
 #' pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
 #' pf <- PairsFile(pairs_path)
 #' pf
+#' pairsFile(pf)
 NULL
 
 #' @export

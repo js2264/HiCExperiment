@@ -37,11 +37,11 @@
 #' @examples
 #' # ---- Importing .(m)cool files 
 #' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-#' import(mcool_path, resolution = 16000, format = 'cool')
+#' import(mcool_path, resolution = 16000, focus = 'XVI', format = 'cool')
 #' 
 #' # ---- Importing .hic files 
 #' hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-#' import(hic_path, resolution = 2000, focus = 'II', format = 'hic')
+#' import(hic_path, resolution = 16000, focus = 'XVI', format = 'hic')
 #' 
 #' # ---- Importing HiC-Pro files 
 #' hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
@@ -186,14 +186,14 @@ setMethod('import', 'HicproFile', function(con, ...) {
     #       potentially stored in *File.
     if ('bed' %in% names(params)) {
         if (!file.exists(params[['bed']])) {
-            stop("Provided regions file does not exist.")
+            stop("Provided regions file (`bed` argument) does not exist.")
         } else {
             bed <- params[['bed']]
         }
     } else {
         bed <- con@bed
     }
-    if (is.null(bed)) stop("Regions file not provided. ")
+    if (is.null(bed)) stop("Regions file (`bed` argument) not provided. ")
     if ('pairsFile' %in% names(params)) {
         if (!file.exists(params[['pairsFile']])) {
             stop("Provided pairsFile does not exist.")

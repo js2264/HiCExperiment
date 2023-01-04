@@ -22,9 +22,6 @@
     <loc>/index.html</loc>
   </url>
   <url>
-    <loc>/reference/AggrHiCExperiment-methods.html</loc>
-  </url>
-  <url>
     <loc>/reference/AggrHiCExperiment.html</loc>
   </url>
   <url>
@@ -34,16 +31,7 @@
     <loc>/reference/ContactsFile-class.html</loc>
   </url>
   <url>
-    <loc>/reference/ContactsFile-methods.html</loc>
-  </url>
-  <url>
     <loc>/reference/CoolFile-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CoolFile-methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/HiCExperiment-methods.html</loc>
   </url>
   <url>
     <loc>/reference/HiCExperiment.html</loc>
@@ -52,13 +40,7 @@
     <loc>/reference/HicFile-class.html</loc>
   </url>
   <url>
-    <loc>/reference/HicFile-methods.html</loc>
-  </url>
-  <url>
     <loc>/reference/HicproFile-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/HicproFile-methods.html</loc>
   </url>
   <url>
     <loc>/reference/PairsFile-class.html</loc>
@@ -77,9 +59,6 @@
   </url>
   <url>
     <loc>/reference/multi2Query.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pairsFile-methods.html</loc>
   </url>
   <url>
     <loc>/reference/parse-cool.html</loc>

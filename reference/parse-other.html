@@ -87,31 +87,40 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2022-12-16</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
-<span class="r-in"><span><span class="va">contacts</span> <span class="op">&lt;-</span> <span class="fu"><a href="import-methods.html">import</a></span><span class="op">(</span><span class="va">mcool_path</span>, format <span class="op">=</span> <span class="st">'cool'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">contacts</span> <span class="op">&lt;-</span> <span class="fu"><a href="import-methods.html">import</a></span><span class="op">(</span><span class="va">mcool_path</span>, focus <span class="op">=</span> <span class="st">'XVI'</span>, resolution <span class="op">=</span> <span class="fl">16000</span>, format <span class="op">=</span> <span class="st">'cool'</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">gis</span> <span class="op">&lt;-</span> <span class="fu">interactions</span><span class="op">(</span><span class="va">contacts</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">gis</span><span class="op">$</span><span class="va">score</span> <span class="op">&lt;-</span> <span class="fu"><a href="AllGenerics.html">scores</a></span><span class="op">(</span><span class="va">contacts</span>, <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">cm</span> <span class="op">&lt;-</span> <span class="fu">gi2cm</span><span class="op">(</span><span class="va">gis</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">cm</span> <span class="op">&lt;-</span> <span class="fu">gi2cm</span><span class="op">(</span><span class="va">gis</span>, <span class="st">'balanced'</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">cm</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class: ContactMatrix </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dim: 11676 11676 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dim: 60 60 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> type: dgCMatrix </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> rownames: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> colnames: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> metadata(0):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> regions: 11676</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> regions: 60</span>
 <span class="r-in"><span><span class="fu">cm2matrix</span><span class="op">(</span><span class="va">cm</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>sparse-&gt;dense coercion: allocating vector of size 1.0 GiB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]   15   21   21   38   17   28    7   13   31    11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]   21    2   22   23   15   14   15    8   21     7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]   21   22    6   43   21   23   16   19   47    17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]   38   23   43   34   56   32   29   26   63    38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]   17   15   21   56    6   15   16   28   42    15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]   28   14   23   32   15    0   29   11   45    18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]    7   15   16   29   16   29   11   25   52    26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]   13    8   19   26   28   11   25    0   59    19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]   31   21   47   63   42   45   52   59   45    66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]   11    7   17   38   15   18   26   19   66     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [,1]       [,2]       [,3]       [,4]       [,5]       [,6]       [,7]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]   NA         NA         NA         NA         NA         NA         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]   NA 1.39502102 1.89623124 0.39560223 0.14820676 0.07426750 0.05980846</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]   NA 1.89623124 2.35751077 1.58129178 0.33905391 0.14339992 0.10552853</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]   NA 0.39560223 1.58129178 1.20960316 0.54168680 0.18242094 0.10413483</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]   NA 0.14820676 0.33905391 0.54168680 0.52832563 0.49867956 0.16116603</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]   NA 0.07426750 0.14339992 0.18242094 0.49867956 0.67745097 0.41256806</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]   NA 0.05980846 0.10552853 0.10413483 0.16116603 0.41256806 0.87399239</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]   NA 0.03340782 0.05614098 0.06121680 0.10343933 0.26074267 0.48711735</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]   NA 0.02780230 0.03659704 0.03372027 0.05460712 0.11214948 0.18101311</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]   NA 0.02204195 0.03877495 0.02539418 0.02878660 0.04762856 0.08132232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             [,8]       [,9]      [,10]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]         NA         NA         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.03340782 0.02780230 0.02204195</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] 0.05614098 0.03659704 0.03877495</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 0.06121680 0.03372027 0.02539418</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 0.10343933 0.05460712 0.02878660</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 0.26074267 0.11214948 0.04762856</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 0.48711735 0.18101311 0.08132232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.59450224 0.52204112 0.16856414</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.52204112 0.61170845 0.48810265</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.16856414 0.48810265 0.64767893</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

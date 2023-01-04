@@ -40,7 +40,7 @@ jobs:
     steps:
     - uses: js2264/rworkflows@master
       with:
-        run_bioccheck: ${{ false }}
+        run_bioccheck: ${{ true }}
         run_rcmdcheck: ${{ true }}
         as_cran: ${{ true }}
         run_vignettes: ${{ true }}

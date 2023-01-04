@@ -45,12 +45,6 @@ knitr::include_graphics(
 )
 ```
 
-# Citing HiCExperiment 
-
-```{r}
-citation('HiCExperiment')
-```
-
 # Basics: importing `.(m)cool`, `.hic` or HiC-Pro-generated files as `HiCExperiment` objects
 
 ## Import methods

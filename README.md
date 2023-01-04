@@ -1,4 +1,4 @@
-[![](https://img.shields.io/badge/release%20version-0.99.1-orange.svg)](https://www.bioconductor.org/packages/HiCExperiment)
+[![](https://img.shields.io/badge/release%20version-0.99.2-orange.svg)](https://www.bioconductor.org/packages/HiCExperiment)
 [![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
@@ -22,7 +22,7 @@ pairs format (by indicating the columns containing
 `chr1`, `start1`, `strand1`, `chr2`, `start2`, `strand2` information). 
 
 `HiCExperiment` S4 class is build on pre-existing Bioconductor classes, 
-namely `InteractionSet`, `GenomicInterations` and `ContactMatrix` 
+namely `InteractionSet` and `ContactMatrix` 
 (`Lun, Perry & Ing-Simmons, F1000Research 2016`), and leverages them to 
 import on-disk Hi-C matrix files.
 

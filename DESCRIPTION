@@ -1,6 +1,6 @@
 Package: HiCExperiment
 Title: Interface to Hi-C files in R
-Version: 0.99.1
+Version: 0.99.2
 Date: 2022-11-10
 Authors@R:
     c(person(given = "Jacques",

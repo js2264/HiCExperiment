@@ -231,7 +231,12 @@ lsHicResolutions <- function(file, verbose = FALSE) {
         si, tilewidth = resolution, cut.last.tile.in.chrom = TRUE
     )
     anchors$bin_id <- seq_along(anchors) - 1
-    names(anchors) <- paste(GenomicRanges::seqnames(anchors), GenomicRanges::start(anchors), GenomicRanges::end(anchors), sep = "_")
+    names(anchors) <- paste(
+        GenomicRanges::seqnames(anchors), 
+        GenomicRanges::start(anchors), 
+        GenomicRanges::end(anchors), 
+        sep = "_"
+    )
     weight <- 1
     return(anchors)
 }

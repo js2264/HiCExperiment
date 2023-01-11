@@ -37,9 +37,16 @@
         matrix_df, as.data.frame(anchors), by = c('stop_idx' = 'bin_id')
     ) |> as("GRanges")
     GenomicRanges::mcols(an2) <- NULL
+    re <- unique(c(an1, an2))
+    names(re) <- paste(
+        GenomicRanges::seqnames(re), 
+        GenomicRanges::start(re), 
+        GenomicRanges::end(re), sep = "_"
+    )
     gi <- InteractionSet::GInteractions(
         an1, 
         an2, 
+        re
     )
     GenomeInfoDb::seqlevels(gi) <- GenomeInfoDb::seqlevels(anchors)
     GenomeInfoDb::seqinfo(gi) <- GenomeInfoDb::seqinfo(anchors)
@@ -59,7 +66,7 @@
     InteractionSet::regions(gi)$chr <- GenomicRanges::seqnames(InteractionSet::regions(gi))
     InteractionSet::regions(gi)$center <- GenomicRanges::start(GenomicRanges::resize(InteractionSet::regions(gi), fix = "center", width = 1))
     InteractionSet::regions(gi)$bin_id <- anchors$bin_id[BiocGenerics::match(regions(gi), anchors)]
-    
+
     return(gi)
 }
 

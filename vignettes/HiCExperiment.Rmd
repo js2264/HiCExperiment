@@ -10,7 +10,7 @@ vignette: >
     %\VignetteEncoding{UTF-8}
 ---
 
-```{r, eval = TRUE, echo=FALSE, results="hide", warning=FALSE}
+```{r opts, eval = TRUE, echo=FALSE, results="hide", warning=FALSE}
 knitr::opts_chunk$set(
     collapse = TRUE,
     comment = "#>", 
@@ -32,14 +32,14 @@ on pre-existing Bioconductor classes, namely `InteractionSet` and `ContactMatrix
 import locally stored Hi-C matrix files. It further provides **analytical** 
 and **visualization** tools to investigate contact maps directly in `R`. 
 
-```{r}
+```{r load_lib}
 library(HiCExperiment)
 showClass("HiCExperiment")
 hic <- contacts_yeast()
 hic
 ```
 
-```{r, eval = TRUE, echo=FALSE, out.width='100%'}
+```{r graph, eval = TRUE, echo=FALSE, out.width='100%'}
 knitr::include_graphics(
    "https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_data-structure.png"
 )
@@ -52,14 +52,14 @@ knitr::include_graphics(
 The implemented `import()` methods allow one to import Hi-C matrix files in R as 
 `HiCExperiment` objects.
 
-```{r, eval = FALSE}
+```{r import, eval = FALSE}
 hic <- import("path-to-cool/mcool/hic/HiC-Pro-file")
 ```
 
 To give real-life examples, we use the `HiContactsData` package to get access 
 to a range of toy datasets available from the `ExperimentHub`. 
 
-```{r}
+```{r evaled_import}
 library(HiContactsData)
 cool_file <- HiContactsData('yeast_wt', format = 'cool')
 import(cool_file, format = 'cool')
@@ -83,9 +83,8 @@ file structures would be properly parsed into `HiCExperiment` objects:
 For each object, an optional `pairsFile` can be associated and linked to the 
 contact matrix file when imported as a `HiCExperiment` object.
 
-```{r}
+```{r many_imports}
 ## --- CoolFile
-cool_file <- HiContactsData('yeast_wt', format = 'cool')
 pairs_file <- HiContactsData('yeast_wt', format = 'pairs.gz')
 coolf <- CoolFile(cool_file, pairsFile = pairs_file)
 coolf
@@ -94,18 +93,17 @@ import(pairsFile(coolf), format = 'pairs')
 
 ## --- HicFile
 hic_file <- HiContactsData('yeast_wt', format = 'hic')
-pairs_file <- HiContactsData('yeast_wt', format = 'pairs.gz')
 hicf <- HicFile(hic_file, pairsFile = pairs_file)
 hicf
 import(hicf)
 import(pairsFile(hicf), format = 'pairs')
 
 ## --- HicproFile
-hicpro_matrix_file <- HiContactsData('yeast_wt', format = 'hicpro_matrix')
-hicpro_regions_file <- HiContactsData('yeast_wt', format = 'hicpro_bed')
-hicprof <- HicproFile(hicpro_matrix_file, bed = hicpro_regions_file)
-hicprof
-import(hicprof)
+# hicpro_matrix_file <- HiContactsData('yeast_wt', format = 'hicpro_matrix')
+# hicpro_regions_file <- HiContactsData('yeast_wt', format = 'hicpro_bed')
+# hicprof <- HicproFile(hicpro_matrix_file, bed = hicpro_regions_file)
+# hicprof
+# import(hicprof)
 ```
 
 # Import arguments
@@ -115,7 +113,7 @@ import(hicprof)
 The `focus` argument is used to specifically import contacts within a genomic 
 locus of interest. 
 
-```{r}
+```{r focus}
 range <- 'I:20000-80000' # range of interest
 hic <- import(cool_file, format = 'cool',  focus = range)
 hic
@@ -131,7 +129,7 @@ One can also extract a count matrix from a Hi-C matrix file that is *not*
 centered at the diagonal. To do this, specify a couple of coordinates in the 
 `focus` argument using a character string formatted as `"...|..."`: 
 
-```{r}
+```{r asym}
 hic <- import(cool_file, format = 'cool', focus = 'II:0-500000|II:100000-600000')
 focus(hic)
 ```
@@ -141,7 +139,7 @@ focus(hic)
 `import()` works with `.mcool` and multi-resolution `.hic` files as well: 
 in this case, the user can specify the `resolution` at which count values are recovered. 
 
-```{r}
+```{r mcool}
 mcool_file <- HiContactsData('yeast_wt', format = 'mcool')
 range <- 'II:0-800000' # range of interest
 lsCoolResolutions(mcool_file, verbose = TRUE)
@@ -155,7 +153,7 @@ hic
 
 Slots for a `HiCExperiment` object can be accessed using the following `getters`: 
 
-```{r}
+```{r slots}
 fileName(hic)
 focus(hic)
 resolutions(hic)
@@ -171,7 +169,7 @@ metadata(hic)
 
 Several extra functions are available as well: 
 
-```{r}
+```{r extra}
 seqinfo(hic) ## To recover the `Seqinfo` object from the `.(m)cool` file
 bins(hic) ## To bin the genome at the current resolution
 regions(hic) ## To extract unique regions of the contact matrix
@@ -184,7 +182,7 @@ anchors(hic) ## To extract "first" and "second" anchors for each interaction
 
 Add any `scores` metric using a numerical vector. 
 
-```{r}
+```{r scores}
 scores(hic, 'random') <- runif(length(hic))
 scores(hic)
 tail(scores(hic, 'random'))
@@ -194,7 +192,7 @@ tail(scores(hic, 'random'))
 
 Add `topologicalFeatures` using `GRanges` or `Pairs`. 
 
-```{r}
+```{r features}
 topologicalFeatures(hic, 'viewpoints') <- GRanges("II:300000-320000")
 topologicalFeatures(hic)
 topologicalFeatures(hic, 'viewpoints')
@@ -205,7 +203,7 @@ topologicalFeatures(hic, 'viewpoints')
 Using the `as()` function, `HiCExperiment` can be coerced in `GInteractions`, 
 `ContactMatrix` and `matrix` seamlessly.
 
-```{r}
+```{r as}
 as(hic, "GInteractions")
 as(hic, "ContactMatrix")
 as(hic, "matrix")[1:10, 1:10]
@@ -226,14 +224,12 @@ Such files have a variety of standards.
 Pairs in any of these different formats are automatically detected and imported 
 in R with the `import` function: 
 
-```{r}
-## --- .pairs file
-pairs_file <- HiContactsData('yeast_wt', format = 'pairs.gz')
+```{r pairs}
 import(pairs_file, format = 'pairs')
 ```
 
 # Session info
 
-```{r}
+```{r session}
 sessionInfo()
 ```

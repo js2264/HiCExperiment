@@ -323,6 +323,7 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
         else {
             stop("Failed to coerce i into a Pairs/GRanges/chr.")
         }
+        focus(x) <- i
     }
     else {
         if (
@@ -334,6 +335,7 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
         else {
             stop("Failed to coerce i into a valid Pairs/GRanges/chr.")
         }
+        focus(x) <- paste(i, collapse = ', ')
     }
     sub <- ints_$bin_id1 %in% valid_regions_first & ints_$bin_id2 %in% valid_regions_second
     interactions(x) <- InteractionSet::reduceRegions(
@@ -342,7 +344,6 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
     for (n in names(scores(x))) {
         scores(x, n) <- scores(x, n)[sub]
     }
-    focus(x) <- i
     return(x)
 })
 
@@ -411,7 +412,7 @@ setMethod("show", signature("HiCExperiment"), function(object) {
     }
 
     cat(glue::glue(
-        '`HiCExperiment` object with {format(length(interactions(object)), big.mark = ",")} interactions over {format(length(regions(object)), big.mark = ",")} regions'
+        '`HiCExperiment` object with {format(sum(interactions(object)$count), big.mark = ",")} contacts over {format(length(regions(object)), big.mark = ",")} regions'
     ), '\n')
     cat('-------\n')
     cat(glue::glue('fileName: "{fileName(object)}"'), '\n')

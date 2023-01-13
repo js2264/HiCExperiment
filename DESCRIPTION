@@ -31,11 +31,8 @@ Imports:
     rhdf5,
     Matrix,
     vroom,
-    tibble,
-    tidyr,
     dplyr,
-    glue,
-    stringr
+    stats
 Suggests:
     HiContactsData,
     BiocFileCache, 

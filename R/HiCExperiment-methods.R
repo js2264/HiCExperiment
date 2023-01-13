@@ -57,9 +57,6 @@
 #' @param i a range or boolean vector.
 #' 
 #' @importMethodsFrom BiocGenerics fileName
-#' @importFrom InteractionSet reduceRegions
-#' @importFrom InteractionSet anchors
-#' @importFrom InteractionSet regions
 #' @importFrom GenomeInfoDb seqinfo
 #' 
 #' @include AllGenerics.R
@@ -411,28 +408,32 @@ setMethod("show", signature("HiCExperiment"), function(object) {
         focus_str <- coords2char(focus(object))
     }
 
-    cat(glue::glue(
-        '`HiCExperiment` object with {format(sum(interactions(object)$count), big.mark = ",")} contacts over {format(length(regions(object)), big.mark = ",")} regions'
+    cat(paste0(
+        "`HiCExperiment` object with ", 
+        format(sum(interactions(object)$count), big.mark = ","), 
+        " contacts over ", 
+        format(length(regions(object)), big.mark = ","), 
+        " regions"
     ), '\n')
     cat('-------\n')
-    cat(glue::glue('fileName: "{fileName(object)}"'), '\n')
-    cat(glue::glue('focus: "{focus_str}"'), '\n')
+    cat(paste0('fileName: \"', fileName(object), '\"'), '\n')
+    cat(paste0('focus: \"', focus_str, '\"'), '\n')
 
     ## Resolutions
     S4Vectors::coolcat("resolutions(%d): %s\n", resolutions(object))
-    cat(glue::glue('current resolution: {resolution(object)}'), '\n')
+    cat(paste0('current resolution: ', resolution(object)), '\n')
 
     ## Interactions
-    cat(glue::glue('interactions: {length(interactions(object))}'), '\n')
+    cat(paste0('interactions: ', length(interactions(object))), '\n')
 
     ## Scores
-    cat(glue::glue('scores({length(scores(object))}): {paste(names(scores(object)), collapse = " ")}'), '\n')
+    cat(paste0('scores(', length(scores(object)), '): ', paste(names(scores(object)), collapse = " ")), '\n')
 
     ## topologicalFeatures
-    cat(glue::glue('topologicalFeatures: {paste(paste0(names(topologicalFeatures(object)), "(", lengths(topologicalFeatures(object)), ")"), collapse = " ")}'), '\n')
+    cat(paste0('topologicalFeatures: ', paste(paste0(names(topologicalFeatures(object)), "(", lengths(topologicalFeatures(object)), ")"), collapse = " ")), '\n')
 
     ## Pairs
-    cat(glue::glue('pairsFile: {ifelse(is.null(pairsFile(object)), "N/A", pairsFile(object))}'), '\n')
+    cat(paste0('pairsFile: ', ifelse(is.null(pairsFile(object)), "N/A", pairsFile(object))), '\n')
 
     ## Metadata
     S4Vectors::coolcat("metadata(%d): %s\n", names(S4Vectors::metadata(object)))

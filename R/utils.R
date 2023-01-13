@@ -12,7 +12,6 @@
 #' @return Reformatted coordinates or GInteractions
 #' 
 #' @param coords coords
-#' @import stringr
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges end
@@ -29,11 +28,14 @@ splitCoords <- function(coords) {
         )
     }
     else {
-        chr <- stringr::str_replace(coords, ":.*", "")
+        # chr <- stringr::str_replace(coords, ":.*", "")
+        chr <- gsub(":.*", "", coords)
         chr <- ifelse(length(chr) == 0, NA, chr)
-        start <- suppressWarnings(as.numeric(stringr::str_replace_all(coords, ".*:|-.*", "")))
+        # start <- suppressWarnings(as.numeric(stringr::str_replace_all(coords, ".*:|-.*", "")))
+        start <- suppressWarnings(as.numeric((gsub(".*:|-.*", "", coords))))
         start <- ifelse(length(start) == 0, NA, start)
-        end <- suppressWarnings(as.numeric(stringr::str_replace(coords, ".*-", "")))
+        # end <- suppressWarnings(as.numeric(stringr::str_replace(coords, ".*-", "")))
+        end <- suppressWarnings(as.numeric(gsub(".*-", "", coords)))
         end <- ifelse(length(end) == 0, NA, end)
         list(
             "chr" = chr,
@@ -58,9 +60,12 @@ coords2char <- function(coords, big.mark = ',') {
             coords
         }
         else {
-            chr <- stringr::str_replace(coords, ":.*", "")
-            start <- suppressWarnings(as.numeric(stringr::str_replace_all(coords, ".*:|-.*", "")))
-            end <- suppressWarnings(as.numeric(stringr::str_replace(coords, ".*-", "")))
+            # chr <- stringr::str_replace(coords, ":.*", "")
+            chr <- gsub(":.*", "", coords)
+            # start <- suppressWarnings(as.numeric(stringr::str_replace_all(coords, ".*:|-.*", "")))
+            start <- suppressWarnings(as.numeric((gsub(".*:|-.*", "", coords))))
+            # end <- suppressWarnings(as.numeric(stringr::str_replace(coords, ".*-", "")))
+            end <- suppressWarnings(as.numeric(gsub(".*-", "", coords)))
             if (is.na(start)) {
                 return(chr)
             }
@@ -71,7 +76,6 @@ coords2char <- function(coords, big.mark = ',') {
 
 #' @param char char (e.g. "II:30000-50000" or "II:30000-50000|II:60000-80000")
 #' @importFrom methods is
-#' @importFrom stringr str_split
 #' @importFrom S4Vectors Pairs
 #' @importFrom GenomicRanges GRanges
 #' @rdname utils
@@ -84,7 +88,7 @@ char2coords <- function(char) {
         '[A-Za-z0-9]*:[0-9]*-[0-9]*\\|[A-Za-z0-9]*:[0-9]*-[0-9]*$', 
         char
     )) {
-        splitst <- stringr::str_split(char, '\\|')[[1]]
+        splitst <- strsplit(char, '\\|')[[1]]
         S4Vectors::Pairs(
             GenomicRanges::GRanges(splitst[[1]]), 
             GenomicRanges::GRanges(splitst[[2]])

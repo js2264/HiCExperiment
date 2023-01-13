@@ -14,11 +14,9 @@
 #' @return a GInteractions object
 #'
 #' @importFrom vroom vroom
-#' @importFrom glue glue
 #' @importFrom GenomicRanges GRanges
 #' @importFrom IRanges IRanges
 #' @importFrom IRanges IRanges
-#' @import tibble
 #' @rdname parse-pairs
 
 pairs2gi <- function(

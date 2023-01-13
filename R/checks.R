@@ -226,7 +226,7 @@ is_hicpro_regions <- function(bed) {
 check_resolution <- function(contacts, resolution) {
     available_res <- resolutions(contacts)
     if (!resolution %in% available_res) 
-        stop("Resolution not stored in the matrix file.\n", paste0('  Available resolutions: ', paste0(res, collapse = ', '), '.'))
+        stop(paste0("Resolution not stored in the matrix file.\n  Available resolutions: ", paste0(available_res, collapse = ', '), '.'))
     TRUE
 }
 

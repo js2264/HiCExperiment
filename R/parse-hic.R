@@ -210,7 +210,6 @@
 #' @return vector
 #'
 #' @import rhdf5
-#' @import tidyr
 #' @rdname parse-hic
 #' @export
 #' @examples 
@@ -250,13 +249,12 @@ lsHicResolutions <- function(file, verbose = FALSE) {
         as("Seqinfo")
 }
 
-#' @importFrom tibble as_tibble
 #' @rdname parse-hic
 
 .dumpHic <- function(file, resolution = NULL) {
     check_hic_format(file, resolution)
     anchors <- .getHicAnchors(file, resolution)
-    bins <- as_tibble(anchors)
+    bins <- as.data.frame(anchors)
     si <- GenomeInfoDb::seqinfo(anchors)
     combs <- data.frame(
         'one' = GenomeInfoDb::seqlevels(anchors), 
@@ -307,8 +305,8 @@ lsHicResolutions <- function(file, verbose = FALSE) {
     pixs$bin2_id <- left_join(
         pixs, bins, by = c(chrom2 = 'seqnames', end2 = 'end')
     )$bin_id
-    pixs <- dplyr::arrange(pixs, bin1_id, bin2_id) |> 
-        tidyr::drop_na(bin1_id, bin2_id)
+    pixs <- dplyr::arrange(pixs, bin1_id, bin2_id) 
+    pixs <- pixs[stats::complete.cases(pixs[ , c('bin1_id', 'bin2_id')]), ]
     res <- list(
         bins = bins, 
         pixels = pixs

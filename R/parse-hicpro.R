@@ -107,6 +107,7 @@
         as("Seqinfo")
 }
 
+#' @importFrom stats complete.cases
 #' @rdname parse-hicpro
 
 .dumpHicpro <- function(file, bed) {
@@ -114,7 +115,7 @@
     
     # Get anchors from hicpro regions file
     anchors <- .getHicproAnchors(bed)
-    bins <- as_tibble(anchors)
+    bins <- as.data.frame(anchors)
     
     # Get raw counts for bins from hicpro matrix file
     pixs <- vroom::vroom(
@@ -133,9 +134,8 @@
     pixs$chrom2 <- j2$seqnames 
     pixs$start2 <- j2$start 
     pixs$end2 <- j2$end 
-    pixs <- dplyr::arrange(pixs, bin1_id, bin2_id) |> 
-        tidyr::drop_na(bin1_id, bin2_id)
-    
+    pixs <- dplyr::arrange(pixs, bin1_id, bin2_id) 
+    pixs <- pixs[stats::complete.cases(pixs[ , c('bin1_id', 'bin2_id')]), ]
     res <- list(
         bins = bins, 
         pixels = pixs

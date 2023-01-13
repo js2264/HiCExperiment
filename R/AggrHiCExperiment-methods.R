@@ -49,29 +49,29 @@ setMethod("slices", signature(x = "AggrHiCExperiment", name = "numeric"), functi
 setMethod("show", signature("AggrHiCExperiment"), function(object) {
 
     ntargets <- length(topologicalFeatures(object, 'targets'))
-    cat(glue::glue('`AggrHiCExperiment` object over {ntargets} targets'), '\n')
+    cat(paste0('`AggrHiCExperiment` object over ', ntargets, ' targets'), '\n')
     cat('-------\n')
-    cat(glue::glue('fileName: "{fileName(object)}"'), '\n')
-    cat(glue::glue('focus: {ntargets} targets'), '\n')
+    cat(paste0('fileName: \"', fileName(object), '\"'), '\n')
+    cat(paste0('focus: ', ntargets, ' targets'), '\n')
 
     ## Resolutions
     S4Vectors::coolcat("resolutions(%d): %s\n", resolutions(object))
-    cat(glue::glue('current resolution: {resolution(object)}'), '\n')
+    cat(paste0('current resolution: ', resolution(object)), '\n')
 
     ## Interactions
-    cat(glue::glue('interactions: {length(interactions(object))}'), '\n')
+    cat(paste0('interactions: ', length(interactions(object))), '\n')
 
     ## Scores
-    cat(glue::glue('scores({length(scores(object))}): {paste(names(scores(object)), collapse = " ")}'), '\n')
+    cat(paste0('scores(', length(scores(object)), '): ', paste(names(scores(object)), collapse = " ")), '\n')
 
     ## Slices
-    cat(glue::glue('slices({length(slices(object))}): {paste(names(slices(object)), collapse = " ")}'), '\n')
+    cat(paste0('slices(', length(slices(object)), '): ', paste(names(slices(object)), collapse = " ")), '\n')
 
     ## topologicalFeatures
-    cat(glue::glue('topologicalFeatures: {paste(paste0(names(topologicalFeatures(object)), "(", lengths(topologicalFeatures(object)), ")"), collapse = " ")}'), '\n')
+    cat(paste0('topologicalFeatures: ', paste(paste0(names(topologicalFeatures(object)), "(", lengths(topologicalFeatures(object)), ")"), collapse = " ")), '\n')
 
     ## Pairs
-    cat(glue::glue('pairsFile: {ifelse(is.null(pairsFile(object)), "N/A", pairsFile(object))}'), '\n')
+    cat(paste0('pairsFile: ', ifelse(is.null(pairsFile(object)), "N/A", pairsFile(object))), '\n')
 
     ## Metadata
     S4Vectors::coolcat("metadata(%d): %s\n", names(S4Vectors::metadata(object)))

@@ -47,14 +47,12 @@
 #' @return counts from (m)cool, stored as a tibble
 #'
 #' @import methods
-#' @import tidyr
 #' @importFrom GenomeInfoDb seqlengths
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges GRanges
 #' @importFrom GenomicRanges findOverlaps
 #' @importFrom IRanges IRanges
 #' @importFrom IRanges subsetByOverlaps
-#' @importFrom glue glue
 #' @importFrom S4Vectors subjectHits
 #' @rdname parse-cool
 
@@ -79,7 +77,7 @@
     ## Check that queried chr. exists
     if (any(!coords_list$chr %in% as.vector(GenomicRanges::seqnames(anchors)) & !is.na(coords_list$chr))) {
         sn <- paste0(unique(as.vector(GenomicRanges::seqnames(anchors))), collapse = ", ")
-        stop(glue::glue("Some chr. are not available. Available seqnames: {sn}"))
+        stop(paste0("Some chr. are not available. Available seqnames:", sn))
     }
 
     ## Find out which chunks of the mcool to recover
@@ -105,7 +103,7 @@
     valid_bin2 <- unique(.fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks_2))
     
     ## Reading the chunks from the cool file
-    df <- tidyr::tibble(
+    df <- data.frame(
         bin1_id = .fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks_1),
         bin2_id = .fetchCool(file, path = "pixels/bin2_id", resolution, idx = chunks_1),
         count = .fetchCool(file, path = "pixels/count", resolution, idx = chunks_1)
@@ -124,14 +122,12 @@
 #' @return counts from (m)cool, stored as a tibble
 #'
 #' @import methods
-#' @import tidyr
 #' @importFrom GenomeInfoDb seqlengths
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges GRanges
 #' @importFrom GenomicRanges findOverlaps
 #' @importFrom IRanges IRanges
 #' @importFrom IRanges subsetByOverlaps
-#' @importFrom glue glue
 #' @importFrom S4Vectors subjectHits
 #' @rdname parse-cool
 
@@ -142,7 +138,6 @@
 ) {
     
     `%within%` <- IRanges::`%within%`
-    check_cool_format(file, resolution)
     sub_within <- NULL
     
     ## Process coordinates
@@ -160,7 +155,11 @@
     ## Check that queried chr. exist
     if (any(!coords_chr %in% as.vector(GenomicRanges::seqnames(anchors)) & !is.na(coords_chr))) {
         sn <- paste0(unique(as.vector(GenomicRanges::seqnames(anchors))), collapse = ", ")
-        stop(glue::glue("{coords_chr} not in file. Available seqnames: {sn}"))
+        stop(paste0(
+            coords_chr,
+            " not in file. Available seqnames: ", 
+            sn
+        ))
     }
 
     ## Find out which chunks of the mcool to recover
@@ -170,7 +169,7 @@
         gr <- GRanges(coords_chr, IRanges::IRanges(coords_start, coords_end))
         sub_within <- which(anchors %within% gr)
         bin_idx <- .fetchCool(file, path = "indexes/bin1_offset", resolution, idx = sub_within)
-        max_bin <- max(.fetchCool(file, path = "indexes/bin1_offset", resolution))
+        max_bin <- max(.fetchCool(file, path = "indexes/bin1_offset", resolution), na.rm = TRUE)
         if ({max(bin_idx)+1} > max_bin) {
             chunks <- seq(min(bin_idx)+1, max(bin_idx), by = 1)
         } else {
@@ -179,7 +178,7 @@
     }
 
     ## Reading the chunks from the cool file
-    df <- tidyr::tibble(
+    df <- data.frame(
         bin1_id = .fetchCool(file, path = "pixels/bin1_id", resolution, idx = chunks),
         bin2_id = .fetchCool(file, path = "pixels/bin2_id", resolution, idx = chunks),
         count = .fetchCool(file, path = "pixels/count", resolution, idx = chunks)
@@ -201,7 +200,6 @@
 #' @param ... ...
 #' @return vector
 #'
-#' @importFrom glue glue
 #' @import rhdf5
 #' @rdname parse-cool
 
@@ -209,13 +207,15 @@
     check_cool_format(file, resolution)
     path <- ifelse(
         is.null(resolution), 
-        glue::glue("/{path}"), 
-        glue::glue("/resolutions/{resolution}/{path}")
+        paste0("/", path), 
+        paste0("/resolutions/", resolution, "/", path)
     )
-    as.vector(rhdf5::h5read(file, name = path, index = list(idx), ...))
+    as.vector(rhdf5::h5read(
+        file, name = path, index = list(idx), ..., 
+        bit64conversion = 'double'
+    ))
 }
 
-#' @importFrom tibble as_tibble
 #' @rdname parse-cool
 
 .dumpCool <- function(file, resolution = NULL) {
@@ -224,17 +224,17 @@
     path <- ifelse(
         is.null(resolution), 
         '/', 
-        glue::glue("/resolutions/{resolution}")
+        paste0("/resolutions/", resolution)
     )
-    lres <- as.vector(rhdf5::h5read(file, name = path))
+    lres <- as.vector(rhdf5::h5read(file, name = path, bit64conversion = 'double'))
     res <- list(
-        'bins' = tibble::as_tibble(lres[['bins']]),
-        'chroms' = tibble::as_tibble(lres[['chroms']]),
+        'bins' = as.data.frame(lres[['bins']]),
+        'chroms' = as.data.frame(lres[['chroms']]),
         'indexes' = list(
             bin1_offset = lres[['indexes']]$bin1_offset, 
             chrom_offset = lres[['indexes']]$chrom_offset
         ),
-        'pixels' = tibble::as_tibble(lres[['pixels']])
+        'pixels' = as.data.frame(lres[['pixels']])
     )
     res$pixels$bin1_weight <- left_join(
        res$pixels, data.frame(an), by = c(bin1_id = 'bin_id')
@@ -252,9 +252,16 @@
 #' @return vector
 #'
 #' @import rhdf5
-#' @import stringr
-#' @import tidyr
-#' @import dplyr
+#' @importFrom dplyr mutate
+#' @importFrom dplyr pull
+#' @importFrom dplyr filter
+#' @importFrom dplyr bind_rows
+#' @importFrom dplyr arrange
+#' @importFrom dplyr rename
+#' @importFrom dplyr all_of
+#' @importFrom dplyr left_join
+#' @importFrom dplyr group_by
+#' @importFrom dplyr summarize
 #' @rdname parse-cool
 
 .lsCoolFiles <- function(file, verbose = FALSE) {
@@ -262,7 +269,7 @@
         dplyr::mutate(path = paste0(group, "/", name)) |> 
         dplyr::pull(path) |> 
         unique() |> 
-        stringr::str_replace("//", "/")
+        (\(x){gsub('//', '/', x)})()
     len <- length(x)
     if (verbose) {
         if (len > 10) {
@@ -285,7 +292,6 @@
 #' @return vector
 #'
 #' @import rhdf5
-#' @import tidyr
 #' @rdname parse-cool
 #' @export
 #' @examples 
@@ -359,17 +365,9 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
 
     # Get raw counts for bins from mcool
     if (!is_pair) {
-        .v <- splitCoords(coords)
-        coords_chr <- .v[[1]]
-        coords_start <- .v[[2]]
-        coords_end <- .v[[3]]
         cnts <- .getCounts(file, coords = coords, anchors = anchors, resolution = resolution)
     }
     else {
-        .v <- splitCoords(unlist(S4Vectors::zipup(coords)))
-        coords_chr <- .v[[1]]
-        coords_start <- .v[[2]]
-        coords_end <- .v[[3]]
         cnts <- .getCountsFromPair(file, pair = coords, anchors = anchors, resolution = resolution)
     }
 

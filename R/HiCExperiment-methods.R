@@ -34,10 +34,14 @@
 #' @aliases [,HiCExperiment,numeric,ANY,ANY-method
 #' @aliases [,HiCExperiment,logical,ANY,ANY-method
 #' @aliases [,HiCExperiment,character,ANY,ANY-method
+#' @aliases [,HiCExperiment,GInteractions,ANY,ANY-method
+#' @aliases [,HiCExperiment,Pairs,ANY,ANY-method
 #' @aliases seqinfo,HiCExperiment-method
 #' @aliases bins,HiCExperiment-method
 #' @aliases anchors,HiCExperiment-method
 #' @aliases regions,HiCExperiment-method
+#' @aliases cis,HiCExperiment-method
+#' @aliases trans,HiCExperiment-method
 #' @aliases show,HiCExperiment-method
 #' @aliases coerce,HiCExperiment,GInteractions-method
 #' @aliases coerce,HiCExperiment,ContactMatrix-method
@@ -275,13 +279,31 @@ setMethod("[", signature("HiCExperiment", "numeric"), function(x, i) {
 #' @rdname HiCExperiment
 
 setMethod("[", signature("HiCExperiment", "logical"), function(x, i) {
-    interactions(x) <- InteractionSet::reduceRegions(
-        interactions(x)[i]
-    )
-    for (n in names(scores(x))) {
-        scores(x, n) <- scores(x, n)[i]
-    }
-    return(x)
+    # Redirect to numeric
+    x[which(i)]
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("[", signature("HiCExperiment", "Pairs"), function(x, i) {
+    if(length(i) > 1) stop("Provide a single Pairs/GInteractions")
+    i <- zipup(i)[[1]] |> 
+        GenomicRanges::sort() |>
+        as.character() |> 
+        paste0(collapse = '|')
+    i <- gsub(':[+-]\\|', '\\|', i)
+    i <- gsub(':[+-]$', '', i)
+    # Redirect to character
+    x[i]
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("[", signature("HiCExperiment", "GInteractions"), function(x, i) {
+    # Redirect to Pairs -> character
+    x[as(i, "Pairs")]
 })
 
 #' @export
@@ -290,10 +312,15 @@ setMethod("[", signature("HiCExperiment", "logical"), function(x, i) {
 setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
     re_ <- regions(x)
     ints_ <- interactions(x)
-    if (length(i) == 1) {
-        if (grepl(
-            '[A-Za-z0-9]*:[0-9]*-[0-9]*[xX/-;\\|][A-Za-z0-9]*:[0-9]*-[0-9]*$', i
-        )) {
+    
+    if (length(i) == 1) { # 'II:10000-20000', 'II:10000-20000|III:50000-90000', 'II' or 'II|III'
+        if (
+            grepl(
+                '[A-Za-z0-9]*:[0-9]*-[0-9]*[xX/-;\\|][A-Za-z0-9]*:[0-9]*-[0-9]*$', i
+            ) | grepl(
+                '[A-Za-z0-9]*:[0-9]*-[0-9]*$', i
+            ) 
+        ) { # e.g. 'II:10000-20000' or 'II:10000-20000|III:50000-90000'
             i_ <- char2coords(i)
             valid_regions_first <- subsetByOverlaps(
                 re_, S4Vectors::first(i_), type = 'within'
@@ -302,18 +329,26 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
                 re_, S4Vectors::second(i_), type = 'within'
             )$bin_id
         }
-        else if (grepl(
-            '[A-Za-z0-9]*:[0-9]*-[0-9]*$', i
-        )) {
-            i_ <- char2coords(i)
-            valid_regions_first <- subsetByOverlaps(
-                re_, S4Vectors::first(i_), type = 'within'
-            )$bin_id
-            valid_regions_second <- valid_regions_first
+        else if (
+            grepl(
+                '[A-Za-z0-9]*[xX/-;\\|][A-Za-z0-9]*$', i
+            )
+        ) { # e.g. 'II|III'
+            chr1 <- strsplit(i, '\\|')[[1]][1]
+            chr2 <- strsplit(i, '\\|')[[1]][2]
+            if (!all(c(chr1, chr2) %in% seqnames(GenomeInfoDb::seqinfo(x)))) {
+                stop("One or all of the provided seqnames is not found.")
+            }
+            si <- GenomeInfoDb::seqinfo(x)
+            gr1 <- as(si[chr1], 'GRanges')
+            gr2 <- as(si[chr2], 'GRanges')
+            i_ <- paste(as.character(gr1), as.character(gr2), sep = '|')
+            # Redirect to character (with extended i_ being like "II:xxx-xxx|III:xxx-xxx")
+            return(x[i_])
         }
         else if (
-            i %in% seqnames(GenomeInfoDb::seqinfo(x))
-        ){
+            all(i %in% seqnames(GenomeInfoDb::seqinfo(x)))
+        ) { # e.g. 'II'
             valid_regions_first <- re_$bin_id[as.vector(seqnames(re_)) %in% i]
             valid_regions_second <- valid_regions_first
         }
@@ -322,26 +357,22 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
         }
         focus(x) <- i
     }
-    else {
+
+    else { # c('II', 'III')
         if (
             all(i %in% seqnames(GenomeInfoDb::seqinfo(x)))
-        ){
+        ) { 
             valid_regions_first <- re_$bin_id[as.vector(seqnames(re_)) %in% i]
             valid_regions_second <- valid_regions_first
         }
         else {
-            stop("Failed to coerce i into a valid Pairs/GRanges/chr.")
+            stop("Failed to coerce i into a Pairs/GRanges/chr.")
         }
         focus(x) <- paste(i, collapse = ', ')
     }
+
     sub <- ints_$bin_id1 %in% valid_regions_first & ints_$bin_id2 %in% valid_regions_second
-    interactions(x) <- InteractionSet::reduceRegions(
-        ints_[sub]
-    )
-    for (n in names(scores(x))) {
-        scores(x, n) <- scores(x, n)[sub]
-    }
-    return(x)
+    x[sub]
 })
 
 #' @export
@@ -399,17 +430,11 @@ setMethod("regions", "HiCExperiment", function(x) regions(interactions(x)))
 #' @export
 #' @rdname HiCExperiment
 
-#' @export
-#' @rdname HiCExperiment
-
 setMethod("cis", "HiCExperiment", function(x) {
     an <- anchors(x)
     sub <- GenomicRanges::seqnames(an[[1]]) == GenomicRanges::seqnames(an[[2]])
     x[which(as.vector(sub))]
 })
-
-#' @export
-#' @rdname HiCExperiment
 
 #' @export
 #' @rdname HiCExperiment
@@ -431,7 +456,7 @@ setMethod("show", signature("HiCExperiment"), function(object) {
 
     cat(paste0(
         "`HiCExperiment` object with ", 
-        format(sum(interactions(object)$count), big.mark = ","), 
+        format(sum(interactions(object)$count, na.rm = TRUE), big.mark = ","), 
         " contacts over ", 
         format(length(regions(object)), big.mark = ","), 
         " regions"

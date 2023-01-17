@@ -28,6 +28,11 @@ gi2cm <- function(gi, use.scores = 'score') {
     #     gr <- gr[GenomicRanges::seqnames(gr) == seqnames]
     #     InteractionSet::replaceRegions(gi) <- gr
     # }
+    an <- anchors(gi)
+    allTrans <- all(GenomicRanges::seqnames(an[[1]]) != GenomicRanges::seqnames(an[[2]]))
+    if (allTrans) {
+        stop("Only trans contacts are found.")
+    }
     InteractionSet::inflate(
         gi,
         rows = InteractionSet::regions(gi), 

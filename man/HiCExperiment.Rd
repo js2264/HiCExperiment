@@ -40,10 +40,14 @@
 \alias{[,HiCExperiment,numeric,ANY,ANY-method}
 \alias{[,HiCExperiment,logical,ANY,ANY-method}
 \alias{[,HiCExperiment,character,ANY,ANY-method}
+\alias{[,HiCExperiment,GInteractions,ANY,ANY-method}
+\alias{[,HiCExperiment,Pairs,ANY,ANY-method}
 \alias{seqinfo,HiCExperiment-method}
 \alias{bins,HiCExperiment-method}
 \alias{anchors,HiCExperiment-method}
 \alias{regions,HiCExperiment-method}
+\alias{cis,HiCExperiment-method}
+\alias{trans,HiCExperiment-method}
 \alias{show,HiCExperiment-method}
 \alias{coerce,HiCExperiment,GInteractions-method}
 \alias{coerce,HiCExperiment,ContactMatrix-method}
@@ -149,6 +153,10 @@ HiCExperiment(
 
 \S4method{[}{HiCExperiment,logical,ANY,ANY}(x, i)
 
+\S4method{[}{HiCExperiment,Pairs,ANY,ANY}(x, i)
+
+\S4method{[}{HiCExperiment,GInteractions,ANY,ANY}(x, i)
+
 \S4method{[}{HiCExperiment,character,ANY,ANY}(x, i)
 
 \S4method{seqinfo}{HiCExperiment}(x)
@@ -159,7 +167,9 @@ HiCExperiment(
 
 \S4method{regions}{HiCExperiment}(x)
 
-\S4method{show}{HiCExperiment}(object)
+\S4method{cis}{HiCExperiment}(x)
+
+\S4method{trans}{HiCExperiment}(x)
 
 \S4method{as.matrix}{HiCExperiment}(x)
 

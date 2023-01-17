@@ -66,9 +66,10 @@
     threshold <- InteractionSet::GInteractions(
         S4Vectors::first(pairs), S4Vectors::second(pairs)
     ) |> InteractionSet::pairdist(type = 'span') |> max()
-    if (threshold < breadth) threshold <- breadth
+    if (any(c(is.na(threshold), threshold < breadth))) threshold <- breadth
     threshold <- ceiling(threshold / resolution) * resolution
     is1D <- all(S4Vectors::first(pairs) == S4Vectors::second(pairs))
+    isTrans <- all(GenomicRanges::seqnames(coords_list_1) != GenomicRanges::seqnames(coords_list_2))
 
     # - !!! HEAVY LOAD !!! Parse ALL pixels and convert to sparse matrix
     # - Full parsing has to be done since parallelized access to HDF5 is not supported 
@@ -89,11 +90,13 @@
 
     # - Get detrending model
     message( "Modeling distance decay..." )
-    detrending_model <- distance_decay(l, threshold)
-    detrending_model_mat <- .df_to_symmmat(
-        detrending_model$diag, detrending_model$score
-    )
-    detrending_model_mat[lower.tri(detrending_model_mat)] <- NA
+    if (!isTrans) {
+        detrending_model <- distance_decay(l, threshold)
+        detrending_model_mat <- .df_to_symmmat(
+            detrending_model$diag, detrending_model$score
+        )
+        detrending_model_mat[lower.tri(detrending_model_mat)] <- NA
+    }
 
     # - For each pair, recover balanced and detrended heatmap
     message( "Filtering for contacts within provided targets..." )
@@ -130,18 +133,24 @@
             counts <- l_count[bi_1+1, bi_2+1]
             balanced <- l_balanced[bi_1+1, bi_2+1]
             if (is1D) balanced[lower.tri(balanced)] <- NA
-            exp_bi_0 <- seq(
-                {{breadth/resolution}/2} - {breadth/resolution}/2, 
-                {{breadth/resolution}/2} + {breadth/resolution}/2
-            )
-            expected <- detrending_model_mat[exp_bi_0+1, exp_bi_0+1+dist]
-            if (is1D) expected[lower.tri(expected)] <- NA
-            detrended <- log2( 
-                {balanced/sum(balanced, na.rm = TRUE)} / 
-                {expected/sum(expected, na.rm = TRUE)} 
-            )
-            if (is1D) detrended[lower.tri(detrended)] <- NA
-            detrended[is.infinite(detrended)] <- NA
+            if (!isTrans) {
+                exp_bi_0 <- seq(
+                    {{breadth/resolution}/2} - {breadth/resolution}/2, 
+                    {{breadth/resolution}/2} + {breadth/resolution}/2
+                )
+                expected <- detrending_model_mat[exp_bi_0+1, exp_bi_0+1+dist]
+                if (is1D) expected[lower.tri(expected)] <- NA
+                detrended <- log2( 
+                    {balanced/sum(balanced, na.rm = TRUE)} / 
+                    {expected/sum(expected, na.rm = TRUE)} 
+                )
+                if (is1D) detrended[lower.tri(detrended)] <- NA
+                detrended[is.infinite(detrended)] <- NA
+            }
+            else {
+                expected <- NULL
+                detrended <- NULL
+            }
             list(
                 count = counts, 
                 balanced = balanced,
@@ -152,8 +161,14 @@
     )
     counts_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['count']])))
     balanced_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['balanced']])))
-    expected_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['expected']])))
-    detrended_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['detrended']])))
+    if (!isTrans) {
+        expected_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['expected']])))
+        detrended_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['detrended']])))
+    } 
+    else {
+        expected_mats <- array(data = NA, dim = dim(counts_mats))
+        detrended_mats <- array(data = NA, dim = dim(counts_mats))
+    }
     n_nonempty_slices <- sum(unlist(lapply(seq_len(length(pairs)), 
         function(k) {
             sum(counts_mats[ , , k], na.rm = TRUE) > 0

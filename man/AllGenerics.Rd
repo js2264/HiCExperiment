@@ -17,6 +17,8 @@
 \alias{slices}
 \alias{zoom}
 \alias{refocus}
+\alias{cis}
+\alias{trans}
 \title{Generic functions}
 \arguments{
 \item{x}{Passed to corresponding method}

@@ -399,6 +399,27 @@ setMethod("regions", "HiCExperiment", function(x) regions(interactions(x)))
 #' @export
 #' @rdname HiCExperiment
 
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("cis", "HiCExperiment", function(x) {
+    an <- anchors(x)
+    sub <- GenomicRanges::seqnames(an[[1]]) == GenomicRanges::seqnames(an[[2]])
+    x[which(as.vector(sub))]
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("trans", "HiCExperiment", function(x) {
+    an <- anchors(x)
+    sub <- GenomicRanges::seqnames(an[[1]]) != GenomicRanges::seqnames(an[[2]])
+    x[which(as.vector(sub))]
+})
+
 setMethod("show", signature("HiCExperiment"), function(object) {
 
     if (is.null(focus(object))) {

@@ -16,6 +16,8 @@
 #' @aliases slices
 #' @aliases zoom
 #' @aliases refocus
+#' @aliases cis
+#' @aliases trans
 #' 
 #' @description
 #' 
@@ -40,3 +42,5 @@ setGeneric("bins", function(x) {standardGeneric("bins")})
 setGeneric("slices", function(x, name) {standardGeneric("slices")})
 setGeneric("zoom", function(x, resolution) {standardGeneric("zoom")})
 setGeneric("refocus", function(x, focus) {standardGeneric("refocus")})
+setGeneric("cis", function(x) {standardGeneric("cis")})
+setGeneric("trans", function(x) {standardGeneric("trans")})

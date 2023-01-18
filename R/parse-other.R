@@ -44,6 +44,8 @@ gi2cm <- function(gi, use.scores = 'score') {
 
 #' @param cm A `ContactMatrix` object
 #' @param replace_NA Replace NA values
+#' @param sparse Whether to return the contact matrix as a sparse matrix 
+#' (default: FALSE)
 #' @return a dense matrix
 #'
 #' @importFrom Matrix as.matrix
@@ -52,9 +54,10 @@ gi2cm <- function(gi, use.scores = 'score') {
 #' @examples 
 #' cm2matrix(cm)[1:10, 1:10]
 
-cm2matrix <- function(cm, replace_NA = NA) {
+cm2matrix <- function(cm, replace_NA = NA, sparse = FALSE) {
     m <- Matrix::as.matrix(cm)
-    m <- base::as.matrix(m)
+    m <- as(m, 'dgTMatrix')
     m[is.na(m)] <- replace_NA
+    if (!sparse) m <- base::as.matrix(m)
     m
 }

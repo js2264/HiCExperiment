@@ -316,7 +316,7 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
     if (length(i) == 1) { # 'II:10000-20000', 'II:10000-20000|III:50000-90000', 'II' or 'II|III'
         if (
             grepl(
-                '[A-Za-z0-9]*:[0-9]*-[0-9]*[xX/-;\\|][A-Za-z0-9]*:[0-9]*-[0-9]*$', i
+                '[A-Za-z0-9]*:[0-9]*-[0-9]*\\|[A-Za-z0-9]*:[0-9]*-[0-9]*$', i
             ) | grepl(
                 '[A-Za-z0-9]*:[0-9]*-[0-9]*$', i
             ) 
@@ -331,7 +331,7 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
         }
         else if (
             grepl(
-                '[A-Za-z0-9]*[xX/-;\\|][A-Za-z0-9]*$', i
+                '[A-Za-z0-9]*\\|[A-Za-z0-9]*$', i
             )
         ) { # e.g. 'II|III'
             chr1 <- strsplit(i, '\\|')[[1]][1]

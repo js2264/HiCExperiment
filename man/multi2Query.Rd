@@ -9,8 +9,9 @@
   file,
   resolution,
   pairs,
-  BPPARAM = BiocParallel::MulticoreParam(workers = 8, progressbar = TRUE),
-  bed = NULL
+  max.distance = NULL,
+  bed = NULL,
+  BPPARAM = BiocParallel::bpparam()
 )
 }
 \arguments{
@@ -20,9 +21,11 @@
 
 \item{pairs}{slices to read}
 
-\item{BPPARAM}{BiocParallel parameters}
+\item{max.distance}{Maximum distance to use when compiling distance decay}
 
 \item{bed}{associated bed file for HiC-Pro derived contact matrix.}
+
+\item{BPPARAM}{BiocParallel parameters}
 }
 \value{
 a GInteractions object with \code{count}, \code{balanced}, \code{detrended} and

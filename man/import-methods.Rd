@@ -49,7 +49,7 @@ hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
 import(hic_path, resolution = 16000, focus = 'XVI', format = 'hic')
 
 # ---- Importing HiC-Pro files 
-#hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
-#hicpro_bed_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_bed')
-#import(hicpro_matrix_path, bed = hicpro_bed_path, format = 'hicpro')
+hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
+hicpro_bed_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_bed')
+import(hicpro_matrix_path, bed = hicpro_bed_path, format = 'hicpro')
 }

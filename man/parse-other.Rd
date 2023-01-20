@@ -7,7 +7,7 @@
 \usage{
 gi2cm(gi, use.scores = "score")
 
-cm2matrix(cm, replace_NA = NA)
+cm2matrix(cm, replace_NA = NA, sparse = FALSE)
 }
 \arguments{
 \item{gi}{GInteractions}
@@ -17,6 +17,9 @@ cm2matrix(cm, replace_NA = NA)
 \item{cm}{A \code{ContactMatrix} object}
 
 \item{replace_NA}{Replace NA values}
+
+\item{sparse}{Whether to return the contact matrix as a sparse matrix
+(default: FALSE)}
 }
 \value{
 a dense matrix

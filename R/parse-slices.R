@@ -10,15 +10,20 @@
 #' @param pairs slices to read
 #' @param BPPARAM BiocParallel parameters
 #' @param bed associated bed file for HiC-Pro derived contact matrix. 
+#' @param max.distance Maximum distance to use when compiling distance decay
 #' @return a GInteractions object with `count`, `balanced`, `detrended` and 
 #'   `expected` scores
 #'
 #' @importFrom BiocParallel bplapply
 #' @importFrom BiocParallel MulticoreParam
 
-.multi2DQuery <- function(file, resolution, pairs, 
-    BPPARAM = BiocParallel::MulticoreParam(workers = 8, progressbar = TRUE), 
-    bed = NULL
+.multi2DQuery <- function(
+    file, 
+    resolution, 
+    pairs, 
+    max.distance = NULL, 
+    bed = NULL, 
+    BPPARAM = BiocParallel::bpparam()  
 ) {
 
     message( "Going through preflight checklist..." )
@@ -62,12 +67,17 @@
             GenomicRanges::resize(coords_list_2, fix = 'center', width = 1), all_bins))
     ]$bin_id
     breadth <- GenomicRanges::width(S4Vectors::first(pairs))[1]
-    if(is.na(breadth)) stop("No pairs are contained within the contact matrix. Try with a smaller `flanking_bins` or a finer `resolution`")
-    threshold <- InteractionSet::GInteractions(
-        S4Vectors::first(pairs), S4Vectors::second(pairs)
-    ) |> InteractionSet::pairdist(type = 'span') |> max()
-    if (any(c(is.na(threshold), threshold < breadth))) threshold <- breadth
-    threshold <- ceiling(threshold / resolution) * resolution
+    if(is.na(breadth)) stop("No pairs are contained within the contact matrix. Try with a smaller `flanking.bins` or a finer `resolution`")
+    if (is.null(max.distance)) {
+        threshold <- InteractionSet::GInteractions(
+            S4Vectors::first(pairs), S4Vectors::second(pairs)
+        ) |> InteractionSet::pairdist(type = 'span') |> max()
+        if (any(c(is.na(threshold), threshold < breadth))) threshold <- breadth
+        threshold <- ceiling(threshold / resolution) * resolution
+    }
+    else {
+        threshold <- max.distance
+    }
     is1D <- all(S4Vectors::first(pairs) == S4Vectors::second(pairs))
     isTrans <- all(GenomicRanges::seqnames(coords_list_1) != GenomicRanges::seqnames(coords_list_2))
 
@@ -90,13 +100,11 @@
 
     # - Get detrending model
     message( "Modeling distance decay..." )
-    if (!isTrans) {
-        detrending_model <- distance_decay(l, threshold)
-        detrending_model_mat <- .df_to_symmmat(
-            detrending_model$diag, detrending_model$score
-        )
-        detrending_model_mat[lower.tri(detrending_model_mat)] <- NA
-    }
+    detrending_model <- distance_decay(l, threshold)
+    detrending_model_mat <- .df_to_symmmat(
+        detrending_model$diag, detrending_model$score
+    )
+    detrending_model_mat[lower.tri(detrending_model_mat)] <- NA
 
     # - For each pair, recover balanced and detrended heatmap
     message( "Filtering for contacts within provided targets..." )
@@ -133,24 +141,18 @@
             counts <- l_count[bi_1+1, bi_2+1]
             balanced <- l_balanced[bi_1+1, bi_2+1]
             if (is1D) balanced[lower.tri(balanced)] <- NA
-            if (!isTrans) {
-                exp_bi_0 <- seq(
-                    {{breadth/resolution}/2} - {breadth/resolution}/2, 
-                    {{breadth/resolution}/2} + {breadth/resolution}/2
-                )
-                expected <- detrending_model_mat[exp_bi_0+1, exp_bi_0+1+dist]
-                if (is1D) expected[lower.tri(expected)] <- NA
-                detrended <- log2( 
-                    {balanced/sum(balanced, na.rm = TRUE)} / 
-                    {expected/sum(expected, na.rm = TRUE)} 
-                )
-                if (is1D) detrended[lower.tri(detrended)] <- NA
-                detrended[is.infinite(detrended)] <- NA
-            }
-            else {
-                expected <- NULL
-                detrended <- NULL
-            }
+            exp_bi_0 <- seq(
+                {{breadth/resolution}/2} - {breadth/resolution}/2, 
+                {{breadth/resolution}/2} + {breadth/resolution}/2
+            )
+            expected <- detrending_model_mat[exp_bi_0+1, exp_bi_0+1+dist]
+            if (is1D) expected[lower.tri(expected)] <- NA
+            detrended <- log2( 
+                {balanced/sum(balanced, na.rm = TRUE)} / 
+                {expected/sum(expected, na.rm = TRUE)} 
+            )
+            if (is1D) detrended[lower.tri(detrended)] <- NA
+            detrended[is.infinite(detrended)] <- NA
             list(
                 count = counts, 
                 balanced = balanced,
@@ -161,14 +163,8 @@
     )
     counts_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['count']])))
     balanced_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['balanced']])))
-    if (!isTrans) {
-        expected_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['expected']])))
-        detrended_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['detrended']])))
-    } 
-    else {
-        expected_mats <- array(data = NA, dim = dim(counts_mats))
-        detrended_mats <- array(data = NA, dim = dim(counts_mats))
-    }
+    expected_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['expected']])))
+    detrended_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['detrended']])))
     n_nonempty_slices <- sum(unlist(lapply(seq_len(length(pairs)), 
         function(k) {
             sum(counts_mats[ , , k], na.rm = TRUE) > 0
@@ -198,8 +194,8 @@
             length.out = {breadth/resolution}+1
         )
     )
-    an1 <- rep(an, {breadth/resolution}+1)
-    an2 <- rep(an, each = {breadth/resolution}+1)
+    an1 <- rep(an, each = {breadth/resolution}+1)
+    an2 <- rep(an, {breadth/resolution}+1)
     gis <- InteractionSet::GInteractions(an1, an2)
     gis$diag <- {IRanges::start(InteractionSet::anchors(gis)[[2]])
         - IRanges::start(InteractionSet::anchors(gis)[[1]])

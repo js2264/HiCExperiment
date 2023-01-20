@@ -99,11 +99,11 @@ import(hicf)
 import(pairsFile(hicf), format = 'pairs')
 
 ## --- HicproFile
-# hicpro_matrix_file <- HiContactsData('yeast_wt', format = 'hicpro_matrix')
-# hicpro_regions_file <- HiContactsData('yeast_wt', format = 'hicpro_bed')
-# hicprof <- HicproFile(hicpro_matrix_file, bed = hicpro_regions_file)
-# hicprof
-# import(hicprof)
+hicpro_matrix_file <- HiContactsData('yeast_wt', format = 'hicpro_matrix')
+hicpro_regions_file <- HiContactsData('yeast_wt', format = 'hicpro_bed')
+hicprof <- HicproFile(hicpro_matrix_file, bed = hicpro_regions_file)
+hicprof
+import(hicprof)
 ```
 
 # Import arguments

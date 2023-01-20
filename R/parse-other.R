@@ -56,7 +56,7 @@ gi2cm <- function(gi, use.scores = 'score') {
 
 cm2matrix <- function(cm, replace_NA = NA, sparse = FALSE) {
     m <- Matrix::as.matrix(cm)
-    m <- as(m, 'dgTMatrix')
+    m <- as(m, 'TsparseMatrix')
     m[is.na(m)] <- replace_NA
     if (!sparse) m <- base::as.matrix(m)
     m

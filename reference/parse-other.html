@@ -53,7 +53,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gi2cm</span><span class="op">(</span><span class="va">gi</span>, use.scores <span class="op">=</span> <span class="st">"score"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">cm2matrix</span><span class="op">(</span><span class="va">cm</span>, replace_NA <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">cm2matrix</span><span class="op">(</span><span class="va">cm</span>, replace_NA <span class="op">=</span> <span class="cn">NA</span>, sparse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -73,6 +73,11 @@
 <dt>replace_NA</dt>
 <dd><p>Replace NA values</p></dd>
 
+
+<dt>sparse</dt>
+<dd><p>Whether to return the contact matrix as a sparse matrix
+(default: FALSE)</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -84,7 +89,7 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mcool_path</span> <span class="op">&lt;-</span> <span class="fu">HiContactsData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html" class="external-link">HiContactsData</a></span><span class="op">(</span><span class="st">'yeast_wt'</span>, <span class="st">'mcool'</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2023-01-13</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2023-01-20</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
 <span class="r-in"><span><span class="va">contacts</span> <span class="op">&lt;-</span> <span class="fu"><a href="import-methods.html">import</a></span><span class="op">(</span><span class="va">mcool_path</span>, focus <span class="op">=</span> <span class="st">'XVI'</span>, resolution <span class="op">=</span> <span class="fl">16000</span>, format <span class="op">=</span> <span class="st">'cool'</span><span class="op">)</span></span></span>

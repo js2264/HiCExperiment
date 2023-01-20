@@ -58,8 +58,9 @@ counts from multiple genomic coordinates in a Hi-C contact matrix.</p>
 <span>  <span class="va">file</span>,</span>
 <span>  <span class="va">resolution</span>,</span>
 <span>  <span class="va">pairs</span>,</span>
-<span>  BPPARAM <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/MulticoreParam-class.html" class="external-link">MulticoreParam</a></span><span class="op">(</span>workers <span class="op">=</span> <span class="fl">8</span>, progressbar <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>  bed <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  max.distance <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  BPPARAM <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">bpparam</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -77,12 +78,16 @@ counts from multiple genomic coordinates in a Hi-C contact matrix.</p>
 <dd><p>slices to read</p></dd>
 
 
-<dt>BPPARAM</dt>
-<dd><p>BiocParallel parameters</p></dd>
+<dt>max.distance</dt>
+<dd><p>Maximum distance to use when compiling distance decay</p></dd>
 
 
 <dt>bed</dt>
 <dd><p>associated bed file for HiC-Pro derived contact matrix.</p></dd>
+
+
+<dt>BPPARAM</dt>
+<dd><p>BiocParallel parameters</p></dd>
 
 </dl></div>
     <div class="section level2">

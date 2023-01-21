@@ -8,9 +8,9 @@ Authors@R:
            role = c("aut", "cre"),
            email = "jacquesserizay@gmail.com",
            comment = c(ORCID = "0000-0002-4295-0624")))
-Description: R interface to (m)cool files and other Hi-C processed file formats.
-    `.(m)cool`, `.hic`, HiC-Pro generated files and `.pairs` files can be 
-    directly parsed and subsetted to create HiCExperiment objects, 
+Description: R interface to .(m)cool, .hic files and other Hi-C processed 
+    file formats. `.(m)cool`, `.hic`, HiC-Pro generated files and `.pairs` 
+    files can be directly parsed and subsetted to create HiCExperiment objects, 
     allowing a memory-efficient representation of Hi-C data in R. 
 License: MIT + file LICENSE
 URL: https://github.com/js2264/HiCExperiment

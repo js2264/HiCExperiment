@@ -239,31 +239,63 @@ viewpoints (\<GRanges\>), etc...)}
 }}
 
 \examples{
-mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-contacts_yeast <- HiCExperiment(mcool_path, resolution = 16000, focus = 'II')
+################################################################
+## -------- Slots present in an HiCExperiment object ---------##
+################################################################
+
+contacts_yeast <- contacts_yeast()
 contacts_yeast
+fileName(contacts_yeast)
+focus(contacts_yeast)
 resolutions(contacts_yeast)
 resolution(contacts_yeast)
-focus(contacts_yeast)
-scores(contacts_yeast)
-tail(scores(contacts_yeast, 1))
-tail(scores(contacts_yeast, 'balanced'))
-scores(contacts_yeast, 'test') <- runif(length(contacts_yeast))
-tail(scores(contacts_yeast, 'test'))
-data(centros_yeast)
-topologicalFeatures(contacts_yeast, 'centromeres') <- centros_yeast
-topologicalFeatures(contacts_yeast, 1)
-topologicalFeatures(contacts_yeast, 'centromeres')
-pairsFile(contacts_yeast)
-fileName(contacts_yeast)
 interactions(contacts_yeast)
-length(contacts_yeast)
-contacts_yeast[seq_len(10)]
+scores(contacts_yeast)
+topologicalFeatures(contacts_yeast)
+pairsFile(contacts_yeast)
+metadata(contacts_yeast)
+
+################################################################
+## ---------------------- Slot getters -----------------------##
+################################################################
+
+scores(contacts_yeast, 1) |> head()
+scores(contacts_yeast, 'balanced') |> head()
+topologicalFeatures(contacts_yeast, 'loops') <- InteractionSet::GInteractions(
+  GenomicRanges::GRanges('')
+)
+
+################################################################
+## ---------------------- Slot setters -----------------------##
+################################################################
+
+scores(contacts_yeast, 'random') <- runif(length(contacts_yeast))
+pairsFile(contacts_yeast) <- HiContactsData('yeast_wt', 'pairs.gz')
+
+################################################################
+## ------------------ Subsetting functions -------------------##
+################################################################
+
+contacts_yeast[1:100]
+contacts_yeast['II']
+contacts_yeast[c('II', 'III')]
+contacts_yeast['II|III']
+contacts_yeast['II:10000-30000|III:50000-90000']
+
+################################################################
+## --------------------- Util functions ----------------------##
+################################################################
+## Adapted from other packages
+
 seqinfo(contacts_yeast)
 bins(contacts_yeast)
 anchors(contacts_yeast)
 regions(contacts_yeast)
-contacts_yeast
+
+################################################################
+## ------------- Coercing HiCExperiment objects --------------##
+################################################################
+
 as(contacts_yeast, 'GInteractions')
 as(contacts_yeast, 'ContactMatrix')
 as(contacts_yeast, 'matrix')[seq_len(10), seq_len(10)]

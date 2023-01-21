@@ -35,15 +35,24 @@
 #' @importFrom BiocIO import
 #' @importFrom BiocGenerics path
 #' @examples
-#' # ---- Importing .(m)cool files 
+#' ################################################################
+#' ## ----------- Importing .(m)cool contact matrices ---------- ##
+#' ################################################################
+#' 
 #' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
 #' import(mcool_path, resolution = 16000, focus = 'XVI', format = 'cool')
 #' 
-#' # ---- Importing .hic files 
+#' ################################################################
+#' ## ------------ Importing .hic contact matrices ------------- ##
+#' ################################################################
+#' 
 #' hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
 #' import(hic_path, resolution = 16000, focus = 'XVI', format = 'hic')
 #' 
-#' # ---- Importing HiC-Pro files 
+#' ################################################################
+#' ## ------- Importing HiC-Pro derived contact matrices ------- ##
+#' ################################################################
+#' 
 #' hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
 #' hicpro_bed_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_bed')
 #' import(hicpro_matrix_path, bed = hicpro_bed_path, format = 'hicpro')

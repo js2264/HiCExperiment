@@ -13,10 +13,9 @@
 #' 
 #' @description 
 #' 
-#' Import methods for data structures implemented in the HiCExperiment package. 
-#' HiCExperiment package implements methods to faciliate 
-#' the import of Hi-C files (.(m)cool, .hic, HiC-Pro derived) 
-#' and pairs files in R, as HiCExperiment or GInteractions objects.
+#' Import methods to parse Hi-C files (.(m)cool, .hic, HiC-Pro derived 
+#' matrices, pairs files) into data structures implemented in the 
+#' HiCExperiment package. 
 #' 
 #' @param con Path or connection to a cool, mcool, .hic or HiC-Pro derived files. 
 #'   Can also be a path to a pairs file. 

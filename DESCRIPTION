@@ -1,5 +1,5 @@
 Package: HiCExperiment
-Title: Interface to Hi-C files in R
+Title: Bioconductor class for interacting with Hi-C files in R
 Version: 0.99.7
 Date: 2022-11-10
 Authors@R:
@@ -11,7 +11,9 @@ Authors@R:
 Description: R interface to .(m)cool, .hic files and other Hi-C processed 
     file formats. `.(m)cool`, `.hic`, HiC-Pro generated files and `.pairs` 
     files can be directly parsed and subsetted to create HiCExperiment objects, 
-    allowing a memory-efficient representation of Hi-C data in R. 
+    allowing a memory-efficient representation of Hi-C data in R. HiCExperiment
+    instances can be further investigated in R using HiContacts analysis 
+    package.
 License: MIT + file LICENSE
 URL: https://github.com/js2264/HiCExperiment
 BugReports: https://github.com/js2264/HiCExperiment/issues
@@ -34,6 +36,7 @@ Imports:
     dplyr,
     stats
 Suggests:
+    HiContacts, 
     HiContactsData,
     BiocFileCache, 
     rtracklayer, 

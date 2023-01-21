@@ -5,9 +5,6 @@
 \name{HiCExperiment}
 \alias{HiCExperiment}
 \alias{HiCExperiment-class}
-\alias{.HiCExperimentFromCoolFile}
-\alias{.HiCExperimentFromHicFile}
-\alias{.HiCExperimentFromHicproFile}
 \alias{resolutions,HiCExperiment-method}
 \alias{resolution,HiCExperiment-method}
 \alias{focus,HiCExperiment-method}
@@ -70,41 +67,6 @@ HiCExperiment(
     viewpoints = GenomicRanges::GRanges()),
   pairsFile = NULL,
   bed = NULL
-)
-
-.HiCExperimentFromCoolFile(
-  file,
-  resolution = NULL,
-  focus = NULL,
-  metadata = list(),
-  topologicalFeatures = S4Vectors::SimpleList(compartments = GenomicRanges::GRanges(),
-    borders = GenomicRanges::GRanges(), loops =
-    InteractionSet::GInteractions(GenomicRanges::GRanges(), GenomicRanges::GRanges()),
-    viewpoints = GenomicRanges::GRanges()),
-  pairsFile = NULL
-)
-
-.HiCExperimentFromHicFile(
-  file,
-  resolution = NULL,
-  focus = NULL,
-  metadata = list(),
-  topologicalFeatures = S4Vectors::SimpleList(compartments = GenomicRanges::GRanges(),
-    borders = GenomicRanges::GRanges(), loops =
-    InteractionSet::GInteractions(GenomicRanges::GRanges(), GenomicRanges::GRanges()),
-    viewpoints = GenomicRanges::GRanges()),
-  pairsFile = NULL
-)
-
-.HiCExperimentFromHicproFile(
-  file,
-  bed,
-  metadata = list(),
-  topologicalFeatures = S4Vectors::SimpleList(compartments = GenomicRanges::GRanges(),
-    borders = GenomicRanges::GRanges(), loops =
-    InteractionSet::GInteractions(GenomicRanges::GRanges(), GenomicRanges::GRanges()),
-    viewpoints = GenomicRanges::GRanges()),
-  pairsFile = NULL
 )
 
 \S4method{resolutions}{HiCExperiment}(x)
@@ -230,7 +192,7 @@ from the Hi-C contact file.}
 \item{\code{scores}}{Available interaction scores.}
 
 \item{\code{topologicalFeatures}}{Topological features associated with the dataset
-(e.g. loops (\<Pairs\>), borders (\<GRanges\>),
+(e.g. loops (\<GInteractions\>), borders (\<GRanges\>),
 viewpoints (\<GRanges\>), etc...)}
 
 \item{\code{pairsFile}}{Path to the .pairs file associated with the Hi-C contact file}
@@ -240,28 +202,39 @@ viewpoints (\<GRanges\>), etc...)}
 
 \examples{
 ################################################################
+## Create a HiCExperiment object from existing contact matrix ##
+################################################################
+
+mcool_file <- HiContactsData::HiContactsData("yeast_wt", "mcool")
+pairs_file <- HiContactsData::HiContactsData("yeast_wt", "pairs.gz")
+contacts <- HiCExperiment(
+    file = mcool_file, 
+    resolution = 8000L, 
+    focus = 'II', 
+    pairsFile = pairs_file
+)
+contacts
+
+################################################################
 ## -------- Slots present in an HiCExperiment object ---------##
 ################################################################
 
-contacts_yeast <- contacts_yeast()
-contacts_yeast
-fileName(contacts_yeast)
-focus(contacts_yeast)
-resolutions(contacts_yeast)
-resolution(contacts_yeast)
-interactions(contacts_yeast)
-scores(contacts_yeast)
-topologicalFeatures(contacts_yeast)
-pairsFile(contacts_yeast)
-metadata(contacts_yeast)
+fileName(contacts)
+focus(contacts)
+resolutions(contacts)
+resolution(contacts)
+interactions(contacts)
+scores(contacts)
+topologicalFeatures(contacts)
+pairsFile(contacts)
 
 ################################################################
 ## ---------------------- Slot getters -----------------------##
 ################################################################
 
-scores(contacts_yeast, 1) |> head()
-scores(contacts_yeast, 'balanced') |> head()
-topologicalFeatures(contacts_yeast, 'loops') <- InteractionSet::GInteractions(
+scores(contacts, 1) |> head()
+scores(contacts, 'balanced') |> head()
+topologicalFeatures(contacts, 'loops') <- InteractionSet::GInteractions(
   GenomicRanges::GRanges('')
 )
 
@@ -269,35 +242,35 @@ topologicalFeatures(contacts_yeast, 'loops') <- InteractionSet::GInteractions(
 ## ---------------------- Slot setters -----------------------##
 ################################################################
 
-scores(contacts_yeast, 'random') <- runif(length(contacts_yeast))
-pairsFile(contacts_yeast) <- HiContactsData('yeast_wt', 'pairs.gz')
+scores(contacts, 'random') <- runif(length(contacts))
+pairsFile(contacts) <- HiContactsData('yeast_wt', 'pairs.gz')
 
 ################################################################
 ## ------------------ Subsetting functions -------------------##
 ################################################################
 
-contacts_yeast[1:100]
-contacts_yeast['II']
-contacts_yeast[c('II', 'III')]
-contacts_yeast['II|III']
-contacts_yeast['II:10000-30000|III:50000-90000']
+contacts[1:100]
+contacts['II']
+contacts[c('II', 'III')]
+contacts['II|III']
+contacts['II:10000-30000|III:50000-90000']
 
 ################################################################
 ## --------------------- Util functions ----------------------##
 ################################################################
 ## Adapted from other packages
 
-seqinfo(contacts_yeast)
-bins(contacts_yeast)
-anchors(contacts_yeast)
-regions(contacts_yeast)
+seqinfo(contacts)
+bins(contacts)
+anchors(contacts)
+regions(contacts)
 
 ################################################################
 ## ------------- Coercing HiCExperiment objects --------------##
 ################################################################
 
-as(contacts_yeast, 'GInteractions')
-as(contacts_yeast, 'ContactMatrix')
-as(contacts_yeast, 'matrix')[seq_len(10), seq_len(10)]
-as(contacts_yeast, 'data.frame')[seq_len(10), seq_len(10)]
+as(contacts, 'GInteractions')
+as(contacts, 'ContactMatrix')
+as(contacts, 'matrix')[seq_len(10), seq_len(10)]
+as(contacts, 'data.frame')[seq_len(10), seq_len(10)]
 }

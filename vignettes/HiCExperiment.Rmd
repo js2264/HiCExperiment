@@ -3,7 +3,9 @@ title: "Introduction to HiCExperiment"
 author: "Jacques Serizay"
 date: "`r Sys.Date()`"
 output: 
-    BiocStyle::html_document
+    BiocStyle::html_document:
+        toc: true
+        toc_depth: 2
 vignette: >
     %\VignetteIndexEntry{Introduction to HiCExperiment}
     %\VignetteEngine{knitr::rmarkdown}
@@ -23,6 +25,71 @@ suppressPackageStartupMessages({
     library(HiCExperiment)
 })
 ```
+
+# Introduction 
+
+Hi-C experimental approach allows one to query contact frequency 
+for all possible pairs of genomic loci simultaneously, in a genome-wide manner. 
+The output of this next-generation sequencing-supported technique is a file 
+describing every pair (a.k.a contact, or interaction) between two genomic loci. 
+This so-called "pairs" file can be binned and transformed into a numerical 
+matrix. In such matrix, each cell contains the raw or normalized 
+interaction **frequency** between a pair of genomic loci (which location 
+can be retrieved using the corresponding column and row indices). 
+
+[HiC-Pro](https://github.com/nservant/HiC-Pro) (mostly based on `python`), [distiller](https://github.com/open2c/distiller-nf) (mostly coded in `nextflow`) and 
+[Juicer](https://github.com/aidenlab/juicer/) (mostly coded in `bash` and `awk`) are the three main pipelines used to 
+align, filter and process paired-end fastq reads into pairs files and contact 
+matrices. Each pipeline defined their own file formats to store these two types of 
+files. 
+
+- Pairs files are (gzipped) human-readable, text files that are 
+a variant of the BEDPE format; however the column order varies depending on the 
+pipeline being used. 
+
+- Contact matrix file formats vary greatly depending on the pipeline: 
+
+  - `HiC-Pro` generates two human-readable files: 
+  a `regions` file describing each genomic interval, and a `matrix` file quantifying 
+  interaction frequency between pairs of loci from the `regions` file, using a 
+  standard triplet sparse matrix format. 
+  - `Juicer` generates a `.hic` file, a highly compressed binary file storing
+  sparse contact matrices from multiple resolutions into a single file. 
+  - `distiller` uses the `.(m)cool` format, a sparse, compressed, binary 
+  genomic matrix data model built on HDF5.
+
+Each file format can contain roughly the same information, albeit with a largely 
+improved compression for `.hic` and `.(m)cool` files, which can also contain 
+multi-resolution matrices compared to the HiC-Pro derived files. The 
+[4DN consortium](https://data.4dnucleome.org/help/about/about-dcic), 
+deciphering the role nuclear organization plays in gene 
+expression and cellular function, officially supports both the `.hic` and 
+`.(m)cool` formats. Furthermore, the `.(m)cool` format has recently gained 
+a lot of traction with the release of a series of `python` packages 
+(`cooler`, `cooltools`, `pairtools`, `coolpuppy`) by the [Open2C organization](https://open2c.github.io/)
+facilitating the investigation of Hi-C data stored in `.(m)cool` files in a 
+`python` environment.
+
+The R `HiCExperiment` package aims at unlocking HiC investigation within the 
+rich, genomic-oriented Bioconductor environment. It provides a set of classes
+and import functions to parse HiC files (both contact matrices and pairs) in R, 
+allowing random access and efficient genome-based subsetting of contact matrices. 
+It leverages pre-existing base Bioconductor classes, notably `GInteractions` and `ContactMatrix`
+classes ([Lun, Perry & Ing-Simmons, F1000 Research 2016](https://f1000research.com/articles/5-950/v2)). 
+
+# Installation
+
+`HiCExperiment` package can be installed from Bioconductor using the following
+command: 
+
+```{r eval = FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("HiCExperiment")
+```
+
+All R dependencies will be installed automatically.
 
 # The `HiCExperiment` class
 

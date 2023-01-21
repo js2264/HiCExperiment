@@ -2,7 +2,7 @@
 #' 
 #' @import InteractionSet
 #' @importFrom GenomicRanges mcols
-#' @param gi GInteractions
+#' @param gi GInteractions object
 #' @param use.scores Which scores to use to inflate GInteractions
 #' @rdname parse-other
 #' @export

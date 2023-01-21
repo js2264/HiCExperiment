@@ -15,11 +15,11 @@
 )
 }
 \arguments{
-\item{file}{file}
+\item{file}{path to a Hi-C contact file (can be any format, (m)cool, .hic, or HiC-Pro-derived)}
 
-\item{resolution}{resolution}
+\item{resolution}{resolution to use to import matrix over specified targets}
 
-\item{pairs}{slices to read}
+\item{pairs}{slices to read, provided as a Pairs object}
 
 \item{max.distance}{Maximum distance to use when compiling distance decay}
 

@@ -4,16 +4,49 @@
 #' a `.(m)cool` file as GInteractions (wrapped into a `HiCExperiment` object
 #' by `HiCExperiment()` function).
 #'
-#' @param file file
-#' @param resolution resolution
+#' @name parse-cool
+#' 
+#' @param file path to a Hi-C contact file (in (m)cool format)
+#' @param resolution resolution of the contact matrix
 #' @param balanced import balancing scores
-#' @return anchors from (m)cool, stored as a GRanges
+#' @param pair Genomic coordinates to extract contacts for, stored as a Pairs 
+#' of GRanges (e.g. 
+#' S4Vectors::Pairs(GRanges("II:200000-300000"), GRanges("II:70000-100000"))). 
+#' @param coords Genomic coordinates to extract contacts for, stored as a 
+#' GRanges object
+#' @param anchors anchors from .getCoolAnchors()
+#' @param path Internal path of the cool file to check 
+#' @param idx Index to extract from the cool (HDF5) file
+#' @param ... Other arguments passed to .fetchCool
+#' @param verbose Print resolutions in the console
 #'
+#' @import rhdf5
+#' @import methods
+#' @import InteractionSet
+#' @importFrom dplyr mutate
+#' @importFrom dplyr pull
+#' @importFrom dplyr filter
+#' @importFrom dplyr bind_rows
+#' @importFrom dplyr arrange
+#' @importFrom dplyr rename
+#' @importFrom dplyr all_of
+#' @importFrom dplyr left_join
+#' @importFrom dplyr group_by
+#' @importFrom dplyr summarize
+#' @importFrom GenomeInfoDb Seqinfo
+#' @importFrom GenomeInfoDb seqlengths
+#' @importFrom IRanges subsetByOverlaps
+#' @importFrom IRanges IRanges
+#' @importFrom S4Vectors subjectHits
+#' @importFrom GenomicRanges findOverlaps
 #' @importFrom GenomicRanges GRanges
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges end
-#' @importFrom IRanges IRanges
+#' @importFrom GenomicRanges resize
+#' @rdname parse-cool
+NULL
+
 #' @rdname parse-cool
 
 .getCoolAnchors <- function(file, resolution = NULL, balanced = "cooler") {
@@ -39,21 +72,6 @@
     return(anchors)
 }
 
-#' @param file file
-#' @param pair pair 
-#'   (e.g. S4Vectors::Pairs(GRanges("II:200000-300000"), GRanges("II:70000-100000"))). 
-#' @param anchors anchors
-#' @param resolution resolution
-#' @return counts from (m)cool, stored as a tibble
-#'
-#' @import methods
-#' @importFrom GenomeInfoDb seqlengths
-#' @importFrom GenomicRanges seqnames
-#' @importFrom GenomicRanges GRanges
-#' @importFrom GenomicRanges findOverlaps
-#' @importFrom IRanges IRanges
-#' @importFrom IRanges subsetByOverlaps
-#' @importFrom S4Vectors subjectHits
 #' @rdname parse-cool
 
 .getCountsFromPair <- function(file,
@@ -115,20 +133,6 @@
     return(df)
 }
 
-#' @param file file
-#' @param coords coordinates 
-#' @param anchors anchors
-#' @param resolution resolution
-#' @return counts from (m)cool, stored as a tibble
-#'
-#' @import methods
-#' @importFrom GenomeInfoDb seqlengths
-#' @importFrom GenomicRanges seqnames
-#' @importFrom GenomicRanges GRanges
-#' @importFrom GenomicRanges findOverlaps
-#' @importFrom IRanges IRanges
-#' @importFrom IRanges subsetByOverlaps
-#' @importFrom S4Vectors subjectHits
 #' @rdname parse-cool
 
 .getCounts <- function(file,
@@ -193,14 +197,6 @@
 
 }
 
-#' @param file file
-#' @param path path
-#' @param resolution resolution
-#' @param idx idx to extract in cool file
-#' @param ... ...
-#' @return vector
-#'
-#' @import rhdf5
 #' @rdname parse-cool
 
 .fetchCool <- function(file, path, resolution = NULL, idx = NULL, ...) {
@@ -247,21 +243,6 @@
     return(res)
 }
 
-#' @param file file
-#' @param verbose verbose
-#' @return vector
-#'
-#' @import rhdf5
-#' @importFrom dplyr mutate
-#' @importFrom dplyr pull
-#' @importFrom dplyr filter
-#' @importFrom dplyr bind_rows
-#' @importFrom dplyr arrange
-#' @importFrom dplyr rename
-#' @importFrom dplyr all_of
-#' @importFrom dplyr left_join
-#' @importFrom dplyr group_by
-#' @importFrom dplyr summarize
 #' @rdname parse-cool
 
 .lsCoolFiles <- function(file, verbose = FALSE) {
@@ -287,12 +268,8 @@
     invisible(x)
 }
 
-#' @param file file
-#' @param verbose Print resolutions in the console
-#' @return vector
-#'
-#' @import rhdf5
 #' @rdname parse-cool
+#' @return Silently, a numerical vector of resolutions stored in the cool file
 #' @export
 #' @examples 
 #' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
@@ -317,11 +294,6 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
     invisible(as.integer(res))
 }
 
-#' @param file file
-#' @param resolution resolution
-#' @return a Seqinfo object
-#'
-#' @importFrom GenomeInfoDb Seqinfo
 #' @rdname parse-cool
 
 .cool2seqinfo <- function(file, resolution = NULL) {
@@ -334,16 +306,6 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
     return(seqinfo)
 }
 
-#' @param file file
-#' @param coords NULL, character, or GRanges. 
-#'   Can also be a Pairs object of paired GRanges (length of 1).
-#' @param resolution resolution
-#' @return a GInteractions object
-#'
-#' @import InteractionSet
-#' @importFrom GenomicRanges seqnames
-#' @importFrom GenomicRanges start
-#' @importFrom GenomicRanges resize
 #' @rdname parse-cool
 
 .cool2gi <- function(file, coords = NULL, resolution = NULL) {

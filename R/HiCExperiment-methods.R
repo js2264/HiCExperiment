@@ -56,8 +56,8 @@
 #'
 #' @param x A \code{HiCExperiment} object.
 #' @param object A \code{HiCExperiment} object.
-#' @param name ...
-#' @param value ...
+#' @param name Name of the element to access in topologicalFeatures or scores SimpleLists.
+#' @param value Value to add to topologicalFeatures, scores, pairsFile or metadata slots.
 #' @param i a range or boolean vector.
 #' 
 #' @importMethodsFrom BiocGenerics fileName

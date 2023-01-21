@@ -1,14 +1,7 @@
 #' Pairs parsing functions
 #' 
-#' @param file pairs file: `<readname>\t<chr1>\t<start1>\t<chr2>\t<start2>`
-#' @param chr1.field chr1.field
-#' @param start1.field start1.field
-#' @param chr2.field chr2.field
-#' @param start2.field start2.field
-#' @param strand1.field strand1.field
-#' @param strand2.field strand2.field
-#' @param frag1.field frag1.field
-#' @param frag2.field frag2.field
+#' @param file pairs file. Default formatting is `<readname>\t<chr1>\t<start1>\t<chr2>\t<start2>`. 
+#' @param chr1.field,start1.field,chr2.field,start2.field,strand1.field,strand2.field,frag1.field,frag2.field Index of the column in which each field is contained in the pairs file.
 #' @param nThread Number of CPUs to use to import the `pairs` file in R
 #' @param nrows Number of pairs to import
 #' @return a GInteractions object

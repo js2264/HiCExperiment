@@ -29,17 +29,19 @@ sdiag(A, k = 0)
 distance_decay(dump, threshold = 1e+10)
 }
 \arguments{
-\item{coords}{coords}
+\item{coords}{A set of genomic coordinates (either as a GRanges
+object or as a character string)}
 
-\item{big.mark}{big.mark}
+\item{big.mark}{Separator for thousands when printing out genomic coordinates
+as character}
 
 \item{char}{char (e.g. "II:30000-50000" or "II:30000-50000|II:60000-80000")}
 
-\item{pairs}{pairs}
+\item{pairs}{Pairs object}
 
-\item{df}{df}
+\item{df}{a data.frame to turn into a GInteraction object.}
 
-\item{A}{matrix}
+\item{A}{Numerical matrix}
 
 \item{k}{secondary diagonal k}
 
@@ -47,7 +49,7 @@ distance_decay(dump, threshold = 1e+10)
 
 \item{score}{scores to parse into symmetrical matrix}
 
-\item{dump}{dumped contacts, e.g. from .dumpCool}
+\item{dump}{dumped contacts as GInteractions, e.g. from .dumpCool}
 
 \item{threshold}{maximum distance to compute distance decay for}
 }

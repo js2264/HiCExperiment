@@ -10,7 +10,7 @@ gi2cm(gi, use.scores = "score")
 cm2matrix(cm, replace_NA = NA, sparse = FALSE)
 }
 \arguments{
-\item{gi}{GInteractions}
+\item{gi}{GInteractions object}
 
 \item{use.scores}{Which scores to use to inflate GInteractions}
 

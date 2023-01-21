@@ -19,12 +19,12 @@ lsHicResolutions(file, verbose = FALSE)
 .dumpHic(file, resolution = NULL)
 }
 \arguments{
-\item{file}{file}
+\item{file}{path to a Hi-C contact file in .hic format}
 
 \item{coords}{NULL, character, or GRanges.
 Can also be a Pairs object of paired GRanges (length of 1).}
 
-\item{resolution}{resolution}
+\item{resolution}{resolution of the contact matrix to use}
 
 \item{verbose}{Print resolutions in the console}
 }

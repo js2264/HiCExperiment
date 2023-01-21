@@ -5,9 +5,9 @@
 #' These functions are the workhorse internal functions used to extract 
 #' counts from multiple genomic coordinates in a Hi-C contact matrix.
 #'
-#' @param file file
-#' @param resolution resolution
-#' @param pairs slices to read
+#' @param file path to a Hi-C contact file (can be any format, (m)cool, .hic, or HiC-Pro-derived)
+#' @param resolution resolution to use to import matrix over specified targets
+#' @param pairs slices to read, provided as a Pairs object
 #' @param BPPARAM BiocParallel parameters
 #' @param bed associated bed file for HiC-Pro derived contact matrix. 
 #' @param max.distance Maximum distance to use when compiling distance decay

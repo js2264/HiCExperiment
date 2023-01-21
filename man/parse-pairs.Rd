@@ -19,23 +19,9 @@ pairs2gi(
 )
 }
 \arguments{
-\item{file}{pairs file: \verb{<readname>\\t<chr1>\\t<start1>\\t<chr2>\\t<start2>}}
+\item{file}{pairs file. Default formatting is \verb{<readname>\\t<chr1>\\t<start1>\\t<chr2>\\t<start2>}.}
 
-\item{chr1.field}{chr1.field}
-
-\item{start1.field}{start1.field}
-
-\item{chr2.field}{chr2.field}
-
-\item{start2.field}{start2.field}
-
-\item{strand1.field}{strand1.field}
-
-\item{strand2.field}{strand2.field}
-
-\item{frag1.field}{frag1.field}
-
-\item{frag2.field}{frag2.field}
+\item{chr1.field, start1.field, chr2.field, start2.field, strand1.field, strand2.field, frag1.field, frag2.field}{Index of the column in which each field is contained in the pairs file.}
 
 \item{nThread}{Number of CPUs to use to import the \code{pairs} file in R}
 

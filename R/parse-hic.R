@@ -4,10 +4,10 @@
 #' a `.hic` file as GInteractions (wrapped into a `HiCExperiment` object
 #' by `HiCExperiment()` function).
 #'
-#' @param file file
+#' @param file path to a Hi-C contact file in .hic format
 #' @param coords NULL, character, or GRanges. 
 #'   Can also be a Pairs object of paired GRanges (length of 1).
-#' @param resolution resolution
+#' @param resolution resolution of the contact matrix to use
 #' @return a GInteractions object
 #'
 #' @import InteractionSet
@@ -205,7 +205,6 @@
     return(gi)
 }
 
-#' @param file file
 #' @param verbose Print resolutions in the console
 #' @return vector
 #'

@@ -11,10 +11,25 @@
 #'
 #' @return Reformatted coordinates or GInteractions
 #' 
-#' @param coords coords
+#' @param coords A set of genomic coordinates (either as a GRanges
+#' object or as a character string)
+#' @param big.mark Separator for thousands when printing out genomic coordinates 
+#' as character
+#' @param char char (e.g. "II:30000-50000" or "II:30000-50000|II:60000-80000")
+#' @param pairs Pairs object
+#' @param df a data.frame to turn into a GInteraction object. 
+#' @param A Numerical matrix
+#' @param k secondary diagonal k
+#' @param diag vector of distances to diagonal
+#' @param score scores to parse into symmetrical matrix
+#' @param dump dumped contacts as GInteractions, e.g. from .dumpCool
+#' @param threshold maximum distance to compute distance decay for
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges end
+NULL
+
+#' @rdname utils
 
 splitCoords <- function(coords) {
     if (is(coords, 'GRanges')) {
@@ -45,7 +60,6 @@ splitCoords <- function(coords) {
     }
 }
 
-#' @param big.mark big.mark
 #' @rdname utils
 
 coords2char <- function(coords, big.mark = ',') {
@@ -74,7 +88,6 @@ coords2char <- function(coords, big.mark = ',') {
     }
 }
 
-#' @param char char (e.g. "II:30000-50000" or "II:30000-50000|II:60000-80000")
 #' @importFrom methods is
 #' @importFrom S4Vectors Pairs
 #' @importFrom GenomicRanges GRanges
@@ -105,7 +118,6 @@ char2coords <- function(char) {
     }
 }
 
-#' @param pairs pairs
 #' @importFrom S4Vectors zipup
 #' @importFrom S4Vectors zipdown
 #' @importFrom GenomicRanges GRangesList
@@ -119,7 +131,6 @@ sortPairs <- function(pairs) {
     S4Vectors::zipdown(p_sorted)
 }
 
-#' @param df df
 #' @rdname utils
 
 asGInteractions <- function(df) {
@@ -135,8 +146,6 @@ asGInteractions <- function(df) {
     gi
 }
 
-#' @param A matrix
-#' @param k secondary diagonal k
 #' @rdname utils
 
 `sdiag` <- function(A, k = 0) {
@@ -156,8 +165,6 @@ asGInteractions <- function(df) {
     A[ii]
 }
 
-#' @param diag vector of distances to diagonal
-#' @param score scores to parse into symmetrical matrix
 #' @rdname utils
 
 .df_to_symmmat <- function(diag, score) {
@@ -172,8 +179,6 @@ asGInteractions <- function(df) {
     return(.l)
 }
 
-#' @param dump dumped contacts, e.g. from .dumpCool
-#' @param threshold maximum distance to compute distance decay for
 #' @rdname utils
 
 distance_decay <- function(dump, threshold = 1e10) {

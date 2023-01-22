@@ -58,7 +58,7 @@ counts from multiple genomic coordinates in a Hi-C contact matrix.</p>
 <span>  <span class="va">file</span>,</span>
 <span>  <span class="va">resolution</span>,</span>
 <span>  <span class="va">pairs</span>,</span>
-<span>  max.distance <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  maxDistance <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bed <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  BPPARAM <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">bpparam</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -67,18 +67,18 @@ counts from multiple genomic coordinates in a Hi-C contact matrix.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>file</dt>
-<dd><p>file</p></dd>
+<dd><p>path to a Hi-C contact file (can be any format, (m)cool, .hic, or HiC-Pro-derived)</p></dd>
 
 
 <dt>resolution</dt>
-<dd><p>resolution</p></dd>
+<dd><p>resolution to use to import matrix over specified targets</p></dd>
 
 
 <dt>pairs</dt>
-<dd><p>slices to read</p></dd>
+<dd><p>slices to read, provided as a Pairs object</p></dd>
 
 
-<dt>max.distance</dt>
+<dt>maxDistance</dt>
 <dd><p>Maximum distance to use when compiling distance decay</p></dd>
 
 

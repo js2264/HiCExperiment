@@ -66,19 +66,21 @@ Pairs, ...</p>
 <span></span>
 <span><span class="fu">sdiag</span><span class="op">(</span><span class="va">A</span>, k <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">.df_to_symmmat</span><span class="op">(</span><span class="va">diag</span>, <span class="va">score</span><span class="op">)</span></span>
+<span><span class="fu">.df2symmmat</span><span class="op">(</span><span class="va">diag</span>, <span class="va">score</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">distance_decay</span><span class="op">(</span><span class="va">dump</span>, threshold <span class="op">=</span> <span class="fl">1e+10</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">distanceDecay</span><span class="op">(</span><span class="va">dump</span>, threshold <span class="op">=</span> <span class="fl">1e+10</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>coords</dt>
-<dd><p>coords</p></dd>
+<dd><p>A set of genomic coordinates (either as a GRanges
+object or as a character string)</p></dd>
 
 
 <dt>big.mark</dt>
-<dd><p>big.mark</p></dd>
+<dd><p>Separator for thousands when printing out genomic coordinates
+as character</p></dd>
 
 
 <dt>char</dt>
@@ -86,15 +88,15 @@ Pairs, ...</p>
 
 
 <dt>pairs</dt>
-<dd><p>pairs</p></dd>
+<dd><p>Pairs object</p></dd>
 
 
 <dt>df</dt>
-<dd><p>df</p></dd>
+<dd><p>a data.frame to turn into a GInteraction object.</p></dd>
 
 
 <dt>A</dt>
-<dd><p>matrix</p></dd>
+<dd><p>Numerical matrix</p></dd>
 
 
 <dt>k</dt>
@@ -110,7 +112,7 @@ Pairs, ...</p>
 
 
 <dt>dump</dt>
-<dd><p>dumped contacts, e.g. from .dumpCool</p></dd>
+<dd><p>dumped contacts as GInteractions, e.g. from .dumpCool</p></dd>
 
 
 <dt>threshold</dt>

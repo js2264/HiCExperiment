@@ -47,3 +47,6 @@ ContactsFile methods.
 \item{\code{metadata}}{list}
 }}
 
+\seealso{
+\code{\link[=CoolFile]{CoolFile()}}, \code{\link[=HiCFile]{HiCFile()}}, \code{\link[=HicProFile]{HicProFile()}}
+}

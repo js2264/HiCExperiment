@@ -37,17 +37,19 @@ matrix. In such matrix, each cell contains the raw or normalized
 interaction **frequency** between a pair of genomic loci (which location 
 can be retrieved using the corresponding column and row indices). 
 
-[HiC-Pro](https://github.com/nservant/HiC-Pro) (mostly based on `python`), [distiller](https://github.com/open2c/distiller-nf) (mostly coded in `nextflow`) and 
-[Juicer](https://github.com/aidenlab/juicer/) (mostly coded in `bash` and `awk`) are the three main pipelines used to 
-align, filter and process paired-end fastq reads into pairs files and contact 
-matrices. Each pipeline defined their own file formats to store these two types of 
+[HiC-Pro](https://github.com/nservant/HiC-Pro), 
+[distiller](https://github.com/open2c/distiller-nf) and 
+[Juicer](https://github.com/aidenlab/juicer/) 
+are the three main pipelines used to align, filter and process 
+paired-end fastq reads into pairs files and contact matrices. Each pipeline 
+defined their own file formats to store these two types of 
 files. 
 
 - Pairs files are (gzipped) human-readable, text files that are 
 a variant of the BEDPE format; however the column order varies depending on the 
 pipeline being used. 
 
-- Contact matrix file formats vary greatly depending on the pipeline: 
+- Contact matrix file formats greatly vary depending on the pipeline: 
 
   - `HiC-Pro` generates two human-readable files: 
   a `regions` file describing each genomic interval, and a `matrix` file quantifying 
@@ -92,12 +94,6 @@ BiocManager::install("HiCExperiment")
 All R dependencies will be installed automatically.
 
 # The `HiCExperiment` class
-
-`HiCExperiment` package implements the new `HiCExperiment` S4 class. It is build 
-on pre-existing Bioconductor classes, namely `InteractionSet` and `ContactMatrix` 
-(`Lun, Perry & Ing-Simmons, F1000Research 2016`), and leverages them to 
-import locally stored Hi-C matrix files. It further provides **analytical** 
-and **visualization** tools to investigate contact maps directly in `R`. 
 
 ```{r load_lib}
 library(HiCExperiment)
@@ -294,6 +290,12 @@ in R with the `import` function:
 ```{r pairs}
 import(pairs_file, format = 'pairs')
 ```
+
+# Further documentation
+
+Please check `?HiCExperiment` in R for a full description of available 
+slots, getters and setters, and comprehensive examples of interaction with a 
+HiCExperiment object. 
 
 # Session info
 

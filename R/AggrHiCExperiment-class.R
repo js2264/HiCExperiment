@@ -37,6 +37,7 @@
 #' @return An `AggrHiCExperiment` object.
 #' 
 #' @include HiCExperiment-class.R
+#' @seealso [HiCExperiment()]
 #' @examples
 #' fpath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
 #' data(centros_yeast)

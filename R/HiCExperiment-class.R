@@ -46,6 +46,7 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' @importFrom S4Vectors metadata
 #' @importClassesFrom S4Vectors Annotated
 #' @importMethodsFrom S4Vectors metadata
+#' @seealso [AggrHiCExperiment()], [CoolFile()], [HiCFile()], [HicProFile()], [PairsFile()]
 #' @examples 
 #' ################################################################
 #' ## Create a HiCExperiment object from existing contact matrix ##

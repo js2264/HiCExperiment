@@ -49,3 +49,6 @@ resolution(cf)
 pairsFile(cf)
 S4Vectors::metadata(cf)
 }
+\seealso{
+\code{\link[=HiCFile]{HiCFile()}}, \code{\link[=HicProFile]{HicProFile()}}
+}

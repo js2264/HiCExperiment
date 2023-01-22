@@ -26,6 +26,7 @@
 #' @importClassesFrom BiocIO BiocFile
 #' @include HiCExperiment-class.R
 #' @include PairsFile-class.R
+#' @seealso [CoolFile()], [HicFile()]
 #' 
 #' @examples
 #' hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')

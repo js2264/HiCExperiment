@@ -20,3 +20,6 @@ pf <- PairsFile(pairs_path)
 pf
 pairsFile(pf)
 }
+\seealso{
+\code{\link[=CoolFile]{CoolFile()}}, \code{\link[=HiCFile]{HiCFile()}}, \code{\link[=HicProFile]{HicProFile()}}
+}

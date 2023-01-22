@@ -1,9 +1,9 @@
 test_that("HicFile works", {
     
     # Prepare paths and HicFiles
-    hf0 <- HicFile(hic_path)
-    hf2 <- HicFile(hic_path, pairsFile = pairs_path, resolution = 16000)
-    hf3 <- HicFile(hic_path, resolution = 16000)
+    hf0 <- HicFile(hicPath)
+    hf2 <- HicFile(hicPath, pairsFile = pairsPath, resolution = 16000)
+    hf3 <- HicFile(hicPath, resolution = 16000)
 
     # No errors/warnings when printing HicFile
     expect_no_warning(show(hf0))
@@ -18,12 +18,12 @@ test_that("HicFile works", {
     expect_equal(resolution(hf0), 1000L)
     expect_equal(resolution(hf2), 16000L)
     expect_equal(resolution(hf3), 16000L)
-    expect_error(HicFile(cool_path, 1000))
-    expect_error(HicFile(hic_path, 2))
+    expect_error(HicFile(coolPath, 1000))
+    expect_error(HicFile(hicPath, 2))
 
     # pairFile is properly handled
     expect_null(pairsFile(hf0))
-    expect_equal(pairsFile(hf2), pairs_path)
+    expect_equal(pairsFile(hf2), pairsPath)
     expect_null(pairsFile(hf3))
 
     # import is properly handled for HicFile
@@ -34,7 +34,7 @@ test_that("HicFile works", {
     expect_equal(resolution(ihf0), 1000L)
     expect_null(pairsFile(ihf0))
     expect_equal(resolution(ihf2), 16000L)
-    expect_equal(pairsFile(ihf2), pairs_path)
+    expect_equal(pairsFile(ihf2), pairsPath)
     expect_equal(metadata(ihf4), list())
     expect_equal(resolution(ihf4), 16000L)
     expect_null(pairsFile(ihf4))
@@ -45,15 +45,15 @@ test_that("HicFile works", {
     expect_equal(focus(ihf5), "I")
 
     # import is properly handled for files provided as string
-    ihf0 <- import(hic_path, focus = 'I', format = 'hic')
-    ihf2 <- import(hic_path, pairsFile = pairs_path, resolution = 16000, format = 'hic')
-    ihf3 <- import(hic_path, focus = 'I', resolution = 16000, format = 'hic')
-    ihf4 <- import(hic_path, focus = 'I', format = 'hic')
-    ihf5 <- import(hic_path, resolution = 4000, focus = 'I', metadata = list(test = 'test'), format = 'hic')
+    ihf0 <- import(hicPath, focus = 'I', format = 'hic')
+    ihf2 <- import(hicPath, pairsFile = pairsPath, resolution = 16000, format = 'hic')
+    ihf3 <- import(hicPath, focus = 'I', resolution = 16000, format = 'hic')
+    ihf4 <- import(hicPath, focus = 'I', format = 'hic')
+    ihf5 <- import(hicPath, resolution = 4000, focus = 'I', metadata = list(test = 'test'), format = 'hic')
     expect_equal(resolution(ihf0), 1000L)
     expect_null(pairsFile(ihf0))
     expect_equal(resolution(ihf2), 16000L)
-    expect_equal(pairsFile(ihf2), pairs_path)
+    expect_equal(pairsFile(ihf2), pairsPath)
     expect_equal(resolution(ihf3), 16000L)
     expect_null(pairsFile(ihf3))
     expect_equal(resolution(ihf4), 1000L)
@@ -65,15 +65,15 @@ test_that("HicFile works", {
     expect_equal(focus(ihf5), "I")
 
     # import is properly handled with HiCExperiment function
-    expect_error(HiCExperiment(hic_path))
-    expect_error(HiCExperiment(hic_path, focus = 'I'))
-    ihf2 <- HiCExperiment(hic_path, focus = 'I', resolution = 16000)
-    ihf3 <- HiCExperiment(hic_path, focus = 'I', resolution = 16000, pairsFile = pairs_path)
+    expect_error(HiCExperiment(hicPath))
+    expect_error(HiCExperiment(hicPath, focus = 'I'))
+    ihf2 <- HiCExperiment(hicPath, focus = 'I', resolution = 16000)
+    ihf3 <- HiCExperiment(hicPath, focus = 'I', resolution = 16000, pairsFile = pairsPath)
     expect_equal(resolution(ihf2), 16000L)
     expect_equal(focus(ihf2), 'I')
     expect_null(pairsFile(ihf2))
     expect_equal(resolution(ihf3), 16000L)
-    expect_equal(pairsFile(ihf3), pairs_path)
+    expect_equal(pairsFile(ihf3), pairsPath)
     expect_equal(resolution(ihf3), 16000L)
 
 })

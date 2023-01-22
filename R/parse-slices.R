@@ -10,7 +10,7 @@
 #' @param pairs slices to read, provided as a Pairs object
 #' @param BPPARAM BiocParallel parameters
 #' @param bed associated bed file for HiC-Pro derived contact matrix. 
-#' @param max.distance Maximum distance to use when compiling distance decay
+#' @param maxDistance Maximum distance to use when compiling distance decay
 #' @return a GInteractions object with `count`, `balanced`, `detrended` and 
 #'   `expected` scores
 #'
@@ -21,7 +21,7 @@
     file, 
     resolution, 
     pairs, 
-    max.distance = NULL, 
+    maxDistance = NULL, 
     bed = NULL, 
     BPPARAM = BiocParallel::bpparam()  
 ) {
@@ -29,57 +29,54 @@
     message( "Going through preflight checklist..." )
     # - Get si and bins from contact matrix
     if (is_cool(file)) {
-        all_bins <- .getCoolAnchors(file, resolution = NULL)
+        allBins <- .getCoolAnchors(file, resolution = NULL)
         si <- .cool2seqinfo(file, NULL)
     } else if (is_mcool(file)) {
-        all_bins <- .getCoolAnchors(file, resolution = resolution)
+        allBins <- .getCoolAnchors(file, resolution = resolution)
         si <- .cool2seqinfo(file, resolution)
     }
     else if (is_hic(file)) {
-        all_bins <- .getHicAnchors(file, resolution = resolution)
+        allBins <- .getHicAnchors(file, resolution = resolution)
         si <- .hic2seqinfo(file)
     }
     else if (is_hicpro_matrix(file) & is_hicpro_regions(bed)) {
-        all_bins <- .getHicproAnchors(bed)
+        allBins <- .getHicproAnchors(bed)
         si <- .hicpro2seqinfo(file)
     }
-    all_bins <- all_bins[GenomicRanges::width(all_bins) == resolution]
+    allBins <- allBins[GenomicRanges::width(allBins) == resolution]
     
     # - Filter and reformat provided pairs
     pairs <- pairs[S4Vectors::queryHits(
         GenomicRanges::findOverlaps(
-            S4Vectors::first(pairs), GenomicRanges::reduce(all_bins), type = 'within'
+            S4Vectors::first(pairs), GenomicRanges::reduce(allBins), type = 'within'
         )
     )]
     pairs <- pairs[S4Vectors::queryHits(
         GenomicRanges::findOverlaps(
-            S4Vectors::second(pairs), GenomicRanges::reduce(all_bins), type = 'within'
+            S4Vectors::second(pairs), GenomicRanges::reduce(allBins), type = 'within'
         )
     )]
-    coords_list_1 <- S4Vectors::first(pairs)
-    coords_list_1$bin_id <- all_bins[
+    coordsList1 <- S4Vectors::first(pairs)
+    coordsList1$bin_id <- allBins[
         S4Vectors::subjectHits(GenomicRanges::findOverlaps(
-            GenomicRanges::resize(coords_list_1, fix = 'center', width = 1), all_bins))
+            GenomicRanges::resize(coordsList1, fix = 'center', width = 1), allBins))
     ]$bin_id
-    coords_list_2 <- S4Vectors::second(pairs)
-    coords_list_2$bin_id <- all_bins[
+    coordsList2 <- S4Vectors::second(pairs)
+    coordsList2$bin_id <- allBins[
         S4Vectors::subjectHits(GenomicRanges::findOverlaps(
-            GenomicRanges::resize(coords_list_2, fix = 'center', width = 1), all_bins))
+            GenomicRanges::resize(coordsList2, fix = 'center', width = 1), allBins))
     ]$bin_id
     breadth <- GenomicRanges::width(S4Vectors::first(pairs))[1]
-    if(is.na(breadth)) stop("No pairs are contained within the contact matrix. Try with a smaller `flanking.bins` or a finer `resolution`")
-    if (is.null(max.distance)) {
-        threshold <- InteractionSet::GInteractions(
+    if(is.na(breadth)) stop("No pairs are contained within the contact matrix. Try with a smaller `flankingBins` or a finer `resolution`")
+    if (is.null(maxDistance)) {
+        maxDistance <- InteractionSet::GInteractions(
             S4Vectors::first(pairs), S4Vectors::second(pairs)
         ) |> InteractionSet::pairdist(type = 'span') |> max()
-        if (any(c(is.na(threshold), threshold < breadth))) threshold <- breadth
-        threshold <- ceiling(threshold / resolution) * resolution
-    }
-    else {
-        threshold <- max.distance
+        if (any(c(is.na(maxDistance), maxDistance < breadth))) maxDistance <- breadth
+        maxDistance <- ceiling(maxDistance / resolution) * resolution
     }
     is1D <- all(S4Vectors::first(pairs) == S4Vectors::second(pairs))
-    isTrans <- all(GenomicRanges::seqnames(coords_list_1) != GenomicRanges::seqnames(coords_list_2))
+    isTrans <- all(GenomicRanges::seqnames(coordsList1) != GenomicRanges::seqnames(coordsList2))
 
     # - !!! HEAVY LOAD !!! Parse ALL pixels and convert to sparse matrix
     # - Full parsing has to be done since parallelized access to HDF5 is not supported 
@@ -100,11 +97,11 @@
 
     # - Get detrending model
     message( "Modeling distance decay..." )
-    detrending_model <- distance_decay(l, threshold)
-    detrending_model_mat <- .df_to_symmmat(
-        detrending_model$diag, detrending_model$score
+    detrendingModel <- distanceDecay(l, maxDistance)
+    detrendingModelMat <- .df2symmmat(
+        detrendingModel$diag, detrendingModel$score
     )
-    detrending_model_mat[lower.tri(detrending_model_mat)] <- NA
+    detrendingModelMat[lower.tri(detrendingModelMat)] <- NA
 
     # - For each pair, recover balanced and detrended heatmap
     message( "Filtering for contacts within provided targets..." )
@@ -125,15 +122,15 @@
                 IRanges::start(S4Vectors::first(pair))
             dist <- abs(ceiling(dist / resolution))
             bi_1 <- seq(
-                coords_list_1[K]$bin_id - {breadth/resolution}/2, 
-                coords_list_1[K]$bin_id + {breadth/resolution}/2
+                coordsList1[K]$bin_id - {breadth/resolution}/2, 
+                coordsList1[K]$bin_id + {breadth/resolution}/2
             )
             bi_2 <- seq(
-                coords_list_2[K]$bin_id - {breadth/resolution}/2, 
-                coords_list_2[K]$bin_id + {breadth/resolution}/2
+                coordsList2[K]$bin_id - {breadth/resolution}/2, 
+                coordsList2[K]$bin_id + {breadth/resolution}/2
             )
-            # bin1_weights <- all_bins[bi_1]$weight
-            # bin2_weights <- all_bins[bi_2]$weight
+            # bin1_weights <- allBins[bi_1]$weight
+            # bin2_weights <- allBins[bi_2]$weight
             # counts <- l_count[bi_1+1, bi_2+1]
             # balanced <- t(apply(
             #     apply(counts, 1, `*`, bin1_weights), 2, `*`, bin2_weights
@@ -145,7 +142,7 @@
                 {{breadth/resolution}/2} - {breadth/resolution}/2, 
                 {{breadth/resolution}/2} + {breadth/resolution}/2
             )
-            expected <- detrending_model_mat[exp_bi_0+1, exp_bi_0+1+dist]
+            expected <- detrendingModelMat[exp_bi_0+1, exp_bi_0+1+dist]
             if (is1D) expected[lower.tri(expected)] <- NA
             detrended <- log2( 
                 {balanced/sum(balanced, na.rm = TRUE)} / 
@@ -161,19 +158,19 @@
             )
         }
     )
-    counts_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['count']])))
-    balanced_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['balanced']])))
-    expected_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['expected']])))
-    detrended_mats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['detrended']])))
-    n_nonempty_slices <- sum(unlist(lapply(seq_len(length(pairs)), 
+    countsMats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['count']])))
+    balancedMats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['balanced']])))
+    expectedMats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['expected']])))
+    detrendedMats <- simplify2array(lapply(xx, function(.x) as.matrix(.x[['detrended']])))
+    nNonemptySlices <- sum(unlist(lapply(seq_len(length(pairs)), 
         function(k) {
-            sum(counts_mats[ , , k], na.rm = TRUE) > 0
+            sum(countsMats[ , , k], na.rm = TRUE) > 0
         }
     )))
-    counts <- apply(counts_mats, c(1, 2), sum, na.rm = TRUE) / n_nonempty_slices
-    balanced <- apply(balanced_mats, c(1, 2), sum, na.rm = TRUE) / n_nonempty_slices
-    expected <- apply(expected_mats, c(1, 2), sum, na.rm = TRUE) / n_nonempty_slices
-    detrended <- apply(detrended_mats, c(1, 2), sum, na.rm = TRUE) / n_nonempty_slices
+    counts <- apply(countsMats, c(1, 2), sum, na.rm = TRUE) / nNonemptySlices
+    balanced <- apply(balancedMats, c(1, 2), sum, na.rm = TRUE) / nNonemptySlices
+    expected <- apply(expectedMats, c(1, 2), sum, na.rm = TRUE) / nNonemptySlices
+    detrended <- apply(detrendedMats, c(1, 2), sum, na.rm = TRUE) / nNonemptySlices
     if (is1D) counts[lower.tri(counts)] <- NA
     if (is1D) balanced[lower.tri(balanced)] <- NA
     if (is1D) expected[lower.tri(expected)] <- NA
@@ -206,10 +203,10 @@
     gis$detrended <- as.vector(detrended)
     gis <- sort(gis)
     S4Vectors::metadata(gis) <- list(slices = S4Vectors::SimpleList(
-        count = counts_mats,
-        balanced = balanced_mats,
-        expected = expected_mats,
-        detrended = detrended_mats 
+        count = countsMats,
+        balanced = balancedMats,
+        expected = expectedMats,
+        detrended = detrendedMats 
     ))
     return(gis)
 

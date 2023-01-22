@@ -1,7 +1,7 @@
 test_that("AggrHiCExperiment methods work", {
     data(centros_yeast)
     x <- AggrHiCExperiment(
-        file = mcool_path, 
+        file = mcoolPath, 
         resolution = 8000,
         targets = centros_yeast[c(4, 7)]
     )

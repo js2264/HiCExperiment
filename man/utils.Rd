@@ -8,8 +8,8 @@
 \alias{sortPairs}
 \alias{asGInteractions}
 \alias{sdiag}
-\alias{.df_to_symmmat}
-\alias{distance_decay}
+\alias{.df2symmmat}
+\alias{distanceDecay}
 \title{Utils functions}
 \usage{
 splitCoords(coords)
@@ -24,9 +24,9 @@ asGInteractions(df)
 
 sdiag(A, k = 0)
 
-.df_to_symmmat(diag, score)
+.df2symmmat(diag, score)
 
-distance_decay(dump, threshold = 1e+10)
+distanceDecay(dump, threshold = 1e+10)
 }
 \arguments{
 \item{coords}{A set of genomic coordinates (either as a GRanges

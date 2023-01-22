@@ -50,9 +50,9 @@ check_cool_format <- function(path, resolution, ...) {
         }
     }
     if (is_cool(path)) {
-        correct_res <- lsCoolResolutions(path)
+        correctRes <- lsCoolResolutions(path)
         if (!is.null(resolution)) {
-            if (resolution != correct_res) {
+            if (resolution != correctRes) {
                 stop("File is in .cool format, please do not specify any resolution. Aborting now.")
             }
         }
@@ -224,9 +224,9 @@ is_hicpro_regions <- function(bed) {
 #' @rdname checks
 
 check_resolution <- function(contacts, resolution) {
-    available_res <- resolutions(contacts)
-    if (!resolution %in% available_res) 
-        stop(paste0("Resolution not stored in the matrix file.\n  Available resolutions: ", paste0(available_res, collapse = ', '), '.'))
+    availableRes <- resolutions(contacts)
+    if (!resolution %in% availableRes) 
+        stop(paste0("Resolution not stored in the matrix file.\n  Available resolutions: ", paste0(availableRes, collapse = ', '), '.'))
     TRUE
 }
 

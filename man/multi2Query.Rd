@@ -9,7 +9,7 @@
   file,
   resolution,
   pairs,
-  max.distance = NULL,
+  maxDistance = NULL,
   bed = NULL,
   BPPARAM = BiocParallel::bpparam()
 )
@@ -21,7 +21,7 @@
 
 \item{pairs}{slices to read, provided as a Pairs object}
 
-\item{max.distance}{Maximum distance to use when compiling distance decay}
+\item{maxDistance}{Maximum distance to use when compiling distance decay}
 
 \item{bed}{associated bed file for HiC-Pro derived contact matrix.}
 

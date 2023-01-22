@@ -210,7 +210,6 @@ pairs_file <- HiContactsData::HiContactsData("yeast_wt", "pairs.gz")
 contacts <- HiCExperiment(
     file = mcool_file, 
     resolution = 8000L, 
-    focus = 'II', 
     pairsFile = pairs_file
 )
 contacts
@@ -234,15 +233,17 @@ pairsFile(contacts)
 
 scores(contacts, 1) |> head()
 scores(contacts, 'balanced') |> head()
-topologicalFeatures(contacts, 'loops') <- InteractionSet::GInteractions(
-  GenomicRanges::GRanges('')
-)
+topologicalFeatures(contacts, 1)
 
 ################################################################
 ## ---------------------- Slot setters -----------------------##
 ################################################################
 
 scores(contacts, 'random') <- runif(length(contacts))
+topologicalFeatures(contacts, 'loops') <- InteractionSet::GInteractions(
+  GenomicRanges::GRanges('II:15324'), 
+  GenomicRanges::GRanges('II:24310')
+)
 pairsFile(contacts) <- HiContactsData('yeast_wt', 'pairs.gz')
 
 ################################################################
@@ -273,4 +274,7 @@ as(contacts, 'GInteractions')
 as(contacts, 'ContactMatrix')
 as(contacts, 'matrix')[seq_len(10), seq_len(10)]
 as(contacts, 'data.frame')[seq_len(10), seq_len(10)]
+}
+\seealso{
+\code{\link[=AggrHiCExperiment]{AggrHiCExperiment()}}, \code{\link[=CoolFile]{CoolFile()}}, \code{\link[=HicFile]{HicFile()}}, \code{\link[=HicproFile]{HicproFile()}}, \code{\link[=PairsFile]{PairsFile()}}
 }

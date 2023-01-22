@@ -43,7 +43,7 @@ pairs2gi <- function(
         .fmt <- 'prespecified'
     }
     if (.fmt == '4dn') {
-        file_lines <- vroom::vroom(
+        fileLines <- vroom::vroom(
             file,
             n_max = 100000,
             col_names = FALSE,
@@ -57,14 +57,14 @@ pairs2gi <- function(
         start2.field <- 5
         strand1.field <- 6
         strand2.field <- 7
-        if (ncol(file_lines) >= 9) {
+        if (ncol(fileLines) >= 9) {
             frag1.field <- 8
             frag2.field <- 9
         }
     }
     if (.fmt == 'hicpro') {
         # <ID> <chr1> <pos1> <str1> <chr2> <pos2> <str2> <isize> <frag1> <frag2> <mapq1> <mapq2> [<allele-spe. info>]
-        file_lines <- vroom::vroom(
+        fileLines <- vroom::vroom(
             file,
             n_max = 100000,
             col_names = FALSE,
@@ -78,7 +78,7 @@ pairs2gi <- function(
         start2.field <- 6
         strand1.field <- 4
         strand2.field <- 7
-        if (ncol(file_lines) >= 10) {
+        if (ncol(fileLines) >= 10) {
             frag1.field <- 8
             frag2.field <- 9
         }
@@ -140,8 +140,8 @@ pairs2gi <- function(
 .guess_pairs_format <- function(file) {
 
     lines <- readLines(file, n = 1000)
-    file_comments <- grep('^#', lines, value = TRUE)
-    file_lines <- vroom::vroom(
+    fileComments <- grep('^#', lines, value = TRUE)
+    fileLines <- vroom::vroom(
         file,
         n_max = 100000,
         col_names = FALSE,
@@ -149,50 +149,50 @@ pairs2gi <- function(
         progress = FALSE, 
         show_col_types = FALSE
     )
-    ncols <- ncol(file_lines)
+    ncols <- ncol(fileLines)
 
     # -- Check if file is .pairs format (4DN)
     # <ID> <chr1> <pos1> <chr2> <pos2> <str1> <str2> [<frag1> <frag2>]
-    if (any(grepl('pairs format', file_comments))) return('4dn')
+    if (any(grepl('pairs format', fileComments))) return('4dn')
     if (tryCatch({
-        ncol(file_lines) >= 7 & 
-        is.character(file_lines[[1]]) & # <ID>
-        {is.character(file_lines[[2]]) | is.numeric(file_lines[[2]])} & # <chr1> 
-        is.numeric(file_lines[[3]]) & # <pos1> 
-        {is.character(file_lines[[4]]) | is.numeric(file_lines[[4]])} & # <chr2> 
-        is.numeric(file_lines[[5]]) & # <pos2> 
-        is.character(file_lines[[6]]) & all(unique(file_lines[[6]]) %in% c('+', '-')) & # <str1> 
-        is.character(file_lines[[7]]) & all(unique(file_lines[[7]]) %in% c('+', '-')) # <str2>
+        ncol(fileLines) >= 7 & 
+        is.character(fileLines[[1]]) & # <ID>
+        {is.character(fileLines[[2]]) | is.numeric(fileLines[[2]])} & # <chr1> 
+        is.numeric(fileLines[[3]]) & # <pos1> 
+        {is.character(fileLines[[4]]) | is.numeric(fileLines[[4]])} & # <chr2> 
+        is.numeric(fileLines[[5]]) & # <pos2> 
+        is.character(fileLines[[6]]) & all(unique(fileLines[[6]]) %in% c('+', '-')) & # <str1> 
+        is.character(fileLines[[7]]) & all(unique(fileLines[[7]]) %in% c('+', '-')) # <str2>
     }, error = function(e) FALSE)) return('4dn')
 
     # -- Check if file is .validPairs format (HiC-Pro)
     # <ID> <chr1> <pos1> <str1> <chr2> <pos2> <str2> <isize> <frag1> <frag2> <mapq1> <mapq2> [<allele-spe. info>]
     if (tryCatch({
-        ncol(file_lines) >= 10 & 
-        is.character(file_lines[[1]]) & 
-        {is.character(file_lines[[2]]) | is.numeric(file_lines[[2]])} & 
-        is.numeric(file_lines[[3]]) & 
-        is.character(file_lines[[4]]) & all(unique(file_lines[[4]]) %in% c('+', '-')) &
-        {is.character(file_lines[[5]]) | is.numeric(file_lines[[5]])} & 
-        is.numeric(file_lines[[6]]) & 
-        is.character(file_lines[[7]]) & all(unique(file_lines[[7]]) %in% c('+', '-')) &
-        is.numeric(file_lines[[8]]) & 
-        is.character(file_lines[[9]]) & 
-        is.character(file_lines[[10]])
+        ncol(fileLines) >= 10 & 
+        is.character(fileLines[[1]]) & 
+        {is.character(fileLines[[2]]) | is.numeric(fileLines[[2]])} & 
+        is.numeric(fileLines[[3]]) & 
+        is.character(fileLines[[4]]) & all(unique(fileLines[[4]]) %in% c('+', '-')) &
+        {is.character(fileLines[[5]]) | is.numeric(fileLines[[5]])} & 
+        is.numeric(fileLines[[6]]) & 
+        is.character(fileLines[[7]]) & all(unique(fileLines[[7]]) %in% c('+', '-')) &
+        is.numeric(fileLines[[8]]) & 
+        is.character(fileLines[[9]]) & 
+        is.character(fileLines[[10]])
     }, error = function(e) FALSE)) return('hicpro')
 
     # -- Check if file is Juicer format 
     # <str1> <chr1> <pos1> <frag1> <str2> <chr2> <pos2> <frag2> <mapq1> <cigar1> <sequence1> <mapq2> <cigar2> <sequence2> <readname1> <readname2>
     if (tryCatch({
-        ncol(file_lines) >= 8 & 
-        is.character(file_lines[[1]]) & sum(file_lines[[1]] == '0') > 0 & 
-        {is.character(file_lines[[2]]) | is.numeric(file_lines[[2]])} & 
-        is.numeric(file_lines[[3]]) & 
-        is.numeric(file_lines[[4]]) & 
-        is.character(file_lines[[5]]) & sum(file_lines[[5]] == '0') > 0 & 
-        {is.character(file_lines[[6]]) | is.numeric(file_lines[[6]])} & 
-        is.numeric(file_lines[[7]]) & 
-        is.numeric(file_lines[[8]])
+        ncol(fileLines) >= 8 & 
+        is.character(fileLines[[1]]) & sum(fileLines[[1]] == '0') > 0 & 
+        {is.character(fileLines[[2]]) | is.numeric(fileLines[[2]])} & 
+        is.numeric(fileLines[[3]]) & 
+        is.numeric(fileLines[[4]]) & 
+        is.character(fileLines[[5]]) & sum(fileLines[[5]] == '0') > 0 & 
+        {is.character(fileLines[[6]]) | is.numeric(fileLines[[6]])} & 
+        is.numeric(fileLines[[7]]) & 
+        is.numeric(fileLines[[8]])
     }, error = function(e) FALSE)) return('juicer')
 
     # -- Unspecified format

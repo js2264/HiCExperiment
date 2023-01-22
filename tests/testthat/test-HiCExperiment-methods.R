@@ -37,7 +37,7 @@ test_that("HiCExperiment methods work", {
     expect_s4_class(topologicalFeatures(contacts_yeast, 'borders'), 'GRanges')
     expect_no_error(topologicalFeatures(contacts_yeast, 'test') <- GenomicRanges::GRanges())
     expect_type(pairsFile(contacts_yeast), 'NULL')
-    expect_no_error(pairsFile(contacts_yeast) <- pairs_path)
+    expect_no_error(pairsFile(contacts_yeast) <- pairsPath)
     expect_type(anchors(contacts_yeast), 'list')
     expect_s4_class(regions(contacts_yeast), 'GRanges')
     expect_type(metadata(contacts_yeast), 'list')

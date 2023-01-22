@@ -36,12 +36,12 @@ two elements: \code{log} (path to \code{HiCool} processing log file) and \code{s
 CoolFile methods.
 }
 \examples{
-mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
+mcoolPath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+pairsPath <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
 cf <- CoolFile(
-  mcool_path, 
+  mcoolPath, 
   resolution = 2000, 
-  pairsFile = pairs_path, 
+  pairsFile = pairsPath, 
   metadata = list(info = 'Yeast WT Hi-C exp.')
 )
 cf
@@ -50,5 +50,5 @@ pairsFile(cf)
 S4Vectors::metadata(cf)
 }
 \seealso{
-\code{\link[=HiCFile]{HiCFile()}}, \code{\link[=HicProFile]{HicProFile()}}
+\code{\link[=HicFile]{HicFile()}}, \code{\link[=HicproFile]{HicproFile()}}
 }

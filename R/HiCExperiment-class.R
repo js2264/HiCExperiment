@@ -46,7 +46,7 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' @importFrom S4Vectors metadata
 #' @importClassesFrom S4Vectors Annotated
 #' @importMethodsFrom S4Vectors metadata
-#' @seealso [AggrHiCExperiment()], [CoolFile()], [HiCFile()], [HicProFile()], [PairsFile()]
+#' @seealso [AggrHiCExperiment()], [CoolFile()], [HicFile()], [HicproFile()], [PairsFile()]
 #' @examples 
 #' ################################################################
 #' ## Create a HiCExperiment object from existing contact matrix ##
@@ -57,7 +57,6 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' contacts <- HiCExperiment(
 #'     file = mcool_file, 
 #'     resolution = 8000L, 
-#'     focus = 'II', 
 #'     pairsFile = pairs_file
 #' )
 #' contacts
@@ -81,15 +80,17 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' 
 #' scores(contacts, 1) |> head()
 #' scores(contacts, 'balanced') |> head()
-#' topologicalFeatures(contacts, 'loops') <- InteractionSet::GInteractions(
-#'   GenomicRanges::GRanges('')
-#' )
+#' topologicalFeatures(contacts, 1)
 #' 
 #' ################################################################
 #' ## ---------------------- Slot setters -----------------------##
 #' ################################################################
 #' 
 #' scores(contacts, 'random') <- runif(length(contacts))
+#' topologicalFeatures(contacts, 'loops') <- InteractionSet::GInteractions(
+#'   GenomicRanges::GRanges('II:15324'), 
+#'   GenomicRanges::GRanges('II:24310')
+#' )
 #' pairsFile(contacts) <- HiContactsData('yeast_wt', 'pairs.gz')
 #' 
 #' ################################################################

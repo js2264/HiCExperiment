@@ -7,8 +7,8 @@
 #' @rdname parse-other
 #' @export
 #' @examples 
-#' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-#' contacts <- import(mcool_path, focus = 'XVI', resolution = 16000, format = 'cool')
+#' mcoolPath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+#' contacts <- import(mcoolPath, focus = 'XVI', resolution = 16000, format = 'cool')
 #' gis <- interactions(contacts)
 #' cm <- gi2cm(gis, 'balanced')
 #' cm

@@ -39,6 +39,6 @@ a \code{.hic} file as GInteractions (wrapped into a \code{HiCExperiment} object
 by \code{HiCExperiment()} function).
 }
 \examples{
-hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-lsHicResolutions(hic_path, verbose = TRUE)
+hicPath <- HiContactsData::HiContactsData('yeast_wt', 'hic')
+lsHicResolutions(hicPath, verbose = TRUE)
 }

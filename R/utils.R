@@ -167,7 +167,7 @@ asGInteractions <- function(df) {
 
 #' @rdname utils
 
-.df_to_symmmat <- function(diag, score) {
+.df2symmmat <- function(diag, score) {
     .n <- length(diag)
     .l <- vector(mode = 'list', length = .n)
     .l[[1]] <- score
@@ -181,7 +181,7 @@ asGInteractions <- function(df) {
 
 #' @rdname utils
 
-distance_decay <- function(dump, threshold = 1e10) {
+distanceDecay <- function(dump, threshold = 1e10) {
     resolution <- as.vector(dump$bins[1, ]$end - dump$bins[1, ]$start)
     dump$bins$bin_id <- seq(0, nrow(dump$bins)-1)
     df <- dump$pixels

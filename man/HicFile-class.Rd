@@ -31,12 +31,12 @@ additional slots:
 HicFile methods.
 }
 \examples{
-hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
+hicPath <- HiContactsData::HiContactsData('yeast_wt', 'hic')
+pairsPath <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
 hic <- HicFile(
-  hic_path, 
+  hicPath, 
   resolution = 16000, 
-  pairsFile = pairs_path, 
+  pairsFile = pairsPath, 
   metadata = list(type = 'example')
 )
 hic
@@ -45,5 +45,5 @@ pairsFile(hic)
 S4Vectors::metadata(hic)
 }
 \seealso{
-\code{\link[=CoolFile]{CoolFile()}}, \code{\link[=HicProFile]{HicProFile()}}
+\code{\link[=CoolFile]{CoolFile()}}, \code{\link[=HicproFile]{HicproFile()}}
 }

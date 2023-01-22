@@ -48,5 +48,5 @@ ContactsFile methods.
 }}
 
 \seealso{
-\code{\link[=CoolFile]{CoolFile()}}, \code{\link[=HiCFile]{HiCFile()}}, \code{\link[=HicProFile]{HicProFile()}}
+\code{\link[=CoolFile]{CoolFile()}}, \code{\link[=HicFile]{HicFile()}}, \code{\link[=HicproFile]{HicproFile()}}
 }

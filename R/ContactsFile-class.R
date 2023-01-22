@@ -29,7 +29,7 @@
 #' @importClassesFrom BiocIO BiocFile
 #' @include HiCExperiment-class.R
 #' @include PairsFile-class.R
-#' @seealso [CoolFile()], [HiCFile()], [HicProFile()]
+#' @seealso [CoolFile()], [HicFile()], [HicproFile()]
 
 setClass('ContactsFile', contains = c('BiocFile', 'Annotated'),
     slots = list(

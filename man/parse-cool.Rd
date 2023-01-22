@@ -64,6 +64,6 @@ a \verb{.(m)cool} file as GInteractions (wrapped into a \code{HiCExperiment} obj
 by \code{HiCExperiment()} function).
 }
 \examples{
-mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-lsCoolResolutions(mcool_path, verbose = TRUE)
+mcoolPath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+lsCoolResolutions(mcoolPath, verbose = TRUE)
 }

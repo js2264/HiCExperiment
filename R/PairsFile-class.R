@@ -13,10 +13,10 @@
 #' @importFrom methods setClass
 #' @importFrom S4Vectors isSingleString
 #' @importClassesFrom BiocIO BiocFile
-#' @seealso [CoolFile()], [HiCFile()], [HicProFile()]
+#' @seealso [CoolFile()], [HicFile()], [HicproFile()]
 #' @examples 
-#' pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
-#' pf <- PairsFile(pairs_path)
+#' pairsPath <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
+#' pf <- PairsFile(pairsPath)
 #' pf
 #' pairsFile(pf)
 NULL

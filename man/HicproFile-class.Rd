@@ -37,11 +37,11 @@ HicproFile methods.
 }}
 
 \examples{
-hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
-hicpro_bed_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_bed')
-pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
+hicproMatrixPath <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
+hicproBedPath <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_bed')
+pairsPath <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
 hicpro <- HicproFile(
-  hicpro_matrix_path, bed = hicpro_bed_path, pairs = pairs_path ,
+  hicproMatrixPath, bed = hicproBedPath, pairs = pairsPath ,
   metadata = list(type = 'example')
 )
 hicpro

@@ -43,21 +43,21 @@ HiCExperiment package.
 ## ----------- Importing .(m)cool contact matrices ---------- ##
 ################################################################
 
-mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-import(mcool_path, resolution = 16000, focus = 'XVI', format = 'cool')
+mcoolPath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+import(mcoolPath, resolution = 16000, focus = 'XVI', format = 'cool')
 
 ################################################################
 ## ------------ Importing .hic contact matrices ------------- ##
 ################################################################
 
-hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-import(hic_path, resolution = 16000, focus = 'XVI', format = 'hic')
+hicPath <- HiContactsData::HiContactsData('yeast_wt', 'hic')
+import(hicPath, resolution = 16000, focus = 'XVI', format = 'hic')
 
 ################################################################
 ## ------- Importing HiC-Pro derived contact matrices ------- ##
 ################################################################
 
-hicpro_matrix_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
-hicpro_bed_path <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_bed')
-import(hicpro_matrix_path, bed = hicpro_bed_path, format = 'hicpro')
+hicproMatrixPath <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
+hicproBedPath <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_bed')
+import(hicproMatrixPath, bed = hicproBedPath, format = 'hicpro')
 }

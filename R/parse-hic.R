@@ -212,8 +212,8 @@
 #' @rdname parse-hic
 #' @export
 #' @examples 
-#' hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-#' lsHicResolutions(hic_path, verbose = TRUE)
+#' hicPath <- HiContactsData::HiContactsData('yeast_wt', 'hic')
+#' lsHicResolutions(hicPath, verbose = TRUE)
 
 lsHicResolutions <- function(file, verbose = FALSE) {
     res <- rev(strawr::readHicBpResolutions(file))

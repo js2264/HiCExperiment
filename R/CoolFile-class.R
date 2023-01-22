@@ -29,15 +29,15 @@
 #' @importClassesFrom BiocIO BiocFile
 #' @include HiCExperiment-class.R
 #' @include PairsFile-class.R
-#' @seealso [HiCFile()], [HicProFile()]
+#' @seealso [HicFile()], [HicproFile()]
 #' 
 #' @examples
-#' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-#' pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
+#' mcoolPath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+#' pairsPath <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
 #' cf <- CoolFile(
-#'   mcool_path, 
+#'   mcoolPath, 
 #'   resolution = 2000, 
-#'   pairsFile = pairs_path, 
+#'   pairsFile = pairsPath, 
 #'   metadata = list(info = 'Yeast WT Hi-C exp.')
 #' )
 #' cf

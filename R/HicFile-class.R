@@ -24,15 +24,15 @@
 #' @importClassesFrom BiocIO BiocFile
 #' @include HiCExperiment-class.R
 #' @include PairsFile-class.R
-#' @seealso [CoolFile()], [HicProFile()]
+#' @seealso [CoolFile()], [HicproFile()]
 #' 
 #' @examples
-#' hic_path <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-#' pairs_path <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
+#' hicPath <- HiContactsData::HiContactsData('yeast_wt', 'hic')
+#' pairsPath <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
 #' hic <- HicFile(
-#'   hic_path, 
+#'   hicPath, 
 #'   resolution = 16000, 
-#'   pairsFile = pairs_path, 
+#'   pairsFile = pairsPath, 
 #'   metadata = list(type = 'example')
 #' )
 #' hic

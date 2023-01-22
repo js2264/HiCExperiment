@@ -272,8 +272,8 @@ NULL
 #' @return Silently, a numerical vector of resolutions stored in the cool file
 #' @export
 #' @examples 
-#' mcool_path <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-#' lsCoolResolutions(mcool_path, verbose = TRUE)
+#' mcoolPath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+#' lsCoolResolutions(mcoolPath, verbose = TRUE)
 
 lsCoolResolutions <- function(file, verbose = FALSE) {
     if (is_cool(file)) {

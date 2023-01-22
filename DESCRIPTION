@@ -1,6 +1,6 @@
 Package: HiCExperiment
 Title: Bioconductor class for interacting with Hi-C files in R
-Version: 0.99.7
+Version: 0.99.8
 Date: 2022-11-10
 Authors@R:
     c(person(given = "Jacques",

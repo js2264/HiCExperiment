@@ -29,6 +29,7 @@
     
     # Get anchors from hicpro
     anchors <- .getHicproAnchors(bed)
+    # anchors$bin_id <- anchors$bin_id+1
     an1 <- left_join(
         matrix_df, as.data.frame(anchors), by = c('start_idx' = 'bin_id')
     ) |> as("GRanges")

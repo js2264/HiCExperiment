@@ -96,9 +96,13 @@ test_that("coerce works", {
     expect_s4_class({
         as(contacts_yeast, 'ContactMatrix')
     }, 'ContactMatrix')
-    expect_true(is.matrix({
-        as(refocus(contacts_yeast, 'II'), 'matrix')
-    }))
+    expect_true(is.matrix(base::as.matrix(as.matrix(contacts_yeast))))
+    expect_s4_class({
+        as(contacts_yeast, 'matrix')
+    }, 'dgTMatrix')
+    expect_s4_class({
+        as.matrix(contacts_yeast)
+    }, 'dgTMatrix')
     expect_s3_class({
         as(contacts_yeast, 'data.frame')
     }, 'data.frame')

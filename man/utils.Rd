@@ -10,6 +10,7 @@
 \alias{sdiag}
 \alias{.df2symmmat}
 \alias{distanceDecay}
+\alias{detrendingModel}
 \title{Utils functions}
 \usage{
 splitCoords(coords)
@@ -26,7 +27,9 @@ sdiag(A, k = 0)
 
 .df2symmmat(diag, score)
 
-distanceDecay(dump, threshold = 1e+10)
+distanceDecay(dump, threshold = NULL)
+
+detrendingModel(x, threshold = NULL)
 }
 \arguments{
 \item{coords}{A set of genomic coordinates (either as a GRanges

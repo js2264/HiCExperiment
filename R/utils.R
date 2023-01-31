@@ -24,6 +24,7 @@
 #' @param score scores to parse into symmetrical matrix
 #' @param dump dumped contacts as GInteractions, e.g. from .dumpCool
 #' @param threshold maximum distance to compute distance decay for
+#' @param x a HiCExperiment object
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges end
@@ -181,7 +182,7 @@ asGInteractions <- function(df) {
 
 #' @rdname utils
 
-distanceDecay <- function(dump, threshold = 1e10) {
+distanceDecay <- function(dump, threshold = NULL) {
     resolution <- as.vector(dump$bins[1, ]$end - dump$bins[1, ]$start)
     dump$bins$bin_id <- seq(0, nrow(dump$bins)-1)
     df <- dump$pixels
@@ -202,8 +203,27 @@ distanceDecay <- function(dump, threshold = 1e10) {
         diag = {as.vector(bin2_id) - as.vector(bin1_id)}, 
         distance = diag * resolution
     )
-    df <- dplyr::filter(df, distance <= threshold)
+    if (!is.null(threshold)) df <- dplyr::filter(df, distance <= threshold)
     mod <- dplyr::group_by(df, diag, distance) |> 
         dplyr::summarize(score = mean(score, na.rm = TRUE))
     return(mod)
+}
+
+#' @rdname utils
+
+detrendingModel <- function(file, resolution) {
+    if (is_cool(file)) {
+        l <- .dumpCool(file, resolution = NULL)
+    }
+    if (is_mcool(file)) {
+        l <- .dumpCool(file, resolution = resolution)
+    }
+    else if (is_hic(file)) {
+        l <- .dumpHic(file, resolution = resolution)
+    }
+    else if (is_hicpro_matrix(file)) {
+        l <- .dumpHicpro(file, bed)
+    }
+    detrendingModel <- distanceDecay(l)
+    return(detrendingModel)
 }

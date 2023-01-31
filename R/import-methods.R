@@ -105,6 +105,11 @@ setMethod('import', 'CoolFile', function(con, ...) {
     } else {
         metadata <- metadata(con)
     }
+    if ('compute.detrend' %in% names(params)) {
+        if (params[['detrend']]) {
+            metadata[['detrending_model']] <- detrendingModel(path, resolution)
+        }
+    }
 
     ## -- Create HiCExperiment
     .HiCExperimentFromCoolFile(

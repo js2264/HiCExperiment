@@ -160,7 +160,7 @@ AggrHiCExperiment <- function(
         ),
         slices = mdata$slices, 
         topologicalFeatures = S4Vectors::SimpleList(
-            c(targets = targets, as.list(topologicalFeatures))
+            c(targets = mdata$pairs, as.list(topologicalFeatures))
         ),
         pairsFile = pairsFile, 
         metadata = metadata

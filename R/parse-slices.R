@@ -207,7 +207,7 @@
         balanced = balancedMats,
         expected = expectedMats,
         detrended = detrendedMats 
-    ))
+    ), pairs = pairs)
     return(gis)
 
 }

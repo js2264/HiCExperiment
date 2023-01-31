@@ -59,6 +59,7 @@
 #' @param name Name of the element to access in topologicalFeatures or scores SimpleLists.
 #' @param value Value to add to topologicalFeatures, scores, pairsFile or metadata slots.
 #' @param i a range or boolean vector.
+#' @param fillout.regions Whehter to add missing regions to GInteractions' regions? 
 #' 
 #' @importMethodsFrom BiocGenerics fileName
 #' @importFrom GenomeInfoDb seqinfo
@@ -240,11 +241,16 @@ setMethod("fileName", "HiCExperiment", function(object) object@fileName)
 #' @export
 #' @rdname HiCExperiment
 
-setMethod("interactions", "HiCExperiment", function(x) {
+setMethod("interactions", signature(x = "HiCExperiment"), function(x, fillout.regions = FALSE) {
     gi <- x@interactions
     n <- names(scores(x))
     for (N in n) {
         S4Vectors::mcols(gi)[[N]] <- scores(x, N)
+    }
+    if (fillout.regions) {
+        re <- bins(x)
+        subre <- re[re$bin_id >= min(regions(gi)$bin_id) & re$bin_id <= max(regions(gi)$bin_id)]
+        replaceRegions(gi) <- subre
     }
     return(gi)
 })
@@ -505,13 +511,12 @@ setAs("HiCExperiment", "GInteractions", function(from) interactions(from))
 #' @rdname HiCExperiment
 
 setAs("HiCExperiment", "ContactMatrix", function(from) {
+    x <- interactions(from, fillout.regions = TRUE)
     if ('balanced' %in% names(scores(from))) {
-        x <- interactions(from)
         x$score <- scores(from, 'balanced')
         gi2cm(x)
     } 
     else {
-        x <- interactions(from)
         x$score <- scores(from, 1)
         gi2cm(x)
     }
@@ -522,7 +527,7 @@ setAs("HiCExperiment", "ContactMatrix", function(from) {
 #' @rdname HiCExperiment
 
 setAs("HiCExperiment", "matrix", function(from) {
-    as(from, "ContactMatrix") |> cm2matrix()
+    as(from, "ContactMatrix") |> cm2matrix(sparse = TRUE)
 })
 
 #' @name as
@@ -545,7 +550,6 @@ setAs("HiCExperiment", "data.frame", function(from) {
 
 setMethod("as.matrix", "HiCExperiment", function(x) {
     xx <- as(x, 'matrix')
-    base::as.matrix(xx)
 })
 
 #' @name as

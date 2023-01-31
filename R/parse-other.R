@@ -14,8 +14,8 @@
 #' cm
 
 gi2cm <- function(gi, use.scores = 'score') {
-    # if (!use.scores %in% colnames(S4Vectors::mcols(gi))) 
-    #     stop("`use.scores` argument not found in the provided interactions")
+    if (!use.scores %in% colnames(S4Vectors::mcols(gi))) 
+        stop("`use.scores` argument not found in the provided interactions")
     # seqnames <- unique(GenomeInfoDb::seqnames(regions(gi)))
     # if (length(seqnames == 1)) {
     #     gr <- GenomicRanges::GRanges(seqinfo(gi))
@@ -57,7 +57,7 @@ gi2cm <- function(gi, use.scores = 'score') {
 cm2matrix <- function(cm, replace_NA = NA, sparse = FALSE) {
     m <- Matrix::as.matrix(cm)
     m <- as(m, 'TsparseMatrix')
-    m[is.na(m)] <- replace_NA
+    if (!is.na(replace_NA)) m[is.na(m)] <- replace_NA
     if (!sparse) m <- base::as.matrix(m)
     m
 }

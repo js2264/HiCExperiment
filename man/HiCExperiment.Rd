@@ -105,7 +105,7 @@ HiCExperiment(
 
 \S4method{fileName}{HiCExperiment}(object)
 
-\S4method{interactions}{HiCExperiment}(x)
+\S4method{interactions}{HiCExperiment}(x, fillout.regions = FALSE)
 
 \S4method{interactions}{HiCExperiment,GInteractions}(x) <- value
 
@@ -162,6 +162,8 @@ the entire Hi-C contact file will be imported.}
 \item{name}{Name of the element to access in topologicalFeatures or scores SimpleLists.}
 
 \item{object}{A \code{HiCExperiment} object.}
+
+\item{fillout.regions}{Whehter to add missing regions to GInteractions' regions?}
 
 \item{i}{a range or boolean vector.}
 }

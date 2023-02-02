@@ -56,7 +56,9 @@ as character}
 
 \item{threshold}{maximum distance to compute distance decay for}
 
-\item{x}{a HiCExperiment object}
+\item{file}{path to a HiC contact matrix file}
+
+\item{resolution}{Resolution to use with the HiC contact matrix file}
 }
 \value{
 Reformatted coordinates or GInteractions

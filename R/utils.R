@@ -24,7 +24,8 @@
 #' @param score scores to parse into symmetrical matrix
 #' @param dump dumped contacts as GInteractions, e.g. from .dumpCool
 #' @param threshold maximum distance to compute distance decay for
-#' @param x a HiCExperiment object
+#' @param file path to a HiC contact matrix file
+#' @param resolution Resolution to use with the HiC contact matrix file
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges end

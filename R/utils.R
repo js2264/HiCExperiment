@@ -144,6 +144,10 @@ asGInteractions <- function(df) {
         )
     )
     if ('score' %in% colnames(df)) gi$score <- df$score
+    if ('bin_id1' %in% colnames(df) & 'bin_id2' %in% colnames(df)) {
+        gi$bin_id1 <- df$bin_id1
+        gi$bin_id2 <- df$bin_id2
+    }
     gi
 }
 

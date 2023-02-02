@@ -29,7 +29,7 @@ sdiag(A, k = 0)
 
 distanceDecay(dump, threshold = NULL)
 
-detrendingModel(x, threshold = NULL)
+detrendingModel(file, resolution)
 }
 \arguments{
 \item{coords}{A set of genomic coordinates (either as a GRanges
@@ -55,6 +55,8 @@ as character}
 \item{dump}{dumped contacts as GInteractions, e.g. from .dumpCool}
 
 \item{threshold}{maximum distance to compute distance decay for}
+
+\item{x}{a HiCExperiment object}
 }
 \value{
 Reformatted coordinates or GInteractions

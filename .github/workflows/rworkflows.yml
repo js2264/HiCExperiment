@@ -18,7 +18,6 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
     container: ${{ matrix.config.cont }}
-    continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: ${{ false }}
       matrix:

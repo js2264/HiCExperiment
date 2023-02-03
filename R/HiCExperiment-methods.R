@@ -468,8 +468,8 @@ setMethod("show", signature("HiCExperiment"), function(object) {
         " regions"
     ), '\n')
     cat('-------\n')
-    cat(paste0('fileName: \"', fileName(object), '\"'), '\n')
-    cat(paste0('focus: \"', focus_str, '\"'), '\n')
+    cat(paste0('fileName: ', ifelse(length(fileName(object)) > 1, paste0('\"', fileName(object), '\"'), "N/A")), '\n')
+    cat(paste0('focus: ', ifelse(length(focus_str) > 1, paste0('\"', focus_str, '\"'), "N/A")), '\n')
 
     ## Resolutions
     S4Vectors::coolcat("resolutions(%d): %s\n", resolutions(object))
@@ -490,72 +490,4 @@ setMethod("show", signature("HiCExperiment"), function(object) {
     ## Metadata
     S4Vectors::coolcat("metadata(%d): %s\n", names(S4Vectors::metadata(object)))
 
-})
-
-################################################################################
-################################################################################
-###############                                                  ###############
-###############                    COERCING                      ###############
-###############                                                  ###############
-################################################################################
-################################################################################
-
-#' @name as
-#' @export
-#' @rdname HiCExperiment
-
-setAs("HiCExperiment", "GInteractions", function(from) interactions(from))
-
-#' @name as
-#' @export
-#' @rdname HiCExperiment
-
-setAs("HiCExperiment", "ContactMatrix", function(from) {
-    x <- interactions(from, fillout.regions = TRUE)
-    if ('balanced' %in% names(scores(from))) {
-        x$score <- scores(from, 'balanced')
-        gi2cm(x)
-    } 
-    else {
-        x$score <- scores(from, 1)
-        gi2cm(x)
-    }
-})
-
-#' @name as
-#' @export
-#' @rdname HiCExperiment
-
-setAs("HiCExperiment", "matrix", function(from) {
-    as(from, "ContactMatrix") |> cm2matrix(sparse = TRUE)
-})
-
-#' @name as
-#' @export
-#' @rdname HiCExperiment
-
-setAs("HiCExperiment", "data.frame", function(from) {
-    x <- interactions(from)
-    x <- as.data.frame(x)
-    x <- x[, !colnames(x) %in% c("chr1", "chr2", "bin_id1.1", "bin_id2.1")]
-    for (n in names(scores(from))) {
-        x[[n]] <- scores(from, n)
-    }
-    return(x)
-})
-
-#' @name as
-#' @export
-#' @rdname HiCExperiment
-
-setMethod("as.matrix", "HiCExperiment", function(x) {
-    xx <- as(x, 'matrix')
-})
-
-#' @name as
-#' @export
-#' @rdname HiCExperiment
-
-setMethod("as.data.frame", "HiCExperiment", function(x) {
-    as(x, 'data.frame')
 })

@@ -27,6 +27,8 @@ utils::globalVariables(c(
     "start1", 
     "start2", 
     "bed", 
-    "name" 
+    "name", 
+    "bin_id1", 
+    "bin_id2"  
 ))
 

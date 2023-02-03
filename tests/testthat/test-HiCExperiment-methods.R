@@ -91,8 +91,8 @@ test_that("utils works", {
 
 test_that("coerce works", {
     expect_s4_class({
-        as(contacts_yeast, 'GInteractions')
-    }, 'GInteractions')
+        as(contacts_yeast, 'InteractionSet')
+    }, 'InteractionSet')
     expect_s4_class({
         as(contacts_yeast, 'ContactMatrix')
     }, 'ContactMatrix')
@@ -104,6 +104,21 @@ test_that("coerce works", {
         as.matrix(contacts_yeast)
     }, 'dgTMatrix')
     expect_s3_class({
-        as(contacts_yeast, 'data.frame')
+        df <- as(contacts_yeast, 'data.frame')
     }, 'data.frame')
+    expect_s4_class({
+        df2gi(df)
+    }, 'GInteractions')
+    expect_s4_class({
+        gi <- as(contacts_yeast, 'GInteractions')
+    }, 'GInteractions')
+    expect_s4_class({
+        cm <- gi2cm(gi, 'balanced')
+    }, 'ContactMatrix')
+    expect_s4_class({
+        cm2matrix(cm, sparse = TRUE)
+    }, 'dgTMatrix')
+    expect_type({
+        cm2matrix(cm, sparse = FALSE)
+    }, 'double')
 })

@@ -26,19 +26,16 @@ jobs:
           bioc: devel
           r: auto
           cont: bioconductor/bioconductor_docker:devel
-          experimental: false
           rspm: https://packagemanager.rstudio.com/cran/__linux__/focal/release
-        - os: macOS-latest
-          bioc: devel
-          r: auto
-          cont: ~
-          experimental: true
-          rspm: ~
+        # - os: macOS-latest
+        #   bioc: devel
+        #   r: auto
+        #   cont: ~
+        #   rspm: ~
         - os: windows-latest
           bioc: devel
           r: auto
           cont: ~
-          experimental: false
           rspm: ~
     steps:
     - uses: js2264/rworkflows@master

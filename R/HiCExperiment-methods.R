@@ -468,8 +468,8 @@ setMethod("show", signature("HiCExperiment"), function(object) {
         " regions"
     ), '\n')
     cat('-------\n')
-    cat(paste0('fileName: ', ifelse(length(fileName(object)) > 1, paste0('\"', fileName(object), '\"'), "N/A")), '\n')
-    cat(paste0('focus: ', ifelse(length(focus_str) > 1, paste0('\"', focus_str, '\"'), "N/A")), '\n')
+    cat(paste0('fileName: ', ifelse(nchar(fileName(object)) >= 1, paste0('\"', fileName(object), '\"'), "N/A")), '\n')
+    cat(paste0('focus: ', ifelse(nchar(focus_str) >= 1, paste0('\"', focus_str, '\"'), "N/A")), '\n')
 
     ## Resolutions
     S4Vectors::coolcat("resolutions(%d): %s\n", resolutions(object))

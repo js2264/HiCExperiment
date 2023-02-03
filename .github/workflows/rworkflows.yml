@@ -18,6 +18,7 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
     container: ${{ matrix.config.cont }}
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: ${{ false }}
       matrix:
@@ -26,16 +27,19 @@ jobs:
           bioc: devel
           r: auto
           cont: bioconductor/bioconductor_docker:devel
+          experimental: false
           rspm: https://packagemanager.rstudio.com/cran/__linux__/focal/release
         - os: macOS-latest
           bioc: devel
           r: auto
           cont: ~
+          experimental: true
           rspm: ~
         - os: windows-latest
           bioc: devel
           r: auto
           cont: ~
+          experimental: false
           rspm: ~
     steps:
     - uses: js2264/rworkflows@master

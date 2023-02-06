@@ -200,7 +200,6 @@ NULL
 #' @rdname parse-cool
 
 .fetchCool <- function(file, path, resolution = NULL, idx = NULL, ...) {
-    check_cool_format(file, resolution)
     path <- ifelse(
         is.null(resolution), 
         paste0("/", path), 
@@ -215,7 +214,6 @@ NULL
 #' @rdname parse-cool
 
 .dumpCool <- function(file, resolution = NULL) {
-    check_cool_format(file, resolution)
     an <- .getCoolAnchors(file, resolution)
     path <- ifelse(
         is.null(resolution), 
@@ -297,7 +295,6 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
 #' @rdname parse-cool
 
 .cool2seqinfo <- function(file, resolution = NULL) {
-    check_cool_format(file, resolution)
     chroms <- .fetchCool(file, "chroms", resolution)
     seqinfo <- GenomeInfoDb::Seqinfo(
         seqnames = as.vector(chroms$name),
@@ -309,9 +306,7 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
 #' @rdname parse-cool
 
 .cool2gi <- function(file, coords = NULL, resolution = NULL) {
-    file <- gsub('~', Sys.getenv('HOME'), file)
-    check_cool_format(file, resolution)
-    
+
     # Mutate Pairs provided as characters to real Pairs
     if (!is.null(coords)) {
         if (grepl('\\|', coords)) {

@@ -262,7 +262,6 @@ makeHiCExperimentFromGInteractions <- function(gi) {
 ) {
     
     ## -- Check that provided file is valid
-    file <- gsub('~', Sys.getenv('HOME'), file)
     check_cool_file(file)
     check_cool_format(file, resolution)
 

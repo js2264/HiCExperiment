@@ -56,7 +56,7 @@ setMethod("show", signature("AggrHiCExperiment"), function(object) {
 
     ## Resolutions
     S4Vectors::coolcat("resolutions(%d): %s\n", resolutions(object))
-    cat(paste0('current resolution: ', resolution(object)), '\n')
+    cat(paste0('active resolution: ', resolution(object)), '\n')
 
     ## Interactions
     cat(paste0('interactions: ', length(interactions(object))), '\n')

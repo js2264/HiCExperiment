@@ -113,7 +113,7 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' contacts['II:10000-30000|III:50000-90000']
 #' 
 #' #####################################################################
-#' ## --------------------- Util functions -------------------------- ##
+#' ## --------------------- Utils functions ------------------------- ##
 #' #####################################################################
 #' ## Adapted from other packages
 #' 
@@ -227,8 +227,9 @@ setValidity("HiCExperiment",
 makeHiCExperimentFromGInteractions <- function(gi) {
     resolution <- GenomicRanges::width(InteractionSet::regions(gi))[1]
     mcols <- S4Vectors::mcols(gi) |> 
-        as.data.frame() |> 
-        dplyr::select(-c(bin_id1, bin_id2))
+        as.data.frame()
+    if ('bin_id1' %in% colnames(mcols)) mcols[,'bin_id1'] <- NULL
+    if ('bin_id2' %in% colnames(mcols)) mcols[,'bin_id2'] <- NULL
     x <- methods::new("HiCExperiment", 
         fileName = "",
         focus = "", 

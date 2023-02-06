@@ -54,6 +54,8 @@
 \alias{as.matrix,HiCExperiment-method}
 \alias{as.data.frame,HiCExperiment-method}
 \alias{interactions<-,HiCExperiment,GInteractions-method}
+\alias{$<-,HiCExperiment-method}
+\alias{$,HiCExperiment-method}
 \alias{as}
 \title{\code{HiCExperiment} S4 class}
 \usage{
@@ -113,6 +115,10 @@ makeHiCExperimentFromGInteractions(gi)
 \S4method{interactions}{HiCExperiment,GInteractions}(x) <- value
 
 \S4method{length}{HiCExperiment}(x)
+
+\S4method{$}{HiCExperiment}(x, name) <- value
+
+\S4method{$}{HiCExperiment}(x, name)
 
 \S4method{[}{HiCExperiment,numeric,ANY,ANY}(x, i)
 
@@ -272,7 +278,7 @@ contacts['II|III']
 contacts['II:10000-30000|III:50000-90000']
 
 #####################################################################
-## --------------------- Util functions -------------------------- ##
+## --------------------- Utils functions ------------------------- ##
 #####################################################################
 ## Adapted from other packages
 

@@ -2,6 +2,8 @@
 % Please edit documentation in R/AllGenerics.R
 \name{AllGenerics}
 \alias{AllGenerics}
+\alias{availableResolutions}
+\alias{availableChromosomes}
 \alias{resolutions}
 \alias{resolution}
 \alias{focus}
@@ -26,6 +28,8 @@
 \item{name}{Passed to corresponding method}
 
 \item{value}{Passed to corresponding method}
+
+\item{...}{Passed to corresponding method}
 }
 \description{
 Generics functions created in HiCExperiment package.

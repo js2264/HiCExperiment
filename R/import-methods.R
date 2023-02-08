@@ -10,6 +10,14 @@
 #' @aliases import,HicFile,ANY,ANY-method
 #' @aliases import,HicproFile,ANY,ANY-method
 #' @aliases import,PairsFile,ANY,ANY-method
+#' @aliases availableResolutions,ANY-method
+#' @aliases availableResolutions,CoolFile-method
+#' @aliases availableResolutions,HicFile-method
+#' @aliases availableResolutions,HicproFile-method
+#' @aliases availableChromosomes,ANY-method
+#' @aliases availableChromosomes,CoolFile-method
+#' @aliases availableChromosomes,HicFile-method
+#' @aliases availableChromosomes,HicproFile-method
 #' 
 #' @description 
 #' 
@@ -17,7 +25,7 @@
 #' matrices, pairs files) into data structures implemented in the 
 #' HiCExperiment package. 
 #' 
-#' @param con Path or connection to a cool, mcool, .hic or HiC-Pro derived files. 
+#' @param con,x Path or connection to a cool, mcool, .hic or HiC-Pro derived files. 
 #'   Can also be a path to a pairs file. 
 #' @param format The format of the output. If missing and 'con' is a filename, 
 #'    the format is derived from the file extension. 
@@ -39,6 +47,8 @@
 #' ################################################################
 #' 
 #' mcoolPath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
+#' availableResolutions(mcoolPath)
+#' availableChromosomes(mcoolPath)
 #' import(mcoolPath, resolution = 16000, focus = 'XVI', format = 'cool')
 #' 
 #' ################################################################
@@ -46,6 +56,8 @@
 #' ################################################################
 #' 
 #' hicPath <- HiContactsData::HiContactsData('yeast_wt', 'hic')
+#' availableResolutions(hicPath)
+#' availableChromosomes(hicPath)
 #' import(hicPath, resolution = 16000, focus = 'XVI', format = 'hic')
 #' 
 #' ################################################################
@@ -54,6 +66,8 @@
 #' 
 #' hicproMatrixPath <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_matrix')
 #' hicproBedPath <- HiContactsData::HiContactsData('yeast_wt', 'hicpro_bed')
+#' availableResolutions(hicproMatrixPath, hicproBedPath)
+#' availableChromosomes(hicproMatrixPath, hicproBedPath)
 #' import(hicproMatrixPath, bed = hicproBedPath, format = 'hicpro')
 NULL
 

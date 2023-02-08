@@ -1,9 +1,13 @@
 test_that("HicFile works", {
     
+    expect_no_error(availableChromosomes(hicPath))
+    expect_no_error(availableResolutions(hicPath))
     # Prepare paths and HicFiles
     hf0 <- HicFile(hicPath)
     hf2 <- HicFile(hicPath, pairsFile = pairsPath, resolution = 16000)
     hf3 <- HicFile(hicPath, resolution = 16000)
+    expect_no_error(availableChromosomes(hf0))
+    expect_no_error(availableResolutions(hf0))
 
     # No errors/warnings when printing HicFile
     expect_no_warning(show(hf0))

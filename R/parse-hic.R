@@ -207,13 +207,7 @@
 
 #' @param verbose Print resolutions in the console
 #' @return vector
-#'
-#' @import rhdf5
 #' @rdname parse-hic
-#' @export
-#' @examples 
-#' hicPath <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-#' lsHicResolutions(hicPath, verbose = TRUE)
 
 lsHicResolutions <- function(file, verbose = FALSE) {
     res <- rev(strawr::readHicBpResolutions(file))
@@ -244,7 +238,7 @@ lsHicResolutions <- function(file, verbose = FALSE) {
 .hic2seqinfo <- function(file) {
     strawr::readHicChroms(file) |> 
         setNames(c('seqnames', 'seqlengths')) |>
-        dplyr::filter(seqnames != 'ALL') |>
+        dplyr::filter(!seqnames %in% c('ALL', 'All')) |>
         as("Seqinfo")
 }
 

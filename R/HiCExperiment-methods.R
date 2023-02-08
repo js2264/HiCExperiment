@@ -266,6 +266,11 @@ setMethod("interactions<-", signature(x = "HiCExperiment", value = "GInteraction
 #' @export
 #' @rdname HiCExperiment
 
+setMethod("length", "HiCExperiment", function(x) length(interactions(x)))
+
+#' @export
+#' @rdname HiCExperiment
+
 setReplaceMethod("$", "HiCExperiment", function(x, name, value) {
     S4Vectors::mcols(regions(interactions(x)))[, name] <- value
     return(x)

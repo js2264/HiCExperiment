@@ -63,7 +63,3 @@ These functions are the workhorse internal functions used to import
 a \verb{.(m)cool} file as GInteractions (wrapped into a \code{HiCExperiment} object
 by \code{HiCExperiment()} function).
 }
-\examples{
-mcoolPath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-lsCoolResolutions(mcoolPath, verbose = TRUE)
-}

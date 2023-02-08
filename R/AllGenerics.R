@@ -1,6 +1,8 @@
 #' @title Generic functions
 #' 
 #' @name AllGenerics
+#' @aliases availableResolutions
+#' @aliases availableChromosomes
 #' @aliases resolutions
 #' @aliases resolution
 #' @aliases focus
@@ -26,7 +28,10 @@
 #' @param x Passed to corresponding method
 #' @param name Passed to corresponding method
 #' @param value Passed to corresponding method
+#' @param ... Passed to corresponding method
 NULL
+setGeneric("availableResolutions", function(x, ...) {standardGeneric("availableResolutions")})
+setGeneric("availableChromosomes", function(x, ...) {standardGeneric("availableChromosomes")})
 setGeneric("resolutions", function(x) {standardGeneric("resolutions")})
 setGeneric("resolution", function(x) {standardGeneric("resolution")})
 setGeneric("focus", function(x) {standardGeneric("focus")})

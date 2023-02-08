@@ -268,10 +268,6 @@ NULL
 
 #' @rdname parse-cool
 #' @return Silently, a numerical vector of resolutions stored in the cool file
-#' @export
-#' @examples 
-#' mcoolPath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
-#' lsCoolResolutions(mcoolPath, verbose = TRUE)
 
 lsCoolResolutions <- function(file, verbose = FALSE) {
     if (is_cool(file)) {

@@ -38,7 +38,3 @@ These functions are the workhorse internal functions used to import
 a \code{.hic} file as GInteractions (wrapped into a \code{HiCExperiment} object
 by \code{HiCExperiment()} function).
 }
-\examples{
-hicPath <- HiContactsData::HiContactsData('yeast_wt', 'hic')
-lsHicResolutions(hicPath, verbose = TRUE)
-}

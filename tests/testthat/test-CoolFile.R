@@ -1,5 +1,9 @@
 test_that("CoolFile works", {
     
+    expect_no_error(availableChromosomes(coolPath))
+    expect_no_error(availableChromosomes(mcoolPath))
+    expect_no_error(availableResolutions(coolPath))
+    expect_no_error(availableResolutions(mcoolPath))
     # Prepare paths and CoolFiles
     cf0 <- CoolFile(coolPath)
     cf1 <- CoolFile(coolPath, pairsFile = pairsPath)
@@ -7,6 +11,10 @@ test_that("CoolFile works", {
     mcf1 <- CoolFile(mcoolPath, pairsFile = pairsPath)
     mcf2 <- CoolFile(mcoolPath, pairsFile = pairsPath, resolution = 16000)
     mcf3 <- CoolFile(mcoolPath, resolution = 16000)
+    expect_no_error(availableChromosomes(cf0))
+    expect_no_error(availableChromosomes(mcf0))
+    expect_no_error(availableResolutions(cf0))
+    expect_no_error(availableResolutions(mcf0))
 
     # No errors/warnings when printing CoolFile
     expect_no_warning(show(cf0))

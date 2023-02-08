@@ -204,8 +204,9 @@ in this case, the user can specify the `resolution` at which count values are re
 
 ```{r mcool}
 mcool_file <- HiContactsData('yeast_wt', format = 'mcool')
+availableResolutions(mcool_file)
+availableChromosomes(mcool_file)
 range <- 'II:0-800000' # range of interest
-lsCoolResolutions(mcool_file, verbose = TRUE)
 hic <- import(mcool_file, format = 'cool', focus = range, resolution = 2000)
 hic
 ```

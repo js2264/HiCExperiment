@@ -76,9 +76,9 @@
                     width = resolution
                 )
             )
-            ean1 <- end(an1)
+            ean1 <- GenomicRanges::end(an1)
             maxean1 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == coords[[1]]]
-            end(an1)[ean1 > maxean1] <- maxean1
+            GenomicRanges::end(an1)[ean1 > maxean1] <- maxean1
             GenomeInfoDb::seqlevels(an1) <- GenomeInfoDb::seqlevels(si)
             GenomeInfoDb::seqinfo(an1) <- si
             an2 <- GenomicRanges::GRanges(
@@ -88,9 +88,9 @@
                     width = resolution
                 )
             )
-            ean2 <- end(an2)
+            ean2 <- GenomicRanges::end(an2)
             maxean2 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == coords[[2]]]
-            end(an2)[ean2 > maxean2] <- maxean2
+            GenomicRanges::end(an2)[ean2 > maxean2] <- maxean2
             GenomeInfoDb::seqlevels(an2) <- GenomeInfoDb::seqlevels(si)
             GenomeInfoDb::seqinfo(an2) <- si
             gi <- InteractionSet::GInteractions(
@@ -159,9 +159,9 @@
                 width = resolution
             )
         )
-        ean1 <- end(an1)
+        ean1 <- GenomicRanges::end(an1)
         maxean1 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == seqnames]
-        end(an1)[ean1 > maxean1] <- maxean1
+        GenomicRanges::end(an1)[ean1 > maxean1] <- maxean1
         GenomeInfoDb::seqlevels(an1) <- GenomeInfoDb::seqlevels(si)
         GenomeInfoDb::seqinfo(an1) <- si
         an2 <- GenomicRanges::GRanges(
@@ -171,9 +171,9 @@
                 width = resolution
             )
         )
-        ean2 <- end(an2)
+        ean2 <- GenomicRanges::end(an2)
         maxean2 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == seqnames]
-        end(an2)[ean2 > maxean2] <- maxean2
+        GenomicRanges::end(an2)[ean2 > maxean2] <- maxean2
         GenomeInfoDb::seqlevels(an2) <- GenomeInfoDb::seqlevels(si)
         GenomeInfoDb::seqinfo(an2) <- si
         gi <- InteractionSet::GInteractions(

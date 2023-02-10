@@ -2,26 +2,26 @@ RCMD := Rscript -e
 .PHONY: install
 install: deps ## Install package and dependencies.
 	@echo "🚀 Installing package"
-	@$(RCMD) 'devtools::install()'
+	$(RCMD) 'devtools::install()'
 
 .PHONY: check
 check: deps ## Check if package can be installed.
 	@echo "🔍 Checking HiCExperiment"
-	@$(RCMD) 'devtools::check()'
+	$(RCMD) 'devtools::check()'
 
 deps: ## Install all dependencies
 	@echo "🔗 Installing dependencies"
-	@$(RCMD) 'devtools::install_dev_deps(".")'
+	$(RCMD) 'devtools::install_dev_deps(".")'
 
 .PHONY: docker-build
 docker-build: ## Build the Docker image.
 	@echo "🐋 Building docker image"
-	@docker build -t r-hicexperiment .
+	docker build -t r-hicexperiment .
 
 .PHONY: test
 test: install ## Test the code with testthat.
 	@echo "🧪 Testing code: Running testthat"
-	@$(RCMD) 'devtools::test()'
+	$(RCMD) 'devtools::load_all();devtools::test()'
 
 .PHONY: help
 help:

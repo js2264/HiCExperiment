@@ -21,7 +21,7 @@ docker-build: ## Build the Docker image.
 .PHONY: test
 test: install ## Test the code with testthat.
 	@echo "🧪 Testing code: Running testthat"
-	$(RCMD) 'devtools::load_all();devtools::test()'
+	$(RCMD) 'devtools::test()'
 
 .PHONY: help
 help:

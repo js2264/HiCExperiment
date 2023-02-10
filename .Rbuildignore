@@ -6,3 +6,5 @@
 ^\.pre-commit-config\.yaml$
 ^doc$
 ^Meta$
+^Dockerfile$
+^Makefile$

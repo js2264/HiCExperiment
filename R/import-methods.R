@@ -21,7 +21,7 @@
 #' 
 #' @description 
 #' 
-#' Import methods to parse Hi-C files (.(m)cool, .hic, HiC-Pro derived 
+#' Import methods to parse Hi-C files (`.(m)cool`, `.hic`, HiC-Pro derived 
 #' matrices, pairs files) into data structures implemented in the 
 #' HiCExperiment package. 
 #' 
@@ -35,6 +35,24 @@
 #'    providing the string data to import.
 #' @param ... e.g. `resolution = ...`; parameters to pass to  
 #'    format-specific methods.
+#' 
+#' @section `import` arguments for `ContactFile` class:
+#' `ContactFile` class gathers `CoolFile`, `HicFile` and `HicproFile` classes. 
+#' When importing a `ContactFile` object in R, two main arguments can be 
+#' provided besides the `ContactFile` itself: 
+#' 
+#' - `resolution`:
+#'    Resolutions available in the disk-stored contact matrix can be 
+#'    listed using `availableResolutions(file)`
+#' - `focus`:
+#'    A genomic locus (or pair of loci) provided as a string. It can be any 
+#'    of the following string structures: 
+#' 
+#'      - "II" or "II:20000-30000": this will extract a symmetrical 
+#'      square HiCExperiment object, of an entire chromosome or an portion of it.
+#'      - "II|III" or "II:20000-30000|III:40000-90000": 
+#'      this will extract a non-symmetrical HiCExperiment object, 
+#'      with an entire or portion of different chromosomes on each axis. 
 #' 
 #' @usage import(con, format, text, ...)
 #' @return A `HiCExperiment` or `GInteractions` object
@@ -158,7 +176,7 @@ setMethod('import', 'HicFile', function(con, ...) {
     }
     if ('focus' %in% names(params)) {
         focus <- params[['focus']]
-        focus <- gsub("-", ":", params[['focus']])
+        # focus <- gsub("-", ":", params[['focus']])
     } else {
         focus <- NULL
     }
@@ -244,6 +262,9 @@ setMethod('import', 'HicproFile', function(con, ...) {
         metadata <- params[['metadata']]
     } else {
         metadata <- metadata(con)
+    }
+    if ('focus' %in% names(params)) {
+        warning('HiC-Pro contact matrix does not support random access. `focus` argument is ignored.')
     }
 
     if (!check_hicpro_files(path, bed))

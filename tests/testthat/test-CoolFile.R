@@ -52,14 +52,30 @@ test_that("CoolFile works", {
     expect_null(pairsFile(mcf3))
 
     # import is properly handled for CoolFile
-    icf0 <- import(cf0, focus = 'I')
-    icf1 <- import(cf1, focus = 'I')
-    imcf0 <- import(mcf0, focus = 'I')
-    imcf1 <- import(mcf1, focus = 'I')
-    imcf2 <- import(mcf2)
-    imcf3 <- import(mcf3)
-    imcf4 <- import(mcf3, focus = 'I')
-    imcf5 <- import(mcf3, resolution = 4000, focus = 'I', metadata = list(test = 'test'))
+    expect_no_error(
+        icf0 <- import(cf0, focus = 'I')
+    )
+    expect_no_error(
+        icf1 <- import(cf1, focus = 'I')
+    )
+    expect_no_error(
+        imcf0 <- import(mcf0, focus = 'I')
+    )
+    expect_no_error(
+        imcf1 <- import(mcf1, focus = 'I')
+    )
+    expect_no_error(
+        imcf2 <- import(mcf2)
+    )
+    expect_no_error(
+        imcf3 <- import(mcf3)
+    )
+    expect_no_error(
+        imcf4 <- import(mcf3, focus = 'I')
+    )
+    expect_no_error(
+        imcf5 <- import(mcf3, resolution = 4000, focus = 'I', metadata = list(test = 'test'))
+    )
     expect_equal(resolution(icf0), 1000L)
     expect_null(pairsFile(icf0))
     expect_equal(resolution(icf1), 1000L)
@@ -125,5 +141,13 @@ test_that("CoolFile works", {
     expect_equal(pairsFile(ihf3), pairsPath)
     expect_equal(resolution(ihf3), 16000L)
     expect_null(focus(ihf3))
+
+    # Import works for all possible combinations of ranges 
+    expect_no_error(import(mcf1))
+    expect_no_error(import(mcf1, focus = 'I'))
+    expect_no_error(import(mcf1, focus = 'I:1-40000'))
+    expect_no_error(import(mcf1, focus = 'I|II'))
+    expect_no_error(import(mcf1, focus = 'III|II'))
+    expect_no_error(import(mcf1, focus = 'III:30000-40000|II:10000-40000'))
 
 })

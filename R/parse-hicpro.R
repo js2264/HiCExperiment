@@ -63,10 +63,8 @@
     # Associate counts for bins to corresponding anchors
     gi$count <- matrix_df[[3]]
     
-    # Add extra info
-    InteractionSet::regions(gi)$chr <- GenomicRanges::seqnames(InteractionSet::regions(gi))
-    InteractionSet::regions(gi)$center <- GenomicRanges::start(GenomicRanges::resize(InteractionSet::regions(gi), fix = "center", width = 1))
-    InteractionSet::regions(gi)$bin_id <- anchors$bin_id[BiocGenerics::match(regions(gi), anchors)]
+    # Fix regions by adding empty ones (with no 'count')
+    gi <- .fixRegions(gi, anchors, NULL)
 
     return(gi)
 }

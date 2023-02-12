@@ -29,6 +29,7 @@ utils::globalVariables(c(
     "bed", 
     "name", 
     "bin_id1", 
-    "bin_id2"  
+    "bin_id2", 
+    "x"  
 ))
 

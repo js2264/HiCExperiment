@@ -7,9 +7,10 @@
 #' @description 
 #' 
 #' Utilities to facilitate parsing/handling of coordinates, GInteractions, 
-#' Pairs, ...
+#' Pairs, ...  
+#' These functions are not exported.
 #'
-#' @return Reformatted coordinates or GInteractions
+#' @return Reformatted coordinates or GInteractions.
 #' 
 #' @param coords A set of genomic coordinates (either as a GRanges
 #' object or as a character string)
@@ -26,6 +27,8 @@
 #' @param threshold maximum distance to compute distance decay for
 #' @param file path to a HiC contact matrix file
 #' @param resolution Resolution to use with the HiC contact matrix file
+#' @param gis GInteractions object
+#' @param bins Larger set of regions (usually bins from HiCExperiment)
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges end
@@ -116,7 +119,7 @@ char2coords <- function(char) {
         )
     }
     else {
-        stop("Cannot coerce string into a Pairs object")
+        stop("Cannot coerce the provided string into a Pairs object")
     }
 }
 
@@ -231,4 +234,84 @@ detrendingModel <- function(file, resolution) {
     }
     detrendingModel <- distanceDecay(l)
     return(detrendingModel)
+}
+
+#' @rdname utils
+
+.fixRegions <- function(gis, bins, coords) {
+
+    # Different possible situations: 
+    #   NULL
+    #   'II:10000-20000'
+    #   'II'
+    #   'II:10000-20000|III:50000-90000'
+    #   'II|III'
+    #   c('II', 'III')
+
+    if (is.null(coords)) { ## genome-wide 
+        re <- bins
+    }
+    else if (
+        is(coords, 'Pairs')
+    ) { ## coords already in Pairs 
+        valid_bins <- c(
+            subsetByOverlaps(bins, S4Vectors::first(coords))$bin_id, 
+            subsetByOverlaps(bins, S4Vectors::second(coords))$bin_id
+        )
+        re <- bins[bins$bin_id %in% valid_bins]
+    }
+    else if (
+        length(coords) > 1
+    ) { # c('II', 'III')
+        valid_bins <- as.vector(seqnames(bins)) %in% coords
+        re <- bins[valid_bins]
+    }
+    else if (
+        grepl(
+            '[A-Za-z0-9]*:[0-9]*-[0-9]*\\|[A-Za-z0-9]*:[0-9]*-[0-9]*$', coords
+        ) | grepl(
+            '[A-Za-z0-9]*:[0-9]*-[0-9]*$', coords
+        ) 
+    ) { # e.g. 'II:10000-20000' or 'II:10000-20000|III:50000-90000'
+        coords <- char2coords(coords)
+        valid_bins <- c(
+            subsetByOverlaps(bins, S4Vectors::first(coords))$bin_id, 
+            subsetByOverlaps(bins, S4Vectors::second(coords))$bin_id
+        )
+        re <- bins[bins$bin_id %in% valid_bins]
+    }
+    else if (
+        grepl(
+            '[A-Za-z0-9]*\\|[A-Za-z0-9]*$', coords
+        )
+    ) { # e.g. 'II|III'
+        chr1 <- strsplit(coords, '\\|')[[1]][1]
+        chr2 <- strsplit(coords, '\\|')[[1]][2]
+        if (!all(c(chr1, chr2) %in% seqnames(GenomeInfoDb::seqinfo(gis)))) {
+            stop("One or all of the provided seqnames is not found.")
+        }
+        si <- GenomeInfoDb::seqinfo(gis)
+        gr1 <- as(si[chr1], 'GRanges')
+        gr2 <- as(si[chr2], 'GRanges')
+        valid_bins <- c(
+            subsetByOverlaps(bins, gr1)$bin_id, 
+            subsetByOverlaps(bins, gr2)$bin_id
+        )
+        re <- bins[bins$bin_id %in% valid_bins]
+    }
+    else if (
+        all(coords %in% seqnames(GenomeInfoDb::seqinfo(gis)))
+    ) { # e.g. 'II'
+        valid_bins <- bins$bin_id[as.vector(seqnames(bins)) %in% coords]
+        re <- bins[bins$bin_id %in% valid_bins]
+    }
+
+    re$chr <- GenomicRanges::seqnames(re)
+    re$center <- GenomicRanges::start(GenomicRanges::resize(re, fix = "center", width = 1))
+    re$bin_id <- bins$bin_id[BiocGenerics::match(re, bins)]
+    an <- anchors(gis)
+    gis <- gis[IRanges::overlapsAny(an[[1]], re) & IRanges::overlapsAny(an[[2]], re)]
+    InteractionSet::replaceRegions(gis) <- re
+    return(gis)
+
 }

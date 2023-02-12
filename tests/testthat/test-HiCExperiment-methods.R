@@ -10,12 +10,11 @@ test_that("HiCExperiment methods work", {
         )
         contacts_yeast[sub]
     }, 'HiCExperiment')
-    expect_s4_class({
-        contacts_yeast['II:1-20000']
-    }, 'HiCExperiment')
-    expect_s4_class({
-        contacts_yeast['II:1-30000|II:30000-60000']
-    }, 'HiCExperiment')
+    expect_no_error(contacts_yeast['II'])
+    expect_no_error(contacts_yeast['II:1-20000'])
+    expect_no_error(contacts_yeast['II:1-30000|II:30000-60000'])
+    expect_no_error(contacts_yeast[c('II', 'III')])
+    expect_no_error(contacts_yeast[c('II:1-30000|III:10000-60000')])
     expect_type(fileName(contacts_yeast), 'character')
     expect_s4_class(seqinfo(contacts_yeast), 'Seqinfo')
     expect_type(resolutions(contacts_yeast), 'integer')

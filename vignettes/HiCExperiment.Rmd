@@ -113,10 +113,14 @@ knitr::include_graphics(
 ## Import methods
 
 The implemented `import()` methods allow one to import Hi-C matrix files in R as 
-`HiCExperiment` objects.
+`HiCExperiment` objects. 
 
 ```{r import, eval = FALSE}
-hic <- import("path-to-cool/mcool/hic/HiC-Pro-file")
+hic <- import(
+    "path/to/contact_matrix.cool", 
+    focus = "chr:start-end", 
+    resolution = ...
+)
 ```
 
 To give real-life examples, we use the `HiContactsData` package to get access 
@@ -159,7 +163,6 @@ hic_file <- HiContactsData('yeast_wt', format = 'hic')
 hicf <- HicFile(hic_file, pairsFile = pairs_file)
 hicf
 import(hicf)
-import(pairsFile(hicf), format = 'pairs')
 
 ## --- HicproFile
 hicpro_matrix_file <- HiContactsData('yeast_wt', format = 'hicpro_matrix')
@@ -177,8 +180,8 @@ The `focus` argument is used to specifically import contacts within a genomic
 locus of interest. 
 
 ```{r focus}
-range <- 'I:20000-80000' # range of interest
-hic <- import(cool_file, format = 'cool',  focus = range)
+availableChromosomes(cool_file)
+hic <- import(cool_file, format = 'cool',  focus = 'I:20001-80000')
 hic
 focus(hic)
 ```
@@ -193,7 +196,7 @@ centered at the diagonal. To do this, specify a couple of coordinates in the
 `focus` argument using a character string formatted as `"...|..."`: 
 
 ```{r asym}
-hic <- import(cool_file, format = 'cool', focus = 'II:0-500000|II:100000-600000')
+hic <- import(cool_file, format = 'cool', focus = 'II:1-500000|II:100001-300000')
 focus(hic)
 ```
 
@@ -206,8 +209,7 @@ in this case, the user can specify the `resolution` at which count values are re
 mcool_file <- HiContactsData('yeast_wt', format = 'mcool')
 availableResolutions(mcool_file)
 availableChromosomes(mcool_file)
-range <- 'II:0-800000' # range of interest
-hic <- import(mcool_file, format = 'cool', focus = range, resolution = 2000)
+hic <- import(mcool_file, format = 'cool', focus = 'II:1-800000', resolution = 2000)
 hic
 ```
 
@@ -257,7 +259,7 @@ tail(scores(hic, 'random'))
 Add `topologicalFeatures` using `GRanges` or `Pairs`. 
 
 ```{r features}
-topologicalFeatures(hic, 'viewpoints') <- GRanges("II:300000-320000")
+topologicalFeatures(hic, 'viewpoints') <- GRanges("II:300001-320000")
 topologicalFeatures(hic)
 topologicalFeatures(hic, 'viewpoints')
 ```

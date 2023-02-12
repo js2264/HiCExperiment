@@ -20,11 +20,41 @@
 .hic2gi <- function(file, coords = NULL, resolution = NULL) {
     
     file <- gsub('~', Sys.getenv('HOME'), file)
-    
+
     # Mutate Pairs provided as characters to real Pairs
     if (!is.null(coords)) {
         if (grepl('\\|', coords)) {
-            coords <- char2coords(coords)
+            si <- .hic2seqinfo(file)
+            if (
+                grepl(
+                    '[A-Za-z0-9]*\\|[A-Za-z0-9]*$', coords
+                )
+            ) { # e.g. 'II|III'
+                chr1 <- strsplit(coords, '\\|')[[1]][1]
+                chr2 <- strsplit(coords, '\\|')[[1]][2]
+                if (!all(c(chr1, chr2) %in% seqnames(si))) {
+                    stop("One or all of the provided seqnames is not found.")
+                }
+                gr1 <- as(si[chr1], 'GRanges')
+                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                gr2 <- as(si[chr2], 'GRanges')
+                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                coords <- S4Vectors::Pairs(
+                    sort(c(gr1, gr2))[1], 
+                    sort(c(gr1, gr2))[2]
+                )
+            }
+            else {
+                coords <- char2coords(coords)
+                gr1 <- S4Vectors::first(coords)
+                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                gr2 <- S4Vectors::second(coords)
+                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                coords <- S4Vectors::Pairs(
+                    sort(c(gr1, gr2))[1], 
+                    sort(c(gr1, gr2))[2]
+                )
+            }
         }
     }
 
@@ -116,6 +146,8 @@
                 width = resolution
             )
         )
+        suppressWarnings(GenomeInfoDb::seqinfo(an1) <- si)
+        an1 <- GenomicRanges::trim(an1)
         an2 <- GenomicRanges::GRanges(
             seqnames = full_parsed_hic$seqnames2, 
             ranges = IRanges::IRanges(
@@ -123,6 +155,8 @@
                 width = resolution
             )
         )
+        suppressWarnings(GenomeInfoDb::seqinfo(an2) <- si)
+        an2 <- GenomicRanges::trim(an2)
         gi <- InteractionSet::GInteractions(
             an1, 
             an2, 
@@ -186,7 +220,58 @@
         gi$score <- parsed_hic_balanced$counts
     }
     else {
-        stop("Non-symetric parsing of .hic files is currently unsupported.")
+        parsed_hic <- strawr::straw(
+            fname = file, 
+            binsize = resolution, 
+            chr1loc = as.character(S4Vectors::first(coords)), 
+            chr2loc = as.character(S4Vectors::second(coords)), 
+            unit = 'BP', 
+            matrix = "observed", 
+            norm = 'NONE'
+        )
+        parsed_hic_balanced <- strawr::straw(
+            fname = file, 
+            binsize = resolution, 
+            chr1loc = as.character(S4Vectors::first(coords)), 
+            chr2loc = as.character(S4Vectors::second(coords)), 
+            unit = 'BP', 
+            matrix = "observed", 
+            norm = 'KR'
+        )
+        seqnames1 <- gsub(':.*', '', as.character(S4Vectors::first(coords)))
+        seqnames2 <- gsub(':.*', '', as.character(S4Vectors::second(coords)))
+        an1 <- GenomicRanges::GRanges(
+            seqnames = seqnames1, 
+            ranges = IRanges::IRanges(
+                start = parsed_hic$x + 1, 
+                width = resolution
+            )
+        )
+        ean1 <- GenomicRanges::end(an1)
+        maxean1 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == seqnames1]
+        GenomicRanges::end(an1)[ean1 > maxean1] <- maxean1
+        GenomeInfoDb::seqlevels(an1) <- GenomeInfoDb::seqlevels(si)
+        GenomeInfoDb::seqinfo(an1) <- si
+        an2 <- GenomicRanges::GRanges(
+            seqnames = seqnames2, 
+            ranges = IRanges::IRanges(
+                start = parsed_hic$y + 1, 
+                width = resolution
+            )
+        )
+        ean2 <- GenomicRanges::end(an2)
+        maxean2 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == seqnames2]
+        GenomicRanges::end(an2)[ean2 > maxean2] <- maxean2
+        GenomeInfoDb::seqlevels(an2) <- GenomeInfoDb::seqlevels(si)
+        GenomeInfoDb::seqinfo(an2) <- si
+        gi <- InteractionSet::GInteractions(
+            an1, 
+            an2, 
+        )
+
+        # Associate raw counts for bins to corresponding anchors
+        gi$count <- parsed_hic$counts
+        gi$score <- parsed_hic_balanced$counts
     }
 
     # Match anchor ID with each interaction
@@ -197,10 +282,8 @@
         GenomicRanges::findOverlaps(an2, anchors)
     ) - 1
     
-    # Add extra info
-    InteractionSet::regions(gi)$chr <- GenomicRanges::seqnames(InteractionSet::regions(gi))
-    InteractionSet::regions(gi)$center <- GenomicRanges::start(GenomicRanges::resize(InteractionSet::regions(gi), fix = "center", width = 1))
-    InteractionSet::regions(gi)$bin_id <- anchors$bin_id[BiocGenerics::match(regions(gi), anchors)]
+    # Fix regions by adding the empty ones with no original 'count'
+    gi <- .fixRegions(gi, anchors, coords)
     
     return(gi)
 }

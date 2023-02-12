@@ -11,6 +11,7 @@
 \alias{.df2symmmat}
 \alias{distanceDecay}
 \alias{detrendingModel}
+\alias{.fixRegions}
 \title{Utils functions}
 \usage{
 splitCoords(coords)
@@ -30,6 +31,8 @@ sdiag(A, k = 0)
 distanceDecay(dump, threshold = NULL)
 
 detrendingModel(file, resolution)
+
+.fixRegions(gis, bins, coords)
 }
 \arguments{
 \item{coords}{A set of genomic coordinates (either as a GRanges
@@ -59,11 +62,16 @@ as character}
 \item{file}{path to a HiC contact matrix file}
 
 \item{resolution}{Resolution to use with the HiC contact matrix file}
+
+\item{gis}{GInteractions object}
+
+\item{bins}{Larger set of regions (usually bins from HiCExperiment)}
 }
 \value{
-Reformatted coordinates or GInteractions
+Reformatted coordinates or GInteractions.
 }
 \description{
 Utilities to facilitate parsing/handling of coordinates, GInteractions,
 Pairs, ...
+These functions are not exported.
 }

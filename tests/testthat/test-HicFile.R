@@ -31,10 +31,10 @@ test_that("HicFile works", {
     expect_null(pairsFile(hf3))
 
     # import is properly handled for HicFile
-    ihf0 <- import(hf0, focus = 'I')
-    ihf2 <- import(hf2)
-    ihf4 <- import(hf3, focus = 'I')
-    ihf5 <- import(hf3, resolution = 4000, focus = 'I', metadata = list(test = 'test'))
+    expect_no_error(ihf0 <- import(hf0, focus = 'I'))
+    expect_no_error(ihf2 <- import(hf2))
+    expect_no_error(ihf4 <- import(hf3, focus = 'I'))
+    expect_no_error(ihf5 <- import(hf3, resolution = 4000, focus = 'I', metadata = list(test = 'test')))
     expect_equal(resolution(ihf0), 1000L)
     expect_null(pairsFile(ihf0))
     expect_equal(resolution(ihf2), 16000L)
@@ -79,5 +79,12 @@ test_that("HicFile works", {
     expect_equal(resolution(ihf3), 16000L)
     expect_equal(pairsFile(ihf3), pairsPath)
     expect_equal(resolution(ihf3), 16000L)
+
+    # Import works for all possible combinations of ranges 
+    expect_no_error(import(hicPath, format = 'hic', focus = 'I'))
+    expect_no_error(import(hicPath, format = 'hic', focus = 'I:1-40000'))
+    expect_no_error(import(hicPath, format = 'hic', focus = 'I|II'))
+    expect_no_error(import(hicPath, format = 'hic', focus = 'III|II'))
+    expect_no_error(import(hicPath, format = 'hic', focus = 'III:30000-40000|II:10000-40000'))
 
 })

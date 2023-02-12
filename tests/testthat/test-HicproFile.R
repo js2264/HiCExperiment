@@ -22,4 +22,6 @@ test_that("HicproFile works", {
     expect_error(HiCExperiment(hicproMatrixPath, bed = hicproBedPath, focus = 'II'))
     expect_error(HiCExperiment(hicproMatrixPath, bed = hicproBedPath, resolution = 160000))
 
+    expect_warning(import(hicpro1, focus = 'III|II'))
+
 })

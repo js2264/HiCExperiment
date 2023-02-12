@@ -333,7 +333,15 @@ setMethod("[", signature("HiCExperiment", "GInteractions"), function(x, i) {
 setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
     re_ <- regions(x)
     ints_ <- interactions(x)
-    
+
+    # Different possible situations: 
+    #   NULL
+    #   'II:10000-20000'
+    #   'II'
+    #   'II:10000-20000|III:50000-90000'
+    #   'II|III'
+    #   c('II', 'III')
+
     if (length(i) == 1) { # 'II:10000-20000', 'II:10000-20000|III:50000-90000', 'II' or 'II|III'
         if (
             grepl(
@@ -393,7 +401,10 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
     }
 
     sub <- ints_$bin_id1 %in% valid_regions_first & ints_$bin_id2 %in% valid_regions_second
-    x[sub]
+    subx <- x[sub]
+    fixed_res <- regions(.fixRegions(interactions(subx), re_, i))
+    InteractionSet::replaceRegions(interactions(subx)) <- fixed_res
+    return(subx)
 })
 
 #' @export

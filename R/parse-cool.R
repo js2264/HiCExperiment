@@ -86,7 +86,7 @@ NULL
     pair <- sortPairs(pair)
 
     # Make sure pair is squared (each GRanges has same width)
-    is_square(pair)
+    # is_square(pair)
 
     # For each pair, get the coords for first and second.
     coords <- unlist(S4Vectors::zipup(pair))
@@ -306,7 +306,38 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
     # Mutate Pairs provided as characters to real Pairs
     if (!is.null(coords)) {
         if (grepl('\\|', coords)) {
-            coords <- char2coords(coords)
+            si <- .cool2seqinfo(file, resolution)
+            if (
+                grepl(
+                    '[A-Za-z0-9]*\\|[A-Za-z0-9]*$', coords
+                )
+            ) { # e.g. 'II|III'
+                chr1 <- strsplit(coords, '\\|')[[1]][1]
+                chr2 <- strsplit(coords, '\\|')[[1]][2]
+                if (!all(c(chr1, chr2) %in% seqnames(si))) {
+                    stop("One or all of the provided seqnames is not found.")
+                }
+                gr1 <- as(si[chr1], 'GRanges')
+                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                gr2 <- as(si[chr2], 'GRanges')
+                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                coords <- S4Vectors::Pairs(
+                    sort(c(gr1, gr2))[1], 
+                    sort(c(gr1, gr2))[2]
+                )
+            }
+            else {
+                coords <- char2coords(coords)
+                gr1 <- S4Vectors::first(coords)
+                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                gr2 <- S4Vectors::second(coords)
+                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                coords <- S4Vectors::Pairs(
+                    sort(c(gr1, gr2))[1], 
+                    sort(c(gr1, gr2))[2]
+                )
+            }
+
         }
     }
 
@@ -341,10 +372,8 @@ lsCoolResolutions <- function(file, verbose = FALSE) {
         gi$score <- gi$count
     }
 
-    # Add extra info
-    InteractionSet::regions(gi)$chr <- GenomicRanges::seqnames(InteractionSet::regions(gi))
-    InteractionSet::regions(gi)$center <- GenomicRanges::start(GenomicRanges::resize(InteractionSet::regions(gi), fix = "center", width = 1))
-    InteractionSet::regions(gi)$bin_id <- anchors$bin_id[BiocGenerics::match(regions(gi), anchors)]
-    
+    # Fix regions by adding the empty ones with no original 'count'
+    gi <- .fixRegions(gi, anchors, coords)
+
     return(gi)
 }

@@ -58,10 +58,32 @@ providing the string data to import.}
 A \code{HiCExperiment} or \code{GInteractions} object
 }
 \description{
-Import methods to parse Hi-C files (.(m)cool, .hic, HiC-Pro derived
+Import methods to parse Hi-C files (\verb{.(m)cool}, \code{.hic}, HiC-Pro derived
 matrices, pairs files) into data structures implemented in the
 HiCExperiment package.
 }
+\section{\code{import} arguments for \code{ContactFile} class}{
+
+\code{ContactFile} class gathers \code{CoolFile}, \code{HicFile} and \code{HicproFile} classes.
+When importing a \code{ContactFile} object in R, two main arguments can be
+provided besides the \code{ContactFile} itself:
+\itemize{
+\item \code{resolution}:
+Resolutions available in the disk-stored contact matrix can be
+listed using \code{availableResolutions(file)}
+\item \code{focus}:
+A genomic locus (or pair of loci) provided as a string. It can be any
+of the following string structures:
+\itemize{
+\item "II" or "II:20000-30000": this will extract a symmetrical
+square HiCExperiment object, of an entire chromosome or an portion of it.
+\item "II|III" or "II:20000-30000|III:40000-90000":
+this will extract a non-symmetrical HiCExperiment object,
+with an entire or portion of different chromosomes on each axis.
+}
+}
+}
+
 \examples{
 ################################################################
 ## ----------- Importing .(m)cool contact matrices ---------- ##

@@ -1,6 +1,6 @@
 Package: HiCExperiment
 Title: Bioconductor class for interacting with Hi-C files in R
-Version: 0.99.8
+Version: 0.99.9
 Date: 2022-11-10
 Authors@R:
     c(person(given = "Jacques",
@@ -8,12 +8,13 @@ Authors@R:
            role = c("aut", "cre"),
            email = "jacquesserizay@gmail.com",
            comment = c(ORCID = "0000-0002-4295-0624")))
-Description: R interface to .(m)cool, .hic files and other Hi-C processed 
-    file formats. `.(m)cool`, `.hic`, HiC-Pro generated files and `.pairs` 
-    files can be directly parsed and subsetted to create HiCExperiment objects, 
-    allowing a memory-efficient representation of Hi-C data in R. HiCExperiment
-    instances can be further investigated in R using HiContacts analysis 
-    package.
+Description: R generic interface to Hi-C contact matrices in `.(m)cool`, 
+    `.hic` or HiC-Pro derived formats, as well as other Hi-C processed 
+    file formats. Contact matrices can be partially parsed using a random access 
+    method, allowing a memory-efficient representation of Hi-C data 
+    in R. The `HiCExperiment` class stores the Hi-C contacts parsed from 
+    local contact matrix files. `HiCExperiment` instances can be further 
+    investigated in R using the `HiContacts` analysis package.
 License: MIT + file LICENSE
 URL: https://github.com/js2264/HiCExperiment
 BugReports: https://github.com/js2264/HiCExperiment/issues

@@ -16,7 +16,7 @@ HiCExperiment methods."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
     
     <a class="navbar-brand me-2" href="../index.html">HiCExperiment</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -320,16 +320,16 @@ viewpoints (\&lt;GRanges\&gt;), etc...)</p></dd>
 <span class="r-in"><span>    pairsFile <span class="op">=</span> <span class="va">pairs_file</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">contacts</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 8,757,906 contacts over 1,510 regions </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 8,757,906 contacts over 1,517 regions </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/5075e161f11_7752" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/fa058b982cc_7752" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> focus: "whole genome" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolutions(5): 1000 2000 4000 8000 16000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> active resolution: 8000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> interactions: 801962 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> scores(2): count balanced </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> topologicalFeatures: compartments(0) borders(0) loops(0) viewpoints(0) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: /github/home/.cache/R/ExperimentHub/50713cc6bd5_7753 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: /github/home/.cache/R/ExperimentHub/fa07d40966f_7753 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> metadata(0):</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#####################################################################</span></span></span>
@@ -339,7 +339,7 @@ viewpoints (\&lt;GRanges\&gt;), etc...)</p></dd>
 <span class="r-in"><span><span class="va">gis</span> <span class="op">&lt;-</span> <span class="fu">interactions</span><span class="op">(</span><span class="va">contacts</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">contacts2</span> <span class="op">&lt;-</span> <span class="fu">makeHiCExperimentFromGInteractions</span><span class="op">(</span><span class="va">gis</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">contacts2</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 6,670 contacts over 1,510 regions </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 6,670 contacts over 1,517 regions </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> fileName: N/A </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> focus: N/A </span>
@@ -356,7 +356,7 @@ viewpoints (\&lt;GRanges\&gt;), etc...)</p></dd>
 <span class="r-in"><span><span class="co">#####################################################################</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">fileName</span><span class="op">(</span><span class="va">contacts</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/ExperimentHub/5075e161f11_7752"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/ExperimentHub/fa058b982cc_7752"</span>
 <span class="r-in"><span><span class="fu"><a href="AllGenerics.html">focus</a></span><span class="op">(</span><span class="va">contacts</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-in"><span><span class="fu"><a href="AllGenerics.html">resolutions</a></span><span class="op">(</span><span class="va">contacts</span><span class="op">)</span></span></span>
@@ -392,7 +392,7 @@ viewpoints (\&lt;GRanges\&gt;), etc...)</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [801961]      1515      1582  0.795995</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [801962]      1515      1409  0.645227</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   regions: 1510 ranges and 3 metadata columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   regions: 1517 ranges and 4 metadata columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 16 sequences from an unspecified genome</span>
 <span class="r-in"><span><span class="fu"><a href="AllGenerics.html">scores</a></span><span class="op">(</span><span class="va">contacts</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of length 2</span>
@@ -402,7 +402,7 @@ viewpoints (\&lt;GRanges\&gt;), etc...)</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names(4): compartments borders loops viewpoints</span>
 <span class="r-in"><span><span class="fu"><a href="AllGenerics.html">pairsFile</a></span><span class="op">(</span><span class="va">contacts</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                 EH7703 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "/github/home/.cache/R/ExperimentHub/50713cc6bd5_7753" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "/github/home/.cache/R/ExperimentHub/fa07d40966f_7753" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#####################################################################</span></span></span>
 <span class="r-in"><span><span class="co">## ---------------------- Slot getters --------------------------- ##</span></span></span>
@@ -440,62 +440,62 @@ viewpoints (\&lt;GRanges\&gt;), etc...)</p></dd>
 <span class="r-in"><span><span class="va">contacts</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 4,140 contacts over 100 regions </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/5075e161f11_7752" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/fa058b982cc_7752" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> focus: "whole genome" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolutions(5): 1000 2000 4000 8000 16000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> active resolution: 8000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> interactions: 100 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> scores(3): count balanced random </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: /github/home/.cache/R/ExperimentHub/50713cc6bd5_7753 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: /github/home/.cache/R/ExperimentHub/fa07d40966f_7753 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> metadata(0):</span>
 <span class="r-in"><span><span class="va">contacts</span><span class="op">[</span><span class="st">'II'</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 471,364 contacts over 102 regions </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/5075e161f11_7752" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/fa058b982cc_7752" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> focus: "II" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolutions(5): 1000 2000 4000 8000 16000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> active resolution: 8000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> interactions: 4693 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> scores(3): count balanced random </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: /github/home/.cache/R/ExperimentHub/50713cc6bd5_7753 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: /github/home/.cache/R/ExperimentHub/fa07d40966f_7753 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> metadata(0):</span>
 <span class="r-in"><span><span class="va">contacts</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'II'</span>, <span class="st">'III'</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 632,446 contacts over 142 regions </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/5075e161f11_7752" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/fa058b982cc_7752" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> focus: "II, III" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolutions(5): 1000 2000 4000 8000 16000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> active resolution: 8000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> interactions: 8502 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> scores(3): count balanced random </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: /github/home/.cache/R/ExperimentHub/50713cc6bd5_7753 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: /github/home/.cache/R/ExperimentHub/fa07d40966f_7753 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> metadata(0):</span>
 <span class="r-in"><span><span class="va">contacts</span><span class="op">[</span><span class="st">'II|III'</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 9,092 contacts over 142 regions </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/5075e161f11_7752" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/fa058b982cc_7752" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> focus: "II:1-813184|III:1-316620" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolutions(5): 1000 2000 4000 8000 16000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> active resolution: 8000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> interactions: 3000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> scores(3): count balanced random </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: /github/home/.cache/R/ExperimentHub/50713cc6bd5_7753 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: /github/home/.cache/R/ExperimentHub/fa07d40966f_7753 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> metadata(0):</span>
 <span class="r-in"><span><span class="va">contacts</span><span class="op">[</span><span class="st">'II:10000-30000|III:50000-90000'</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 11 contacts over 5 regions </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 11 contacts over 9 regions </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/5075e161f11_7752" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/fa058b982cc_7752" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> focus: "II:10000-30000|III:50000-90000" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolutions(5): 1000 2000 4000 8000 16000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> active resolution: 8000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> interactions: 4 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> scores(3): count balanced random </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: /github/home/.cache/R/ExperimentHub/50713cc6bd5_7753 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pairsFile: /github/home/.cache/R/ExperimentHub/fa07d40966f_7753 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> metadata(0):</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#####################################################################</span></span></span>
@@ -536,56 +536,69 @@ viewpoints (\&lt;GRanges\&gt;), etc...)</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 16 sequences from an unspecified genome</span>
 <span class="r-in"><span><span class="fu">anchors</span><span class="op">(</span><span class="va">contacts</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $first</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 801962 ranges and 3 metadata columns:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            seqnames        ranges strand |   chr    center    bin_id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;Rle&gt; &lt;integer&gt; &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [1]        I        1-8000      * |     I      4000         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [2]        I        1-8000      * |     I      4000         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [3]        I        1-8000      * |     I      4000         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [4]        I        1-8000      * |     I      4000         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [5]        I        1-8000      * |     I      4000         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        ...      ...           ...    ... .   ...       ...       ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801958]      XVI 920001-928000      * |   XVI    924000      1513</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801959]      XVI 920001-928000      * |   XVI    924000      1513</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801960]      XVI 928001-936000      * |   XVI    932000      1514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801961]      XVI 928001-936000      * |   XVI    932000      1514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801962]      XVI 936001-944000      * |   XVI    940000      1515</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 801962 ranges and 4 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            seqnames        ranges strand |    bin_id    weight   chr    center</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt; &lt;Rle&gt; &lt;integer&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [1]        I        1-8000      * |         0 0.0287442     I      4000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [2]        I        1-8000      * |         0 0.0287442     I      4000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [3]        I        1-8000      * |         0 0.0287442     I      4000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [4]        I        1-8000      * |         0 0.0287442     I      4000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [5]        I        1-8000      * |         0 0.0287442     I      4000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        ...      ...           ...    ... .       ...       ...   ...       ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801958]      XVI 920001-928000      * |      1513 0.0245536   XVI    924000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801959]      XVI 920001-928000      * |      1513 0.0245536   XVI    924000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801960]      XVI 928001-936000      * |      1514 0.0235127   XVI    932000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801961]      XVI 928001-936000      * |      1514 0.0235127   XVI    932000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801962]      XVI 936001-944000      * |      1515 0.0213994   XVI    940000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 16 sequences from an unspecified genome</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $second</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 801962 ranges and 3 metadata columns:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            seqnames        ranges strand |   chr    center    bin_id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;Rle&gt; &lt;integer&gt; &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [1]        I        1-8000      * |     I      4000         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [2]        I    8001-16000      * |     I     12000         1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [3]        I   16001-24000      * |     I     20000         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [4]        I   24001-32000      * |     I     28000         3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [5]        I   32001-40000      * |     I     36000         4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        ...      ...           ...    ... .   ...       ...       ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801958]      XVI 928001-936000      * |   XVI    932000      1514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801959]      XVI 936001-944000      * |   XVI    940000      1515</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801960]      XVI 928001-936000      * |   XVI    932000      1514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801961]      XVI 936001-944000      * |   XVI    940000      1515</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801962]      XVI 936001-944000      * |   XVI    940000      1515</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 801962 ranges and 4 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            seqnames        ranges strand |    bin_id    weight   chr    center</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt; &lt;Rle&gt; &lt;integer&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [1]        I        1-8000      * |         0 0.0287442     I      4000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [2]        I    8001-16000      * |         1 0.0258423     I     12000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [3]        I   16001-24000      * |         2 0.0183936     I     20000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [4]        I   24001-32000      * |         3 0.0221529     I     28000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [5]        I   32001-40000      * |         4 0.0166096     I     36000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        ...      ...           ...    ... .       ...       ...   ...       ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801958]      XVI 928001-936000      * |      1514 0.0235127   XVI    932000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801959]      XVI 936001-944000      * |      1515 0.0213994   XVI    940000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801960]      XVI 928001-936000      * |      1514 0.0235127   XVI    932000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801961]      XVI 936001-944000      * |      1515 0.0213994   XVI    940000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801962]      XVI 936001-944000      * |      1515 0.0213994   XVI    940000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 16 sequences from an unspecified genome</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">regions</span><span class="op">(</span><span class="va">contacts</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 1510 ranges and 3 metadata columns:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     seqnames        ranges strand |   chr    center    bin_id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;Rle&gt; &lt;integer&gt; &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            I_1_8000        I        1-8000      * |     I      4000         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        I_8001_16000        I    8001-16000      * |     I     12000         1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       I_16001_24000        I   16001-24000      * |     I     20000         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       I_24001_32000        I   24001-32000      * |     I     28000         3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       I_32001_40000        I   32001-40000      * |     I     36000         4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 ...      ...           ...    ... .   ...       ...       ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_912001_920000      XVI 912001-920000      * |   XVI    916000      1512</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_920001_928000      XVI 920001-928000      * |   XVI    924000      1513</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_928001_936000      XVI 928001-936000      * |   XVI    932000      1514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_936001_944000      XVI 936001-944000      * |   XVI    940000      1515</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_944001_948066      XVI 944001-948066      * |   XVI    946033      1516</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 1517 ranges and 4 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     seqnames        ranges strand |    bin_id    weight   chr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt; &lt;Rle&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            I_1_8000        I        1-8000      * |         0 0.0287442     I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        I_8001_16000        I    8001-16000      * |         1 0.0258423     I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       I_16001_24000        I   16001-24000      * |         2 0.0183936     I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       I_24001_32000        I   24001-32000      * |         3 0.0221529     I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       I_32001_40000        I   32001-40000      * |         4 0.0166096     I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 ...      ...           ...    ... .       ...       ...   ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_912001_920000      XVI 912001-920000      * |      1512 0.0122756   XVI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_920001_928000      XVI 920001-928000      * |      1513 0.0245536   XVI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_928001_936000      XVI 928001-936000      * |      1514 0.0235127   XVI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_936001_944000      XVI 936001-944000      * |      1515 0.0213994   XVI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_944001_948066      XVI 944001-948066      * |      1516       NaN   XVI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        center</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     &lt;integer&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            I_1_8000      4000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        I_8001_16000     12000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       I_16001_24000     20000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       I_24001_32000     28000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       I_32001_40000     36000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 ...       ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_912001_920000    916000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_920001_928000    924000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_928001_936000    932000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_936001_944000    940000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   XVI_944001_948066    946033</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 16 sequences from an unspecified genome</span>
 <span class="r-in"><span></span></span>
@@ -610,19 +623,19 @@ viewpoints (\&lt;GRanges\&gt;), etc...)</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [801962]       XVI 936001-944000 ---       XVI 936001-944000 |      1515</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              bin_id2     count  balanced    random</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [1]         0       705  0.582493 0.9533381</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [2]         1      1260  0.935951 0.0352258</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [3]         2       557  0.294491 0.8200076</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [4]         3       274  0.174475 0.2815187</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [5]         4       291  0.138932 0.7201413</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [1]         0       705  0.582493 0.8294757</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [2]         1      1260  0.935951 0.0474867</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [3]         2       557  0.294491 0.6659889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [4]         3       274  0.174475 0.3765678</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [5]         4       291  0.138932 0.6265504</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        ...       ...       ...       ...       ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801958]      1514       893  0.515549  0.813093</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801959]      1515       524  0.275326  0.703002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801960]      1514      1317  0.728102  0.154298</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801961]      1515      1582  0.795995  0.873544</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [801962]      1515      1409  0.645227  0.100318</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801958]      1514       893  0.515549  0.277640</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801959]      1515       524  0.275326  0.562558</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801960]      1514      1317  0.728102  0.260232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801961]      1515      1582  0.795995  0.205150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [801962]      1515      1409  0.645227  0.150607</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   regions: 1510 ranges and 3 metadata columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   regions: 1517 ranges and 4 metadata columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 16 sequences from an unspecified genome</span>
 <span class="r-in"><span><span class="fu">as</span><span class="op">(</span><span class="va">contacts</span>, <span class="st">'ContactMatrix'</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class: ContactMatrix </span>
@@ -657,17 +670,28 @@ viewpoints (\&lt;GRanges\&gt;), etc...)</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.17347572 0.37791267 0.35093060 0.28081603</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.09070876 0.14931650 0.28081603 0.33402283</span>
 <span class="r-in"><span><span class="fu">as</span><span class="op">(</span><span class="va">contacts</span>, <span class="st">'data.frame'</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    seqnames1 start1 end1 width1 strand1 center1 bin_id1 seqnames2 start2  end2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          I      1 8000   8000       *    4000       0         I      1  8000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          I      1 8000   8000       *    4000       0         I   8001 16000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          I      1 8000   8000       *    4000       0         I  16001 24000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          I      1 8000   8000       *    4000       0         I  24001 32000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          I      1 8000   8000       *    4000       0         I  32001 40000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          I      1 8000   8000       *    4000       0         I  40001 48000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7          I      1 8000   8000       *    4000       0         I  48001 56000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8          I      1 8000   8000       *    4000       0         I  56001 64000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9          I      1 8000   8000       *    4000       0         I  64001 72000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10         I      1 8000   8000       *    4000       0         I  72001 80000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    seqnames1 start1 end1 width1 strand1 bin_id1    weight1 center1 seqnames2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          I      1 8000   8000       *       0 0.02874424    4000         I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          I      1 8000   8000       *       0 0.02874424    4000         I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          I      1 8000   8000       *       0 0.02874424    4000         I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          I      1 8000   8000       *       0 0.02874424    4000         I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5          I      1 8000   8000       *       0 0.02874424    4000         I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6          I      1 8000   8000       *       0 0.02874424    4000         I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7          I      1 8000   8000       *       0 0.02874424    4000         I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8          I      1 8000   8000       *       0 0.02874424    4000         I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9          I      1 8000   8000       *       0 0.02874424    4000         I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         I      1 8000   8000       *       0 0.02874424    4000         I</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    start2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    8001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   16001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   24001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   32001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   40001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   48001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   56001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   64001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  72001</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

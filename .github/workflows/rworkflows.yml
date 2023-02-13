@@ -50,7 +50,9 @@ jobs:
         has_runit: ${{ false }}
         has_latex: ${{ false }}
         GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
-        run_docker: ${{ false }}
+        run_docker: ${{ true }}
+        docker_user: ${{ 'js2264' }}
+        docker_org: ${{ 'js2264' }}
         DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
         runner_os: ${{ runner.os }}
         cache_version: cache-v1

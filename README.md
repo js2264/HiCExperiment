@@ -205,16 +205,28 @@ provides toy datasets to illustrate how the `HiCExperiment` ecosystem works.
 ## Contributing
 
 We use [devtools](https://github.com/r-lib/devtools) and [testthat](https://github.com/r-lib/testthat) for the development workflow. A Makefile is provided for automation. New functions should be documented with [roxygen2](https://github.com/r-lib/roxygen2) comments and associated tests should be added inside `tests/testthat/`.
+
 * To install the package for development, run `make install`.
 * To run tests, run `make test`
 * To know more, run `make help`
 
-For development purposes, we provide a docker image with HiCExperiment and 
-related packages pre-installed and ready-to-go:
+For development purposes, we provide a DockerHub-hosted `docker` image 
+with `HiCExperiment` and related packages pre-installed and ready-to-go. 
+A new image is automatically built on every `push`. 
 
 ```sh
-## To fetch docker image
-docker pull ghcr.io/js2264/hicexperiment
+## To fetch the latest docker image from Docker Hub (for development purposes!)
+docker pull js2264/hicexperiment:latest
 ## To start docker image
-docker run -it ghcr.io/js2264/hicexperiment /usr/local/bin/R
+docker run -it js2264/hicexperiment:latest /usr/local/bin/R
+```
+
+On top of that, for each release, an extra `docker` image is built and 
+uploaded to the Github Container Repository.
+
+```sh
+## To fetch release-specific docker image from Github Container Repo
+docker pull ghcr.io/js2264/hicexperiment:0.99.9
+## To start docker image
+docker run -it ghcr.io/js2264/hicexperiment:0.99.9 /usr/local/bin/R
 ```

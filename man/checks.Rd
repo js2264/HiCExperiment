@@ -13,6 +13,7 @@
 \alias{is_hicpro_matrix}
 \alias{is_hicpro_regions}
 \alias{check_resolution}
+\alias{check_scores}
 \alias{is_square}
 \title{Checks functions}
 \usage{
@@ -38,6 +39,8 @@ is_hicpro_regions(bed)
 
 check_resolution(contacts, resolution)
 
+check_scores(contacts, use.scores)
+
 is_square(pair)
 }
 \arguments{
@@ -51,13 +54,15 @@ is_square(pair)
 
 \item{contacts}{A \code{HiCExperiment} object}
 
+\item{use.scores}{Name of scores to check}
+
 \item{pair}{Pairs object with length of 1}
 }
 \value{
 Logical
 }
 \description{
-Useful functions to validate the nature/structure of (m)cool files or
+Internal functions to validate the nature/structure of (m)cool files or
 \code{HiCExperiment} objects.
 All these check functions should return a logical.
 }

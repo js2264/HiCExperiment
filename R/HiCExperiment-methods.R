@@ -140,9 +140,7 @@ setMethod("scores", signature(x = "HiCExperiment", name = "missing"), function(x
 #' @rdname HiCExperiment
 
 setMethod("scores", signature(x = "HiCExperiment", name = "character"), function(x, name) {
-    if (!name %in% names(scores(x))) {
-        stop(paste0(name, ' not in scores.'))
-    }
+    check_scores(x, name)
     return(x@scores[[name]])
 })
 
@@ -485,10 +483,10 @@ setMethod("show", signature("HiCExperiment"), function(object) {
     else {
         focus_str <- coords2char(focus(object))
     }
-
+    gi <- interactions(object)
     cat(paste0(
         "`HiCExperiment` object with ", 
-        format(sum(interactions(object)$count, na.rm = TRUE), big.mark = ","), 
+        format(sum(S4Vectors::mcols(gi)[,1], na.rm = TRUE), big.mark = ","), 
         " contacts over ", 
         format(length(regions(object)), big.mark = ","), 
         " regions"
@@ -502,7 +500,7 @@ setMethod("show", signature("HiCExperiment"), function(object) {
     cat(paste0('active resolution: ', resolution(object)), '\n')
 
     ## Interactions
-    cat(paste0('interactions: ', length(interactions(object))), '\n')
+    cat(paste0('interactions: ', length(gi)), '\n')
 
     ## Scores
     cat(paste0('scores(', length(scores(object)), '): ', paste(names(scores(object)), collapse = " ")), '\n')

@@ -1,8 +1,11 @@
-name: Publish on Github container registry
+name: Publish docker image to Github Container Registry
 
 on:
   release:
     type: [published]
+  push:
+    branches:
+      - master
 
 env:
   REGISTRY: ghcr.io
@@ -33,6 +36,7 @@ jobs:
           run: |
             version=$(grep -m1 -E '^Version: +' DESCRIPTION | sed -E 's/.*: +//')
             echo "version=${version}" >> $GITHUB_OUTPUT
+            
         - name: Log in to the Container registry
           uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
           with:
@@ -46,8 +50,8 @@ jobs:
           with:
             images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
             tags: |
-              type=raw,value=latest,enable=${{ github.event_name == 'release' }}
-              type=raw,value=${{ steps.release-version.outputs.version }},enable=${{ github.event_name == 'release' }}
+              type=raw,value=latest,enable=true
+              type=raw,value=${{ steps.release-version.outputs.version }},enable=true
 
         - name: Build and push multi-arch Docker image
           uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc

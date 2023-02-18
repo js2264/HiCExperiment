@@ -12,5 +12,4 @@ LABEL org.opencontainers.image.version ${VERSION}
 COPY . /app/
 WORKDIR /app
 
-RUN make deps
 RUN make install

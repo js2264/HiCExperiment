@@ -1,15 +1,21 @@
 RCMD := Rscript -e
 .PHONY: install
-install: deps ## Install package and dependencies.
-	@echo "🚀 Installing package"
-	$(RCMD) 'devtools::install()'
+install: ## Install all HiC* packages and dependencies with pak.
+	@echo "🚀 Installing HiCExperiment package"
+	$(RCMD) 'install.packages("pak", repos = "https://r-lib.github.io/p/pak/devel/")'
+	$(RCMD) 'pak::pkg_install(".", ask = FALSE, dependencies = c("Depends", "Imports", "Suggests"))'
+	$(RCMD) 'pak::pkg_install("js2264/HiCool", ask = FALSE, dependencies = c("Depends", "Imports", "Suggests"))'
+	$(RCMD) 'pak::pkg_install("js2264/HiContacts", ask = FALSE, dependencies = c("Depends", "Imports", "Suggests"))'
+	$(RCMD) 'pak::pkg_install("js2264/HiContactsData", ask = FALSE, dependencies = c("Depends", "Imports", "Suggests"))'
+	$(RCMD) 'pak::pkg_install("js2264/fourDNData", ask = FALSE, dependencies = c("Depends", "Imports", "Suggests"))'
+	$(RCMD) 'pak::pkg_install("js2264/DNAZooData", ask = FALSE, dependencies = c("Depends", "Imports", "Suggests"))'
 
 .PHONY: check
-check: deps ## Check if package can be installed.
+check: deps ## Check if HiCExperiment package can be installed.
 	@echo "🔍 Checking HiCExperiment"
 	$(RCMD) 'devtools::check()'
 
-deps: ## Install all dependencies
+deps: ## Install all HiCExperiment dependencies
 	@echo "🔗 Installing dependencies"
 	$(RCMD) 'devtools::install_dev_deps(".")'
 

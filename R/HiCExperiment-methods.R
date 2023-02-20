@@ -116,7 +116,7 @@ setMethod("zoom", c("HiCExperiment", "numeric"), function(x, resolution) {
 #' @rdname HiCExperiment
 
 setMethod("refocus", c("HiCExperiment", "character"), function(x, focus) {
-    if (is_cool(fileName(x))) {
+    if (.is_cool(fileName(x))) {
         res <- NULL
     } else {
         res <- resolution(x)
@@ -140,7 +140,7 @@ setMethod("scores", signature(x = "HiCExperiment", name = "missing"), function(x
 #' @rdname HiCExperiment
 
 setMethod("scores", signature(x = "HiCExperiment", name = "character"), function(x, name) {
-    check_scores(x, name)
+    .check_scores(x, name)
     return(x@scores[[name]])
 })
 
@@ -409,16 +409,16 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
 #' @rdname HiCExperiment
 
 setMethod("seqinfo", "HiCExperiment", function(x) {
-    if (is_mcool(fileName(x))) {
+    if (.is_mcool(fileName(x))) {
         si <- .cool2seqinfo(fileName(x), resolution(x))
     }
-    else if (is_cool(fileName(x))) {
+    else if (.is_cool(fileName(x))) {
         si <- .cool2seqinfo(fileName(x))
     }
-    else if (is_hic(fileName(x))) {
+    else if (.is_hic(fileName(x))) {
         si <- .hic2seqinfo(fileName(x))
     }
-    else if (is_hicpro_matrix(fileName(x)) & is_hicpro_regions(metadata(x)$regions)) {
+    else if (.is_hicpro_matrix(fileName(x)) & .is_hicpro_regions(metadata(x)$regions)) {
         si <- .hicpro2seqinfo(metadata(x)$regions)
     }
     return(si)
@@ -428,19 +428,19 @@ setMethod("seqinfo", "HiCExperiment", function(x) {
 #' @rdname HiCExperiment
 
 setMethod("bins", "HiCExperiment", function(x) {
-    if (is_cool(fileName(x)) | is_mcool(fileName(x))) {
+    if (.is_cool(fileName(x)) | .is_mcool(fileName(x))) {
         bins <- .getCoolAnchors(
             fileName(x), resolution = resolution(x), balanced = TRUE
         )
         GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
     }
-    else if (is_hic(fileName(x))) {
+    else if (.is_hic(fileName(x))) {
         bins <- .getHicAnchors(
             fileName(x), resolution = resolution(x)
         )
         GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
     }
-    else if (is_hicpro_matrix(fileName(x)) & is_hicpro_regions(metadata(x)$regions)) {
+    else if (.is_hicpro_matrix(fileName(x)) & .is_hicpro_regions(metadata(x)$regions)) {
         bins <- .getHicproAnchors(metadata(x)$regions)
         GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
     }
@@ -486,7 +486,7 @@ setMethod("show", signature("HiCExperiment"), function(object) {
     gi <- interactions(object)
     cat(paste0(
         "`HiCExperiment` object with ", 
-        format(sum(S4Vectors::mcols(gi)[,1], na.rm = TRUE), big.mark = ","), 
+        format(sum(S4Vectors::mcols(gi)[,names(scores(object))[1]], na.rm = TRUE), big.mark = ","), 
         " contacts over ", 
         format(length(regions(object)), big.mark = ","), 
         " regions"

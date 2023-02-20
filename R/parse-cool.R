@@ -45,6 +45,7 @@
 #' @importFrom GenomicRanges end
 #' @importFrom GenomicRanges resize
 #' @rdname parse-cool
+#' @keywords internal
 NULL
 
 #' @rdname parse-cool
@@ -86,7 +87,7 @@ NULL
     pair <- sortPairs(pair)
 
     # Make sure pair is squared (each GRanges has same width)
-    # is_square(pair)
+    # .is_square(pair)
 
     # For each pair, get the coords for first and second.
     coords <- unlist(S4Vectors::zipup(pair))
@@ -269,13 +270,13 @@ NULL
 #' @rdname parse-cool
 #' @return Silently, a numerical vector of resolutions stored in the cool file
 
-lsCoolResolutions <- function(file, verbose = FALSE) {
-    if (is_cool(file)) {
+.lsCoolResolutions <- function(file, verbose = FALSE) {
+    if (.is_cool(file)) {
         x <- rhdf5::h5ls(file)
         bin_ends <- rhdf5::h5read(file, name = '/bins/end', index = list(c(1, 2)))
         res <- bin_ends[2] - bin_ends[1]
     }
-    if (is_mcool(file)) {
+    if (.is_mcool(file)) {
         x <- rhdf5::h5ls(file)
         res <- gsub("/resolutions/", "", x$group) |>
             grep(pattern = "/", invert = TRUE, value = TRUE) |>

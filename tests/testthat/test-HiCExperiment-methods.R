@@ -45,9 +45,9 @@ test_that("HiCExperiment methods work", {
 })
 
 test_that("checks work", {
-    expect_true(check_resolution(contacts_yeast, 2000))
-    expect_error(check_resolution(contacts_yeast, 3000))
-    expect_true(is_square(S4Vectors::Pairs(
+    expect_true(.check_resolution(contacts_yeast, 2000))
+    expect_error(.check_resolution(contacts_yeast, 3000))
+    expect_true(.is_square(S4Vectors::Pairs(
         first = 'I:10000-20000', 
         second = 'I:10000-20000'
     )))

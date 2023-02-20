@@ -32,6 +32,7 @@
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges end
+#' @keywords internal
 NULL
 
 #' @rdname utils
@@ -220,16 +221,16 @@ distanceDecay <- function(dump, threshold = NULL) {
 #' @rdname utils
 
 detrendingModel <- function(file, resolution) {
-    if (is_cool(file)) {
+    if (.is_cool(file)) {
         l <- .dumpCool(file, resolution = NULL)
     }
-    if (is_mcool(file)) {
+    if (.is_mcool(file)) {
         l <- .dumpCool(file, resolution = resolution)
     }
-    else if (is_hic(file)) {
+    else if (.is_hic(file)) {
         l <- .dumpHic(file, resolution = resolution)
     }
-    else if (is_hicpro_matrix(file)) {
+    else if (.is_hicpro_matrix(file)) {
         l <- .dumpHicpro(file, bed)
     }
     detrendingModel <- distanceDecay(l)

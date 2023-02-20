@@ -1,15 +1,4 @@
-#' @title `AggrHiCExperiment` methods
-#' 
 #' @name AggrHiCExperiment
-#' @rdname AggrHiCExperiment
-#' @aliases slices,AggrHiCExperiment,missing-method
-#' @aliases slices,AggrHiCExperiment,character-method
-#' @aliases slices,AggrHiCExperiment,numeric-method
-#' @aliases show,AggrHiCExperiment-method
-#' 
-#' @description
-#' 
-#' AggrHiCExperiment methods.
 #' 
 #' @param x,object A \code{AggrHiCExperiment} object.
 #' @param name The name/index of slices to extract.

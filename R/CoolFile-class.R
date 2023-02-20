@@ -58,10 +58,10 @@ setClass('McoolFile', contains = 'CoolFile')
 
 CoolFile <- function(path, resolution = NULL, pairsFile = NULL, metadata = list()) {
     path <- gsub('~', Sys.getenv('HOME'), path)
-    check_cool_file(path)
-    if (is_mcool(path) & is.null(resolution)) 
-        resolution <- lsCoolResolutions(path)[1]
-    check_cool_format(path, resolution)
+    .check_cool_file(path)
+    if (.is_mcool(path) & is.null(resolution)) 
+        resolution <- .lsCoolResolutions(path)[1]
+    .check_cool_format(path, resolution)
     new(
         'CoolFile', 
         resource = path, 

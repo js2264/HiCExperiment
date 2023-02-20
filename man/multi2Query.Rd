@@ -35,3 +35,4 @@ a GInteractions object with \code{count}, \code{balanced}, \code{detrended} and
 These functions are the workhorse internal functions used to extract
 counts from multiple genomic coordinates in a Hi-C contact matrix.
 }
+\keyword{internal}

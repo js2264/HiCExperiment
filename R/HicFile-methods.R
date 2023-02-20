@@ -20,7 +20,7 @@ NULL
 setMethod("show", signature("HicFile"), function(object) {
     r <- BiocIO::resource(object)
     res <- resolution(object)
-    if (is.null(res)) res = lsHicResolutions(r)[1]
+    if (is.null(res)) res = .lsHicResolutions(r)[1]
     if (!S4Vectors::isSingleString(r))
         stop('"filename" must be a single string, specifiying a path')
     cat(class(object), "object\n.hic file:", r, '\n') 

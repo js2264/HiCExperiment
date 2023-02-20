@@ -4,3 +4,33 @@ template:
     primary: "#0054AD"
     border-radius: 0.5rem
     btn-border-radius: 0.25rem
+
+
+
+reference:
+- title: Importing Hi-C files
+- contents:
+  - availableResolutions
+  - availableChromosomes
+  - import-methods
+
+- title: Methods for `HiCExperiment` S4 class
+- contents:
+  - starts_with("HiCExperiment")
+  - starts_with("AggrHiCExperiment")
+
+- title: S4 Classes for Hi-C contact matrix file formats
+- contents:
+  - starts_with("ContactsFile")
+  - starts_with("CoolFile")
+  - starts_with("HicFile")
+  - starts_with("HicproFile")
+  - starts_with("PairsFile")
+
+- title: Coercing methods
+- contents:
+  - as
+
+- title: Example datasets
+- contents:
+  - data

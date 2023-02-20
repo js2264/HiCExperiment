@@ -5,7 +5,7 @@
 #' 
 #' @description
 #' 
-#' The `AggrHiCExperiment` extends `HiCExperiment` class
+#' The `AggrHiCExperiment` extends `HiCExperiment` class.
 #'
 #' @slot fileName Path of Hi-C contact file
 #' @slot resolutions Resolutions available in the Hi-C contact file.
@@ -80,29 +80,29 @@ AggrHiCExperiment <- function(
         resolution <- as.integer(resolution)
     }
     else {
-        resolution <- ifelse({is_cool(file) | is_mcool(file)}, 
-            lsCoolResolutions(file)[1], 
-            ifelse(is_hic(file), lsHicResolutions(file)[1], 
+        resolution <- ifelse({.is_cool(file) | .is_mcool(file)}, 
+            .lsCoolResolutions(file)[1], 
+            ifelse(.is_hic(file), .lsHicResolutions(file)[1], 
             GenomicRanges::width(.getHicproAnchors(bed))[1])
         )
     }
-    if (is_cool(file)) {
-        check_cool_file(file)
-        check_cool_format(file, NULL)
-        resolutions <- lsCoolResolutions(file)
+    if (.is_cool(file)) {
+        .check_cool_file(file)
+        .check_cool_format(file, NULL)
+        resolutions <- .lsCoolResolutions(file)
     } 
-    else if (is_mcool(file)) {
-        check_cool_file(file)
-        check_cool_format(file, resolution)
-        resolutions <- lsCoolResolutions(file)
+    else if (.is_mcool(file)) {
+        .check_cool_file(file)
+        .check_cool_format(file, resolution)
+        resolutions <- .lsCoolResolutions(file)
     }
-    else if (is_hic(file)) {
-        check_hic_file(file)
-        check_hic_format(file, resolution)
-        resolutions <- lsHicResolutions(file)
+    else if (.is_hic(file)) {
+        .check_hic_file(file)
+        .check_hic_format(file, resolution)
+        resolutions <- .lsHicResolutions(file)
     }
-    else if (is_hicpro_matrix(file)) {
-        check_hicpro_files(file, bed)
+    else if (.is_hicpro_matrix(file)) {
+        .check_hicpro_files(file, bed)
         if (is.null(bed)) stop("Regions files not provided.")
         resolutions <- resolution
     }

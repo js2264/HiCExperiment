@@ -34,3 +34,4 @@
 \description{
 Generics functions created in HiCExperiment package.
 }
+\keyword{internal}

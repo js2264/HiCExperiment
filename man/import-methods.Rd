@@ -40,8 +40,9 @@ import(con, format, text, ...)
 \S4method{availableChromosomes}{HicproFile}(x)
 }
 \arguments{
-\item{...}{e.g. \code{resolution = ...}; parameters to pass to
-format-specific methods.}
+\item{...}{Extra parameters to pass to
+format-specific methods. A list of possible arguments is
+provided in the next section.}
 
 \item{con, x}{Path or connection to a cool, mcool, .hic or HiC-Pro derived files.
 Can also be a path to a pairs file.}
@@ -62,7 +63,7 @@ Import methods to parse Hi-C files (\verb{.(m)cool}, \code{.hic}, HiC-Pro derive
 matrices, pairs files) into data structures implemented in the
 HiCExperiment package.
 }
-\section{\code{import} arguments for \code{ContactFile} class}{
+\section{import arguments for ContactFile class}{
 
 \code{ContactFile} class gathers \code{CoolFile}, \code{HicFile} and \code{HicproFile} classes.
 When importing a \code{ContactFile} object in R, two main arguments can be
@@ -75,9 +76,9 @@ listed using \code{availableResolutions(file)}
 A genomic locus (or pair of loci) provided as a string. It can be any
 of the following string structures:
 \itemize{
-\item "II" or "II:20000-30000": this will extract a symmetrical
+\item \code{"II"} or \code{"II:20000-30000"}: this will extract a symmetrical
 square HiCExperiment object, of an entire chromosome or an portion of it.
-\item "II|III" or "II:20000-30000|III:40000-90000":
+\item \code{"II|III"} or \code{"II:20000-30000|III:40000-90000"}:
 this will extract a non-symmetrical HiCExperiment object,
 with an entire or portion of different chromosomes on each axis.
 }

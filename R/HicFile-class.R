@@ -49,10 +49,10 @@ setClass('HicFile', contains = 'ContactsFile')
 
 HicFile <- function(path, resolution = NULL, pairsFile = NULL, metadata = list()) {
     path <- gsub('~', Sys.getenv('HOME'), path)
-    check_hic_file(path)
-    if (is_hic(path) & is.null(resolution)) 
-        resolution <- lsHicResolutions(path)[1]
-    check_hic_format(path, resolution)
+    .check_hic_file(path)
+    if (.is_hic(path) & is.null(resolution)) 
+        resolution <- .lsHicResolutions(path)[1]
+    .check_hic_format(path, resolution)
     if (!S4Vectors::isSingleString(path))
         stop('"filename" must be a single string, specifiying a path')
     new(

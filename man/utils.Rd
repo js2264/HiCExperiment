@@ -75,3 +75,4 @@ Utilities to facilitate parsing/handling of coordinates, GInteractions,
 Pairs, ...
 These functions are not exported.
 }
+\keyword{internal}

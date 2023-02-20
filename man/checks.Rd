@@ -2,46 +2,46 @@
 % Please edit documentation in R/checks.R
 \name{checks}
 \alias{checks}
-\alias{check_cool_file}
-\alias{check_cool_format}
-\alias{is_mcool}
-\alias{is_cool}
-\alias{check_hic_file}
-\alias{check_hic_format}
-\alias{is_hic}
-\alias{check_hicpro_files}
-\alias{is_hicpro_matrix}
-\alias{is_hicpro_regions}
-\alias{check_resolution}
-\alias{check_scores}
-\alias{is_square}
+\alias{.check_cool_file}
+\alias{.check_cool_format}
+\alias{.is_mcool}
+\alias{.is_cool}
+\alias{.check_hic_file}
+\alias{.check_hic_format}
+\alias{.is_hic}
+\alias{.check_hicpro_files}
+\alias{.is_hicpro_matrix}
+\alias{.is_hicpro_regions}
+\alias{.check_resolution}
+\alias{.check_scores}
+\alias{.is_square}
 \title{Checks functions}
 \usage{
-check_cool_file(path)
+.check_cool_file(path)
 
-check_cool_format(path, resolution, ...)
+.check_cool_format(path, resolution, ...)
 
-is_mcool(path)
+.is_mcool(path)
 
-is_cool(path)
+.is_cool(path)
 
-check_hic_file(path)
+.check_hic_file(path)
 
-check_hic_format(path, resolution, ...)
+.check_hic_format(path, resolution, ...)
 
-is_hic(path)
+.is_hic(path)
 
-check_hicpro_files(path, bed)
+.check_hicpro_files(path, bed)
 
-is_hicpro_matrix(path)
+.is_hicpro_matrix(path)
 
-is_hicpro_regions(bed)
+.is_hicpro_regions(bed)
 
-check_resolution(contacts, resolution)
+.check_resolution(contacts, resolution)
 
-check_scores(contacts, use.scores)
+.check_scores(contacts, use.scores)
 
-is_square(pair)
+.is_square(pair)
 }
 \arguments{
 \item{path}{Path of a (m)cool file}
@@ -66,3 +66,4 @@ Internal functions to validate the nature/structure of (m)cool files or
 \code{HiCExperiment} objects.
 All these check functions should return a logical.
 }
+\keyword{internal}

@@ -15,6 +15,11 @@
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges resize
+#' @name parse-hic
+#' @rdname parse-hic
+#' @keywords internal
+NULL 
+
 #' @rdname parse-hic
 
 .hic2gi <- function(file, coords = NULL, resolution = NULL) {
@@ -292,7 +297,7 @@
 #' @return vector
 #' @rdname parse-hic
 
-lsHicResolutions <- function(file, verbose = FALSE) {
+.lsHicResolutions <- function(file, verbose = FALSE) {
     res <- rev(strawr::readHicBpResolutions(file))
     if (verbose) message(S4Vectors::coolcat("resolutions(%d): %s", res))
     invisible(as.integer(res))
@@ -328,7 +333,7 @@ lsHicResolutions <- function(file, verbose = FALSE) {
 #' @rdname parse-hic
 
 .dumpHic <- function(file, resolution = NULL) {
-    check_hic_format(file, resolution)
+    .check_hic_format(file, resolution)
     anchors <- .getHicAnchors(file, resolution)
     bins <- as.data.frame(anchors)
     si <- GenomeInfoDb::seqinfo(anchors)

@@ -33,10 +33,11 @@
 #'    `CoolFile`, `HicFile`, `HicproFile` or `PairsFile`.
 #' @param text If 'con' is missing, this can be a character vector directly 
 #'    providing the string data to import.
-#' @param ... e.g. `resolution = ...`; parameters to pass to  
-#'    format-specific methods.
+#' @param ... Extra parameters to pass to  
+#'    format-specific methods. A list of possible arguments is 
+#'    provided in the next section.
 #' 
-#' @section `import` arguments for `ContactFile` class:
+#' @section import arguments for ContactFile class:
 #' `ContactFile` class gathers `CoolFile`, `HicFile` and `HicproFile` classes. 
 #' When importing a `ContactFile` object in R, two main arguments can be 
 #' provided besides the `ContactFile` itself: 
@@ -48,9 +49,9 @@
 #'    A genomic locus (or pair of loci) provided as a string. It can be any 
 #'    of the following string structures: 
 #' 
-#'      - "II" or "II:20000-30000": this will extract a symmetrical 
+#'      - `"II"` or `"II:20000-30000"`: this will extract a symmetrical 
 #'      square HiCExperiment object, of an entire chromosome or an portion of it.
-#'      - "II|III" or "II:20000-30000|III:40000-90000": 
+#'      - `"II|III"` or `"II:20000-30000|III:40000-90000"`: 
 #'      this will extract a non-symmetrical HiCExperiment object, 
 #'      with an entire or portion of different chromosomes on each axis. 
 #' 
@@ -96,14 +97,14 @@ setMethod('import', 'CoolFile', function(con, ...) {
     path <- BiocGenerics::path(con)
     path <- gsub('~', Sys.getenv('HOME'), path)
     stopifnot(file.exists(path))
-    if (!check_cool_file(path)) stop("Provided file is not a valid .(m)cool file")
+    if (!.check_cool_file(path)) stop("Provided file is not a valid .(m)cool file")
 
     ## -- Handle parsed arguments. Priority is given to 
     #       explicitly provided arguments, then to resolution/pairsFile/metadata 
     #       stored in *File.
     params <- list(...)
     if ('resolution' %in% names(params)) {
-        check_cool_format(path, params[['resolution']])
+        .check_cool_format(path, params[['resolution']])
         resolution <- as.integer(params[['resolution']])
     } else {
         resolution <- resolution(con)
@@ -162,14 +163,14 @@ setMethod('import', 'HicFile', function(con, ...) {
     path <- BiocGenerics::path(con)
     path <- gsub('~', Sys.getenv('HOME'), path)
     stopifnot(file.exists(path))
-    if (!check_hic_file(path)) stop("Provided file is not a valid .hic file")
+    if (!.check_hic_file(path)) stop("Provided file is not a valid .hic file")
 
     ## -- Handle parsed arguments. Priority is given to 
     #       explicitly provided arguments, then to resolution/pairsFile/metadata 
     #       potentially stored in *File.
     params <- list(...)
     if ('resolution' %in% names(params)) {
-        check_hic_format(path, params[['resolution']])
+        .check_hic_format(path, params[['resolution']])
         resolution <- as.integer(params[['resolution']])
     } else {
         resolution <- resolution(con)
@@ -267,7 +268,7 @@ setMethod('import', 'HicproFile', function(con, ...) {
         warning('HiC-Pro contact matrix does not support random access. `focus` argument is ignored.')
     }
 
-    if (!check_hicpro_files(path, bed))
+    if (!.check_hicpro_files(path, bed))
         stop("Provided file is not a valid HiC-Pro derived file")
 
     ## -- Create HiCExperiment
@@ -287,6 +288,6 @@ setMethod('import', 'PairsFile', function(con, ...) {
 
     con <- BiocGenerics::path(con)
     stopifnot(file.exists(con))
-    pairs2gi(con, ...)
+    .pairs2gi(con, ...)
 
 })

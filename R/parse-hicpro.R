@@ -12,6 +12,11 @@
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges resize
+#' @name parse-hicpro
+#' @rdname parse-hicpro
+#' @keywords internal
+NULL
+
 #' @rdname parse-hicpro
 
 .hicpro2gi <- function(file, bed) {
@@ -110,7 +115,7 @@
 #' @rdname parse-hicpro
 
 .dumpHicpro <- function(file, bed) {
-    check_hicpro_files(file, bed)
+    .check_hicpro_files(file, bed)
     
     # Get anchors from hicpro regions file
     anchors <- .getHicproAnchors(bed)

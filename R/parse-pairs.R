@@ -11,8 +11,9 @@
 #' @importFrom IRanges IRanges
 #' @importFrom IRanges IRanges
 #' @rdname parse-pairs
+#' @keywords internal
 
-pairs2gi <- function(
+.pairs2gi <- function(
     file, 
     chr1.field = NULL, 
     start1.field = NULL, 

@@ -29,7 +29,9 @@
 #' @param name Passed to corresponding method
 #' @param value Passed to corresponding method
 #' @param ... Passed to corresponding method
+#' @keywords internal
 NULL
+
 setGeneric("availableResolutions", function(x, ...) {standardGeneric("availableResolutions")})
 setGeneric("availableChromosomes", function(x, ...) {standardGeneric("availableChromosomes")})
 setGeneric("resolutions", function(x) {standardGeneric("resolutions")})

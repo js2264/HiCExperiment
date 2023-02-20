@@ -16,6 +16,7 @@
 #'
 #' @importFrom BiocParallel bplapply
 #' @importFrom BiocParallel MulticoreParam
+#' @keywords internal
 
 .multi2DQuery <- function(
     file, 
@@ -28,18 +29,18 @@
 
     message( "Going through preflight checklist..." )
     # - Get si and bins from contact matrix
-    if (is_cool(file)) {
+    if (.is_cool(file)) {
         allBins <- .getCoolAnchors(file, resolution = NULL)
         si <- .cool2seqinfo(file, NULL)
-    } else if (is_mcool(file)) {
+    } else if (.is_mcool(file)) {
         allBins <- .getCoolAnchors(file, resolution = resolution)
         si <- .cool2seqinfo(file, resolution)
     }
-    else if (is_hic(file)) {
+    else if (.is_hic(file)) {
         allBins <- .getHicAnchors(file, resolution = resolution)
         si <- .hic2seqinfo(file)
     }
-    else if (is_hicpro_matrix(file) & is_hicpro_regions(bed)) {
+    else if (.is_hicpro_matrix(file) & .is_hicpro_regions(bed)) {
         allBins <- .getHicproAnchors(bed)
         si <- .hicpro2seqinfo(file)
     }
@@ -82,16 +83,16 @@
     # - Full parsing has to be done since parallelized access to HDF5 is not supported 
     # - Once full parsing is done, parallelization is trivial
     message( "Parsing the entire contact matrice as a sparse matrix..." )
-    if (is_cool(file)) {
+    if (.is_cool(file)) {
         l <- .dumpCool(file, resolution = NULL)
     }
-    if (is_mcool(file)) {
+    if (.is_mcool(file)) {
         l <- .dumpCool(file, resolution = resolution)
     }
-    else if (is_hic(file)) {
+    else if (.is_hic(file)) {
         l <- .dumpHic(file, resolution = resolution)
     }
-    else if (is_hicpro_matrix(file)) {
+    else if (.is_hicpro_matrix(file)) {
         l <- .dumpHicpro(file, bed)
     }
 

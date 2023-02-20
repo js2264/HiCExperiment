@@ -65,9 +65,7 @@ input targets.}
 An \code{AggrHiCExperiment} object.
 }
 \description{
-The \code{AggrHiCExperiment} extends \code{HiCExperiment} class
-
-AggrHiCExperiment methods.
+The \code{AggrHiCExperiment} extends \code{HiCExperiment} class.
 }
 \section{Slots}{
 

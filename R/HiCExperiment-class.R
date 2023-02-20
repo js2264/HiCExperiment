@@ -174,7 +174,7 @@ HiCExperiment <- function(
     stopifnot(file.exists(file))
     if (!is.null(resolution)) resolution <- as.integer(resolution)
     
-    if (is_cool(file) | is_mcool(file)) {
+    if (.is_cool(file) | .is_mcool(file)) {
         return(.HiCExperimentFromCoolFile(
             file = file,
             resolution = resolution,
@@ -184,7 +184,7 @@ HiCExperiment <- function(
             pairsFile = pairsFile
         ))
     }
-    if (is_hic(file)) {
+    if (.is_hic(file)) {
         return(.HiCExperimentFromHicFile(
             file = file,
             resolution = resolution,
@@ -194,7 +194,7 @@ HiCExperiment <- function(
             pairsFile = pairsFile
         ))
     }
-    if (is_hicpro_matrix(file)) {
+    if (.is_hicpro_matrix(file)) {
         if (is.null(bed)) stop("Regions files not provided.")
         if (!is.null(resolution)) stop("Resolution cannot be specified when importing HiC-Pro files.")
         if (!is.null(focus)) stop("Focus cannot be specified when importing HiC-Pro files.")
@@ -263,8 +263,8 @@ makeHiCExperimentFromGInteractions <- function(gi) {
 ) {
     
     ## -- Check that provided file is valid
-    check_cool_file(file)
-    check_cool_format(file, resolution)
+    .check_cool_file(file)
+    .check_cool_format(file, resolution)
 
     ## -- Read interactions
     gis <- .cool2gi(file, resolution = resolution, coords = focus) |> sort()
@@ -275,8 +275,8 @@ makeHiCExperimentFromGInteractions <- function(gi) {
     x <- methods::new("HiCExperiment", 
         fileName = as.character(file),
         focus = focus, 
-        resolutions = lsCoolResolutions(file), 
-        resolution = ifelse(is.null(resolution), lsCoolResolutions(file)[1], resolution), 
+        resolutions = .lsCoolResolutions(file), 
+        resolution = ifelse(is.null(resolution), .lsCoolResolutions(file)[1], resolution), 
         interactions = gis, 
         scores = S4Vectors::SimpleList(
             'count' = as.numeric(mcols$count),
@@ -309,8 +309,8 @@ makeHiCExperimentFromGInteractions <- function(gi) {
     
     ## -- Check that provided file is valid
     file <- gsub('~', Sys.getenv('HOME'), file)
-    check_hic_file(file)
-    check_hic_format(file, resolution)
+    .check_hic_file(file)
+    .check_hic_format(file, resolution)
 
     ## -- Read interactions
     gis <- .hic2gi(file, resolution = resolution, coords = focus) |> sort()
@@ -355,7 +355,7 @@ makeHiCExperimentFromGInteractions <- function(gi) {
     
     ## -- Check that provided file is valid
     file <- gsub('~', Sys.getenv('HOME'), file)
-    check_hicpro_files(file, bed)
+    .check_hicpro_files(file, bed)
 
     ## -- Read interactions
     gis <- .hicpro2gi(file, bed) |> sort()

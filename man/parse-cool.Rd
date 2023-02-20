@@ -8,7 +8,7 @@
 \alias{.fetchCool}
 \alias{.dumpCool}
 \alias{.lsCoolFiles}
-\alias{lsCoolResolutions}
+\alias{.lsCoolResolutions}
 \alias{.cool2seqinfo}
 \alias{.cool2gi}
 \title{Parsing (m)cool files}
@@ -25,7 +25,7 @@
 
 .lsCoolFiles(file, verbose = FALSE)
 
-lsCoolResolutions(file, verbose = FALSE)
+.lsCoolResolutions(file, verbose = FALSE)
 
 .cool2seqinfo(file, resolution = NULL)
 
@@ -63,3 +63,4 @@ These functions are the workhorse internal functions used to import
 a \verb{.(m)cool} file as GInteractions (wrapped into a \code{HiCExperiment} object
 by \code{HiCExperiment()} function).
 }
+\keyword{internal}

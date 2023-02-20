@@ -66,13 +66,13 @@ setMethod("availableChromosomes", signature(x = "HicproFile"), function(x) {
 .availableResolutions <- function(file, bed = NULL) {
     file <- gsub('~', Sys.getenv('HOME'), file)
     stopifnot(file.exists(file))
-    if (is_cool(file) | is_mcool(file)) {
-        return(lsCoolResolutions(file, verbose = TRUE))
+    if (.is_cool(file) | .is_mcool(file)) {
+        return(.lsCoolResolutions(file, verbose = TRUE))
     }
-    if (is_hic(file)) {
-        return(lsHicResolutions(file, verbose = TRUE))
+    if (.is_hic(file)) {
+        return(.lsHicResolutions(file, verbose = TRUE))
     }
-    if (is_hicpro_matrix(file)) {
+    if (.is_hicpro_matrix(file)) {
         if (is.null(bed)) stop("Regions files not provided.")
         return({
             bed1 <- vroom::vroom(
@@ -90,16 +90,16 @@ setMethod("availableChromosomes", signature(x = "HicproFile"), function(x) {
 .availableChromosomes <- function(file, bed = NULL) {
     file <- gsub('~', Sys.getenv('HOME'), file)
     stopifnot(file.exists(file))
-    if (is_cool(file)) {
+    if (.is_cool(file)) {
         return(.cool2seqinfo(file))
     }
-    if (is_mcool(file)) {
-        return(.cool2seqinfo(file, resolution = lsCoolResolutions(file)[1]))
+    if (.is_mcool(file)) {
+        return(.cool2seqinfo(file, resolution = .lsCoolResolutions(file)[1]))
     }
-    if (is_hic(file)) {
+    if (.is_hic(file)) {
         return(.hic2seqinfo(file))
     }
-    if (is_hicpro_matrix(file)) {
+    if (.is_hicpro_matrix(file)) {
         if (is.null(bed)) stop("Regions files not provided.")
         return(.hicpro2seqinfo(bed))
     }

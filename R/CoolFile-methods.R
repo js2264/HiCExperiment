@@ -21,7 +21,7 @@ NULL
 setMethod("show", signature("CoolFile"), function(object) {
     r <- BiocIO::resource(object)
     res <- resolution(object)
-    if (is.null(res)) res = lsCoolResolutions(r)[1]
+    if (is.null(res)) res = .lsCoolResolutions(r)[1]
     if (!S4Vectors::isSingleString(r))
         stop('"filename" must be a single string, specifiying a path')
     cat(class(object), "object\n.mcool file:", r, '\n') 

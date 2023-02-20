@@ -8,13 +8,13 @@
 
 #' @name as
 #' @export
-#' @rdname HiCExperiment
+#' @rdname coerce
 
 setAs("HiCExperiment", "GInteractions", function(from) interactions(from))
 
 #' @name as
 #' @export
-#' @rdname HiCExperiment
+#' @rdname coerce
 
 setAs("HiCExperiment", "InteractionSet", function(from) {
     gi <- interactions(from)
@@ -29,7 +29,7 @@ setAs("HiCExperiment", "InteractionSet", function(from) {
 
 #' @name as
 #' @export
-#' @rdname HiCExperiment
+#' @rdname coerce
 
 setAs("HiCExperiment", "ContactMatrix", function(from) {
     x <- interactions(from, fillout.regions = TRUE)
@@ -45,7 +45,7 @@ setAs("HiCExperiment", "ContactMatrix", function(from) {
 
 #' @name as
 #' @export
-#' @rdname HiCExperiment
+#' @rdname coerce
 
 setAs("HiCExperiment", "matrix", function(from) {
     as(from, "ContactMatrix") |> cm2matrix(sparse = TRUE)
@@ -53,7 +53,7 @@ setAs("HiCExperiment", "matrix", function(from) {
 
 #' @name as
 #' @export
-#' @rdname HiCExperiment
+#' @rdname coerce
 
 setAs("HiCExperiment", "data.frame", function(from) {
     x <- interactions(from)
@@ -67,7 +67,7 @@ setAs("HiCExperiment", "data.frame", function(from) {
 
 #' @name as
 #' @export
-#' @rdname HiCExperiment
+#' @rdname coerce
 
 setMethod("as.matrix", "HiCExperiment", function(x) {
     xx <- as(x, 'matrix')
@@ -75,7 +75,7 @@ setMethod("as.matrix", "HiCExperiment", function(x) {
 
 #' @name as
 #' @export
-#' @rdname HiCExperiment
+#' @rdname coerce
 
 setMethod("as.data.frame", "HiCExperiment", function(x) {
     as(x, 'data.frame')
@@ -96,7 +96,7 @@ setMethod("as.data.frame", "HiCExperiment", function(x) {
 #' @importFrom GenomicRanges mcols
 #' @param gi GInteractions object
 #' @param use.scores Which scores to use to inflate GInteractions
-#' @rdname parse-other
+#' @rdname coerce
 #' @export
 #' @examples 
 #' mcoolPath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')
@@ -144,7 +144,7 @@ gi2cm <- function(gi, use.scores = 'score') {
 #' @return a dense matrix
 #'
 #' @importFrom Matrix as.matrix
-#' @rdname parse-other
+#' @rdname coerce
 #' @export
 #' @examples 
 #' cm2matrix(cm)[1:10, 1:10]
@@ -160,7 +160,7 @@ cm2matrix <- function(cm, replace_NA = NA, sparse = FALSE) {
 #' @param df A `data.frame` object
 #' @return a `GInteractions` object
 #'
-#' @rdname parse-other
+#' @rdname coerce
 #' @export
 #' @examples 
 #' df2gi(data.frame(

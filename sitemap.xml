@@ -46,6 +46,9 @@
     <loc>/reference/PairsFile-class.html</loc>
   </url>
   <url>
+    <loc>/reference/as.html</loc>
+  </url>
+  <url>
     <loc>/reference/checks.html</loc>
   </url>
   <url>
@@ -70,10 +73,10 @@
     <loc>/reference/parse-hicpro.html</loc>
   </url>
   <url>
-    <loc>/reference/parse-other.html</loc>
+    <loc>/reference/parse-pairs.html</loc>
   </url>
   <url>
-    <loc>/reference/parse-pairs.html</loc>
+    <loc>/reference/reexports.html</loc>
   </url>
   <url>
     <loc>/reference/utils.html</loc>

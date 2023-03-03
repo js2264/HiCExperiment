@@ -42,7 +42,7 @@ hic <- HicFile(
 hic
 resolution(hic)
 pairsFile(hic)
-S4Vectors::metadata(hic)
+metadata(hic)
 }
 \seealso{
 \code{\link[=CoolFile]{CoolFile()}}, \code{\link[=HicproFile]{HicproFile()}}

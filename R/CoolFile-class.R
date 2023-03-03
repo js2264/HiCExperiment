@@ -43,7 +43,7 @@
 #' cf
 #' resolution(cf)
 #' pairsFile(cf)
-#' S4Vectors::metadata(cf)
+#' metadata(cf)
 NULL
 
 #' @export

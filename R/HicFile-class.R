@@ -38,7 +38,7 @@
 #' hic
 #' resolution(hic)
 #' pairsFile(hic)
-#' S4Vectors::metadata(hic)
+#' metadata(hic)
 NULL
 
 #' @export

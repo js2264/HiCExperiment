@@ -47,7 +47,7 @@ cf <- CoolFile(
 cf
 resolution(cf)
 pairsFile(cf)
-S4Vectors::metadata(cf)
+metadata(cf)
 }
 \seealso{
 \code{\link[=HicFile]{HicFile()}}, \code{\link[=HicproFile]{HicproFile()}}

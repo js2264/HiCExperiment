@@ -47,12 +47,6 @@
 \alias{cis,HiCExperiment-method}
 \alias{trans,HiCExperiment-method}
 \alias{show,HiCExperiment-method}
-\alias{coerce,HiCExperiment,GInteractions-method}
-\alias{coerce,HiCExperiment,ContactMatrix-method}
-\alias{coerce,HiCExperiment,matrix-method}
-\alias{coerce,HiCExperiment,data.frame-method}
-\alias{as.matrix,HiCExperiment-method}
-\alias{as.data.frame,HiCExperiment-method}
 \alias{interactions<-,HiCExperiment,GInteractions-method}
 \alias{$<-,HiCExperiment-method}
 \alias{$,HiCExperiment-method}

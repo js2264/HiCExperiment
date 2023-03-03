@@ -43,12 +43,6 @@
 #' @aliases cis,HiCExperiment-method
 #' @aliases trans,HiCExperiment-method
 #' @aliases show,HiCExperiment-method
-#' @aliases coerce,HiCExperiment,GInteractions-method
-#' @aliases coerce,HiCExperiment,ContactMatrix-method
-#' @aliases coerce,HiCExperiment,matrix-method
-#' @aliases coerce,HiCExperiment,data.frame-method
-#' @aliases as.matrix,HiCExperiment-method
-#' @aliases as.data.frame,HiCExperiment-method
 #' 
 #' @description
 #' 

@@ -39,7 +39,7 @@
 #' hicpro
 #' resolution(hicpro)
 #' pairsFile(hicpro)
-#' S4Vectors::metadata(hicpro)
+#' metadata(hicpro)
 NULL
 
 #' @export

@@ -2,10 +2,17 @@
 % Please edit documentation in R/coerce.R
 \name{as}
 \alias{as}
+\alias{coerce,HiCExperiment,GInteractions-method}
+\alias{coerce,HiCExperiment,InteractionSet-method}
+\alias{coerce,HiCExperiment,ContactMatrix-method}
+\alias{coerce,HiCExperiment,matrix-method}
+\alias{coerce,HiCExperiment,data.frame-method}
+\alias{as.matrix,HiCExperiment-method}
+\alias{as.data.frame,HiCExperiment-method}
 \alias{gi2cm}
 \alias{cm2matrix}
 \alias{df2gi}
-\title{Other coercing functions}
+\title{Coercing functions}
 \usage{
 \S4method{as.matrix}{HiCExperiment}(x)
 
@@ -26,6 +33,8 @@ df2gi(
 )
 }
 \arguments{
+\item{x}{HiCExperiment object}
+
 \item{gi}{GInteractions object}
 
 \item{use.scores}{Which scores to use to inflate GInteractions}
@@ -43,13 +52,8 @@ columns containing corresponding information in a data.frame parsed into
 GInteractions
 (default: FALSE)}
 }
-\value{
-a dense matrix
-
-a \code{GInteractions} object
-}
 \description{
-Other coercing functions
+Coercing functions available for HiCExperiment objects.
 }
 \examples{
 mcoolPath <- HiContactsData::HiContactsData('yeast_wt', 'mcool')

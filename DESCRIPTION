@@ -82,4 +82,5 @@ Collate:
     'parse-hicpro.R'
     'parse-pairs.R'
     'parse-slices.R'
+    'reexports.R'
     'utils.R'

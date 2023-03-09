@@ -109,8 +109,8 @@ setAs("HiCExperiment", "data.frame", function(from) {
 #' @export
 #' @name as
 
-setMethod("as.matrix", "HiCExperiment", function(x) {
-    xx <- as(x, 'matrix')
+setMethod("as.matrix", "HiCExperiment", function(x, use.scores = "balanced", sparse = TRUE) {
+    interactions(x) |> gi2cm(use.scores = use.scores) |> cm2matrix(sparse = sparse)
 })
 
 #' @export

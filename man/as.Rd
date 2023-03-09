@@ -14,7 +14,7 @@
 \alias{df2gi}
 \title{Coercing functions}
 \usage{
-\S4method{as.matrix}{HiCExperiment}(x)
+\S4method{as.matrix}{HiCExperiment}(x, use.scores = "balanced", sparse = TRUE)
 
 \S4method{as.data.frame}{HiCExperiment}(x)
 
@@ -35,15 +35,15 @@ df2gi(
 \arguments{
 \item{x}{HiCExperiment object}
 
-\item{gi}{GInteractions object}
-
 \item{use.scores}{Which scores to use to inflate GInteractions}
+
+\item{sparse}{Whether to return the contact matrix as a sparse matrix}
+
+\item{gi}{GInteractions object}
 
 \item{cm}{A \code{ContactMatrix} object}
 
 \item{replace_NA}{Replace NA values}
-
-\item{sparse}{Whether to return the contact matrix as a sparse matrix}
 
 \item{df}{A \code{data.frame} object}
 

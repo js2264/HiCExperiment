@@ -36,6 +36,7 @@
 \alias{length,HiCExperiment-method}
 \alias{[,HiCExperiment-method}
 \alias{[,HiCExperiment,numeric,ANY,ANY-method}
+\alias{subsetByOverlaps,HiCExperiment,GRanges-method}
 \alias{[,HiCExperiment,logical,ANY,ANY-method}
 \alias{[,HiCExperiment,character,ANY,ANY-method}
 \alias{[,HiCExperiment,GInteractions,ANY,ANY-method}
@@ -123,6 +124,8 @@ makeHiCExperimentFromGInteractions(gi)
 
 \S4method{[}{HiCExperiment,character,ANY,ANY}(x, i)
 
+\S4method{subsetByOverlaps}{HiCExperiment,GRanges}(x, ranges)
+
 \S4method{seqinfo}{HiCExperiment}(x)
 
 \S4method{bins}{HiCExperiment}(x)
@@ -165,7 +168,7 @@ the entire Hi-C contact file will be imported.}
 
 \item{fillout.regions}{Whehter to add missing regions to GInteractions' regions?}
 
-\item{i}{a range or boolean vector.}
+\item{i, ranges}{a GRanges, coordinates in character, or boolean vector to subset a HiCExperiment}
 }
 \value{
 An \code{HiCExperiment} object.

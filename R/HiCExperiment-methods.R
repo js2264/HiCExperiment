@@ -32,6 +32,7 @@
 #' @aliases length,HiCExperiment-method
 #' @aliases [,HiCExperiment-method
 #' @aliases [,HiCExperiment,numeric,ANY,ANY-method
+#' @aliases subsetByOverlaps,HiCExperiment,GRanges-method
 #' @aliases [,HiCExperiment,logical,ANY,ANY-method
 #' @aliases [,HiCExperiment,character,ANY,ANY-method
 #' @aliases [,HiCExperiment,GInteractions,ANY,ANY-method
@@ -52,7 +53,7 @@
 #' @param object A \code{HiCExperiment} object.
 #' @param name Name of the element to access in topologicalFeatures or scores SimpleLists.
 #' @param value Value to add to topologicalFeatures, scores, pairsFile or metadata slots.
-#' @param i a range or boolean vector.
+#' @param i,ranges a GRanges, coordinates in character, or boolean vector to subset a HiCExperiment
 #' @param fillout.regions Whehter to add missing regions to GInteractions' regions? 
 #' 
 #' @importMethodsFrom BiocGenerics fileName
@@ -397,6 +398,13 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
     fixed_res <- regions(.fixRegions(interactions(subx), re_, i))
     InteractionSet::replaceRegions(interactions(subx)) <- fixed_res
     return(subx)
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("subsetByOverlaps", signature = c(x="HiCExperiment", ranges="GRanges"), function(x, ranges) {
+    x[as.character(ranges)]
 })
 
 #' @export

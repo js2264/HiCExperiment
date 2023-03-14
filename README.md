@@ -10,6 +10,8 @@
 
 [👉 OHCA book 📖](https://js2264.github.io/OHCA/)
 
+---
+
 ![](https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_data-structure.png)
 
 The `HiCExperiment` package provides a unified data structure to import the three main Hi-C matrix file formats (`.(m)cool`, `.hic` and `HiC-Pro` matrices) in R and performs common array operations on them.

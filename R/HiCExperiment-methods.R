@@ -430,7 +430,13 @@ setMethod("seqinfo", "HiCExperiment", function(x) {
 #' @rdname HiCExperiment
 
 setMethod("bins", "HiCExperiment", function(x) {
-    if (.is_cool(fileName(x)) | .is_mcool(fileName(x))) {
+    if (.is_cool(fileName(x))) {
+        bins <- .getCoolAnchors(
+            fileName(x), resolution = NULL, balanced = TRUE
+        )
+        GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
+    }
+    if (.is_mcool(fileName(x))) {
         bins <- .getCoolAnchors(
             fileName(x), resolution = resolution(x), balanced = TRUE
         )

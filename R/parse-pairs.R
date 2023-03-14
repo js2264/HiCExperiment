@@ -96,24 +96,18 @@
     # -- Import pairs
     sel1 <- (c(chr1.field, start1.field, strand1.field, frag1.field))
     sel2 <- (c(chr2.field, start2.field, strand2.field, frag2.field))
-    anchors1 <- vroom::vroom(
+    sel <- c(sel1, sel2)
+    anchors <- vroom::vroom(
         file,
         n_max = nrows,
-        col_select = dplyr::all_of(sel1),
+        col_select = dplyr::all_of(sel),
         comment = '#',
         col_names = FALSE,
         show_col_types = FALSE, 
         num_threads = nThread
     )
-    anchors2 <- vroom::vroom(
-        file,
-        n_max = nrows,
-        col_select = dplyr::all_of(sel2),
-        comment = '#',
-        col_names = FALSE,
-        show_col_types = FALSE, 
-        num_threads = nThread
-    )  
+    anchors1 <- anchors[, seq_along(sel1)]
+    anchors2 <- anchors[, {length(seq_along(sel1)) + seq_along(sel2)}]
     anchor_one <- GenomicRanges::GRanges(
         anchors1[[1]],
         IRanges::IRanges(anchors1[[2]], width = 1), 

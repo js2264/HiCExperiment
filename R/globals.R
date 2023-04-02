@@ -30,6 +30,10 @@ utils::globalVariables(c(
     "name", 
     "bin_id1", 
     "bin_id2", 
-    "x"  
+    "x", 
+    "index", 
+    "seqnames1", 
+    "seqnames2", 
+    "n"
 ))
 

@@ -15,6 +15,7 @@
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges resize
+#' @importFrom dplyr select
 #' @name parse-hic
 #' @rdname parse-hic
 #' @keywords internal
@@ -325,6 +326,8 @@ NULL
 
 .hic2seqinfo <- function(file) {
     strawr::readHicChroms(file) |> 
+        dplyr::arrange(index) |> 
+        dplyr::select(-index) |> 
         setNames(c('seqnames', 'seqlengths')) |>
         dplyr::filter(!seqnames %in% c('ALL', 'All')) |>
         as("Seqinfo")

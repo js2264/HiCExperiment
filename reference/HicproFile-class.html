@@ -113,15 +113,15 @@ of a HiC-Pro-generated matrix file and containing 4 additional slots:</p><ol><li
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">hicproMatrixPath</span> <span class="op">&lt;-</span> <span class="fu">HiContactsData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html" class="external-link">HiContactsData</a></span><span class="op">(</span><span class="st">'yeast_wt'</span>, <span class="st">'hicpro_matrix'</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2023-03-13</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2023-03-29</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
 <span class="r-in"><span><span class="va">hicproBedPath</span> <span class="op">&lt;-</span> <span class="fu">HiContactsData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html" class="external-link">HiContactsData</a></span><span class="op">(</span><span class="st">'yeast_wt'</span>, <span class="st">'hicpro_bed'</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2023-03-13</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2023-03-29</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
 <span class="r-in"><span><span class="va">pairsPath</span> <span class="op">&lt;-</span> <span class="fu">HiContactsData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html" class="external-link">HiContactsData</a></span><span class="op">(</span><span class="st">'yeast_wt'</span>, <span class="st">'pairs.gz'</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2023-03-13</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2023-03-29</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> loading from cache</span>
 <span class="r-in"><span><span class="va">hicpro</span> <span class="op">&lt;-</span> <span class="fu">HicproFile</span><span class="op">(</span></span></span>
@@ -131,16 +131,16 @@ of a HiC-Pro-generated matrix file and containing 4 additional slots:</p><ol><li
 <span class="r-in"><span><span class="va">hicpro</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HicproFile object</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HiC-Pro files:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   $ matrix:   /github/home/.cache/R/ExperimentHub/4194c110023_7837 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   $ regions:  /github/home/.cache/R/ExperimentHub/41944fa2c43_7838 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   $ matrix:   /github/home/.cache/R/ExperimentHub/341e3a02ef86_7837 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   $ regions:  /github/home/.cache/R/ExperimentHub/341e3e69983a_7838 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolution: 1000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pairs file: /github/home/.cache/R/ExperimentHub/41927c23d20_7753 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pairs file: /github/home/.cache/R/ExperimentHub/341e7b0fe912_7753 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> metadata(1): type</span>
 <span class="r-in"><span><span class="fu"><a href="AllGenerics.html">resolution</a></span><span class="op">(</span><span class="va">hicpro</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1000</span>
 <span class="r-in"><span><span class="fu"><a href="AllGenerics.html">pairsFile</a></span><span class="op">(</span><span class="va">hicpro</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 EH7703 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "/github/home/.cache/R/ExperimentHub/41927c23d20_7753" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  EH7703 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "/github/home/.cache/R/ExperimentHub/341e7b0fe912_7753" </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Annotated-class.html" class="external-link">metadata</a></span><span class="op">(</span><span class="va">hicpro</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $type</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "example"</span>

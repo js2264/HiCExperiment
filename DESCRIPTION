@@ -1,6 +1,6 @@
 Package: HiCExperiment
 Title: Bioconductor class for interacting with Hi-C files in R
-Version: 0.99.12
+Version: 0.99.11
 Date: 2022-11-10
 Authors@R:
     c(person(given = "Jacques",
@@ -73,11 +73,9 @@ Collate:
     'PairsFile-methods.R'
     'import-methods.R'
     'available.R'
-    'bin.R'
     'checks.R'
     'coerce.R'
     'data.R'
-    'export-methods.R'
     'globals.R'
     'parse-cool.R'
     'parse-hic.R'

@@ -21,7 +21,6 @@
 \alias{refocus}
 \alias{cis}
 \alias{trans}
-\alias{bin}
 \title{Generic functions}
 \arguments{
 \item{x}{Passed to corresponding method}

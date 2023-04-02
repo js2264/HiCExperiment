@@ -20,6 +20,7 @@
 #' @aliases refocus
 #' @aliases cis
 #' @aliases trans
+#' @aliases bin
 #' 
 #' @description
 #' 
@@ -51,3 +52,4 @@ setGeneric("zoom", function(x, resolution) {standardGeneric("zoom")})
 setGeneric("refocus", function(x, focus) {standardGeneric("refocus")})
 setGeneric("cis", function(x) {standardGeneric("cis")})
 setGeneric("trans", function(x) {standardGeneric("trans")})
+setGeneric("bin", function(x, ...) {standardGeneric("bin")})

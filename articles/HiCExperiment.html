@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">HiCExperiment</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.13</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,7 @@
                         <h4 data-toc-skip class="author">Jacques
 Serizay</h4>
             
-            <h4 data-toc-skip class="date">2023-04-02</h4>
+            <h4 data-toc-skip class="date">2023-04-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/js2264/HiCExperiment/blob/HEAD/vignettes/HiCExperiment.Rmd" class="external-link"><code>vignettes/HiCExperiment.Rmd</code></a></small>
       <div class="d-none name"><code>HiCExperiment.Rmd</code></div>
@@ -175,13 +175,13 @@ using the following command:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Known Subclasses: "AggrHiCExperiment"</span></span>
 <span><span class="va">hic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/data.html">contacts_yeast</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; snapshotDate(): 2023-03-29</span></span>
+<span><span class="co">#&gt; snapshotDate(): 2023-04-03</span></span>
 <span><span class="co">#&gt; see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span></span>
 <span><span class="co">#&gt; loading from cache</span></span>
 <span><span class="va">hic</span></span>
 <span><span class="co">#&gt; `HiCExperiment` object with 8,757,906 contacts over 763 regions </span></span>
 <span><span class="co">#&gt; -------</span></span>
-<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/49d72d21f8_7752" </span></span>
+<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/701657cbcd3_7752" </span></span>
 <span><span class="co">#&gt; focus: "whole genome" </span></span>
 <span><span class="co">#&gt; resolutions(5): 1000 2000 4000 8000 16000</span></span>
 <span><span class="co">#&gt; active resolution: 16000 </span></span>
@@ -213,13 +213,13 @@ package to get access to a range of toy datasets available from the
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/HiContactsData" class="external-link">HiContactsData</a></span><span class="op">)</span></span>
 <span><span class="va">cool_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html" class="external-link">HiContactsData</a></span><span class="op">(</span><span class="st">'yeast_wt'</span>, format <span class="op">=</span> <span class="st">'cool'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; snapshotDate(): 2023-03-29</span></span>
+<span><span class="co">#&gt; snapshotDate(): 2023-04-03</span></span>
 <span><span class="co">#&gt; see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span></span>
 <span><span class="co">#&gt; loading from cache</span></span>
 <span><span class="fu"><a href="../reference/import-methods.html">import</a></span><span class="op">(</span><span class="va">cool_file</span>, format <span class="op">=</span> <span class="st">'cool'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `HiCExperiment` object with 8,757,906 contacts over 12,079 regions </span></span>
 <span><span class="co">#&gt; -------</span></span>
-<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/49d25df6158_7751" </span></span>
+<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/7016df63c6e_7751" </span></span>
 <span><span class="co">#&gt; focus: "whole genome" </span></span>
 <span><span class="co">#&gt; resolutions(1): 1000</span></span>
 <span><span class="co">#&gt; active resolution: 1000 </span></span>
@@ -257,27 +257,27 @@ and linked to the contact matrix file when imported as a
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## --- CoolFile</span></span>
 <span><span class="va">pairs_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html" class="external-link">HiContactsData</a></span><span class="op">(</span><span class="st">'yeast_wt'</span>, format <span class="op">=</span> <span class="st">'pairs.gz'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; snapshotDate(): 2023-03-29</span></span>
+<span><span class="co">#&gt; snapshotDate(): 2023-04-03</span></span>
 <span><span class="co">#&gt; see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span></span>
 <span><span class="co">#&gt; loading from cache</span></span>
 <span><span class="va">coolf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CoolFile-class.html">CoolFile</a></span><span class="op">(</span><span class="va">cool_file</span>, pairsFile <span class="op">=</span> <span class="va">pairs_file</span><span class="op">)</span></span>
 <span><span class="va">coolf</span></span>
 <span><span class="co">#&gt; CoolFile object</span></span>
-<span><span class="co">#&gt; .mcool file: /github/home/.cache/R/ExperimentHub/49d25df6158_7751 </span></span>
+<span><span class="co">#&gt; .mcool file: /github/home/.cache/R/ExperimentHub/7016df63c6e_7751 </span></span>
 <span><span class="co">#&gt; resolution: 1000 </span></span>
-<span><span class="co">#&gt; pairs file: /github/home/.cache/R/ExperimentHub/49d70352d5a_7753 </span></span>
+<span><span class="co">#&gt; pairs file: /github/home/.cache/R/ExperimentHub/701661ab1b_7753 </span></span>
 <span><span class="co">#&gt; metadata(0):</span></span>
 <span><span class="fu"><a href="../reference/import-methods.html">import</a></span><span class="op">(</span><span class="va">coolf</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `HiCExperiment` object with 8,757,906 contacts over 12,079 regions </span></span>
 <span><span class="co">#&gt; -------</span></span>
-<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/49d25df6158_7751" </span></span>
+<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/7016df63c6e_7751" </span></span>
 <span><span class="co">#&gt; focus: "whole genome" </span></span>
 <span><span class="co">#&gt; resolutions(1): 1000</span></span>
 <span><span class="co">#&gt; active resolution: 1000 </span></span>
 <span><span class="co">#&gt; interactions: 2945692 </span></span>
 <span><span class="co">#&gt; scores(2): count balanced </span></span>
 <span><span class="co">#&gt; topologicalFeatures: compartments(0) borders(0) loops(0) viewpoints(0) </span></span>
-<span><span class="co">#&gt; pairsFile: /github/home/.cache/R/ExperimentHub/49d70352d5a_7753 </span></span>
+<span><span class="co">#&gt; pairsFile: /github/home/.cache/R/ExperimentHub/701661ab1b_7753 </span></span>
 <span><span class="co">#&gt; metadata(0):</span></span>
 <span><span class="fu"><a href="../reference/import-methods.html">import</a></span><span class="op">(</span><span class="fu"><a href="../reference/AllGenerics.html">pairsFile</a></span><span class="op">(</span><span class="va">coolf</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">'pairs'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; GInteractions object with 471364 interactions and 3 metadata columns:</span></span>
@@ -313,51 +313,51 @@ and linked to the contact matrix file when imported as a
 <span></span>
 <span><span class="co">## --- HicFile</span></span>
 <span><span class="va">hic_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html" class="external-link">HiContactsData</a></span><span class="op">(</span><span class="st">'yeast_wt'</span>, format <span class="op">=</span> <span class="st">'hic'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; snapshotDate(): 2023-03-29</span></span>
+<span><span class="co">#&gt; snapshotDate(): 2023-04-03</span></span>
 <span><span class="co">#&gt; see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span></span>
 <span><span class="co">#&gt; loading from cache</span></span>
 <span><span class="va">hicf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/HicFile-class.html">HicFile</a></span><span class="op">(</span><span class="va">hic_file</span>, pairsFile <span class="op">=</span> <span class="va">pairs_file</span><span class="op">)</span></span>
 <span><span class="va">hicf</span></span>
 <span><span class="co">#&gt; HicFile object</span></span>
-<span><span class="co">#&gt; .hic file: /github/home/.cache/R/ExperimentHub/49d1498f604_7836 </span></span>
+<span><span class="co">#&gt; .hic file: /github/home/.cache/R/ExperimentHub/7017f389812_7836 </span></span>
 <span><span class="co">#&gt; resolution: 1000 </span></span>
-<span><span class="co">#&gt; pairs file: /github/home/.cache/R/ExperimentHub/49d70352d5a_7753 </span></span>
+<span><span class="co">#&gt; pairs file: /github/home/.cache/R/ExperimentHub/701661ab1b_7753 </span></span>
 <span><span class="co">#&gt; metadata(0):</span></span>
 <span><span class="fu"><a href="../reference/import-methods.html">import</a></span><span class="op">(</span><span class="va">hicf</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `HiCExperiment` object with 13,681,280 contacts over 12,165 regions </span></span>
 <span><span class="co">#&gt; -------</span></span>
-<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/49d1498f604_7836" </span></span>
+<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/7017f389812_7836" </span></span>
 <span><span class="co">#&gt; focus: "whole genome" </span></span>
 <span><span class="co">#&gt; resolutions(5): 1000 2000 4000 8000 16000</span></span>
 <span><span class="co">#&gt; active resolution: 1000 </span></span>
 <span><span class="co">#&gt; interactions: 2965693 </span></span>
 <span><span class="co">#&gt; scores(2): count balanced </span></span>
 <span><span class="co">#&gt; topologicalFeatures: compartments(0) borders(0) loops(0) viewpoints(0) </span></span>
-<span><span class="co">#&gt; pairsFile: /github/home/.cache/R/ExperimentHub/49d70352d5a_7753 </span></span>
+<span><span class="co">#&gt; pairsFile: /github/home/.cache/R/ExperimentHub/701661ab1b_7753 </span></span>
 <span><span class="co">#&gt; metadata(0):</span></span>
 <span></span>
 <span><span class="co">## --- HicproFile</span></span>
 <span><span class="va">hicpro_matrix_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html" class="external-link">HiContactsData</a></span><span class="op">(</span><span class="st">'yeast_wt'</span>, format <span class="op">=</span> <span class="st">'hicpro_matrix'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; snapshotDate(): 2023-03-29</span></span>
+<span><span class="co">#&gt; snapshotDate(): 2023-04-03</span></span>
 <span><span class="co">#&gt; see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span></span>
 <span><span class="co">#&gt; loading from cache</span></span>
 <span><span class="va">hicpro_regions_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html" class="external-link">HiContactsData</a></span><span class="op">(</span><span class="st">'yeast_wt'</span>, format <span class="op">=</span> <span class="st">'hicpro_bed'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; snapshotDate(): 2023-03-29</span></span>
+<span><span class="co">#&gt; snapshotDate(): 2023-04-03</span></span>
 <span><span class="co">#&gt; see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span></span>
 <span><span class="co">#&gt; loading from cache</span></span>
 <span><span class="va">hicprof</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/HicproFile-class.html">HicproFile</a></span><span class="op">(</span><span class="va">hicpro_matrix_file</span>, bed <span class="op">=</span> <span class="va">hicpro_regions_file</span><span class="op">)</span></span>
 <span><span class="va">hicprof</span></span>
 <span><span class="co">#&gt; HicproFile object</span></span>
 <span><span class="co">#&gt; HiC-Pro files:</span></span>
-<span><span class="co">#&gt;   $ matrix:   /github/home/.cache/R/ExperimentHub/49d57e2ee8d_7837 </span></span>
-<span><span class="co">#&gt;   $ regions:  /github/home/.cache/R/ExperimentHub/49d1978d3fd_7838 </span></span>
+<span><span class="co">#&gt;   $ matrix:   /github/home/.cache/R/ExperimentHub/701683ebc39_7837 </span></span>
+<span><span class="co">#&gt;   $ regions:  /github/home/.cache/R/ExperimentHub/70164507229_7838 </span></span>
 <span><span class="co">#&gt; resolution: 1000 </span></span>
 <span><span class="co">#&gt; pairs file: </span></span>
 <span><span class="co">#&gt; metadata(0):</span></span>
 <span><span class="fu"><a href="../reference/import-methods.html">import</a></span><span class="op">(</span><span class="va">hicprof</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `HiCExperiment` object with 9,503,604 contacts over 12,165 regions </span></span>
 <span><span class="co">#&gt; -------</span></span>
-<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/49d57e2ee8d_7837" </span></span>
+<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/701683ebc39_7837" </span></span>
 <span><span class="co">#&gt; focus: "whole genome" </span></span>
 <span><span class="co">#&gt; resolutions(1): 1000</span></span>
 <span><span class="co">#&gt; active resolution: 1000 </span></span>
@@ -395,7 +395,7 @@ contacts within a genomic locus of interest.</p>
 <span><span class="va">hic</span></span>
 <span><span class="co">#&gt; `HiCExperiment` object with 24,322 contacts over 60 regions </span></span>
 <span><span class="co">#&gt; -------</span></span>
-<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/49d25df6158_7751" </span></span>
+<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/7016df63c6e_7751" </span></span>
 <span><span class="co">#&gt; focus: "I:20,001-80,000" </span></span>
 <span><span class="co">#&gt; resolutions(1): 1000</span></span>
 <span><span class="co">#&gt; active resolution: 1000 </span></span>
@@ -428,7 +428,7 @@ can specify the <code>resolution</code> at which count values are
 recovered.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mcool_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html" class="external-link">HiContactsData</a></span><span class="op">(</span><span class="st">'yeast_wt'</span>, format <span class="op">=</span> <span class="st">'mcool'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; snapshotDate(): 2023-03-29</span></span>
+<span><span class="co">#&gt; snapshotDate(): 2023-04-03</span></span>
 <span><span class="co">#&gt; see ?HiContactsData and browseVignettes('HiContactsData') for documentation</span></span>
 <span><span class="co">#&gt; loading from cache</span></span>
 <span><span class="fu"><a href="../reference/AllGenerics.html">availableResolutions</a></span><span class="op">(</span><span class="va">mcool_file</span><span class="op">)</span></span>
@@ -452,7 +452,7 @@ recovered.</p>
 <span><span class="va">hic</span></span>
 <span><span class="co">#&gt; `HiCExperiment` object with 466,123 contacts over 400 regions </span></span>
 <span><span class="co">#&gt; -------</span></span>
-<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/49d72d21f8_7752" </span></span>
+<span><span class="co">#&gt; fileName: "/github/home/.cache/R/ExperimentHub/701657cbcd3_7752" </span></span>
 <span><span class="co">#&gt; focus: "II:1-800,000" </span></span>
 <span><span class="co">#&gt; resolutions(5): 1000 2000 4000 8000 16000</span></span>
 <span><span class="co">#&gt; active resolution: 2000 </span></span>
@@ -473,7 +473,7 @@ recovered.</p>
 the following <code>getters</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fileName</span><span class="op">(</span><span class="va">hic</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/github/home/.cache/R/ExperimentHub/49d72d21f8_7752"</span></span>
+<span><span class="co">#&gt; [1] "/github/home/.cache/R/ExperimentHub/701657cbcd3_7752"</span></span>
 <span><span class="fu"><a href="../reference/AllGenerics.html">focus</a></span><span class="op">(</span><span class="va">hic</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "II:1-800000"</span></span>
 <span><span class="fu"><a href="../reference/AllGenerics.html">resolutions</a></span><span class="op">(</span><span class="va">hic</span><span class="op">)</span></span>
@@ -638,7 +638,7 @@ the following <code>getters</code>:</p>
 <span><span class="co">#&gt; List of length 3</span></span>
 <span><span class="co">#&gt; names(3): count balanced random</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="../reference/AllGenerics.html">scores</a></span><span class="op">(</span><span class="va">hic</span>, <span class="st">'random'</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.8709861 0.7710754 0.8148809 0.2205474 0.6124404 0.6750823</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.99319982 0.84801768 0.06357637 0.36699361 0.93097553 0.91681542</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
@@ -683,17 +683,17 @@ be coerced in <code>GInteractions</code>, <code>ContactMatrix</code> and
 <span><span class="co">#&gt;   [33479]        II 798001-800000 ---        II 798001-800000 |       515</span></span>
 <span><span class="co">#&gt;             bin_id2     count  balanced    random</span></span>
 <span><span class="co">#&gt;           &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt;       [1]       116         1       NaN 0.1772224</span></span>
-<span><span class="co">#&gt;       [2]       118         2       NaN 0.0263903</span></span>
-<span><span class="co">#&gt;       [3]       119         3       NaN 0.4840889</span></span>
-<span><span class="co">#&gt;       [4]       120        15       NaN 0.7335559</span></span>
-<span><span class="co">#&gt;       [5]       121         9       NaN 0.5287920</span></span>
+<span><span class="co">#&gt;       [1]       116         1       NaN 0.1147614</span></span>
+<span><span class="co">#&gt;       [2]       118         2       NaN 0.0328798</span></span>
+<span><span class="co">#&gt;       [3]       119         3       NaN 0.8267154</span></span>
+<span><span class="co">#&gt;       [4]       120        15       NaN 0.8248537</span></span>
+<span><span class="co">#&gt;       [5]       121         9       NaN 0.8386218</span></span>
 <span><span class="co">#&gt;       ...       ...       ...       ...       ...</span></span>
-<span><span class="co">#&gt;   [33475]       514       309 0.1194189  0.771075</span></span>
-<span><span class="co">#&gt;   [33476]       515       227 0.0956207  0.814881</span></span>
-<span><span class="co">#&gt;   [33477]       514       130 0.0501703  0.220547</span></span>
-<span><span class="co">#&gt;   [33478]       515       297 0.1249314  0.612440</span></span>
-<span><span class="co">#&gt;   [33479]       515       117 0.0536429  0.675082</span></span>
+<span><span class="co">#&gt;   [33475]       514       309 0.1194189 0.8480177</span></span>
+<span><span class="co">#&gt;   [33476]       515       227 0.0956207 0.0635764</span></span>
+<span><span class="co">#&gt;   [33477]       514       130 0.0501703 0.3669936</span></span>
+<span><span class="co">#&gt;   [33478]       515       297 0.1249314 0.9309755</span></span>
+<span><span class="co">#&gt;   [33479]       515       117 0.0536429 0.9168154</span></span>
 <span><span class="co">#&gt;   -------</span></span>
 <span><span class="co">#&gt;   regions: 400 ranges and 4 metadata columns</span></span>
 <span><span class="co">#&gt;   seqinfo: 16 sequences from an unspecified genome</span></span>
@@ -753,16 +753,16 @@ be coerced in <code>GInteractions</code>, <code>ContactMatrix</code> and
 <span><span class="co">#&gt; 9   18001 20000   2000       *     125 0.02331795   19000     6      NaN</span></span>
 <span><span class="co">#&gt; 10  20001 22000   2000       *     126 0.02241734   21000     5      NaN</span></span>
 <span><span class="co">#&gt;        random</span></span>
-<span><span class="co">#&gt; 1  0.17722241</span></span>
-<span><span class="co">#&gt; 2  0.02639034</span></span>
-<span><span class="co">#&gt; 3  0.48408889</span></span>
-<span><span class="co">#&gt; 4  0.73355585</span></span>
-<span><span class="co">#&gt; 5  0.52879200</span></span>
-<span><span class="co">#&gt; 6  0.70824659</span></span>
-<span><span class="co">#&gt; 7  0.27125300</span></span>
-<span><span class="co">#&gt; 8  0.14961184</span></span>
-<span><span class="co">#&gt; 9  0.05640976</span></span>
-<span><span class="co">#&gt; 10 0.28531850</span></span></code></pre></div>
+<span><span class="co">#&gt; 1  0.11476139</span></span>
+<span><span class="co">#&gt; 2  0.03287975</span></span>
+<span><span class="co">#&gt; 3  0.82671536</span></span>
+<span><span class="co">#&gt; 4  0.82485371</span></span>
+<span><span class="co">#&gt; 5  0.83862178</span></span>
+<span><span class="co">#&gt; 6  0.74920571</span></span>
+<span><span class="co">#&gt; 7  0.05452285</span></span>
+<span><span class="co">#&gt; 8  0.57142462</span></span>
+<span><span class="co">#&gt; 9  0.19647799</span></span>
+<span><span class="co">#&gt; 10 0.40395821</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -854,7 +854,7 @@ interaction with a HiCExperiment object.</p>
 <span><span class="co">#&gt; [8] base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt;  [1] HiCExperiment_0.99.12 HiContactsData_1.1.9  ExperimentHub_2.7.1  </span></span>
+<span><span class="co">#&gt;  [1] HiCExperiment_0.99.13 HiContactsData_1.1.9  ExperimentHub_2.7.1  </span></span>
 <span><span class="co">#&gt;  [4] AnnotationHub_3.7.3   BiocFileCache_2.7.2   dbplyr_2.3.2         </span></span>
 <span><span class="co">#&gt;  [7] GenomicRanges_1.51.4  GenomeInfoDb_1.35.16  IRanges_2.33.0       </span></span>
 <span><span class="co">#&gt; [10] S4Vectors_0.37.4      BiocGenerics_0.45.3   dplyr_1.1.1          </span></span>
@@ -868,7 +868,7 @@ interaction with a HiCExperiment object.</p>
 <span><span class="co">#&gt;  [9] digest_0.6.31                 mime_0.12                    </span></span>
 <span><span class="co">#&gt; [11] lifecycle_1.0.3               ellipsis_0.3.2               </span></span>
 <span><span class="co">#&gt; [13] KEGGREST_1.39.0               interactiveDisplayBase_1.37.0</span></span>
-<span><span class="co">#&gt; [15] RSQLite_2.3.0                 magrittr_2.0.3               </span></span>
+<span><span class="co">#&gt; [15] RSQLite_2.3.1                 magrittr_2.0.3               </span></span>
 <span><span class="co">#&gt; [17] compiler_4.3.0                rlang_1.1.0                  </span></span>
 <span><span class="co">#&gt; [19] sass_0.4.5                    tools_4.3.0                  </span></span>
 <span><span class="co">#&gt; [21] utf8_1.2.3                    yaml_2.3.7                   </span></span>

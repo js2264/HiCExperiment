@@ -28,6 +28,7 @@
 ) {
 
     # -- Guess pairs format
+    skip <- 0
     if (
         is.null(chr1.field) & 
         is.null(start1.field) & 
@@ -84,6 +85,27 @@
             frag2.field <- 9
         }
     }
+    if (.fmt == 'hicstuff') {
+        skip <- 1
+        # <chr1> <pos1> <end1> <chr2> <start2> <end2> <frag1> <frag2> <kernel_id> <iteration> <score> <pvalue> <qvalue>
+        fileLines <- vroom::vroom(
+            file,
+            skip = 1, 
+            n_max = 100000,
+            col_names = FALSE,
+            comment = '#',
+            progress = FALSE, 
+            show_col_types = FALSE
+        )
+        chr1.field <- 1
+        start1.field <- 2
+        chr2.field <- 4
+        start2.field <- 5
+        strand1.field <- 0
+        strand2.field <- 0
+        frag1.field <- 0
+        frag2.field <- 0
+    }
     if (any(c(
         is.null(chr1.field), 
         is.null(start1.field), 
@@ -93,41 +115,66 @@
         is.null(strand2.field)
     ))) stop("Impossible to parse pairs file")
 
-    # -- Import pairs
+    # -- Import pairs as anchors
     sel1 <- (c(chr1.field, start1.field, strand1.field, frag1.field))
+    sel1 <- sel1[sel1 != 0]
     sel2 <- (c(chr2.field, start2.field, strand2.field, frag2.field))
+    sel2 <- sel2[sel2 != 0]
     sel <- c(sel1, sel2)
     anchors <- vroom::vroom(
         file,
+        skip = skip,
         n_max = nrows,
         col_select = dplyr::all_of(sel),
         comment = '#',
         col_names = FALSE,
-        show_col_types = FALSE, 
+        show_col_types = FALSE,
         num_threads = nThread
     )
-    anchors1 <- anchors[, seq_along(sel1)]
-    anchors2 <- anchors[, {length(seq_along(sel1)) + seq_along(sel2)}]
+    anchors1 <- dplyr::select(anchors, seq_len(ncol(anchors)/2))
+    anchors2 <- dplyr::select(anchors, ncol(anchors)/2 + seq_len(ncol(anchors)/2))
     anchor_one <- GenomicRanges::GRanges(
         anchors1[[1]],
-        IRanges::IRanges(anchors1[[2]], width = 1), 
-        strand = anchors1[[3]]
+        IRanges::IRanges(anchors1[[2]], width = 1)
     )
     anchor_two <- GenomicRanges::GRanges(
         anchors2[[1]],
-        IRanges::IRanges(anchors2[[2]], width = 1), 
-        strand = anchors2[[3]]
+        IRanges::IRanges(anchors2[[2]], width = 1)
     )
+
+    # -- Add strand information for anchors
+    if (strand1.field != 0) GenomicRanges::strand(anchor_one) <- anchors1[[3]]
+    if (strand2.field != 0) GenomicRanges::strand(anchor_two) <- anchors2[[3]]
+
+    # -- Parse anchors into GInteractions
     gi <- InteractionSet::GInteractions(anchor_one, anchor_two)
     
+    # -- Add frag information
     if (!is.null(frag1.field) & !is.null(frag2.field)) {
-        gi$frag1 <- anchors1[[4]]
-        gi$frag2 <- anchors2[[4]]
+        gi$frag1 <- anchors1[[ncol(anchors1)]]
+        gi$frag2 <- anchors2[[ncol(anchors1)]]
     } 
     else {
         gi$frag1 <- NA
         gi$frag2 <- NA
     }
+
+    # -- Add loop scores for hicstuff files 
+    if (.fmt == 'hicstuff') {
+        dat <- vroom::vroom(
+            file,
+            skip = 0,
+            n_max = nrows,
+            col_select = c(9, 10, 11, 12, 13),
+            comment = '#',
+            col_names = TRUE,
+            show_col_types = FALSE,
+            num_threads = nThread
+        )
+        GenomicRanges::mcols(gi) <- cbind(mcols(gi), dat)
+    }
+
+    # -- Add pairdist
     gi$distance <- InteractionSet::pairdist(gi) 
     return(gi)
 }
@@ -142,7 +189,8 @@
         col_names = FALSE,
         comment = '#',
         progress = FALSE, 
-        show_col_types = FALSE
+        show_col_types = FALSE, 
+        skip = 1
     )
     ncols <- ncol(fileLines)
 
@@ -189,6 +237,25 @@
         is.numeric(fileLines[[7]]) & 
         is.numeric(fileLines[[8]])
     }, error = function(e) FALSE)) return('juicer')
+
+    # -- Check if file is hicstuff format 
+    # <chr1> <pos1> <end1> <chr2> <start2> <end2> <frag1> <frag2> <kernel_id> <iteration> <score> <pvalue> <qvalue>
+    if (tryCatch({
+        ncol(fileLines) == 13 & 
+        {is.character(fileLines[[1]]) | is.numeric(fileLines[[1]])} & 
+        is.numeric(fileLines[[2]]) & 
+        is.numeric(fileLines[[3]]) & 
+        {is.character(fileLines[[4]]) | is.numeric(fileLines[[4]])} & 
+        is.numeric(fileLines[[5]]) & 
+        is.numeric(fileLines[[6]]) & 
+        is.numeric(fileLines[[7]]) & 
+        is.numeric(fileLines[[8]]) & 
+        is.numeric(fileLines[[9]]) & 
+        is.numeric(fileLines[[10]]) & 
+        is.numeric(fileLines[[11]]) & 
+        is.numeric(fileLines[[12]]) & 
+        is.numeric(fileLines[[13]])
+    }, error = function(e) FALSE)) return('hicstuff')
 
     # -- Unspecified format
     stop("Pairs file format could not be guessed. Please provide indications about the format.")

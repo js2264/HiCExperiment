@@ -73,6 +73,7 @@ Collate:
     'PairsFile-methods.R'
     'import-methods.R'
     'available.R'
+    'bin.R'
     'checks.R'
     'coerce.R'
     'data.R'

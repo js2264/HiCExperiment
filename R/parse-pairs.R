@@ -171,7 +171,7 @@
             show_col_types = FALSE,
             num_threads = nThread
         )
-        GenomicRanges::mcols(gi) <- cbind(mcols(gi), dat)
+        GenomicRanges::mcols(gi) <- cbind(GenomicRanges::mcols(gi), dat)
     }
 
     # -- Add pairdist

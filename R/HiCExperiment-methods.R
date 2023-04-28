@@ -436,7 +436,7 @@ setMethod("bins", "HiCExperiment", function(x) {
         )
         GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
     }
-    if (.is_mcool(fileName(x))) {
+    else if (.is_mcool(fileName(x))) {
         bins <- .getCoolAnchors(
             fileName(x), resolution = resolution(x), balanced = TRUE
         )
@@ -451,6 +451,9 @@ setMethod("bins", "HiCExperiment", function(x) {
     else if (.is_hicpro_matrix(fileName(x)) & .is_hicpro_regions(metadata(x)$regions)) {
         bins <- .getHicproAnchors(metadata(x)$regions)
         GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
+    }
+    else {
+        stop("Input format not supported")
     }
     return(bins)
 })

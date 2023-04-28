@@ -34,6 +34,9 @@ utils::globalVariables(c(
     "index", 
     "seqnames1", 
     "seqnames2", 
-    "n"
+    "n", 
+    "b", 
+    "gi", 
+    "prefix"
 ))
 

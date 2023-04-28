@@ -12,7 +12,7 @@
 
 ---
 
-![](https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_data-structure.png)
+![](https://raw.githubusercontent.com/js2264/HiCExperiment/devel/man/figures/HiCExperiment_data-structure.png)
 
 The `HiCExperiment` package provides a unified data structure to import the three main Hi-C matrix file formats (`.(m)cool`, `.hic` and `HiC-Pro` matrices) in R and performs common array operations on them.
 
@@ -26,7 +26,7 @@ point to on-disk Hi-C matrix files and dynamically parse them into R.
 
 Several other packages rely on the `HiCExperiment` class to provide a rich ecosystem when interacting with Hi-C data.
 
-![](https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_ecosystem.png)
+![](https://raw.githubusercontent.com/js2264/HiCExperiment/devel/man/figures/HiCExperiment_ecosystem.png)
 
 ## Installation
 

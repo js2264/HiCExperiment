@@ -5,7 +5,7 @@ on:
     type: [published]
   push:
     branches:
-      - master
+      - devel
 
 env:
   REGISTRY: ghcr.io

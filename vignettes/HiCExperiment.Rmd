@@ -104,7 +104,7 @@ hic
 
 ```{r graph, eval = TRUE, echo=FALSE, out.width='100%'}
 knitr::include_graphics(
-   "https://raw.githubusercontent.com/js2264/HiCExperiment/master/man/figures/HiCExperiment_data-structure.png"
+   "https://raw.githubusercontent.com/js2264/HiCExperiment/devel/man/figures/HiCExperiment_data-structure.png"
 )
 ```
 

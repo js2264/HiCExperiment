@@ -5,14 +5,16 @@ template:
     border-radius: 0.5rem
     btn-border-radius: 0.25rem
 
-
-
 reference:
 - title: Importing Hi-C files
 - contents:
   - availableResolutions
   - availableChromosomes
   - import-methods
+
+- title: Exporting Hi-C files
+- contents:
+  - export-methods
 
 - title: Methods for `HiCExperiment` S4 class
 - contents:
@@ -29,6 +31,7 @@ reference:
 
 - title: Coercing methods
 - contents:
+  - bin-methods
   - as
 
 - title: Example datasets

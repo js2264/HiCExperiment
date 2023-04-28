@@ -49,10 +49,16 @@
     <loc>/reference/as.html</loc>
   </url>
   <url>
+    <loc>/reference/bin-methods.html</loc>
+  </url>
+  <url>
     <loc>/reference/checks.html</loc>
   </url>
   <url>
     <loc>/reference/data.html</loc>
+  </url>
+  <url>
+    <loc>/reference/export-methods.html</loc>
   </url>
   <url>
     <loc>/reference/import-methods.html</loc>

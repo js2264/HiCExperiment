@@ -45,15 +45,12 @@
 #' @aliases trans,HiCExperiment-method
 #' @aliases show,HiCExperiment-method
 #' 
-#' @description
-#' 
-#' HiCExperiment methods.
-#'
 #' @param x A \code{HiCExperiment} object.
 #' @param object A \code{HiCExperiment} object.
 #' @param name Name of the element to access in topologicalFeatures or scores SimpleLists.
 #' @param value Value to add to topologicalFeatures, scores, pairsFile or metadata slots.
 #' @param i,ranges a GRanges, coordinates in character, or boolean vector to subset a HiCExperiment
+#' @param type any of `within` or `any`, to subset interactions by overlap with a provided GRanges.
 #' @param fillout.regions Whehter to add missing regions to GInteractions' regions? 
 #' 
 #' @importMethodsFrom BiocGenerics fileName
@@ -221,6 +218,201 @@ setMethod("metadata<-", signature(x = "HiCExperiment", value = "list"), function
 ################################################################################
 ################################################################################
 ###############                                                  ###############
+###############               METHODS FOR SUBSET                 ###############
+###############                                                  ###############
+################################################################################
+################################################################################
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("subsetByOverlaps", signature = c(x="HiCExperiment", ranges="numeric"), function(x, ranges) {
+    subints <- interactions(x)[ranges]
+    subre <- IRanges::subsetByOverlaps(regions(x), subints)
+    InteractionSet::replaceRegions(subints) <- subre
+    interactions(x) <- subints
+    for (n in names(scores(x))) {
+        scores(x, n) <- scores(x, n)[ranges]
+    }
+    return(x)
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("subsetByOverlaps", signature = c(x="HiCExperiment", ranges="logical"), function(x, ranges) {
+    # Redirect to subsetByOverlaps,HiCExperiment,numeric-method
+    x[which(ranges)]
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("subsetByOverlaps", signature = c(x="HiCExperiment", ranges="GRanges"), function(x, ranges, type = c('within', 'any')) {
+    type <- match.arg(type)
+    if (type == "any") { ## Anchors not constrained within segment
+        i <- IRanges::overlapsAny(
+            interactions(x), ranges, type = 'within'
+        )
+        # Redirect to subsetByOverlaps,HiCExperiment,numeric-method
+        return(x[i])
+    }
+    else if (type == "within") { ## Anchors constrained within segment, for each range
+        # Redirect to subsetByOverlaps,HiCExperiment,GInteractions-method
+        subsetByOverlaps(x, InteractionSet::GInteractions(ranges, ranges))
+    }
+    else {
+        stop("'type' should be one of \"any\", \"both\"")
+    }
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("subsetByOverlaps", signature = c(x="HiCExperiment", ranges="GInteractions"), function(x, ranges) {
+    ranges <- swapAnchors(ranges)
+    ints <- interactions(x)
+    an <- anchors(ints)
+    i <- lapply(seq_along(ranges), function(k) {
+        which(IRanges::overlapsAny(
+            an[["first"]], anchors(ranges[k], "first"), type = 'within'
+        ) & IRanges::overlapsAny(
+            an[["second"]], anchors(ranges[k], "second"), type = 'within'
+        ))
+    }) |> unlist() |> unique()
+    # Redirect to subsetByOverlaps,HiCExperiment,numeric-method
+    return(x[i])
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("subsetByOverlaps", signature = c(x="HiCExperiment", ranges="Pairs"), function(x, ranges) {
+    gi <- GInteractions(S4Vectors::first(ranges), S4Vectors::second(ranges))
+    # Redirect to subsetByOverlaps,HiCExperiment,GInteractions-method
+    return(x[gi])
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("[", signature("HiCExperiment", "numeric"), function(x, i) {
+    # Redirect to subsetByOverlaps,HiCExperiment,numeric-method
+    subsetByOverlaps(x, i)
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("[", signature("HiCExperiment", "GRanges"), function(x, i) {
+    # Redirect to subsetByOverlaps,HiCExperiment,GRanges-method
+    subsetByOverlaps(x, i)
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("[", signature("HiCExperiment", "logical"), function(x, i) {
+    # Redirect to subsetByOverlaps,HiCExperiment,logical-method
+    subsetByOverlaps(x, i)
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("[", signature("HiCExperiment", "GInteractions"), function(x, i) {
+    # Redirect to subsetByOverlaps,HiCExperiment,GInteractions-method
+    subsetByOverlaps(x, i)
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("[", signature("HiCExperiment", "Pairs"), function(x, i) {
+    # Redirect to subsetByOverlaps,HiCExperiment,Pairs-method
+    subsetByOverlaps(x, i)
+})
+
+#' @export
+#' @rdname HiCExperiment
+
+setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
+
+    re_ <- regions(x)
+    ints_ <- interactions(x)
+
+    # Different possible situations: 
+    #   'II:10001-20000'                    --> Redirects to GRanges method
+    #   'II'                                --> Redirects to GRanges method
+    #   'II:10001-20000|III:50001-90000'    --> Redirects to GInteractions method
+    #   'II|III'                            --> Redirects to GInteractions method
+    #   c('II', 'III')                      --> Redirects to GRanges method
+
+    if (length(i) == 1) { # 'II:10001-20000', 'II:10001-20000|III:50000-90000', 'II' or 'II|III'
+        if (
+            grepl(
+                '.*:[0-9]*-[0-9]*\\|[A-Za-z0-9]*:[0-9]*-[0-9]*$', i
+            ) | grepl(
+                '.*:[0-9]*-[0-9]*$', i
+            ) 
+        ) { # e.g. 'II:10001-20000' or 'II:10001-20000|III:50000-90000'
+            i_ <- char2coords(i)
+            valid_regions_first <- subsetByOverlaps(
+                re_, S4Vectors::first(i_), type = 'within'
+            )$bin_id
+            valid_regions_second <- subsetByOverlaps(
+                re_, S4Vectors::second(i_), type = 'within'
+            )$bin_id
+        }
+        else if (
+            grepl(
+                '[^:]*\\|[^:]*$', i
+            )
+        ) { # e.g. 'II|III'
+            chr1 <- strsplit(i, '\\|')[[1]][1]
+            chr2 <- strsplit(i, '\\|')[[1]][2]
+            if (!all(c(chr1, chr2) %in% seqnames(GenomeInfoDb::seqinfo(x)))) {
+                stop("One or all of the provided seqnames is not found.")
+            }
+            si <- GenomeInfoDb::seqinfo(x)
+            gr1 <- as(si[chr1], 'GRanges')
+            gr2 <- as(si[chr2], 'GRanges')
+            i_ <- paste(as.character(gr1), as.character(gr2), sep = '|')
+            # Redirect to character (with extended i_ being like "II:xxx-xxx|III:xxx-xxx")
+            return(x[i_])
+        }
+        else if (
+            all(i %in% seqnames(GenomeInfoDb::seqinfo(x)))
+        ) { # e.g. 'II'
+            valid_regions_first <- re_$bin_id[as.vector(seqnames(re_)) %in% i]
+            valid_regions_second <- valid_regions_first
+        }
+        else {
+            stop("Failed to coerce i into a GRanges or GInteractions")
+        }
+        focus(x) <- i
+    }
+
+    else { # c('II', 'III')
+        if (
+            all(i %in% seqnames(GenomeInfoDb::seqinfo(x)))
+        ) { 
+            valid_regions_first <- re_$bin_id[as.vector(seqnames(re_)) %in% i]
+            valid_regions_second <- valid_regions_first
+        }
+        else {
+            stop("Failed to coerce i into a GRanges or GInteractions")
+        }
+        focus(x) <- paste(i, collapse = ', ')
+    }
+
+    sub <- ints_$bin_id1 %in% valid_regions_first & ints_$bin_id2 %in% valid_regions_second
+    x[sub]
+})
+
+################################################################################
+################################################################################
+###############                                                  ###############
 ###############          METHODS FOR EXISTING GENERICS           ###############
 ###############                                                  ###############
 ################################################################################
@@ -274,137 +466,6 @@ setReplaceMethod("$", "HiCExperiment", function(x, name, value) {
 
 setMethod("$", "HiCExperiment", function(x, name) {
     S4Vectors::mcols(regions(interactions(x)))[, name]
-})
-
-#' @export
-#' @rdname HiCExperiment
-
-setMethod("[", signature("HiCExperiment", "numeric"), function(x, i) {
-    interactions(x) <- InteractionSet::reduceRegions(
-        interactions(x)[i]
-    )
-    for (n in names(scores(x))) {
-        scores(x, n) <- scores(x, n)[i]
-    }
-    return(x)
-})
-
-#' @export
-#' @rdname HiCExperiment
-
-setMethod("[", signature("HiCExperiment", "logical"), function(x, i) {
-    # Redirect to numeric
-    x[which(i)]
-})
-
-#' @export
-#' @rdname HiCExperiment
-
-setMethod("[", signature("HiCExperiment", "Pairs"), function(x, i) {
-    if(length(i) > 1) stop("Provide a single Pairs/GInteractions")
-    i <- zipup(i)[[1]] |> 
-        GenomicRanges::sort() |>
-        as.character() |> 
-        paste0(collapse = '|')
-    i <- gsub(':[+-]\\|', '\\|', i)
-    i <- gsub(':[+-]$', '', i)
-    # Redirect to character
-    x[i]
-})
-
-#' @export
-#' @rdname HiCExperiment
-
-setMethod("[", signature("HiCExperiment", "GInteractions"), function(x, i) {
-    # Redirect to Pairs -> character
-    x[as(i, "Pairs")]
-})
-
-#' @export
-#' @rdname HiCExperiment
-
-setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
-    re_ <- regions(x)
-    ints_ <- interactions(x)
-
-    # Different possible situations: 
-    #   NULL
-    #   'II:10000-20000'
-    #   'II'
-    #   'II:10000-20000|III:50000-90000'
-    #   'II|III'
-    #   c('II', 'III')
-
-    if (length(i) == 1) { # 'II:10000-20000', 'II:10000-20000|III:50000-90000', 'II' or 'II|III'
-        if (
-            grepl(
-                '[A-Za-z0-9]*:[0-9]*-[0-9]*\\|[A-Za-z0-9]*:[0-9]*-[0-9]*$', i
-            ) | grepl(
-                '[A-Za-z0-9]*:[0-9]*-[0-9]*$', i
-            ) 
-        ) { # e.g. 'II:10000-20000' or 'II:10000-20000|III:50000-90000'
-            i_ <- char2coords(i)
-            valid_regions_first <- subsetByOverlaps(
-                re_, S4Vectors::first(i_), type = 'within'
-            )$bin_id
-            valid_regions_second <- subsetByOverlaps(
-                re_, S4Vectors::second(i_), type = 'within'
-            )$bin_id
-        }
-        else if (
-            grepl(
-                '[A-Za-z0-9]*\\|[A-Za-z0-9]*$', i
-            )
-        ) { # e.g. 'II|III'
-            chr1 <- strsplit(i, '\\|')[[1]][1]
-            chr2 <- strsplit(i, '\\|')[[1]][2]
-            if (!all(c(chr1, chr2) %in% seqnames(GenomeInfoDb::seqinfo(x)))) {
-                stop("One or all of the provided seqnames is not found.")
-            }
-            si <- GenomeInfoDb::seqinfo(x)
-            gr1 <- as(si[chr1], 'GRanges')
-            gr2 <- as(si[chr2], 'GRanges')
-            i_ <- paste(as.character(gr1), as.character(gr2), sep = '|')
-            # Redirect to character (with extended i_ being like "II:xxx-xxx|III:xxx-xxx")
-            return(x[i_])
-        }
-        else if (
-            all(i %in% seqnames(GenomeInfoDb::seqinfo(x)))
-        ) { # e.g. 'II'
-            valid_regions_first <- re_$bin_id[as.vector(seqnames(re_)) %in% i]
-            valid_regions_second <- valid_regions_first
-        }
-        else {
-            stop("Failed to coerce i into a Pairs/GRanges/chr.")
-        }
-        focus(x) <- i
-    }
-
-    else { # c('II', 'III')
-        if (
-            all(i %in% seqnames(GenomeInfoDb::seqinfo(x)))
-        ) { 
-            valid_regions_first <- re_$bin_id[as.vector(seqnames(re_)) %in% i]
-            valid_regions_second <- valid_regions_first
-        }
-        else {
-            stop("Failed to coerce i into a Pairs/GRanges/chr.")
-        }
-        focus(x) <- paste(i, collapse = ', ')
-    }
-
-    sub <- ints_$bin_id1 %in% valid_regions_first & ints_$bin_id2 %in% valid_regions_second
-    subx <- x[sub]
-    fixed_res <- regions(.fixRegions(interactions(subx), re_, i))
-    InteractionSet::replaceRegions(interactions(subx)) <- fixed_res
-    return(subx)
-})
-
-#' @export
-#' @rdname HiCExperiment
-
-setMethod("subsetByOverlaps", signature = c(x="HiCExperiment", ranges="GRanges"), function(x, ranges) {
-    x[as.character(ranges)]
 })
 
 #' @export

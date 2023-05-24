@@ -104,7 +104,7 @@ char2coords <- function(char) {
     #     return(char)
     # }
     if (grepl(
-        '[A-Za-z0-9]*:[0-9]*-[0-9]*\\|[A-Za-z0-9]*:[0-9]*-[0-9]*$', 
+        '.*:[0-9]*-[0-9]*\\|.*:[0-9]*-[0-9]*$', 
         char
     )) {
         splitst <- strsplit(char, '\\|')[[1]]
@@ -113,7 +113,7 @@ char2coords <- function(char) {
             GenomicRanges::GRanges(splitst[[2]])
         )
     }
-    else if (grepl('[A-Za-z0-9]*:[0-9]*[-:][0-9]*$', char)) {
+    else if (grepl('.*:[0-9]*[-:][0-9]*$', char)) {
         S4Vectors::Pairs(
             GenomicRanges::GRanges(char), 
             GenomicRanges::GRanges(char)

@@ -48,6 +48,11 @@
 \alias{cis,HiCExperiment-method}
 \alias{trans,HiCExperiment-method}
 \alias{show,HiCExperiment-method}
+\alias{subsetByOverlaps,HiCExperiment,numeric-method}
+\alias{subsetByOverlaps,HiCExperiment,logical-method}
+\alias{subsetByOverlaps,HiCExperiment,GInteractions-method}
+\alias{subsetByOverlaps,HiCExperiment,Pairs-method}
+\alias{[,HiCExperiment,GRanges,ANY,ANY-method}
 \alias{interactions<-,HiCExperiment,GInteractions-method}
 \alias{$<-,HiCExperiment-method}
 \alias{$,HiCExperiment-method}
@@ -102,6 +107,28 @@ makeHiCExperimentFromGInteractions(gi)
 
 \S4method{metadata}{HiCExperiment,list}(x) <- value
 
+\S4method{subsetByOverlaps}{HiCExperiment,numeric}(x, ranges)
+
+\S4method{subsetByOverlaps}{HiCExperiment,logical}(x, ranges)
+
+\S4method{subsetByOverlaps}{HiCExperiment,GRanges}(x, ranges, type = c("within", "any"))
+
+\S4method{subsetByOverlaps}{HiCExperiment,GInteractions}(x, ranges)
+
+\S4method{subsetByOverlaps}{HiCExperiment,Pairs}(x, ranges)
+
+\S4method{[}{HiCExperiment,numeric,ANY,ANY}(x, i)
+
+\S4method{[}{HiCExperiment,GRanges,ANY,ANY}(x, i)
+
+\S4method{[}{HiCExperiment,logical,ANY,ANY}(x, i)
+
+\S4method{[}{HiCExperiment,GInteractions,ANY,ANY}(x, i)
+
+\S4method{[}{HiCExperiment,Pairs,ANY,ANY}(x, i)
+
+\S4method{[}{HiCExperiment,character,ANY,ANY}(x, i)
+
 \S4method{fileName}{HiCExperiment}(object)
 
 \S4method{interactions}{HiCExperiment}(x, fillout.regions = FALSE)
@@ -113,18 +140,6 @@ makeHiCExperimentFromGInteractions(gi)
 \S4method{$}{HiCExperiment}(x, name) <- value
 
 \S4method{$}{HiCExperiment}(x, name)
-
-\S4method{[}{HiCExperiment,numeric,ANY,ANY}(x, i)
-
-\S4method{[}{HiCExperiment,logical,ANY,ANY}(x, i)
-
-\S4method{[}{HiCExperiment,Pairs,ANY,ANY}(x, i)
-
-\S4method{[}{HiCExperiment,GInteractions,ANY,ANY}(x, i)
-
-\S4method{[}{HiCExperiment,character,ANY,ANY}(x, i)
-
-\S4method{subsetByOverlaps}{HiCExperiment,GRanges}(x, ranges)
 
 \S4method{seqinfo}{HiCExperiment}(x)
 
@@ -145,7 +160,7 @@ makeHiCExperimentFromGInteractions(gi)
 
 \item{focus}{Chromosome coordinates for which
 interaction counts are extracted from the Hi-C contact file, provided
-as a character string (e.g. "II:4000-5000"). If not provided,
+as a character string (e.g. "II:4001-5000"). If not provided,
 the entire Hi-C contact file will be imported.}
 
 \item{metadata}{list of metadata}
@@ -164,11 +179,13 @@ the entire Hi-C contact file will be imported.}
 
 \item{name}{Name of the element to access in topologicalFeatures or scores SimpleLists.}
 
+\item{type}{any of \code{within} or \code{any}, to subset interactions by overlap with a provided GRanges.}
+
+\item{i, ranges}{a GRanges, coordinates in character, or boolean vector to subset a HiCExperiment}
+
 \item{object}{A \code{HiCExperiment} object.}
 
 \item{fillout.regions}{Whehter to add missing regions to GInteractions' regions?}
-
-\item{i, ranges}{a GRanges, coordinates in character, or boolean vector to subset a HiCExperiment}
 }
 \value{
 An \code{HiCExperiment} object.
@@ -177,8 +194,6 @@ An \code{HiCExperiment} object.
 The \code{HiCExperiment} class describes Hi-C contact files imported in R, either
 through the \code{HiCExperiment} constructor function or using the \code{import}
 method implemented by \code{HiCExperiment} package.
-
-HiCExperiment methods.
 }
 \section{Slots}{
 
@@ -267,7 +282,7 @@ contacts[1:100]
 contacts['II']
 contacts[c('II', 'III')]
 contacts['II|III']
-contacts['II:10000-30000|III:50000-90000']
+contacts['II:10001-30000|III:50001-90000']
 
 #####################################################################
 ## --------------------- Utils functions ------------------------- ##

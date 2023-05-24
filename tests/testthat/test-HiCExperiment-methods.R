@@ -11,10 +11,10 @@ test_that("HiCExperiment methods work", {
         contacts_yeast[sub]
     }, 'HiCExperiment')
     expect_no_error(contacts_yeast['II'])
-    expect_no_error(contacts_yeast['II:1-20000'])
-    expect_no_error(contacts_yeast['II:1-30000|II:30000-60000'])
+    expect_no_error(contacts_yeast['II:1-20001'])
+    expect_no_error(contacts_yeast['II:1-30001|II:30001-60000'])
     expect_no_error(contacts_yeast[c('II', 'III')])
-    expect_no_error(contacts_yeast[c('II:1-30000|III:10000-60000')])
+    expect_no_error(contacts_yeast[c('II:1-30000|III:10001-60000')])
     expect_type(fileName(contacts_yeast), 'character')
     expect_s4_class(seqinfo(contacts_yeast), 'Seqinfo')
     expect_type(resolutions(contacts_yeast), 'integer')
@@ -48,29 +48,29 @@ test_that("checks work", {
     expect_true(.check_resolution(contacts_yeast, 2000))
     expect_error(.check_resolution(contacts_yeast, 3000))
     expect_true(.is_square(S4Vectors::Pairs(
-        first = 'I:10000-20000', 
-        second = 'I:10000-20000'
+        first = 'I:10001-20000', 
+        second = 'I:10001-20000'
     )))
 })
 
 test_that("utils works", {
 
-    expect_type(splitCoords(GRanges('II:30-40')), 'list')
-    expect_type(splitCoords('II:30-40'), 'list')
+    expect_type(splitCoords(GRanges('II:31-40')), 'list')
+    expect_type(splitCoords('II:31-40'), 'list')
 
-    expect_type(coords2char('II:30-40'), 'character')
-    expect_type(coords2char('II:30-40|II:40-50'), 'character')
-    expect_type(coords2char(GRanges('II:30-40')), 'character')
+    expect_type(coords2char('II:31-40'), 'character')
+    expect_type(coords2char('II:31-40|II:41-50'), 'character')
+    expect_type(coords2char(GRanges('II:31-40')), 'character')
 
-    expect_s4_class(char2coords("II:30000-50000|II:60000-80000"), 'Pairs')
+    expect_s4_class(char2coords("II:30001-50000|II:60001-80000"), 'Pairs')
 
     expect_equal(
-        sortPairs(char2coords("II:30000-50000|II:60000-80000")), 
-        char2coords("II:30000-50000|II:60000-80000")
+        sortPairs(char2coords("II:30001-50000|II:60001-80000")), 
+        char2coords("II:30001-50000|II:60001-80000")
     )
     expect_equal(
-        sortPairs(char2coords("II:90000-100000|II:60000-80000")), 
-        char2coords("II:60000-80000|II:90000-100000")
+        sortPairs(char2coords("II:90001-100000|II:60001-80000")), 
+        char2coords("II:60001-80000|II:90001-100000")
     )
 
     expect_s4_class(

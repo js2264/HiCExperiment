@@ -49,9 +49,9 @@
 #'    A genomic locus (or pair of loci) provided as a string. It can be any 
 #'    of the following string structures: 
 #' 
-#'      - `"II"` or `"II:20000-30000"`: this will extract a symmetrical 
+#'      - `"II"` or `"II:20001-30000"`: this will extract a symmetrical 
 #'      square HiCExperiment object, of an entire chromosome or an portion of it.
-#'      - `"II|III"` or `"II:20000-30000|III:40000-90000"`: 
+#'      - `"II|III"` or `"II:20001-30000|III:40001-90000"`: 
 #'      this will extract a non-symmetrical HiCExperiment object, 
 #'      with an entire or portion of different chromosomes on each axis. 
 #' 

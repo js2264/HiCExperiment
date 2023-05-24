@@ -41,7 +41,7 @@ object or as a character string)}
 \item{big.mark}{Separator for thousands when printing out genomic coordinates
 as character}
 
-\item{char}{char (e.g. "II:30000-50000" or "II:30000-50000|II:60000-80000")}
+\item{char}{char (e.g. "II:30001-50000" or "II:30001-50000|II:60001-80000")}
 
 \item{pairs}{Pairs object}
 

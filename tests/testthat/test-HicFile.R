@@ -85,6 +85,6 @@ test_that("HicFile works", {
     expect_no_error(import(hicPath, format = 'hic', focus = 'I:1-40000'))
     expect_no_error(import(hicPath, format = 'hic', focus = 'I|II'))
     expect_no_error(import(hicPath, format = 'hic', focus = 'III|II'))
-    expect_no_error(import(hicPath, format = 'hic', focus = 'III:30000-40000|II:10000-40000'))
+    expect_no_error(import(hicPath, format = 'hic', focus = 'III:30001-40000|II:10001-40000'))
 
 })

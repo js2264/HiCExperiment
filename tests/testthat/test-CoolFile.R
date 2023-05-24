@@ -148,6 +148,6 @@ test_that("CoolFile works", {
     expect_no_error(import(mcf1, focus = 'I:1-40000'))
     expect_no_error(import(mcf1, focus = 'I|II'))
     expect_no_error(import(mcf1, focus = 'III|II'))
-    expect_no_error(import(mcf1, focus = 'III:30000-40000|II:10000-40000'))
+    expect_no_error(import(mcf1, focus = 'III:30001-40000|II:10001-40000'))
 
 })

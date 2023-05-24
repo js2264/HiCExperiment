@@ -33,7 +33,7 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' @param resolution Resolution to use with the Hi-C contact file
 #' @param focus Chromosome coordinates for which 
 #'   interaction counts are extracted from the Hi-C contact file, provided
-#'   as a character string (e.g. "II:4000-5000"). If not provided, 
+#'   as a character string (e.g. "II:4001-5000"). If not provided, 
 #'   the entire Hi-C contact file will be imported. 
 #' @param metadata list of metadata
 #' @param topologicalFeatures topologicalFeatures provided as a named SimpleList
@@ -110,7 +110,7 @@ setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 #' contacts['II']
 #' contacts[c('II', 'III')]
 #' contacts['II|III']
-#' contacts['II:10000-30000|III:50000-90000']
+#' contacts['II:10001-30000|III:50001-90000']
 #' 
 #' #####################################################################
 #' ## --------------------- Utils functions ------------------------- ##

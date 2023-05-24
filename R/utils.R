@@ -16,7 +16,7 @@
 #' object or as a character string)
 #' @param big.mark Separator for thousands when printing out genomic coordinates 
 #' as character
-#' @param char char (e.g. "II:30000-50000" or "II:30000-50000|II:60000-80000")
+#' @param char char (e.g. "II:30001-50000" or "II:30001-50000|II:60001-80000")
 #' @param pairs Pairs object
 #' @param df a data.frame to turn into a GInteraction object. 
 #' @param A Numerical matrix
@@ -243,9 +243,9 @@ detrendingModel <- function(file, resolution) {
 
     # Different possible situations: 
     #   NULL
-    #   'II:10000-20000'
+    #   'II:10001-20000'
     #   'II'
-    #   'II:10000-20000|III:50000-90000'
+    #   'II:10001-20000|III:50001-90000'
     #   'II|III'
     #   c('II', 'III')
 

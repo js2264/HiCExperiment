@@ -126,9 +126,9 @@ Resolutions available in the disk-stored contact matrix can be
 listed using <code>availableResolutions(file)</code></p></li>
 <li><p><code>focus</code>:
 A genomic locus (or pair of loci) provided as a string. It can be any
-of the following string structures:</p><ul><li><p><code>"II"</code> or <code>"II:20000-30000"</code>: this will extract a symmetrical
+of the following string structures:</p><ul><li><p><code>"II"</code> or <code>"II:20001-30000"</code>: this will extract a symmetrical
 square HiCExperiment object, of an entire chromosome or an portion of it.</p></li>
-<li><p><code>"II|III"</code> or <code>"II:20000-30000|III:40000-90000"</code>:
+<li><p><code>"II|III"</code> or <code>"II:20001-30000|III:40001-90000"</code>:
 this will extract a non-symmetrical HiCExperiment object,
 with an entire or portion of different chromosomes on each axis.</p></li>
 </ul></li>
@@ -163,7 +163,7 @@ with an entire or portion of different chromosomes on each axis.</p></li>
 <span class="r-in"><span><span class="fu">import</span><span class="op">(</span><span class="va">mcoolPath</span>, resolution <span class="op">=</span> <span class="fl">16000</span>, focus <span class="op">=</span> <span class="st">'XVI'</span>, format <span class="op">=</span> <span class="st">'cool'</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 535,350 contacts over 60 regions </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/7cc479f9e5bc_7752" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/23aa10292b81_7752" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> focus: "XVI" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolutions(5): 1000 2000 4000 8000 16000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> active resolution: 16000 </span>
@@ -200,7 +200,7 @@ with an entire or portion of different chromosomes on each axis.</p></li>
 <span class="r-in"><span><span class="fu">import</span><span class="op">(</span><span class="va">hicPath</span>, resolution <span class="op">=</span> <span class="fl">16000</span>, focus <span class="op">=</span> <span class="st">'XVI'</span>, format <span class="op">=</span> <span class="st">'hic'</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 838,222 contacts over 60 regions </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/7cc4776919b2_7836" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/23aa69241c6a_7836" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> focus: "XVI" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolutions(5): 1000 2000 4000 8000 16000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> active resolution: 16000 </span>
@@ -239,7 +239,7 @@ with an entire or portion of different chromosomes on each axis.</p></li>
 <span class="r-in"><span><span class="fu">import</span><span class="op">(</span><span class="va">hicproMatrixPath</span>, bed <span class="op">=</span> <span class="va">hicproBedPath</span>, format <span class="op">=</span> <span class="st">'hicpro'</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> `HiCExperiment` object with 9,503,604 contacts over 12,165 regions </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/7cc418560af_7837" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fileName: "/github/home/.cache/R/ExperimentHub/23aa72974575_7837" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> focus: "whole genome" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolutions(1): 1000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> active resolution: 1000 </span>

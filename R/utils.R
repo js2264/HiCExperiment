@@ -53,11 +53,18 @@ splitCoords <- function(coords) {
         chr <- gsub(":.*", "", coords)
         chr <- ifelse(length(chr) == 0, NA, chr)
         # start <- suppressWarnings(as.numeric(stringr::str_replace_all(coords, ".*:|-.*", "")))
-        start <- suppressWarnings(as.numeric((gsub(".*:|-.*", "", coords))))
-        start <- ifelse(length(start) == 0, NA, start)
         # end <- suppressWarnings(as.numeric(stringr::str_replace(coords, ".*-", "")))
-        end <- suppressWarnings(as.numeric(gsub(".*-", "", coords)))
-        end <- ifelse(length(end) == 0, NA, end)
+        has_coords <- grepl(':', coords) 
+        start <- ifelse(
+            has_coords, 
+            suppressWarnings(as.numeric(gsub(".*:|-.*", "", coords))), 
+            NA
+        )
+        end <- ifelse(
+            has_coords, 
+            suppressWarnings(as.numeric(gsub(".*-", "", coords))), 
+            NA
+        )
         list(
             "chr" = chr,
             "start" = start,
@@ -82,10 +89,17 @@ coords2char <- function(coords, big.mark = ',') {
         else {
             # chr <- stringr::str_replace(coords, ":.*", "")
             chr <- gsub(":.*", "", coords)
-            # start <- suppressWarnings(as.numeric(stringr::str_replace_all(coords, ".*:|-.*", "")))
-            start <- suppressWarnings(as.numeric((gsub(".*:|-.*", "", coords))))
-            # end <- suppressWarnings(as.numeric(stringr::str_replace(coords, ".*-", "")))
-            end <- suppressWarnings(as.numeric(gsub(".*-", "", coords)))
+            has_coords <- grepl(':', coords) 
+            start <- ifelse(
+                has_coords, 
+                suppressWarnings(as.numeric(gsub(".*:|-.*", "", coords))), 
+                NA
+            )
+            end <- ifelse(
+                has_coords, 
+                suppressWarnings(as.numeric(gsub(".*-", "", coords))), 
+                NA
+            )
             if (is.na(start)) {
                 return(chr)
             }

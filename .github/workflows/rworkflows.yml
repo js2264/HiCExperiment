@@ -40,7 +40,7 @@ jobs:
           cont: ~
           rspm: ~
     steps:
-    - uses: neurogenomics/rworkflows@master
+    - uses: js2264/rworkflows@master
       with:
         run_bioccheck: ${{ true }}
         run_rcmdcheck: ${{ true }}

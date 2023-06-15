@@ -1,9 +1,7 @@
-[![](https://img.shields.io/badge/release%20version-0.99.10-orange.svg)](https://www.bioconductor.org/packages/HiCExperiment)
 [![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![rworkflows](https://github.com/js2264/HiCExperiment/actions/workflows/rworkflows.yml/badge.svg)](https://github.com/js2264/HiCExperiment/actions/workflows/rworkflows.yml)
 [![Documentation](https://github.com/js2264/HiCExperiment/workflows/pkgdown/badge.svg)](https://js2264.github.io/HiCExperiment)
-[![Github container registry](https://github.com/js2264/HiCExperiment/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/js2264/HiCExperiment/pkgs/container/hicexperiment)
 [![OHCA book](https://github.com/js2264/OHCA/actions/workflows/pages/pages-build-deployment/badge.svg)](https://js2264.github.io/OHCA/)
 
 # HiCExperiment

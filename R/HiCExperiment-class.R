@@ -377,6 +377,23 @@ makeHiCExperimentFromGInteractions <- function(gi) {
         pairsFile = pairsFile, 
         metadata = c(list(regions = bed), metadata)
     )
+
+    ## -- If imported data is all integers, run ICE and save `balanced`
+    s <- scores(x, 'count')
+    if (all(as.integer(s) == s)) {
+        if (requireNamespace("HiContacts", quietly = TRUE)) {
+            x <- HiContacts::normalize(x)
+            names(x@scores)[2] <- 'balanced'
+        }
+        else {
+            warning('Install `HiContacts` package (`BiocManager::install("HiContacts")`)\nto balance Hi-C data.')
+        }
+    }
+    else {
+        message("Imported data stored in `balanced` scores.")
+        names(x@scores)[1] <- 'balanced'
+    }
+
     methods::validObject(x)
     return(x)
 } 

@@ -264,15 +264,15 @@
 </li>
 </ul>
 <p>For development purposes, we provide a DockerHub-hosted <code>docker</code> image with <code>HiCExperiment</code> and related packages pre-installed and ready-to-go. A new image is automatically built on every <code>push</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co">## To fetch the latest docker image from Docker Hub (for development purposes!)</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="ex">docker</span> pull js2264/hicexperiment:latest</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">## To start docker image</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> js2264/hicexperiment:latest /usr/local/bin/R</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">## To fetch the latest docker image from Docker Hub (for development purposes!)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> pull js2264/hicexperiment:latest</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">## To start docker image</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> js2264/hicexperiment:latest /usr/local/bin/R</span></code></pre></div>
 <p>On top of that, for each release, an extra <code>docker</code> image is built and uploaded to the Github Container Repository.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co">## To fetch release-specific docker image from Github Container Repo</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="ex">docker</span> pull ghcr.io/js2264/hicexperiment:0.99.9</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">## To start docker image</span></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> ghcr.io/js2264/hicexperiment:0.99.9 /usr/local/bin/R</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">## To fetch release-specific docker image from Github Container Repo</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> pull ghcr.io/js2264/hicexperiment:0.99.9</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">## To start docker image</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> ghcr.io/js2264/hicexperiment:0.99.9 /usr/local/bin/R</span></code></pre></div>
 </div>
 </div>
 

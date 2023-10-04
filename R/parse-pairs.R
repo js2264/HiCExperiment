@@ -45,30 +45,47 @@
         .fmt <- 'prespecified'
     }
     if (.fmt == '4dn') {
-        fileLines <- vroom::vroom(
+        fileComments <- read.delim(
             file,
-            n_max = 100000,
-            col_names = FALSE,
-            comment = '#',
-            progress = FALSE, 
-            show_col_types = FALSE
-        )
-        chr1.field <- 2
-        start1.field <- 3
-        chr2.field <- 4
-        start2.field <- 5
-        strand1.field <- 6
-        strand2.field <- 7
-        if (ncol(fileLines) >= 9) {
-            frag1.field <- 8
-            frag2.field <- 9
+            sep = '&',
+            nrows = 1000,
+            check.names = FALSE, 
+            header = FALSE 
+        ) 
+        fileComments <- fileComments[grepl('^#[^#]', fileComments[,1]), ]
+        if (any(grepl("^#columns:", fileComments))) {
+            colIDs <- fileComments[which(grepl("^#columns:", fileComments))] |> 
+                strsplit(" ") |> 
+                unlist() |> 
+                tail(-1)
+            chr1.field <- which(colIDs == 'chr1')
+            start1.field <- which(colIDs == 'pos1')
+            chr2.field <- which(colIDs == 'chr2')
+            start2.field <- which(colIDs == 'pos2')
+            strand1.field <- which(colIDs == 'strand1')
+            strand2.field <- which(colIDs == 'strand2')
+            if ("pair_type" %in% colIDs) {
+                pair_type.field <- which(colIDs == 'pair_type')
+            } else {
+                pair_type.field <- NULL
+            }
+            if ("frag1" %in% colIDs) frag1.field <- which(colIDs == 'frag1')
+            if ("frag2" %in% colIDs) frag2.field <- which(colIDs == 'frag2')
+        }
+        else {
+            chr1.field <- 2
+            start1.field <- 3
+            chr2.field <- 4
+            start2.field <- 5
+            strand1.field <- 6
+            strand2.field <- 7
         }
     }
     if (.fmt == 'hicpro') {
         # <ID> <chr1> <pos1> <str1> <chr2> <pos2> <str2> <isize> <frag1> <frag2> <mapq1> <mapq2> [<allele-spe. info>]
         fileLines <- vroom::vroom(
             file,
-            n_max = 100000,
+            n_max = 1000,
             col_names = FALSE,
             comment = '#',
             progress = FALSE, 
@@ -91,7 +108,7 @@
         fileLines <- vroom::vroom(
             file,
             skip = 1, 
-            n_max = 100000,
+            n_max = 1000,
             col_names = FALSE,
             comment = '#',
             progress = FALSE, 
@@ -148,7 +165,7 @@
 
     # -- Parse anchors into GInteractions
     gi <- InteractionSet::GInteractions(anchor_one, anchor_two)
-    
+
     # -- Add frag information
     if (!is.null(frag1.field) & !is.null(frag2.field)) {
         gi$frag1 <- anchors1[[ncol(anchors1)]]
@@ -158,6 +175,21 @@
         gi$frag1 <- NA
         gi$frag2 <- NA
     }
+
+    # -- Add pair_type information
+    if (!is.null(pair_type.field)) {
+        pair_types <- vroom::vroom(
+            file,
+            skip = skip,
+            n_max = nrows,
+            col_select = dplyr::all_of(pair_type.field),
+            comment = '#',
+            col_names = FALSE,
+            show_col_types = FALSE,
+            num_threads = nThread
+        )
+        gi$pair_type <- pair_types[[1]]
+    } 
 
     # -- Add loop scores for hicstuff files 
     if (.fmt == 'hicstuff') {
@@ -185,7 +217,7 @@
     fileComments <- grep('^#', lines, value = TRUE)
     fileLines <- vroom::vroom(
         file,
-        n_max = 100000,
+        n_max = 1000,
         col_names = FALSE,
         comment = '#',
         progress = FALSE, 
@@ -193,6 +225,20 @@
         skip = 1
     )
     ncols <- ncol(fileLines)
+
+    # -- Check if file is pairtools format (pairtools)
+    # <ID> <chr1> <pos1> <chr2> <pos2> <str1> <str2> <pair_type>
+    if (any(grepl('pairs format', fileComments))) return('4dn')
+    if (tryCatch({
+        ncol(fileLines) >= 7 & 
+        is.character(fileLines[[1]]) & # <ID>
+        {is.character(fileLines[[2]]) | is.numeric(fileLines[[2]])} & # <chr1> 
+        is.numeric(fileLines[[3]]) & # <pos1> 
+        {is.character(fileLines[[4]]) | is.numeric(fileLines[[4]])} & # <chr2> 
+        is.numeric(fileLines[[5]]) & # <pos2> 
+        is.character(fileLines[[6]]) & all(unique(fileLines[[6]]) %in% c('+', '-')) & # <str1> 
+        is.character(fileLines[[7]]) & all(unique(fileLines[[7]]) %in% c('+', '-')) # <str2>
+    }, error = function(e) FALSE)) return('4dn')
 
     # -- Check if file is .pairs format (4DN)
     # <ID> <chr1> <pos1> <chr2> <pos2> <str1> <str2> [<frag1> <frag2>]

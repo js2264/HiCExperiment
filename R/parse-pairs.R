@@ -208,6 +208,21 @@
 
     # -- Add pairdist
     gi$distance <- InteractionSet::pairdist(gi) 
+
+    # -- Add seqinfo
+    if (.fmt == '4dn') {
+        chrs <- fileComments |> 
+            grep('#chromsize: ', x = _, value = TRUE) |>
+            gsub("#chromsize: ", "", x = _)
+        si <- gsub(".* ", "", chrs)
+        names(si) <- gsub(" .*", "", chrs)
+        GenomeInfoDb::seqlevels(gi) <- names(si)
+        GenomeInfoDb::seqinfo(gi) <- GenomeInfoDb::Seqinfo(
+            names(si), 
+            as.numeric(si)
+        )
+    }
+
     return(gi)
 }
 

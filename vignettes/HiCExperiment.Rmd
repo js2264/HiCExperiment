@@ -116,8 +116,9 @@ The implemented `import()` methods allow one to import Hi-C matrix files in R as
 `HiCExperiment` objects. 
 
 ```{r import, eval = FALSE}
+## Change <path/to/contact_matrix>.cool accordingly
 hic <- import(
-    "path/to/contact_matrix.cool", 
+    "<path/to/contact_matrix>.cool", 
     focus = "chr:start-end", 
     resolution = ...
 )

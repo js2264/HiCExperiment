@@ -14,7 +14,7 @@
 \alias{df2gi}
 \title{Coercing functions}
 \usage{
-\S4method{as.matrix}{HiCExperiment}(x, use.scores = "balanced", sparse = TRUE)
+\S4method{as.matrix}{HiCExperiment}(x, use.scores = "balanced", sparse = FALSE)
 
 \S4method{as.data.frame}{HiCExperiment}(x)
 

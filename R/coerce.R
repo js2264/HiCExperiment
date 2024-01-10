@@ -90,6 +90,14 @@ setAs("HiCExperiment", "ContactMatrix", function(from) {
 #' @name as
 
 setAs("HiCExperiment", "matrix", function(from) {
+    as(from, "ContactMatrix") |> cm2matrix(sparse = FALSE)
+})
+
+
+#' @export
+#' @name as
+
+setAs("HiCExperiment", "dgTMatrix", function(from) {
     as(from, "ContactMatrix") |> cm2matrix(sparse = TRUE)
 })
 
@@ -109,7 +117,7 @@ setAs("HiCExperiment", "data.frame", function(from) {
 #' @export
 #' @name as
 
-setMethod("as.matrix", "HiCExperiment", function(x, use.scores = "balanced", sparse = TRUE) {
+setMethod("as.matrix", "HiCExperiment", function(x, use.scores = "balanced", sparse = FALSE) {
     interactions(x) |> gi2cm(use.scores = use.scores) |> cm2matrix(sparse = sparse)
 })
 

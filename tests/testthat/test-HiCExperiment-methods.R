@@ -95,13 +95,23 @@ test_that("coerce works", {
     expect_s4_class({
         as(contacts_yeast, 'ContactMatrix')
     }, 'ContactMatrix')
-    expect_true(is.matrix(base::as.matrix(as.matrix(contacts_yeast))))
+    expect_true({
+        is.matrix(as(contacts_yeast, 'matrix'))
+    })
+    expect_false({
+        is.matrix(as(contacts_yeast, 'dgTMatrix'))
+    })
     expect_s4_class({
-        as(contacts_yeast, 'matrix')
+        as(contacts_yeast, 'dgTMatrix')
     }, 'dgTMatrix')
     expect_s4_class({
-        as.matrix(contacts_yeast)
+        as.matrix(contacts_yeast, sparse = TRUE)
     }, 'dgTMatrix')
+    expect_true({
+        is.matrix(
+            as.matrix(contacts_yeast, sparse = FALSE)
+        )
+    })
     expect_s3_class({
         df <- as(contacts_yeast, 'data.frame')
     }, 'data.frame')

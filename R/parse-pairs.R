@@ -29,6 +29,7 @@
 
     # -- Guess pairs format
     skip <- 0
+    pair_type.field <- NULL
     if (
         is.null(chr1.field) & 
         is.null(start1.field) & 

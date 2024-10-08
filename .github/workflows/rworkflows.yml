@@ -17,6 +17,7 @@ name: rworkflows
     - RELEASE_**
 jobs:
   rworkflows:
+    permissions: write-all
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
     container: ${{ matrix.config.cont }}
@@ -27,27 +28,22 @@ jobs:
         - os: ubuntu-latest
           bioc: devel
           r: auto
-          cont: bioconductor/bioconductor_docker:devel
-          rspm: https://packagemanager.rstudio.com/cran/__linux__/focal/release
-        - os: ubuntu-latest
-          bioc: RELEASE_3_18
+          cont: ghcr.io/bioconductor/bioconductor_docker:devel
+          rspm: ~
+        - os: macOS-latest
+          bioc: release
           r: auto
-          cont: bioconductor/bioconductor_docker:RELEASE_3_18
-          rspm: https://packagemanager.rstudio.com/cran/__linux__/focal/release
-        # - os: macOS-latest
-        #   bioc: devel
-        #   r: auto
-        #   cont: ~
-        #   rspm: ~
+          cont: ~
+          rspm: ~
         - os: windows-latest
-          bioc: devel
+          bioc: release
           r: auto
           cont: ~
           rspm: ~
     steps:
     - uses: neurogenomics/rworkflows@master
       with:
-        run_bioccheck: ${{ true }}
+        run_bioccheck: ${{ false }}
         run_rcmdcheck: ${{ true }}
         as_cran: ${{ true }}
         run_vignettes: ${{ true }}
@@ -56,10 +52,9 @@ jobs:
         run_pkgdown: ${{ true }}
         has_runit: ${{ false }}
         has_latex: ${{ false }}
-        GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run_docker: ${{ false }}
-        docker_user: ${{ 'js2264' }}
-        docker_org: ${{ 'js2264' }}
         DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
         runner_os: ${{ runner.os }}
         cache_version: cache-v1
+        docker_registry: ghcr.io

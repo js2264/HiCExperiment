@@ -306,11 +306,11 @@ NULL
 
     # Mutate Pairs provided as characters to real Pairs
     if (!is.null(coords)) {
-        if (grepl('\\|', coords)) {
+        if (any(grepl('\\|', coords))) {
             si <- .cool2seqinfo(file, resolution)
             if (
                 grepl(
-                    '[A-Za-z0-9]*\\|[A-Za-z0-9]*$', coords
+                    '[A-Za-z0-9_-]*\\|[A-Za-z0-9_-]*$', coords
                 )
             ) { # e.g. 'II|III'
                 chr1 <- strsplit(coords, '\\|')[[1]][1]

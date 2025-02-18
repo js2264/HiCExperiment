@@ -78,6 +78,8 @@
     }
     is1D <- all(S4Vectors::first(pairs) == S4Vectors::second(pairs))
     isTrans <- all(GenomicRanges::seqnames(coordsList1) != GenomicRanges::seqnames(coordsList2))
+    # DEBUG message(glue::glue('is1D: {is1D}'))
+    # DEBUG message(glue::glue('isTrans: {isTrans}'))
 
     # - !!! HEAVY LOAD !!! Parse ALL pixels and convert to sparse matrix
     # - Full parsing has to be done since parallelized access to HDF5 is not supported 
@@ -143,14 +145,22 @@
                 {{breadth/resolution}/2} - {breadth/resolution}/2, 
                 {{breadth/resolution}/2} + {breadth/resolution}/2
             )
-            expected <- detrendingModelMat[exp_bi_0+1, exp_bi_0+1+dist]
-            if (is1D) expected[lower.tri(expected)] <- NA
-            detrended <- log2( 
-                {balanced/sum(balanced, na.rm = TRUE)} / 
-                {expected/sum(expected, na.rm = TRUE)} 
-            )
-            if (is1D) detrended[lower.tri(detrended)] <- NA
-            detrended[is.infinite(detrended)] <- NA
+            if (isTrans) {
+                expected <- balanced
+                expected[lower.tri(expected)] <- NA
+                detrended <- balanced
+                detrended[lower.tri(detrended)] <- NA
+            } 
+            else {
+                expected <- detrendingModelMat[exp_bi_0+1, exp_bi_0+1+dist]
+                if (is1D) expected[lower.tri(expected)] <- NA
+                detrended <- log2( 
+                    {balanced/sum(balanced, na.rm = TRUE)} / 
+                    {expected/sum(expected, na.rm = TRUE)} 
+                )
+                if (is1D) detrended[lower.tri(detrended)] <- NA
+                detrended[is.infinite(detrended)] <- NA
+            }
             list(
                 count = counts, 
                 balanced = balanced,

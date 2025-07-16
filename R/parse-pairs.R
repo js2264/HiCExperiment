@@ -124,6 +124,17 @@
         frag1.field <- 0
         frag2.field <- 0
     }
+    if (.fmt == 'juicer') {
+        # <str1> <chr1> <pos1> <frag1> <str2> <chr2> <pos2> <frag2> <mapq1> <cigar1> <sequence1> <mapq2> <cigar2> <sequence2> <readname1> <readname2>
+        chr1.field <- 2
+        start1.field <- 3
+        chr2.field <- 6
+        start2.field <- 7
+        strand1.field <- 0
+        strand2.field <- 0
+        frag1.field <- 4
+        frag2.field <- 8
+    }
     if (any(c(
         is.null(chr1.field), 
         is.null(start1.field), 

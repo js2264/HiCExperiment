@@ -52,6 +52,10 @@ NULL
 
 .getCoolAnchors <- function(file, resolution = NULL, balanced = "cooler") {
     bins <- .fetchCool(file, "bins", resolution)
+    if (is.numeric(bins$chrom)) {
+        chroms <- .fetchCool(file, "chroms", resolution)$name
+        bins$chrom <- factor(chroms[bins$chrom + 1], levels = chroms)
+    }
     anchors <- GenomicRanges::GRanges(
         bins$chr,
         IRanges::IRanges(bins$start + 1, bins$end),

@@ -54,7 +54,7 @@
 #' @param fillout.regions Whehter to add missing regions to GInteractions' regions? 
 #' 
 #' @importMethodsFrom BiocGenerics fileName
-#' @importFrom GenomeInfoDb seqinfo
+#' @importFrom Seqinfo seqinfo
 #' 
 #' @include AllGenerics.R
 NULL
@@ -371,10 +371,10 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
         ) { # e.g. 'II|III'
             chr1 <- strsplit(i, '\\|')[[1]][1]
             chr2 <- strsplit(i, '\\|')[[1]][2]
-            if (!all(c(chr1, chr2) %in% seqnames(GenomeInfoDb::seqinfo(x)))) {
+            if (!all(c(chr1, chr2) %in% seqnames(Seqinfo::seqinfo(x)))) {
                 stop("One or all of the provided seqnames is not found.")
             }
-            si <- GenomeInfoDb::seqinfo(x)
+            si <- Seqinfo::seqinfo(x)
             gr1 <- as(si[chr1], 'GRanges')
             gr2 <- as(si[chr2], 'GRanges')
             i_ <- paste(as.character(gr1), as.character(gr2), sep = '|')
@@ -382,7 +382,7 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
             return(x[i_])
         }
         else if (
-            all(i %in% seqnames(GenomeInfoDb::seqinfo(x)))
+            all(i %in% seqnames(Seqinfo::seqinfo(x)))
         ) { # e.g. 'II'
             valid_regions_first <- re_$bin_id[as.vector(seqnames(re_)) %in% i]
             valid_regions_second <- valid_regions_first
@@ -395,7 +395,7 @@ setMethod("[", signature("HiCExperiment", "character"), function(x, i) {
 
     else { # c('II', 'III')
         if (
-            all(i %in% seqnames(GenomeInfoDb::seqinfo(x)))
+            all(i %in% seqnames(Seqinfo::seqinfo(x)))
         ) { 
             valid_regions_first <- re_$bin_id[as.vector(seqnames(re_)) %in% i]
             valid_regions_second <- valid_regions_first
@@ -495,23 +495,23 @@ setMethod("bins", "HiCExperiment", function(x) {
         bins <- .getCoolAnchors(
             fileName(x), resolution = NULL, balanced = TRUE
         )
-        GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
+        Seqinfo::seqinfo(bins) <- Seqinfo::seqinfo(x)
     }
     else if (.is_mcool(fileName(x))) {
         bins <- .getCoolAnchors(
             fileName(x), resolution = resolution(x), balanced = TRUE
         )
-        GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
+        Seqinfo::seqinfo(bins) <- Seqinfo::seqinfo(x)
     }
     else if (.is_hic(fileName(x))) {
         bins <- .getHicAnchors(
             fileName(x), resolution = resolution(x)
         )
-        GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
+        Seqinfo::seqinfo(bins) <- Seqinfo::seqinfo(x)
     }
     else if (.is_hicpro_matrix(fileName(x)) & .is_hicpro_regions(metadata(x)$regions)) {
         bins <- .getHicproAnchors(metadata(x)$regions)
-        GenomeInfoDb::seqinfo(bins) <- GenomeInfoDb::seqinfo(x)
+        Seqinfo::seqinfo(bins) <- Seqinfo::seqinfo(x)
     }
     else {
         stop("Input format not supported")

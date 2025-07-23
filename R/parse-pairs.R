@@ -228,8 +228,8 @@
             gsub("#chromsize: ", "", x = _)
         si <- gsub(".* ", "", chrs)
         names(si) <- gsub(" .*", "", chrs)
-        GenomeInfoDb::seqlevels(gi) <- names(si)
-        GenomeInfoDb::seqinfo(gi) <- GenomeInfoDb::Seqinfo(
+        Seqinfo::seqlevels(gi) <- names(si)
+        Seqinfo::seqinfo(gi) <- Seqinfo::Seqinfo(
             names(si), 
             as.numeric(si)
         )

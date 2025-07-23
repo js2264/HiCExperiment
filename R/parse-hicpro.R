@@ -54,8 +54,8 @@ NULL
         an2, 
         re
     )
-    GenomeInfoDb::seqlevels(gi) <- GenomeInfoDb::seqlevels(anchors)
-    GenomeInfoDb::seqinfo(gi) <- GenomeInfoDb::seqinfo(anchors)
+    Seqinfo::seqlevels(gi) <- Seqinfo::seqlevels(anchors)
+    Seqinfo::seqinfo(gi) <- Seqinfo::seqinfo(anchors)
 
     # Find bin IDs
     gi$bin_id1 <- S4Vectors::subjectHits(

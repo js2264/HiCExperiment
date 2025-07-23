@@ -82,7 +82,7 @@ setMethod("export", signature(object = "HiCExperiment", con = "missing", format 
                 "genome-assembly"= "unknown",
                 "metadata" = metadata,
                 "nbins"= nrow(b),
-                "nchroms"= length(GenomeInfoDb::seqlevels(re)),
+                "nchroms"= length(Seqinfo::seqlevels(re)),
                 "nnz"= length(interactions(object)),
                 "storage-mode"= "symmetric-upper",
                 "sum"= sum(scores(object, 'count'))
@@ -90,8 +90,8 @@ setMethod("export", signature(object = "HiCExperiment", con = "missing", format 
 
             ## -- Create Chroms table
             chroms <- data.frame(
-                seqnames = GenomeInfoDb::seqlevels(re), 
-                seqlengths = GenomeInfoDb::seqlengths(re)
+                seqnames = Seqinfo::seqlevels(re),
+                seqlengths = Seqinfo::seqlengths(re)
             )
             colnames(chroms) <- c("name", "length")
 

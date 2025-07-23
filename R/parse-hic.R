@@ -42,9 +42,9 @@ NULL
                     stop("One or all of the provided seqnames is not found.")
                 }
                 gr1 <- as(si[chr1], 'GRanges')
-                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                Seqinfo::seqlevels(gr1) <- Seqinfo::seqlevels(si)
                 gr2 <- as(si[chr2], 'GRanges')
-                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                Seqinfo::seqlevels(gr1) <- Seqinfo::seqlevels(si)
                 coords <- S4Vectors::Pairs(
                     sort(c(gr1, gr2))[1], 
                     sort(c(gr1, gr2))[2]
@@ -53,9 +53,9 @@ NULL
             else {
                 coords <- char2coords(coords)
                 gr1 <- S4Vectors::first(coords)
-                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                Seqinfo::seqlevels(gr1) <- Seqinfo::seqlevels(si)
                 gr2 <- S4Vectors::second(coords)
-                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                Seqinfo::seqlevels(gr1) <- Seqinfo::seqlevels(si)
                 coords <- S4Vectors::Pairs(
                     sort(c(gr1, gr2))[1], 
                     sort(c(gr1, gr2))[2]
@@ -69,18 +69,18 @@ NULL
 
     # Get anchors from hic
     anchors <- .getHicAnchors(file, resolution)
-    si <- GenomeInfoDb::seqinfo(anchors)
+    si <- Seqinfo::seqinfo(anchors)
 
     # Get raw counts for bins from hic
     if (is.null(coords)) {
-        combs <- combn(GenomeInfoDb::seqlevels(anchors), m = 2) |> 
+        combs <- combn(Seqinfo::seqlevels(anchors), m = 2) |>
                 as.data.frame() |> 
                 t()
         colnames(combs) <- c('one', 'two')
         combs <- rbind(
             data.frame(
-                'one' = GenomeInfoDb::seqlevels(anchors), 
-                'two' = GenomeInfoDb::seqlevels(anchors)
+                'one' = Seqinfo::seqlevels(anchors),
+                'two' = Seqinfo::seqlevels(anchors)
             ),
             combs
         )
@@ -113,10 +113,10 @@ NULL
                 )
             )
             ean1 <- GenomicRanges::end(an1)
-            maxean1 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == coords[[1]]]
+            maxean1 <- Seqinfo::seqlengths(si)[Seqinfo::seqlevels(si) == coords[[1]]]
             GenomicRanges::end(an1)[ean1 > maxean1] <- maxean1
-            GenomeInfoDb::seqlevels(an1) <- GenomeInfoDb::seqlevels(si)
-            GenomeInfoDb::seqinfo(an1) <- si
+            Seqinfo::seqlevels(an1) <- Seqinfo::seqlevels(si)
+            Seqinfo::seqinfo(an1) <- si
             an2 <- GenomicRanges::GRanges(
                 seqnames = seqnames2, 
                 ranges = IRanges::IRanges(
@@ -125,10 +125,10 @@ NULL
                 )
             )
             ean2 <- GenomicRanges::end(an2)
-            maxean2 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == coords[[2]]]
+            maxean2 <- Seqinfo::seqlengths(si)[Seqinfo::seqlevels(si) == coords[[2]]]
             GenomicRanges::end(an2)[ean2 > maxean2] <- maxean2
-            GenomeInfoDb::seqlevels(an2) <- GenomeInfoDb::seqlevels(si)
-            GenomeInfoDb::seqinfo(an2) <- si
+            Seqinfo::seqlevels(an2) <- Seqinfo::seqlevels(si)
+            Seqinfo::seqinfo(an2) <- si
             gi <- InteractionSet::GInteractions(
                 an1, 
                 an2, 
@@ -152,7 +152,7 @@ NULL
                 width = resolution
             )
         )
-        suppressWarnings(GenomeInfoDb::seqinfo(an1) <- si)
+        suppressWarnings(Seqinfo::seqinfo(an1) <- si)
         an1 <- GenomicRanges::trim(an1)
         an2 <- GenomicRanges::GRanges(
             seqnames = full_parsed_hic$seqnames2, 
@@ -161,7 +161,7 @@ NULL
                 width = resolution
             )
         )
-        suppressWarnings(GenomeInfoDb::seqinfo(an2) <- si)
+        suppressWarnings(Seqinfo::seqinfo(an2) <- si)
         an2 <- GenomicRanges::trim(an2)
         gi <- InteractionSet::GInteractions(
             an1, 
@@ -200,10 +200,10 @@ NULL
             )
         )
         ean1 <- GenomicRanges::end(an1)
-        maxean1 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == seqnames]
+        maxean1 <- Seqinfo::seqlengths(si)[Seqinfo::seqlevels(si) == seqnames]
         GenomicRanges::end(an1)[ean1 > maxean1] <- maxean1
-        GenomeInfoDb::seqlevels(an1) <- GenomeInfoDb::seqlevels(si)
-        GenomeInfoDb::seqinfo(an1) <- si
+        Seqinfo::seqlevels(an1) <- Seqinfo::seqlevels(si)
+        Seqinfo::seqinfo(an1) <- si
         an2 <- GenomicRanges::GRanges(
             seqnames = seqnames, 
             ranges = IRanges::IRanges(
@@ -212,10 +212,10 @@ NULL
             )
         )
         ean2 <- GenomicRanges::end(an2)
-        maxean2 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == seqnames]
+        maxean2 <- Seqinfo::seqlengths(si)[Seqinfo::seqlevels(si) == seqnames]
         GenomicRanges::end(an2)[ean2 > maxean2] <- maxean2
-        GenomeInfoDb::seqlevels(an2) <- GenomeInfoDb::seqlevels(si)
-        GenomeInfoDb::seqinfo(an2) <- si
+        Seqinfo::seqlevels(an2) <- Seqinfo::seqlevels(si)
+        Seqinfo::seqinfo(an2) <- si
         gi <- InteractionSet::GInteractions(
             an1, 
             an2, 
@@ -254,10 +254,10 @@ NULL
             )
         )
         ean1 <- GenomicRanges::end(an1)
-        maxean1 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == seqnames1]
+        maxean1 <- Seqinfo::seqlengths(si)[Seqinfo::seqlevels(si) == seqnames1]
         GenomicRanges::end(an1)[ean1 > maxean1] <- maxean1
-        GenomeInfoDb::seqlevels(an1) <- GenomeInfoDb::seqlevels(si)
-        GenomeInfoDb::seqinfo(an1) <- si
+        Seqinfo::seqlevels(an1) <- Seqinfo::seqlevels(si)
+        Seqinfo::seqinfo(an1) <- si
         an2 <- GenomicRanges::GRanges(
             seqnames = seqnames2, 
             ranges = IRanges::IRanges(
@@ -266,10 +266,10 @@ NULL
             )
         )
         ean2 <- GenomicRanges::end(an2)
-        maxean2 <- GenomeInfoDb::seqlengths(si)[GenomeInfoDb::seqlevels(si) == seqnames2]
+        maxean2 <- Seqinfo::seqlengths(si)[Seqinfo::seqlevels(si) == seqnames2]
         GenomicRanges::end(an2)[ean2 > maxean2] <- maxean2
-        GenomeInfoDb::seqlevels(an2) <- GenomeInfoDb::seqlevels(si)
-        GenomeInfoDb::seqinfo(an2) <- si
+        Seqinfo::seqlevels(an2) <- Seqinfo::seqlevels(si)
+        Seqinfo::seqinfo(an2) <- si
         gi <- InteractionSet::GInteractions(
             an1, 
             an2, 
@@ -339,10 +339,10 @@ NULL
     .check_hic_format(file, resolution)
     anchors <- .getHicAnchors(file, resolution)
     bins <- as.data.frame(anchors)
-    si <- GenomeInfoDb::seqinfo(anchors)
+    si <- Seqinfo::seqinfo(anchors)
     combs <- data.frame(
-        'one' = GenomeInfoDb::seqlevels(anchors), 
-        'two' = GenomeInfoDb::seqlevels(anchors)
+        'one' = Seqinfo::seqlevels(anchors),
+        'two' = Seqinfo::seqlevels(anchors)
     )
     pixs <- apply(combs, 1, function(coords) {tryCatch(expr = {
         parsed_hic <- strawr::straw(

@@ -142,7 +142,7 @@ setMethod("as.data.frame", "HiCExperiment", function(x) {
 gi2cm <- function(gi, use.scores = 'score') {
     if (!use.scores %in% colnames(S4Vectors::mcols(gi))) 
         stop("`use.scores` argument not found in the provided interactions")
-    # seqnames <- unique(GenomeInfoDb::seqnames(regions(gi)))
+    # seqnames <- unique(Seqinfo::seqnames(regions(gi)))
     # if (length(seqnames == 1)) {
     #     gr <- GenomicRanges::GRanges(seqinfo(gi))
     #     res <- GenomicRanges::width(regions(gi))[1]

@@ -1,7 +1,7 @@
 Package: HiCExperiment
 Title: Bioconductor class for interacting with Hi-C files in R
-Version: 1.9.1
-Date: 2022-11-10
+Version: 1.9.2
+Date: 2025-07-22
 Authors@R:
     c(person(given = "Jacques",
            family = "Serizay",
@@ -23,7 +23,7 @@ Depends:
 Imports:
     InteractionSet,
     strawr, 
-    GenomeInfoDb,
+    Seqinfo,
     GenomicRanges,
     IRanges,
     S4Vectors,

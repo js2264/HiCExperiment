@@ -33,8 +33,8 @@
 #' @importFrom dplyr left_join
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarize
-#' @importFrom GenomeInfoDb Seqinfo
-#' @importFrom GenomeInfoDb seqlengths
+#' @importFrom Seqinfo Seqinfo
+#' @importFrom Seqinfo seqlengths
 #' @importFrom IRanges subsetByOverlaps
 #' @importFrom IRanges IRanges
 #' @importFrom S4Vectors subjectHits
@@ -158,7 +158,7 @@ NULL
     # If only chr. names are provided, find their start and stop
     if (any(is.na(coords_start) & !is.na(coords_chr))) {
         coords_start <- rep(1, length(coords_start))
-        coords_end <- GenomeInfoDb::seqlengths(anchors)[coords_chr]
+        coords_end <- Seqinfo::seqlengths(anchors)[coords_chr]
     }
 
     ## Check that queried chr. exist
@@ -297,7 +297,7 @@ NULL
 
 .cool2seqinfo <- function(file, resolution = NULL) {
     chroms <- .fetchCool(file, "chroms", resolution)
-    seqinfo <- GenomeInfoDb::Seqinfo(
+    seqinfo <- Seqinfo::Seqinfo(
         seqnames = as.vector(chroms$name),
         seqlengths = as.vector(chroms$length)
     )
@@ -323,9 +323,9 @@ NULL
                     stop("One or all of the provided seqnames is not found.")
                 }
                 gr1 <- as(si[chr1], 'GRanges')
-                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                Seqinfo::seqlevels(gr1) <- Seqinfo::seqlevels(si)
                 gr2 <- as(si[chr2], 'GRanges')
-                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                Seqinfo::seqlevels(gr1) <- Seqinfo::seqlevels(si)
                 coords <- S4Vectors::Pairs(
                     sort(c(gr1, gr2))[1], 
                     sort(c(gr1, gr2))[2]
@@ -334,9 +334,9 @@ NULL
             else {
                 coords <- char2coords(coords)
                 gr1 <- S4Vectors::first(coords)
-                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                Seqinfo::seqlevels(gr1) <- Seqinfo::seqlevels(si)
                 gr2 <- S4Vectors::second(coords)
-                GenomeInfoDb::seqlevels(gr1) <- GenomeInfoDb::seqlevels(si)
+                Seqinfo::seqlevels(gr1) <- Seqinfo::seqlevels(si)
                 coords <- S4Vectors::Pairs(
                     sort(c(gr1, gr2))[1], 
                     sort(c(gr1, gr2))[2]

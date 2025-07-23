@@ -302,10 +302,10 @@ detrendingModel <- function(file, resolution) {
     ) { # e.g. 'II|III'
         chr1 <- strsplit(coords, '\\|')[[1]][1]
         chr2 <- strsplit(coords, '\\|')[[1]][2]
-        if (!all(c(chr1, chr2) %in% seqnames(GenomeInfoDb::seqinfo(gis)))) {
+        if (!all(c(chr1, chr2) %in% seqnames(Seqinfo::seqinfo(gis)))) {
             stop("One or all of the provided seqnames is not found.")
         }
-        si <- GenomeInfoDb::seqinfo(gis)
+        si <- Seqinfo::seqinfo(gis)
         gr1 <- as(si[chr1], 'GRanges')
         gr2 <- as(si[chr2], 'GRanges')
         valid_bins <- c(
@@ -315,7 +315,7 @@ detrendingModel <- function(file, resolution) {
         re <- bins[bins$bin_id %in% valid_bins]
     }
     else if (
-        all(coords %in% seqnames(GenomeInfoDb::seqinfo(gis)))
+        all(coords %in% seqnames(Seqinfo::seqinfo(gis)))
     ) { # e.g. 'II'
         valid_bins <- bins$bin_id[as.vector(seqnames(bins)) %in% coords]
         re <- bins[bins$bin_id %in% valid_bins]

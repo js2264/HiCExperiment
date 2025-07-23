@@ -20,7 +20,7 @@ setMethod("bin", signature(x = "GInteractions", resolution = "numeric"), functio
             as.data.frame() |> 
             dplyr::group_by(seqnames) |> 
             dplyr::summarize(seqlengths = max(end))
-        seqinfo <- GenomeInfoDb::Seqinfo(
+        seqinfo <- Seqinfo::Seqinfo(
             seqnames = levels(re_df$seqnames), 
             seqlengths = re_df$seqlengths
         )

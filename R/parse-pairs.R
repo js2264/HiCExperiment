@@ -59,9 +59,9 @@
                 strsplit(" ") |> 
                 unlist() |> 
                 tail(-1)
-            chr1.field <- which(colIDs == 'chr1')
+            chr1.field <- which(colIDs == 'chr1' | colIDs == 'chrom1')
             start1.field <- which(colIDs == 'pos1')
-            chr2.field <- which(colIDs == 'chr2')
+            chr2.field <- which(colIDs == 'chr2' | colIDs == 'chrom2')
             start2.field <- which(colIDs == 'pos2')
             strand1.field <- which(colIDs == 'strand1')
             strand2.field <- which(colIDs == 'strand2')

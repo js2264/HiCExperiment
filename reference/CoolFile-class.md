@@ -62,15 +62,15 @@ cf <- CoolFile(
 )
 cf
 #> CoolFile object
-#> .mcool file: /github/home/.cache/R/ExperimentHub/3e261f048867_7752 
+#> .mcool file: /github/home/.cache/R/ExperimentHub/1ad066697fb8_7752 
 #> resolution: 2000 
-#> pairs file: /github/home/.cache/R/ExperimentHub/3e2648419160_7753 
+#> pairs file: /github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753 
 #> metadata(1): info
 resolution(cf)
 #> [1] 2000
 pairsFile(cf)
 #>                                                  EH7703 
-#> "/github/home/.cache/R/ExperimentHub/3e2648419160_7753" 
+#> "/github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753" 
 metadata(cf)
 #> $info
 #> [1] "Yeast WT Hi-C exp."

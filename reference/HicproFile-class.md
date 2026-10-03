@@ -67,16 +67,16 @@ hicpro <- HicproFile(
 hicpro
 #> HicproFile object
 #> HiC-Pro files:
-#>   $ matrix:   /github/home/.cache/R/ExperimentHub/3e2639eaefe7_7837 
-#>   $ regions:  /github/home/.cache/R/ExperimentHub/3e2612bef73a_7838 
+#>   $ matrix:   /github/home/.cache/R/ExperimentHub/1ad0496724a6_7837 
+#>   $ regions:  /github/home/.cache/R/ExperimentHub/1ad0375f3a28_7838 
 #> resolution: 1000 
-#> pairs file: /github/home/.cache/R/ExperimentHub/3e2648419160_7753 
+#> pairs file: /github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753 
 #> metadata(1): type
 resolution(hicpro)
 #> [1] 1000
 pairsFile(hicpro)
 #>                                                  EH7703 
-#> "/github/home/.cache/R/ExperimentHub/3e2648419160_7753" 
+#> "/github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753" 
 metadata(hicpro)
 #> $type
 #> [1] "example"

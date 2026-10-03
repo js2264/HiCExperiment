@@ -1,4 +1,4 @@
 # License
 
-    YEAR: 2022
-    COPYRIGHT HOLDER: HiCExperiment authors
+YEAR: 2022\
+COPYRIGHT HOLDER: HiCExperiment authors\

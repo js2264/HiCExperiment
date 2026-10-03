@@ -285,14 +285,14 @@ contacts <- HiCExperiment(
 contacts
 #> `HiCExperiment` object with 8,757,906 contacts over 1,517 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/3e261f048867_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1ad066697fb8_7752" 
 #> focus: "whole genome" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 
 #> interactions: 801962 
 #> scores(2): count balanced 
 #> topologicalFeatures: compartments(0) borders(0) loops(0) viewpoints(0) 
-#> pairsFile: /github/home/.cache/R/ExperimentHub/3e2648419160_7753 
+#> pairsFile: /github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753 
 #> metadata(0):
 
 #####################################################################
@@ -319,7 +319,7 @@ contacts2
 #####################################################################
 
 fileName(contacts)
-#> [1] "/github/home/.cache/R/ExperimentHub/3e261f048867_7752"
+#> [1] "/github/home/.cache/R/ExperimentHub/1ad066697fb8_7752"
 focus(contacts)
 #> NULL
 resolutions(contacts)
@@ -365,7 +365,7 @@ topologicalFeatures(contacts)
 #> names(4): compartments borders loops viewpoints
 pairsFile(contacts)
 #>                                                  EH7703 
-#> "/github/home/.cache/R/ExperimentHub/3e2648419160_7753" 
+#> "/github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753" 
 
 #####################################################################
 ## ---------------------- Slot getters --------------------------- ##
@@ -402,62 +402,62 @@ pairsFile(contacts) <- HiContactsData('yeast_wt', 'pairs.gz')
 contacts[1:100]
 #> `HiCExperiment` object with 4,140 contacts over 100 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/3e261f048867_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1ad066697fb8_7752" 
 #> focus: "whole genome" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 
 #> interactions: 100 
 #> scores(3): count balanced random 
 #> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) 
-#> pairsFile: /github/home/.cache/R/ExperimentHub/3e2648419160_7753 
+#> pairsFile: /github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753 
 #> metadata(0):
 contacts['II']
 #> `HiCExperiment` object with 471,364 contacts over 102 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/3e261f048867_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1ad066697fb8_7752" 
 #> focus: "II" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 
 #> interactions: 4693 
 #> scores(3): count balanced random 
 #> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) 
-#> pairsFile: /github/home/.cache/R/ExperimentHub/3e2648419160_7753 
+#> pairsFile: /github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753 
 #> metadata(0):
 contacts[c('II', 'III')]
 #> `HiCExperiment` object with 632,446 contacts over 142 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/3e261f048867_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1ad066697fb8_7752" 
 #> focus: "II, III" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 
 #> interactions: 8502 
 #> scores(3): count balanced random 
 #> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) 
-#> pairsFile: /github/home/.cache/R/ExperimentHub/3e2648419160_7753 
+#> pairsFile: /github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753 
 #> metadata(0):
 contacts['II|III']
 #> `HiCExperiment` object with 9,092 contacts over 142 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/3e261f048867_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1ad066697fb8_7752" 
 #> focus: "II:1-813184|III:1-316620" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 
 #> interactions: 3000 
 #> scores(3): count balanced random 
 #> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) 
-#> pairsFile: /github/home/.cache/R/ExperimentHub/3e2648419160_7753 
+#> pairsFile: /github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753 
 #> metadata(0):
 contacts['II:10001-30000|III:50001-90000']
 #> `HiCExperiment` object with 11 contacts over 5 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/3e261f048867_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1ad066697fb8_7752" 
 #> focus: "II:10001-30000|III:50001-90000" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 
 #> interactions: 4 
 #> scores(3): count balanced random 
 #> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) 
-#> pairsFile: /github/home/.cache/R/ExperimentHub/3e2648419160_7753 
+#> pairsFile: /github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753 
 #> metadata(0):
 
 #####################################################################
@@ -467,18 +467,18 @@ contacts['II:10001-30000|III:50001-90000']
 
 seqinfo(contacts)
 #> Seqinfo object with 16 sequences from an unspecified genome:
-#>   seqnames seqlengths isCircular genome
-#>   I            230218       <NA>   <NA>
-#>   II           813184       <NA>   <NA>
-#>   III          316620       <NA>   <NA>
-#>   IV          1531933       <NA>   <NA>
-#>   V            576874       <NA>   <NA>
-#>   ...             ...        ...    ...
-#>   XII         1078177       <NA>   <NA>
-#>   XIII         924431       <NA>   <NA>
-#>   XIV          784333       <NA>   <NA>
-#>   XV          1091291       <NA>   <NA>
-#>   XVI          948066       <NA>   <NA>
+#>   seqnames seqnames seqlengths isCircular genome
+#>   1               I     230218       <NA>   <NA>
+#>   2              II     813184       <NA>   <NA>
+#>   3             III     316620       <NA>   <NA>
+#>   4              IV    1531933       <NA>   <NA>
+#>   5               V     576874       <NA>   <NA>
+#>   ...           ...        ...        ...    ...
+#>   12            XII    1078177       <NA>   <NA>
+#>   13           XIII     924431       <NA>   <NA>
+#>   14            XIV     784333       <NA>   <NA>
+#>   15             XV    1091291       <NA>   <NA>
+#>   16            XVI     948066       <NA>   <NA>
 bins(contacts)
 #> GRanges object with 1517 ranges and 2 metadata columns:
 #>                     seqnames        ranges strand |    bin_id    weight

@@ -44,20 +44,16 @@ rich ecosystem when interacting with Hi-C data.
 HiCExperiment is an R/Bioconductor package. As such, it can be installed
 with:
 
-``` r
-
-BiocManager::install("HiCExperiment")
-```
+\
+`BiocManager``::`[`install`](https://bioconductor.github.io/BiocManager/reference/install.html)`(``"HiCExperiment"``)`
 
 ## Importing a Hi-C matrix file
 
 ### `.(m)cool` files:
 
-``` r
-
-cool_file <- CoolFile(HiContactsData::HiContactsData('yeast_wt', format = 'cool'))
-import(cool_file, focus = "II:10000-100000")
-```
+\
+`cool_file`` ``<-`` `[`CoolFile`](reference/CoolFile-class.md)`(``HiContactsData``::`[`HiContactsData`](https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html)`(``'yeast_wt'``, format ``=`` ``'cool'``)``)`\
+[`import`](reference/import-methods.md)`(``cool_file``, focus ``=`` ``"II:10000-100000"``)`
 
     ## `HiCExperiment` object with 3,454 interactions over 90 regions
     ## -------
@@ -71,11 +67,9 @@ import(cool_file, focus = "II:10000-100000")
     ## pairsFile: N/A
     ## metadata(0):
 
-``` r
-
-mcool_file <- CoolFile(HiContactsData::HiContactsData('yeast_wt', format = 'mcool'))
-import(mcool_file, focus = "II:10000-100000", resolution = 2000)
-```
+\
+`mcool_file`` ``<-`` `[`CoolFile`](reference/CoolFile-class.md)`(``HiContactsData``::`[`HiContactsData`](https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html)`(``'yeast_wt'``, format ``=`` ``'mcool'``)``)`\
+[`import`](reference/import-methods.md)`(``mcool_file``, focus ``=`` ``"II:10000-100000"``, resolution ``=`` ``2000``)`
 
     ## `HiCExperiment` object with 1,004 interactions over 45 regions
     ## -------
@@ -91,11 +85,9 @@ import(mcool_file, focus = "II:10000-100000", resolution = 2000)
 
 ### `.hic` files:
 
-``` r
-
-hic_file <- HicFile(HiContactsData::HiContactsData('yeast_wt', format = 'hic'))
-import(hic_file, focus = "II:10000-100000", resolution = 4000)
-```
+\
+`hic_file`` ``<-`` `[`HicFile`](reference/HicFile-class.md)`(``HiContactsData``::`[`HiContactsData`](https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html)`(``'yeast_wt'``, format ``=`` ``'hic'``)``)`\
+[`import`](reference/import-methods.md)`(``hic_file``, focus ``=`` ``"II:10000-100000"``, resolution ``=`` ``4000``)`
 
     ## `HiCExperiment` object with 276 interactions over 23 regions
     ## -------
@@ -111,14 +103,12 @@ import(hic_file, focus = "II:10000-100000", resolution = 4000)
 
 ### HiC-Pro files:
 
-``` r
-
-hicpro_file <- HicproFile(
-    HiContactsData::HiContactsData('yeast_wt', format = 'hicpro_matrix'),
-    bed = HiContactsData::HiContactsData('yeast_wt', format = 'hicpro_bed')
-)
-import(hicpro_file)
-```
+\
+`hicpro_file`` ``<-`` `[`HicproFile`](reference/HicproFile-class.md)`(`\
+`    ``HiContactsData``::`[`HiContactsData`](https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html)`(``'yeast_wt'``, format ``=`` ``'hicpro_matrix'``)``,`\
+`    bed ``=`` ``HiContactsData``::`[`HiContactsData`](https://rdrr.io/pkg/HiContactsData/man/HiContactsData.html)`(``'yeast_wt'``, format ``=`` ``'hicpro_bed'``)`\
+`)`\
+[`import`](reference/import-methods.md)`(``hicpro_file``)`
 
     ## `HiCExperiment` object with 2,686,250 interactions over 11,805 regions
     ## -------
@@ -136,11 +126,9 @@ import(hicpro_file)
 
 - `.pairs` files (e.g. from `pairtools` or `cooler`):
 
-``` r
-
-pairs_file <- PairsFile(HiContactsData('yeast_wt', format = 'pairs.gz'))
-import(pairs_file)
-```
+\
+`pairs_file`` ``<-`` `[`PairsFile`](reference/PairsFile-class.md)`(``HiContactsData``(``'yeast_wt'``, format ``=`` ``'pairs.gz'``)``)`\
+[`import`](reference/import-methods.md)`(``pairs_file``)`
 
     ## GInteractions object with 471364 interactions and 4 metadata columns:
     ##            seqnames1   ranges1     seqnames2   ranges2 |    counts     frag1     frag2  distance
@@ -162,11 +150,9 @@ import(pairs_file)
 
 - `.validPairs` files (e.g. from HiC-Pro pipeline):
 
-``` r
-
-hicpro_pairs_file <- PairsFile(HiContactsData('yeast_wt', format = 'hicpro_pairs'))
-import(hicpro_pairs_file, nrows = 100)
-```
+\
+`hicpro_pairs_file`` ``<-`` `[`PairsFile`](reference/PairsFile-class.md)`(``HiContactsData``(``'yeast_wt'``, format ``=`` ``'hicpro_pairs'``)``)`\
+[`import`](reference/import-methods.md)`(``hicpro_pairs_file``, nrows ``=`` ``100``)`
 
     ## GInteractions object with 100 interactions and 4 metadata columns:
     ##         seqnames1   ranges1     seqnames2   ranges2 |    counts     frag1       frag2  distance

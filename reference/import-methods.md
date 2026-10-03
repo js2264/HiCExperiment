@@ -96,22 +96,22 @@ availableResolutions(mcoolPath)
 #> 
 availableChromosomes(mcoolPath)
 #> Seqinfo object with 16 sequences from an unspecified genome:
-#>   seqnames seqlengths isCircular genome
-#>   I            230218       <NA>   <NA>
-#>   II           813184       <NA>   <NA>
-#>   III          316620       <NA>   <NA>
-#>   IV          1531933       <NA>   <NA>
-#>   V            576874       <NA>   <NA>
-#>   ...             ...        ...    ...
-#>   XII         1078177       <NA>   <NA>
-#>   XIII         924431       <NA>   <NA>
-#>   XIV          784333       <NA>   <NA>
-#>   XV          1091291       <NA>   <NA>
-#>   XVI          948066       <NA>   <NA>
+#>   seqnames seqnames seqlengths isCircular genome
+#>   1               I     230218       <NA>   <NA>
+#>   2              II     813184       <NA>   <NA>
+#>   3             III     316620       <NA>   <NA>
+#>   4              IV    1531933       <NA>   <NA>
+#>   5               V     576874       <NA>   <NA>
+#>   ...           ...        ...        ...    ...
+#>   12            XII    1078177       <NA>   <NA>
+#>   13           XIII     924431       <NA>   <NA>
+#>   14            XIV     784333       <NA>   <NA>
+#>   15             XV    1091291       <NA>   <NA>
+#>   16            XVI     948066       <NA>   <NA>
 import(mcoolPath, resolution = 16000, focus = 'XVI', format = 'cool')
 #> `HiCExperiment` object with 535,350 contacts over 60 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/3e261f048867_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1ad066697fb8_7752" 
 #> focus: "XVI" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 16000 
@@ -133,22 +133,22 @@ availableResolutions(hicPath)
 #> 
 availableChromosomes(hicPath)
 #> Seqinfo object with 17 sequences from an unspecified genome:
-#>   seqnames seqlengths isCircular genome
-#>   I            230218       <NA>   <NA>
-#>   II           813184       <NA>   <NA>
-#>   III          316620       <NA>   <NA>
-#>   IV          1531933       <NA>   <NA>
-#>   IX           439888       <NA>   <NA>
-#>   ...             ...        ...    ...
-#>   XIII         924431       <NA>   <NA>
-#>   XIV          784333       <NA>   <NA>
-#>   XV          1091291       <NA>   <NA>
-#>   XVI          948066       <NA>   <NA>
-#>   M             85780       <NA>   <NA>
+#>   seqnames seqnames seqlengths isCircular genome
+#>   1               I     230218       <NA>   <NA>
+#>   2              II     813184       <NA>   <NA>
+#>   3             III     316620       <NA>   <NA>
+#>   4              IV    1531933       <NA>   <NA>
+#>   5              IX     439888       <NA>   <NA>
+#>   ...           ...        ...        ...    ...
+#>   13           XIII     924431       <NA>   <NA>
+#>   14            XIV     784333       <NA>   <NA>
+#>   15             XV    1091291       <NA>   <NA>
+#>   16            XVI     948066       <NA>   <NA>
+#>   17              M      85780       <NA>   <NA>
 import(hicPath, resolution = 16000, focus = 'XVI', format = 'hic')
 #> `HiCExperiment` object with 838,222 contacts over 60 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/3e265ac673a5_7836" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1ad037446cf_7836" 
 #> focus: "XVI" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 16000 
@@ -172,18 +172,18 @@ availableResolutions(hicproMatrixPath, hicproBedPath)
 #> [1] 1000
 availableChromosomes(hicproMatrixPath, hicproBedPath)
 #> Seqinfo object with 17 sequences from an unspecified genome:
-#>   seqnames seqlengths isCircular genome
-#>   I            230218       <NA>   <NA>
-#>   II           813184       <NA>   <NA>
-#>   III          316620       <NA>   <NA>
-#>   IV          1531933       <NA>   <NA>
-#>   IX           439888       <NA>   <NA>
-#>   ...             ...        ...    ...
-#>   XII         1078177       <NA>   <NA>
-#>   XIII         924431       <NA>   <NA>
-#>   XIV          784333       <NA>   <NA>
-#>   XV          1091291       <NA>   <NA>
-#>   XVI          948066       <NA>   <NA>
+#>   seqnames seqnames seqlengths isCircular genome
+#>   1               I     230218       <NA>   <NA>
+#>   2              II     813184       <NA>   <NA>
+#>   3             III     316620       <NA>   <NA>
+#>   4              IV    1531933       <NA>   <NA>
+#>   5              IX     439888       <NA>   <NA>
+#>   ...           ...        ...        ...    ...
+#>   13            XII    1078177       <NA>   <NA>
+#>   14           XIII     924431       <NA>   <NA>
+#>   15            XIV     784333       <NA>   <NA>
+#>   16             XV    1091291       <NA>   <NA>
+#>   17            XVI     948066       <NA>   <NA>
 import(hicproMatrixPath, bed = hicproBedPath, format = 'hicpro')
 #> Registered S3 methods overwritten by 'readr':
 #>   method                    from 
@@ -198,7 +198,7 @@ import(hicproMatrixPath, bed = hicproBedPath, format = 'hicpro')
 #> 
 #> `HiCExperiment` object with 9,503,604 contacts over 12,165 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/3e2639eaefe7_7837" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1ad0496724a6_7837" 
 #> focus: "whole genome" 
 #> resolutions(1): 1000
 #> active resolution: 1000 

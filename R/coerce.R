@@ -123,6 +123,7 @@ setMethod("as.matrix", "HiCExperiment", function(x, use.scores = "balanced", spa
 
 #' @export
 #' @name as
+#' @importFrom BiocGenerics as.data.frame
 
 setMethod("as.data.frame", "HiCExperiment", function(x) {
     as(x, 'data.frame')

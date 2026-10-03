@@ -52,7 +52,7 @@ contacts_yeast()
 #> loading from cache
 #> `HiCExperiment` object with 8,757,906 contacts over 763 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/1ac1382204de_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1bd1e0d46b6_7752" 
 #> focus: "whole genome" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 16000 

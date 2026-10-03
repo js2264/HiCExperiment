@@ -150,7 +150,7 @@ x <- AggrHiCExperiment(
 x
 #> `AggrHiCExperiment` object over 2 targets 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/1ac1382204de_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1bd1e0d46b6_7752" 
 #> focus: 2 targets 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 

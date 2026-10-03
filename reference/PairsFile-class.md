@@ -25,8 +25,8 @@ pairsPath <- HiContactsData::HiContactsData('yeast_wt', 'pairs.gz')
 pf <- PairsFile(pairsPath)
 pf
 #> PairsFile object
-#> resource: /github/home/.cache/R/ExperimentHub/1ac16459cc80_7753 
+#> resource: /github/home/.cache/R/ExperimentHub/1bd11dc394f0_7753 
 pairsFile(pf)
 #>                                                  EH7703 
-#> "/github/home/.cache/R/ExperimentHub/1ac16459cc80_7753" 
+#> "/github/home/.cache/R/ExperimentHub/1bd11dc394f0_7753" 
 ```

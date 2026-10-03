@@ -111,7 +111,7 @@ availableChromosomes(mcoolPath)
 import(mcoolPath, resolution = 16000, focus = 'XVI', format = 'cool')
 #> `HiCExperiment` object with 535,350 contacts over 60 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/1ac1382204de_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1bd1e0d46b6_7752" 
 #> focus: "XVI" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 16000 
@@ -148,7 +148,7 @@ availableChromosomes(hicPath)
 import(hicPath, resolution = 16000, focus = 'XVI', format = 'hic')
 #> `HiCExperiment` object with 838,222 contacts over 60 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/1ac12a2ae53e_7836" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1bd174c1b730_7836" 
 #> focus: "XVI" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 16000 
@@ -198,7 +198,7 @@ import(hicproMatrixPath, bed = hicproBedPath, format = 'hicpro')
 #> 
 #> `HiCExperiment` object with 9,503,604 contacts over 12,165 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/1ac122f8a070_7837" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/1bd1529d6de7_7837" 
 #> focus: "whole genome" 
 #> resolutions(1): 1000
 #> active resolution: 1000 

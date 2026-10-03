@@ -57,15 +57,15 @@ hic <- HicFile(
 )
 hic
 #> HicFile object
-#> .hic file: /github/home/.cache/R/ExperimentHub/1ac12a2ae53e_7836 
+#> .hic file: /github/home/.cache/R/ExperimentHub/1bd174c1b730_7836 
 #> resolution: 16000 
-#> pairs file: /github/home/.cache/R/ExperimentHub/1ac16459cc80_7753 
+#> pairs file: /github/home/.cache/R/ExperimentHub/1bd11dc394f0_7753 
 #> metadata(1): type
 resolution(hic)
 #> [1] 16000
 pairsFile(hic)
 #>                                                  EH7703 
-#> "/github/home/.cache/R/ExperimentHub/1ac16459cc80_7753" 
+#> "/github/home/.cache/R/ExperimentHub/1bd11dc394f0_7753" 
 metadata(hic)
 #> $type
 #> [1] "example"

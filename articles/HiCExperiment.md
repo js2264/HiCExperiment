@@ -97,7 +97,7 @@ All R dependencies will be installed automatically.
 `hic`\
 `` #> `HiCExperiment` object with 8,757,906 contacts over 763 regions  ``\
 `#> -------`\
-`#> fileName: "/github/home/.cache/R/ExperimentHub/1ad066697fb8_7752" `\
+`#> fileName: "/github/home/.cache/R/ExperimentHub/1ac1382204de_7752" `\
 `#> focus: "whole genome" `\
 `#> resolutions(5): 1000 2000 4000 8000 16000`\
 `#> active resolution: 16000 `\
@@ -135,7 +135,7 @@ access to a range of toy datasets available from the `ExperimentHub`.
 [`import`](../reference/import-methods.md)`(``cool_file``, format ``=`` ``'cool'``)`\
 `` #> `HiCExperiment` object with 8,757,906 contacts over 12,079 regions  ``\
 `#> -------`\
-`#> fileName: "/github/home/.cache/R/ExperimentHub/1ad03017f4a3_7751" `\
+`#> fileName: "/github/home/.cache/R/ExperimentHub/1ac1694e780c_7751" `\
 `#> focus: "whole genome" `\
 `#> resolutions(1): 1000`\
 `#> active resolution: 1000 `\
@@ -173,21 +173,21 @@ the contact matrix file when imported as a `HiCExperiment` object.
 `coolf`` ``<-`` `[`CoolFile`](../reference/CoolFile-class.md)`(``cool_file``, pairsFile ``=`` ``pairs_file``)`\
 `coolf`\
 `#> CoolFile object`\
-`#> .mcool file: /github/home/.cache/R/ExperimentHub/1ad03017f4a3_7751 `\
+`#> .mcool file: /github/home/.cache/R/ExperimentHub/1ac1694e780c_7751 `\
 `#> resolution: 1000 `\
-`#> pairs file: /github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753 `\
+`#> pairs file: /github/home/.cache/R/ExperimentHub/1ac16459cc80_7753 `\
 `#> metadata(0):`\
 [`import`](../reference/import-methods.md)`(``coolf``)`\
 `` #> `HiCExperiment` object with 8,757,906 contacts over 12,079 regions  ``\
 `#> -------`\
-`#> fileName: "/github/home/.cache/R/ExperimentHub/1ad03017f4a3_7751" `\
+`#> fileName: "/github/home/.cache/R/ExperimentHub/1ac1694e780c_7751" `\
 `#> focus: "whole genome" `\
 `#> resolutions(1): 1000`\
 `#> active resolution: 1000 `\
 `#> interactions: 2945692 `\
 `#> scores(2): count balanced `\
 `#> topologicalFeatures: compartments(0) borders(0) loops(0) viewpoints(0) `\
-`#> pairsFile: /github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753 `\
+`#> pairsFile: /github/home/.cache/R/ExperimentHub/1ac16459cc80_7753 `\
 `#> metadata(0):`\
 [`import`](../reference/import-methods.md)`(`[`pairsFile`](../reference/AllGenerics.md)`(``coolf``)``, format ``=`` ``'pairs'``)`\
 `#> GInteractions object with 471364 interactions and 3 metadata columns:`\
@@ -228,21 +228,21 @@ the contact matrix file when imported as a `HiCExperiment` object.
 `hicf`` ``<-`` `[`HicFile`](../reference/HicFile-class.md)`(``hic_file``, pairsFile ``=`` ``pairs_file``)`\
 `hicf`\
 `#> HicFile object`\
-`#> .hic file: /github/home/.cache/R/ExperimentHub/1ad037446cf_7836 `\
+`#> .hic file: /github/home/.cache/R/ExperimentHub/1ac12a2ae53e_7836 `\
 `#> resolution: 1000 `\
-`#> pairs file: /github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753 `\
+`#> pairs file: /github/home/.cache/R/ExperimentHub/1ac16459cc80_7753 `\
 `#> metadata(0):`\
 [`import`](../reference/import-methods.md)`(``hicf``)`\
 `` #> `HiCExperiment` object with 13,681,280 contacts over 12,165 regions  ``\
 `#> -------`\
-`#> fileName: "/github/home/.cache/R/ExperimentHub/1ad037446cf_7836" `\
+`#> fileName: "/github/home/.cache/R/ExperimentHub/1ac12a2ae53e_7836" `\
 `#> focus: "whole genome" `\
 `#> resolutions(5): 1000 2000 4000 8000 16000`\
 `#> active resolution: 1000 `\
 `#> interactions: 2965693 `\
 `#> scores(2): count balanced `\
 `#> topologicalFeatures: compartments(0) borders(0) loops(0) viewpoints(0) `\
-`#> pairsFile: /github/home/.cache/R/ExperimentHub/1ad01a2fec8d_7753 `\
+`#> pairsFile: /github/home/.cache/R/ExperimentHub/1ac16459cc80_7753 `\
 `#> metadata(0):`\
 \
 `## --- HicproFile`\
@@ -256,8 +256,8 @@ the contact matrix file when imported as a `HiCExperiment` object.
 `hicprof`\
 `#> HicproFile object`\
 `#> HiC-Pro files:`\
-`#>   $ matrix:   /github/home/.cache/R/ExperimentHub/1ad0496724a6_7837 `\
-`#>   $ regions:  /github/home/.cache/R/ExperimentHub/1ad0375f3a28_7838 `\
+`#>   $ matrix:   /github/home/.cache/R/ExperimentHub/1ac122f8a070_7837 `\
+`#>   $ regions:  /github/home/.cache/R/ExperimentHub/1ac14be431f6_7838 `\
 `#> resolution: 1000 `\
 `#> pairs file: `\
 `#> metadata(0):`\
@@ -274,7 +274,7 @@ the contact matrix file when imported as a `HiCExperiment` object.
 `#>   str.col_spec              vroom`\
 `` #> `HiCExperiment` object with 9,503,604 contacts over 12,165 regions  ``\
 `#> -------`\
-`#> fileName: "/github/home/.cache/R/ExperimentHub/1ad0496724a6_7837" `\
+`#> fileName: "/github/home/.cache/R/ExperimentHub/1ac122f8a070_7837" `\
 `#> focus: "whole genome" `\
 `#> resolutions(1): 1000`\
 `#> active resolution: 1000 `\
@@ -310,7 +310,7 @@ genomic locus of interest.
 `hic`\
 `` #> `HiCExperiment` object with 24,322 contacts over 60 regions  ``\
 `#> -------`\
-`#> fileName: "/github/home/.cache/R/ExperimentHub/1ad03017f4a3_7751" `\
+`#> fileName: "/github/home/.cache/R/ExperimentHub/1ac1694e780c_7751" `\
 `#> focus: "I:20,001-80,000" `\
 `#> resolutions(1): 1000`\
 `#> active resolution: 1000 `\
@@ -368,7 +368,7 @@ specify the `resolution` at which count values are recovered.
 `hic`\
 `` #> `HiCExperiment` object with 466,123 contacts over 400 regions  ``\
 `#> -------`\
-`#> fileName: "/github/home/.cache/R/ExperimentHub/1ad066697fb8_7752" `\
+`#> fileName: "/github/home/.cache/R/ExperimentHub/1ac1382204de_7752" `\
 `#> focus: "II:1-800,000" `\
 `#> resolutions(5): 1000 2000 4000 8000 16000`\
 `#> active resolution: 2000 `\
@@ -387,7 +387,7 @@ Slots for a `HiCExperiment` object can be accessed using the following
 
 \
 `fileName``(``hic``)`\
-`#> [1] "/github/home/.cache/R/ExperimentHub/1ad066697fb8_7752"`\
+`#> [1] "/github/home/.cache/R/ExperimentHub/1ac1382204de_7752"`\
 [`focus`](../reference/AllGenerics.md)`(``hic``)`\
 `#> [1] "II:1-800000"`\
 [`resolutions`](../reference/AllGenerics.md)`(``hic``)`\
@@ -756,7 +756,7 @@ comprehensive examples of interaction with a HiCExperiment object.
 `#> [8] base     `\
 `#> `\
 `#> other attached packages:`\
-`#>  [1] HiCExperiment_1.13.0  HiContactsData_1.15.0 ExperimentHub_3.3.2  `\
+`#>  [1] HiCExperiment_1.13.1  HiContactsData_1.15.0 ExperimentHub_3.3.2  `\
 `#>  [4] AnnotationHub_4.3.2   BiocFileCache_3.3.0   dbplyr_2.6.0         `\
 `#>  [7] GenomicRanges_1.65.4  Seqinfo_1.3.2         IRanges_2.47.5       `\
 `#> [10] S4Vectors_0.51.10     BiocGenerics_0.59.12  generics_0.1.4       `\

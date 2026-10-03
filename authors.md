@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/js2264/HiCExperiment/blob/claude/new-session-craecj/inst/CITATION)
+[`inst/CITATION`](https://github.com/js2264/HiCExperiment/blob/devel/inst/CITATION)
 
 Serizay J, Matthey-Doret C, Bignaud A, Baudry L, Koszul R (2024).
 “Orchestrating chromosome conformation capture analysis with

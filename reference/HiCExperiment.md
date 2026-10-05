@@ -273,8 +273,6 @@ An `HiCExperiment` object.
 
 mcool_file <- HiContactsData::HiContactsData("yeast_wt", "mcool")
 #> see ?HiContactsData and browseVignettes('HiContactsData') for documentation
-#> Error while performing HEAD request.
-#>    Proceeding without cache information.
 #> loading from cache
 pairs_file <- HiContactsData::HiContactsData("yeast_wt", "pairs.gz")
 #> see ?HiContactsData and browseVignettes('HiContactsData') for documentation
@@ -287,14 +285,14 @@ contacts <- HiCExperiment(
 contacts
 #> `HiCExperiment` object with 8,757,906 contacts over 1,517 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/1bd1e0d46b6_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/5b910420e2f_7752" 
 #> focus: "whole genome" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 
 #> interactions: 801962 
 #> scores(2): count balanced 
 #> topologicalFeatures: compartments(0) borders(0) loops(0) viewpoints(0) 
-#> pairsFile: /github/home/.cache/R/ExperimentHub/1bd11dc394f0_7753 
+#> pairsFile: /github/home/.cache/R/ExperimentHub/5b943264778_7753 
 #> metadata(0):
 
 #####################################################################
@@ -321,7 +319,7 @@ contacts2
 #####################################################################
 
 fileName(contacts)
-#> [1] "/github/home/.cache/R/ExperimentHub/1bd1e0d46b6_7752"
+#> [1] "/github/home/.cache/R/ExperimentHub/5b910420e2f_7752"
 focus(contacts)
 #> NULL
 resolutions(contacts)
@@ -366,8 +364,8 @@ topologicalFeatures(contacts)
 #> List of length 4
 #> names(4): compartments borders loops viewpoints
 pairsFile(contacts)
-#>                                                  EH7703 
-#> "/github/home/.cache/R/ExperimentHub/1bd11dc394f0_7753" 
+#>                                                 EH7703 
+#> "/github/home/.cache/R/ExperimentHub/5b943264778_7753" 
 
 #####################################################################
 ## ---------------------- Slot getters --------------------------- ##
@@ -404,62 +402,62 @@ pairsFile(contacts) <- HiContactsData('yeast_wt', 'pairs.gz')
 contacts[1:100]
 #> `HiCExperiment` object with 4,140 contacts over 100 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/1bd1e0d46b6_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/5b910420e2f_7752" 
 #> focus: "whole genome" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 
 #> interactions: 100 
 #> scores(3): count balanced random 
 #> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) 
-#> pairsFile: /github/home/.cache/R/ExperimentHub/1bd11dc394f0_7753 
+#> pairsFile: /github/home/.cache/R/ExperimentHub/5b943264778_7753 
 #> metadata(0):
 contacts['II']
 #> `HiCExperiment` object with 471,364 contacts over 102 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/1bd1e0d46b6_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/5b910420e2f_7752" 
 #> focus: "II" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 
 #> interactions: 4693 
 #> scores(3): count balanced random 
 #> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) 
-#> pairsFile: /github/home/.cache/R/ExperimentHub/1bd11dc394f0_7753 
+#> pairsFile: /github/home/.cache/R/ExperimentHub/5b943264778_7753 
 #> metadata(0):
 contacts[c('II', 'III')]
 #> `HiCExperiment` object with 632,446 contacts over 142 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/1bd1e0d46b6_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/5b910420e2f_7752" 
 #> focus: "II, III" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 
 #> interactions: 8502 
 #> scores(3): count balanced random 
 #> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) 
-#> pairsFile: /github/home/.cache/R/ExperimentHub/1bd11dc394f0_7753 
+#> pairsFile: /github/home/.cache/R/ExperimentHub/5b943264778_7753 
 #> metadata(0):
 contacts['II|III']
 #> `HiCExperiment` object with 9,092 contacts over 142 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/1bd1e0d46b6_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/5b910420e2f_7752" 
 #> focus: "II:1-813184|III:1-316620" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 
 #> interactions: 3000 
 #> scores(3): count balanced random 
 #> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) 
-#> pairsFile: /github/home/.cache/R/ExperimentHub/1bd11dc394f0_7753 
+#> pairsFile: /github/home/.cache/R/ExperimentHub/5b943264778_7753 
 #> metadata(0):
 contacts['II:10001-30000|III:50001-90000']
 #> `HiCExperiment` object with 11 contacts over 5 regions 
 #> -------
-#> fileName: "/github/home/.cache/R/ExperimentHub/1bd1e0d46b6_7752" 
+#> fileName: "/github/home/.cache/R/ExperimentHub/5b910420e2f_7752" 
 #> focus: "II:10001-30000|III:50001-90000" 
 #> resolutions(5): 1000 2000 4000 8000 16000
 #> active resolution: 8000 
 #> interactions: 4 
 #> scores(3): count balanced random 
 #> topologicalFeatures: compartments(0) borders(0) loops(1) viewpoints(0) 
-#> pairsFile: /github/home/.cache/R/ExperimentHub/1bd11dc394f0_7753 
+#> pairsFile: /github/home/.cache/R/ExperimentHub/5b943264778_7753 
 #> metadata(0):
 
 #####################################################################
